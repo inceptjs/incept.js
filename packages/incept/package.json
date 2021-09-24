@@ -1,9 +1,17 @@
 {
   "name": "inceptjs",
-  "version": "0.0.9",
+  "version": "0.0.11",
   "description": "A pluggable React framework",
   "author": "Chris <chris@incept.asia>",
   "license": "MIT",
+  "homepage": "https://github.com/inceptjs/incept.js#readme",
+  "bugs": {
+    "url": "https://github.com/inceptjs/incept.js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inceptjs/incept.js.git"
+  },
   "main": "dist/index.js",
   "bin": {
     "incept": "./bin/incept.js"
@@ -13,26 +21,10 @@
     "build": "tsc"
   },
   "files": [
+    "components.js",
     "bin",
     "dist"
   ],
-  "purposes": {
-    "cookie": "Cookie Parser",
-    "mime": "Get mime type from file name",
-    "react-dom": "Convert react to string",
-    "react-is": "Tests if functions are react components",
-    "@babel/preset-env": "Converts ES6 back to regular JS",
-    "@babel/preset-react": "Converts JSX files to regular JS",
-    "@babel/register": "Hijacks the require() in order to convert ES6 to regular JS",
-    "babel-loader": "Allows transpiling JS files using Babel and webpack",
-    "babel-plugin-react-require": "Adds import React from react in all react files",
-    "webpack-node-externals": "ignores node_modules when webpack compiles the server (mainly for server side packing)",
-    "@pmmmwh/react-refresh-webpack-plugin": "For react refresh (dev mode)",
-    "webpack-dev-middleware": "For react refresh (dev mode)",
-    "webpack-hot-middleware": "For react refresh (dev mode)",
-    "webpack-virtual-modules": "Used to inject hydrate",
-    "babel-plugin-module-resolver": "module alias"
-  },
   "dependencies": {
     "@babel/core": "^7.13.14",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
@@ -40,7 +32,7 @@
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
     "@babel/register": "^7.15.3",
-    "@inceptjs/framework": "^0.0.7",
+    "@inceptjs/framework": "^0.0.10",
     "@loadable/babel-plugin": "5.13.2",
     "@loadable/component": "5.15.0",
     "@loadable/server": "5.15.1",

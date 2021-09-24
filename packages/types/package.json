@@ -1,9 +1,17 @@
 {
   "name": "@inceptjs/types",
-  "version": "0.0.4",
+  "version": "0.0.10",
   "description": "Type definitions implementations for core types.",
   "author": "Chris <chris@incept.asia>",
   "license": "MIT",
+  "homepage": "https://github.com/inceptjs/incept.js#readme",
+  "bugs": {
+    "url": "https://github.com/inceptjs/incept.js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inceptjs/incept.js.git"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
