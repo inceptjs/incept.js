@@ -1,0 +1,15 @@
+{
+  "name": "sandbox",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "incept dev"
+  },
+  "incept": [
+    "./plugin/api",
+    "./plugin/static",
+    "./plugin/www"
+  ],
+  "dependencies": {
+    "inceptjs": "^0.0.9"
+  }
+}

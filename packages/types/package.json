@@ -1,0 +1,23 @@
+{
+  "name": "@inceptjs/types",
+  "version": "0.0.4",
+  "description": "Type definitions implementations for core types.",
+  "author": "Chris <chris@incept.asia>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "mocha",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/expect": "^24.3.0",
+    "@types/mocha": "^9.0.0",
+    "chai": "^4.3.4",
+    "mocha": "^8.4.0",
+    "ts-mocha": "^8.0.0"
+  }
+}
