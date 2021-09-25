@@ -1,6 +1,6 @@
 {
   "name": "sandbox",
-  "version": "0.0.1",
+  "version": "0.0.12",
   "scripts": {
     "dev": "incept dev"
   },
@@ -10,6 +10,7 @@
     "./plugin/www"
   ],
   "dependencies": {
-    "inceptjs": "^0.0.11"
+    "inceptjs": "^0.0.12",
+    "@inceptjs/admin": "^0.0.12"
   }
 }

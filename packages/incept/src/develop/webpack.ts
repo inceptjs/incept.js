@@ -3,6 +3,7 @@ import { HotModuleReplacementPlugin } from 'webpack';
 import LoadablePlugin from '@loadable/webpack-plugin';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import Application from '../types/Application';
 
@@ -25,6 +26,8 @@ export default function webpackPlugin(app: Application) {
       filename: 'stats.json',
       writeToDisk: { filename: buildFolder }
     }))
+    //add css module
+    .addPlugin(new MiniCssExtractPlugin)
     //add HOT module (for dev server)
     .addPlugin(new HotModuleReplacementPlugin)
     //add react refresh (for dev server)

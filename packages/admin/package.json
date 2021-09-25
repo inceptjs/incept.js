@@ -1,0 +1,19 @@
+{
+  "name": "@inceptjs/admin",
+  "version": "0.0.12",
+  "description": "Incept Admin",
+  "author": "Chris <chris@incept.asia>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "incept dev"
+  },
+  "incept": [
+    "./src"
+  ],
+  "dependencies": {
+    "inceptjs": "^0.0.12",
+    "react-redux": "^7.2.5",
+    "redux-thunk": "^2.3.0",
+    "redux": "^4.1.1"
+  }
+}

@@ -13,6 +13,12 @@ require('@babel/register')({
     '@babel/preset-react'
   ],
   plugins: [
+    //import css server side
+    [
+      '@dr.pogodin/css-modules-transform', {
+        generateScopedName: '[path][name]-[local]'
+      }
+    ],
     //adds react import where jsx is found
     'react-require', 
     //allows to use import as a function
