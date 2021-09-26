@@ -43,11 +43,24 @@ export default {
             options: {
               esModule: true,
               modules: {
-                localIdentName: '[path][name]-[local]',
+                localIdentName: '[path][name]-[local]-[md5:hash:base64:7]',
               }
             }
           }
         ]
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[md5:hash:base64:7].[ext]',
+              publicPath: '/.build/images',
+              outputPath: 'images'
+            },
+          },
+        ],
       }
     ]
   }

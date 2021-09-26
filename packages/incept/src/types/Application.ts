@@ -1,6 +1,7 @@
-import { http } from '@inceptjs/framework'
-import PluginLoader from './PluginLoader'
-import WithWebpack from '../webpack'
+import { http } from '@inceptjs/framework';
+import PluginLoader from './PluginLoader';
+import WithWebpack from '../webpack';
+import WithBabel from '../babel';
 import WithReact from '../react';
 
 export default class Application extends http.Router {
@@ -13,6 +14,11 @@ export default class Application extends http.Router {
    * Connects to the Webpack plugin
    */
   public withWebpack: WithWebpack;
+
+  /**
+   * Connects to the Babel plugin
+   */
+  public withBabel: WithBabel;
 
   /**
    * The current working directory
@@ -40,6 +46,7 @@ export default class Application extends http.Router {
     this._pluginManager = new PluginLoader(cwd);
     
     this.withReact = new WithReact(cwd);
+    this.withBabel = new WithBabel;
     this.withWebpack = new WithWebpack;
   }
 

@@ -62,6 +62,20 @@ export default class WithWebpack {
   }
 
   /**
+   * Manually resets the config (Use with caution) 
+   */
+  set config(config: Record<string, any>) {
+    this._config = config;
+  }
+
+  /**
+   * Sets the mode in config
+   */
+  set mode(mode: string) {
+    this._config.mode = mode;
+  }
+
+  /**
    * Sets the webpack config
    */
   constructor(config: Record<string, any> = {}) {
@@ -102,6 +116,14 @@ export default class WithWebpack {
    */
   addPlugin(plugin: any): WithWebpack {
     this._config.plugins.push(plugin);
+    return this;
+  }
+
+  /**
+   * Adds a rule to the config
+   */
+  addRule(rule: Record<string, any>): WithWebpack {
+    this._config.module.rules.push(rule);
     return this;
   }
 
