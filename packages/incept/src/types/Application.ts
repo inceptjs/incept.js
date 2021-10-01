@@ -1,24 +1,32 @@
 import { http } from '@inceptjs/framework';
+import { VirtualFS } from '@inceptjs/virtualfs';
+
 import PluginLoader from './PluginLoader';
+
 import WithWebpack from '../webpack';
 import WithBabel from '../babel';
 import WithReact from '../react';
 
 export default class Application extends http.Router {
   /**
+   * Connects to the Babel plugin
+   */
+  public withBabel: WithBabel;
+
+  /**
    * Connects to the React plugin
    */
   public withReact: WithReact;
 
   /**
+   * Connects to the VirtualFS plugin
+   */
+  public withVirtualFS: VirtualFS;
+
+  /**
    * Connects to the Webpack plugin
    */
   public withWebpack: WithWebpack;
-
-  /**
-   * Connects to the Babel plugin
-   */
-  public withBabel: WithBabel;
 
   /**
    * The current working directory
@@ -45,9 +53,11 @@ export default class Application extends http.Router {
     this._cwd = cwd;
     this._pluginManager = new PluginLoader(cwd);
     
-    this.withReact = new WithReact(cwd);
     this.withBabel = new WithBabel;
+    this.withReact = new WithReact(cwd);
+    this.withVirtualFS = new VirtualFS;
     this.withWebpack = new WithWebpack;
+    this.withVirtualFS.patchFS();
   }
 
   /**

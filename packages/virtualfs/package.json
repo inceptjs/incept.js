@@ -1,0 +1,31 @@
+{
+  "name": "@inceptjs/virtualfs",
+  "version": "0.0.14",
+  "description": "Incept virtual file system",
+  "author": "Chris <chris@incept.asia>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "mocha",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@inceptjs/framework": "^0.0.13",
+    "memfs": "^3.3.0",
+    "unionfs": "^4.4.0",
+    "fs-monkey": "^1.0.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.14",
+    "@babel/register": "^7.15.3",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.14.5",
+    "chai": "^4.3.4",
+    "mocha": "^8.4.0",
+    "react": "^17.0.2"
+  }
+}

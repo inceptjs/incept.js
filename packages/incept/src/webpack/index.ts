@@ -1,5 +1,4 @@
 import webpack, { Compiler, Stats } from 'webpack'
-import VirtualModulesPlugin from 'webpack-virtual-modules';
 
 import Exception from './Exception'
 import defaults from './defaults'
@@ -27,21 +26,9 @@ export default class WithWebpack {
   protected _events: Event[] = [];
 
   /**
-   * Virtual modules
-   */
-  protected _virtualModules: Record<string, string> = {};
-
-  /**
    * Returns a webpack compiler
    */
   get compiler(): Compiler {
-    const config = this.config;
-    //add modules to config
-    if (Object.keys(this._virtualModules)) {
-      config.plugins.push(
-        new VirtualModulesPlugin(this._virtualModules)
-      );
-    }
     //make the compiler
     const compiler = webpack(this._config);
     //add events
@@ -100,14 +87,6 @@ export default class WithWebpack {
     }
   
     this._config.entry[name] = file;
-    return this;
-  }
-
-  /**
-   * Adds a virtual file to the VirtualModules plugin
-   */
-  addModule(filename: string, code: string): WithWebpack {
-    this._virtualModules[filename] = code;
     return this;
   }
 

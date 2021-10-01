@@ -8,7 +8,12 @@ import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import Application from '../types/Application';
 
 export default function webpackPlugin(app: Application) {
-  const { cwd, withReact: react, withWebpack: bundler } = app
+  const { 
+    cwd, 
+    withReact: react, 
+    withWebpack: bundler, 
+    withVirtualFS: vfs 
+  } = app
   const buildFolder = path.join(cwd, '.build');
 
   const chunkNamer = (fileinfo: Record<string, any>) => {
@@ -48,6 +53,8 @@ export default function webpackPlugin(app: Application) {
       ))
       .forEach(key => delete require.cache[key])
   });
+
+  vfs.mkdirSync(path.join(cwd, 'scripts'), { recursive: true });
   
   //add routes as bundler entries
   for(const route of react.routes) {
@@ -56,7 +63,7 @@ export default function webpackPlugin(app: Application) {
     //determine the virtual entry
     const entry = path.join(cwd, `${name}.js`);
     bundler.addEntry(name, [ 'webpack-hot-middleware/client', entry ]);
-    bundler.addModule(entry, react.entry(route.path));
+    vfs.writeFileSync(entry, react.entry(route.path));
   }
 
   //build a webpack compiler

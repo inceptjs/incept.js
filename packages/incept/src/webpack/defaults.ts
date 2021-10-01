@@ -5,6 +5,9 @@ export default {
   resolve: {
     extensions: ['.js', '.json', '.css']
   },
+  stats: {
+    errorDetails: true,
+  },
   module: {
     rules: [
       {
@@ -22,8 +25,9 @@ export default {
                 '@babel/preset-react'
               ],
               plugins: [
+                //adds react import where jsx is found
                 'react-require',
-                '@babel/plugin-syntax-dynamic-import',
+                //updates on react component changes (for dev)
                 'react-refresh/babel'
               ]
             }

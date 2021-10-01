@@ -1,6 +1,6 @@
 {
   "name": "inceptjs",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "A pluggable React framework",
   "author": "Chris <chris@incept.asia>",
   "license": "MIT",
@@ -33,7 +33,9 @@
     "@babel/preset-react": "^7.14.5",
     "@babel/register": "^7.15.3",
     "@dr.pogodin/babel-plugin-css-modules-transform": "1.10.0",
-    "@inceptjs/framework": "^0.0.13",
+    "@dr.pogodin/babel-preset-svgr": "1.3.1",
+    "@inceptjs/framework": "^0.0.14",
+    "@inceptjs/virtualfs": "^0.0.14",
     "@loadable/babel-plugin": "5.13.2",
     "@loadable/component": "5.15.0",
     "@loadable/server": "5.15.1",

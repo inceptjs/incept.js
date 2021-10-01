@@ -117,6 +117,25 @@ export default class TaskQueue {
 
     return Statuses.OK;
   }
+
+  /**
+   * Runs the tasks syncronously
+   */
+  runSync(...args: any[]): Status {
+    if (!this.tasks.length) {
+      //report a 404
+      return Statuses.NOT_FOUND;
+    }
+
+    while (this.tasks.length) {
+      const task = (this.tasks.shift() as Task);
+      if (task.callback(...args) === false) {
+        return Statuses.ABORT;
+      }
+    }
+
+    return Statuses.OK;
+  }
 }
 
 /**

@@ -84,6 +84,54 @@ export default class EventEmitter {
   }
 
   /**
+   * Calls all the callbacks of the given event passing the given arguments
+   */
+  emitSync(event: string, ...args: any[]) {
+    Exception.require(
+      typeof event === 'string', 
+      'Argument 1 expected String'
+    );
+
+    const matches = this.match(event);
+
+    //if there are no events found
+    if (!Object.keys(matches).length) {
+      //report a 404
+      return Status.NOT_FOUND;
+    }
+
+    const queue = EventEmitter.makeQueue();
+
+    Object.keys(matches).forEach((key: string) => {
+      const match = matches[key]
+      const event = match.pattern
+      //if no direct observers
+      if (typeof this.listeners[event] === 'undefined') {
+        return
+      }
+
+      //add args on to match
+      match.args = args
+
+      //then loop the observers
+      this.listeners[event].forEach(listener => {
+        queue.add((...args: any[]) => {
+          //set the current
+          this.event = Object.assign({}, match, listener)
+          //if this is the same event, call the 
+          //method, if the method returns false
+          if (listener.callback(...args) === false) {
+            return false
+          }
+        }, listener.priority)
+      })
+    })
+
+    //call the callbacks
+    return queue.runSync(...args)
+  }
+
+  /**
    * Returns a list of callbacks that will trigger when event is called
    */
   inspect(event: string): Task[] {

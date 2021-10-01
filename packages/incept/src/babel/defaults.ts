@@ -2,6 +2,7 @@ export default {
   ignore: [
     /node_modules[\\/](?!@incept\/admin)/
   ],
+  extensions: ['.js', '.jsx', '.svg', '.jpg', '.gif', '.png', '.jpeg'],
   presets: [
     [
       '@babel/preset-env',

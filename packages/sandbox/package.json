@@ -11,7 +11,7 @@
     "@inceptjs/admin"
   ],
   "dependencies": {
-    "inceptjs": "^0.0.13",
-    "@inceptjs/admin": "^0.0.13"
+    "inceptjs": "^0.0.14",
+    "@inceptjs/admin": "^0.0.14"
   }
 }
