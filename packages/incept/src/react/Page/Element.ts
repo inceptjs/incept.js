@@ -3,8 +3,6 @@ import ReactIs from 'react-is'
 
 import Exception from '../Exception'
 
-type GenericObject = { [key: string]: any };
-
 /**
  * Helper for page to manage the Head and body configuration
  */
@@ -12,7 +10,7 @@ export default class Element {
   /**
    * Attributes for the element
    */
-  protected _props: GenericObject = {};
+  protected _props: Record<string, any> = {};
 
   /**
    * Children of the element
@@ -39,14 +37,14 @@ export default class Element {
   /**
    * Returns element props
    */
-  get props(): GenericObject {
+  get props(): Record<string, any> {
     return Object.assign({}, this._props);
   }
 
   /**
    * Sets element props
    */
-  set props(props: GenericObject) {
+  set props(props: Record<string, any>) {
     Exception.require(
       typeof props === 'object', 
       'Value assigned to `props` is not an object'

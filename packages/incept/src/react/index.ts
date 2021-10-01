@@ -7,13 +7,11 @@ import { Request, Response } from '@inceptjs/framework';
 
 import Page from './Page';
 
-type GenericObject = { [key: string]: any };
-
 export default class WithReact {
   protected _cwd: string;
   protected _app: string;
   protected _page: Page;
-  protected _appProps: GenericObject = {};
+  protected _appProps: Record<string, any> = {};
   protected _layouts: { [key: string]: string } = {};
   protected _routes: { [key: string]: StringRoute } = {};
 
@@ -177,7 +175,7 @@ export default class WithReact {
    * Returns a new page that developers can manipulate 
    * and send back using `ReactPlugin.page = page`
    */
-  makePage(props: GenericObject = {}): Page {
+  makePage(props: Record<string, any> = {}): Page {
     const page = new Page
 
     if (typeof props === 'object') {

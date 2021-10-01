@@ -5,8 +5,6 @@ import Request from './Request';
 import Response from './Response';
 import Exception from './Exception';
 
-type GenericObject = { [key: string]: any };
-
 /**
  * Allows requests to be routed to a callback to be processed
  */
@@ -150,7 +148,10 @@ export default class Router extends EventEmitter {
   /**
    * Handles an incoming request
    */
-  handle: Function = async (req: GenericObject, res: GenericObject) => {
+  handle: Function = async (
+    req: Record<string, any>, 
+    res: Record<string, any>
+  ) => {
     Exception.require(
       typeof req === 'object',
       'Argument 1 expecting Object'
@@ -221,14 +222,14 @@ export default class Router extends EventEmitter {
   /**
    * Makes a new request object (IoC)
    */
-  makeRequest(data?: GenericObject, resource?: any): Request {
+  makeRequest(data?: Record<string, any>, resource?: any): Request {
     return new Request({}, resource)
   }
 
   /**
    * Makes a new response object (IoC)
    */
-  makeResponse(data?: GenericObject, resource?: any): Response {
+  makeResponse(data?: Record<string, any>, resource?: any): Response {
     return new Response({}, resource)
   }
 
@@ -269,7 +270,7 @@ export default class Router extends EventEmitter {
   /**
    * Returns dynamic variables from path pattern
    */
-  params(request: Request, method: string, path: string): GenericObject {
+  params(request: Request, method: string, path: string): Params {
     Exception.require(
       request instanceof Request, 
       'Argument 1 expected Request'
@@ -581,7 +582,10 @@ export default class Router extends EventEmitter {
 
       //okay so no path and just a callback
       //here we will support next()
-      const wrapper = function(req: GenericObject, res: GenericObject) {
+      const wrapper = function(
+        req: Record<string, any>, 
+        res: Record<string, any>
+      ) {
         return new Promise((resolve, reject) => {
           //make a next function
           const next = function(...args: any[]) {
@@ -630,5 +634,5 @@ export interface Params {
    * `params` from the dynamic : pathing
    * ex. /foo/:bar/zoo
    */
-  params: GenericObject;
+  params: Record<string, any>;
 }

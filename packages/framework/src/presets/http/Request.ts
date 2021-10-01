@@ -3,13 +3,11 @@ import { IncomingMessage } from 'http';
 
 import Request from '../../Request';
 
-type GenericObject = { [key: string]: any };
-
 export default class HTTPRequest extends Request {
   /**
    * Returns all cookies
    */
-  get cookies(): GenericObject|null {
+  get cookies(): Record<string, any>|null {
     return this.get('cookies');
   }
 
@@ -27,14 +25,14 @@ export default class HTTPRequest extends Request {
   /**
    * Returns session data
    */
-  get session(): GenericObject|null {
+  get session(): Record<string, any>|null {
     return this.get('session');
   }
 
   /**
    * Maps resource
    */
-  constructor(data: GenericObject, resource: IncomingMessage) {
+  constructor(data: Record<string, any>, resource: IncomingMessage) {
     super(data, resource);
     map(resource, this);
   }

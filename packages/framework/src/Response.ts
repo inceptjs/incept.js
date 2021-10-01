@@ -3,7 +3,6 @@ import { Reflection, Store } from '@inceptjs/types';
 import Exception from './Exception';
 
 type Scalar = string|number|boolean;
-type GenericObject = { [key: string]: any };
 
 /**
  * Simple response object irrespective of where it came from. 
@@ -20,7 +19,7 @@ export default class Response extends Store {
   /**
    * The context is where the response was created
    */
-  protected _context: GenericObject;
+  protected _context: Record<string, any>;
 
   /**
    * Returns the response
@@ -32,7 +31,7 @@ export default class Response extends Store {
   /**
    * Returns a response status code
    */
-  get ctx(): GenericObject {
+  get ctx(): Record<string, any> {
     return this._context;
   }
 
@@ -72,7 +71,7 @@ export default class Response extends Store {
   /**
    * Sets the context
    */
-  set ctx(value: GenericObject) {
+  set ctx(value: Record<string, any>) {
     this._context = value;
   }
 
@@ -87,7 +86,7 @@ export default class Response extends Store {
   /**
    * Sets the data and resource
    */
-  constructor(data?: GenericObject, resource?: any) {
+  constructor(data?: Record<string, any>, resource?: any) {
     super(data);
     this._resource = resource;
     this._context = {}
@@ -119,5 +118,13 @@ export default class Response extends Store {
     }
 
     return this.set('status', { code, text })
+  }
+
+  /**
+   * Alias For setting the body (what people traditionally expect)
+   */
+  write(body: any): this {
+    this.set('body', body);
+    return this;
   }
 }

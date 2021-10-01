@@ -10,9 +10,6 @@ import Exception from '../../Exception';
 import Request from './Request';
 import Response from './Response';
 
-
-type GenericObject = { [key: string]: any };
-
 export default class HTTPRouter extends Pluggable {
   /**
    * Handles an incoming request
@@ -60,14 +57,20 @@ export default class HTTPRouter extends Pluggable {
   /**
    * Makes a new request object (IoC)
    */
-  makeRequest(data: GenericObject, resource: IncomingMessage): Request {
+  makeRequest(
+    data: Record<string, any>, 
+    resource: IncomingMessage
+  ): Request {
     return new Request(data, resource);
   }
 
   /**
    * Makes a new response object (IoC)
    */
-  makeResponse(data: GenericObject, resource: ServerResponse): Response {
+  makeResponse(
+    data: Record<string, any>, 
+    resource: ServerResponse
+  ): Response {
     return new Response(data, resource);
   }
 

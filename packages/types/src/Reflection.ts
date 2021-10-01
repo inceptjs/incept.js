@@ -37,8 +37,6 @@ const nativeFunctionProperties = [
   ...nativeObjectProperties
 ];
 
-type GenericObject = { [key: string]: any };
-
 /**
  * Reflection analyzes and dynamically manipulates definitions 
  */
@@ -48,9 +46,9 @@ export default class Reflection {
    * also considering class instances
    */
   static assign(
-    destination: GenericObject, 
-    ...sources: GenericObject[]
-  ): GenericObject {
+    destination: Record<string, any>, 
+    ...sources: Record<string, any>[]
+  ): Record<string, any> {
     for (const source of sources) {
       const properties = this.getPrototypeOf(source);
       if (!properties.length) {
@@ -79,7 +77,7 @@ export default class Reflection {
   /**
    * Returns a shallow copy of an object
    */
-  static clone(object: GenericObject): GenericObject {
+  static clone(object: Record<string, any>): Record<string, any> {
     return this.assign({}, object);
   }
 
@@ -95,9 +93,9 @@ export default class Reflection {
    * Filters elements in objects
    */
   static filter(
-    destination: GenericObject, 
+    destination: Record<string, any>, 
     callback: Function
-  ): GenericObject {
+  ): Record<string, any> {
     Reflection.getPrototypeOf(destination).forEach(property => {
       if (!callback(destination[property], property)) {
         delete destination[property];
@@ -223,7 +221,7 @@ export default class Reflection {
    * Checks to see if child implements all the methods of a parent
    */
   static implements = function(
-    child: GenericObject, 
+    child: Record<string, any>, 
     ...parents: Definable[]
   ): boolean {
     //if class
@@ -293,10 +291,10 @@ export default class Reflection {
    * @returns {Object}
    */
   static map(
-    destination: GenericObject, 
-    source: GenericObject | Function, 
+    destination: Record<string, any>, 
+    source: Record<string, any> | Function, 
     callback?: Function
-  ): GenericObject {
+  ): Record<string, any> {
     if (typeof source === 'function') {
       callback = source;
       source = destination;
@@ -343,7 +341,7 @@ export default class Reflection {
    * Merges an object to another object, 
    * also considering class instances
    */
-  assign(...sources: GenericObject[]): Reflection {
+  assign(...sources: Record<string, any>[]): Reflection {
     Reflection.assign(this.definition, ...sources);
     return this;
   }
@@ -351,7 +349,7 @@ export default class Reflection {
   /**
    * Returns a shallow copy of an object
    */
-  clone(): GenericObject {
+  clone(): Record<string, any> {
     return Reflection.clone(this.definition);
   }
 
@@ -425,7 +423,10 @@ export default class Reflection {
   /**
    * Maps an object to itself or another
    */
-  map(source: GenericObject|Function, callback?: Function): Reflection {
+  map(
+    source: Record<string, any>|Function, 
+    callback?: Function
+  ): Reflection {
     Reflection.map(this.definition, source, callback);
     return this;
   }
@@ -439,4 +440,4 @@ export default class Reflection {
   }
 }
 
-export type Definable = Function | GenericObject;
+export type Definable = Function | Record<string, any>;

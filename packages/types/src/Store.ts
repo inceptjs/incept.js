@@ -1,5 +1,4 @@
 type Index = string|number;
-type GenericObject = { [key: string]: any };
 
 /**
  * Store are designed to easily manipulate data in
@@ -10,7 +9,7 @@ export default class Store {
   /**
    * The raw data
    */
-  public data: GenericObject;
+  public data: Record<string, any>;
 
   /**
    * Parser for terminal args
@@ -30,7 +29,7 @@ export default class Store {
   /**
    * Sets the initial data
    */
-  constructor(data: GenericObject = {}) {
+  constructor(data: Record<string, any> = {}) {
     this.data = data;
     this.withArgs = new Args(this);
     this.withPath = new Path(this);
@@ -487,7 +486,7 @@ class Query {
 /**
  * Transforms an object into an array
  */
-function makeArray(object: GenericObject): any[] {
+function makeArray(object: Record<string, any>): any[] {
   const array: any[] = [];
   const keys = Object.keys(object);
   
@@ -503,14 +502,14 @@ function makeArray(object: GenericObject): any[] {
 /**
  * Transforms an array into an object
  */
-function makeObject(array: any[]): GenericObject {
+function makeObject(array: any[]): Record<string, any> {
   return Object.assign({}, array);
 }
 
 /**
  * Returns true if object keys is all numbers
  */
-function shouldBeAnArray(object: GenericObject): boolean {
+function shouldBeAnArray(object: Record<string, any>): boolean {
   if (typeof object !== 'object') {
     return false;
   }

@@ -1,13 +1,11 @@
 import Router from '../Router';
 import Exception from '../Exception';
 
-type GenericObject = { [key: string]: any };
-
 export default class Pluggable extends Router {
   /**
    * Plugin registry
    */
-  protected plugins: GenericObject = {};
+  protected plugins: Record<string, any> = {};
 
   /**
    * Allows a plugin to bootstrap itself to the app.
@@ -31,7 +29,7 @@ export default class Pluggable extends Router {
    * pattern is used as a pollyfill for private 
    * properties (plugins)
    */
-  plugin(name: string, definition?: GenericObject): any {
+  plugin(name: string, definition?: Record<string, any>): any {
     //name should be a string
     Exception.require(
       typeof name === 'string', 

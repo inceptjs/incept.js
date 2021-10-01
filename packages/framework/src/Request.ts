@@ -1,8 +1,6 @@
 import Response from './Response';
 import Exception from './Exception';
 
-type GenericObject = { [key: string]: any };
-
 /**
  * Simple request object irrespective of where it came from. 
  * This is useful as an interface to extend for routing that 
@@ -27,7 +25,7 @@ export default class Request extends Response {
   /**
    * Returns custom parameters
    */
-  get params(): GenericObject {
+  get params(): Record<string, any> {
     //self starter
     if (!this.has('params')) {
       this.set('params', {});
@@ -66,7 +64,7 @@ export default class Request extends Response {
   /**
    * Sets parameters
    */
-  set params(data: GenericObject) {
+  set params(data: Record<string, any>) {
     Exception.require(
       data.constructor === Object, 
       'Value expected Object'
