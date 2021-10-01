@@ -6,6 +6,7 @@
 
  - [types](https://github.com/inceptjs/incept.js/tree/main/packages/types)
  - [framework](https://github.com/inceptjs/incept.js/tree/main/packages/framework)
+ - [virtualfs](https://github.com/inceptjs/incept.js/tree/main/packages/virtualfs)
  - [incept](https://github.com/inceptjs/incept.js/tree/main/packages/incept)
 
 ## Installing
