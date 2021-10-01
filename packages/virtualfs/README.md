@@ -2,6 +2,8 @@
 
 VirtualFS (VFS) lets you read and require files in a way that node 
 treats them as if they were physically presented in the file system.
+Designed to inherently work with Babel and Webpack with no extra 
+tooling.
 
 ## Install
 
