@@ -1,0 +1,67 @@
+.screen {
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 100%;
+  height: 100%;
+  position: relative;
+  transition: 1s;
+  width: 100%;
+}
+
+.screen-head {
+  align-items: center;
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.40);
+  display: flex;
+  left: 0;
+  overflow: hidden;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  white-space: nowrap;
+}
+.screen-head-back {
+  background-color: transparent;
+  border-width: 0;
+  color: var(--fg-secondary);
+  cursor: pointer;
+  display: inline-block;
+  padding: 0;
+}
+.screen-head-title {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 18px;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: -4;
+  overflow: hidden;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  vertical-align: text-top;
+  width: 95%;
+}
+.screen-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: absolute;
+  right: 0;
+  top: 56px;
+}
+.screen-foot {
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  padding: 5px;
+  position: absolute;
+  right: 0;
+  background-color: var(--bg-secondary);
+  border-top: 6px solid var(--bg-secondary);
+}

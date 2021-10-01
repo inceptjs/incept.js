@@ -1,0 +1,21 @@
+.table {
+  border-spacing: 0;
+  width: 100%;
+}
+.table-head {
+  background-color: var(--bg-secondary);
+  padding: 20px 10px;
+  position: relative;
+  text-align: left;
+}
+.table-row {
+  background-color: var(--bg-inset);
+}
+.table-row-stripe {
+  background-color: var(--bg-accent);
+}
+.table-col {
+  background-color: inherit;
+  border-top: 1px solid var(--bg-secondary);
+  padding: 20px 10px;
+}

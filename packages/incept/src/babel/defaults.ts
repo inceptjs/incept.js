@@ -15,7 +15,7 @@ export default {
     //import css server side
     [
       '@dr.pogodin/css-modules-transform', {
-        generateScopedName: '[path][name]-[local]-[md5:hash:base64:7]'
+        generateScopedName: '[name]-[local]'
       }
     ],
     //import images

@@ -7,7 +7,7 @@ export default function registerIconComponent(app) {
     return;
   }
 
-  const iconRoute = `${__dirname}/components/icon/:type/:name`
+  const iconRoute = `${__dirname}/components/Icon/:type/:name`
   vfs.route(iconRoute, (filename, res) => {   
     //wait for .js so babel can parse it
     if (!/\.js$/.test(filename)) {
@@ -32,9 +32,13 @@ export default function registerIconComponent(app) {
 
     svg = svg.replace(/width="[0-9]*"/, 'width={size}')
     svg = svg.replace(/height="[0-9]*"/, 'height={size}')
+    svg = svg.replace('<svg', '<svg className={className} style={style}')
   
     res.write(
-      `export default function ${name}Icon({ size = 16 }) { return ${svg} }`
+      `export default function BoxIcon(props) {
+        const { className, style, size } = props 
+        return ${svg} 
+      }`
     )
   })
 }

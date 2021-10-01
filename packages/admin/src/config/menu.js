@@ -1,12 +1,12 @@
-import IconCode from '@material-ui/icons/Code'
-import IconCamera from '@material-ui/icons/Camera'
-import IconStorage from '@material-ui/icons/Storage'
-import IconSettings from '@material-ui/icons/Settings'
-import IconLocalCafe from '@material-ui/icons/LocalCafe'
+import IconCog from '../components/Icon/regular/Cog'
+import IconData from '../components/Icon/regular/Data'
+import IconCode from '../components/Icon/regular/code-alt'
+import IconCamera from '../components/Icon/regular/Camera'
+import IconCoffee from '../components/Icon/regular/Coffee'
 
 export default [
   {
-    icon: IconLocalCafe,
+    icon: IconCoffee,
     title: 'Admin',
     children: [
       { title: 'Profile' },
@@ -26,7 +26,7 @@ export default [
     ]
   },
   {
-    icon: IconStorage,
+    icon: IconData,
     title: 'System',
     children: [
       { 
@@ -37,7 +37,7 @@ export default [
     ]
   },
   {
-    icon: IconSettings,
+    icon: IconCog,
     title: 'Configuration',
     children: [
       { title: 'Languages' },

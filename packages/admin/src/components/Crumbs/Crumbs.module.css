@@ -1,0 +1,25 @@
+.crumbs {
+  align-items: center;
+  background-color: var(--bg-secondary);
+  color: var(--fg-default);
+  display: flex;
+  padding: 10px;
+}
+.crumbs-link {
+  align-items: center;
+  color: var(--fg-secondary);
+  display: inline-flex;
+  text-decoration: none;
+}
+.crumbs-item {
+  align-items: center;
+  display: inline-flex;
+}
+.crumbs-icon {
+  height: 16px;
+  margin-right: 5px;
+  width: 16px;
+}
+.crumbs-separator {
+  color: var(--fg-inverse);
+}

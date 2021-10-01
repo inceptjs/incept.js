@@ -1,6 +1,6 @@
 {
   "name": "sandbox",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "scripts": {
     "dev": "incept dev"
   },
@@ -11,7 +11,7 @@
     "@inceptjs/admin"
   ],
   "dependencies": {
-    "inceptjs": "^0.0.15",
-    "@inceptjs/admin": "^0.0.15"
+    "inceptjs": "^0.0.16",
+    "@inceptjs/admin": "^0.0.16"
   }
 }

@@ -5,9 +5,6 @@ export default {
   resolve: {
     extensions: ['.js', '.json', '.css']
   },
-  stats: {
-    errorDetails: true,
-  },
   module: {
     rules: [
       {
@@ -47,7 +44,7 @@ export default {
             options: {
               esModule: true,
               modules: {
-                localIdentName: '[path][name]-[local]-[md5:hash:base64:7]',
+                localIdentName: '[name]-[local]',
               }
             }
           }
@@ -67,5 +64,7 @@ export default {
         ],
       }
     ]
-  }
+  },
+  //see: https://webpack.js.org/configuration/stats/
+  stats: 'errors-only'
 }

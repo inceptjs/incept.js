@@ -1,0 +1,33 @@
+# Backlog
+
+ - Develop `$ incept build` Script
+ - Develop `$ incept start` Script
+ - Develop `$ incept lint` Script
+ - Move scripts to a package called `devops`
+ - Move babel configuration into a package called `presets`
+ - Move webpack configuration into a package called `presets`
+ - Move admin/icons into a package called `icons`
+ - Build EventRPC
+ - Build Admin Builder *(in ts)*
+   - Dashboard
+   - Admin
+     - Profiles
+     - Auth
+     - Roles
+   - API
+     - Applications
+     - Sessions
+     - Scopes
+     - REST
+     - Webhooks
+   - System
+     - Schemas
+     - Fieldsets
+   - Configuration
+     - Settings
+     - Languages
+     - Packages 
+  - Build ORM package called `storm`
+    - Build drivers for SQL
+    - Build drivers for MongoDB
+  - Build serverless package called `serverless`
