@@ -69,6 +69,25 @@ export default class VirtualFS extends MemVolume {
   }
 
   /**
+   * A helper to find a node module
+   */
+  public lookupModule(name: string, parent: string): string|boolean {
+    const module = new Module(parent);
+    //@ts-ignore
+    module.paths = Module._nodeModulePaths(name, module);
+    //@ts-ignore
+    const paths = Module._resolveLookupPaths(name, module);
+    for (const pathname of paths) {
+      const folder = path.join(pathname, name);
+      if (fs.existsSync(folder)) {
+        return folder;
+      }
+    }
+
+    return false;
+  }
+
+  /**
    * Calls `route()` before `lstat()`
    */
   public lstat(path: PathLike, ...args: any) {

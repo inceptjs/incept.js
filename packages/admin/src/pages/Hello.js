@@ -1,9 +1,9 @@
-import Icon from '../components/Icon'
+import Alarm from '../components/icon/regular/Alarm'
 
 export default function Hello(props) {
   return (
     <div>
-      <Icon name="alarm" />
+      <Alarm />
     </div>
   )
 }

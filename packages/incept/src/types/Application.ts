@@ -1,5 +1,5 @@
 import { http } from '@inceptjs/framework';
-import { VirtualFS } from '@inceptjs/virtualfs';
+import vfs, { VirtualFS } from '@inceptjs/virtualfs';
 
 import PluginLoader from './PluginLoader';
 
@@ -55,7 +55,7 @@ export default class Application extends http.Router {
     
     this.withBabel = new WithBabel;
     this.withReact = new WithReact(cwd);
-    this.withVirtualFS = new VirtualFS;
+    this.withVirtualFS = vfs;
     this.withWebpack = new WithWebpack;
     this.withVirtualFS.patchFS();
   }
