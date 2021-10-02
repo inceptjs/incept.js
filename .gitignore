@@ -106,3 +106,4 @@ dist
 # Incept.js
 .build
 archives
+.DS_Store
