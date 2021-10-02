@@ -1,12 +1,13 @@
-import React from 'react'
-import { Switch, Route } from 'react-router-dom'
-import { ComponentRoute } from '..'
+import React, { Attributes } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import { ComponentRoute } from '..';
 
-type Props = { 
+type Props = Attributes & { 
   routes: ComponentRoute[]
-}
+};
 
-export default function App({ routes, ...other }: Props) {
+export default function App(props: Props) {
+  const routes = props.routes || [];
   //build the switch cases
   const cases = routes.map((route, key) => {
     return React.createElement(
@@ -14,10 +15,10 @@ export default function App({ routes, ...other }: Props) {
       { key, path: route.path, exact: true }, 
       React.createElement(
         route.layout, 
-        other, 
-        React.createElement(route.view, other)
+        props, 
+        React.createElement(route.view, props)
       )
-    )
-  })
-  return React.createElement(Switch, {}, cases)
+    );
+  });
+  return React.createElement(Switch, {}, cases);
 }

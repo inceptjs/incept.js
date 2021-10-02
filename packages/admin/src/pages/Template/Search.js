@@ -11,7 +11,7 @@ import SearchRows from './Search/Rows'
 import Form from './Form'
 import Detail from './Detail'
 import store from './store'
-import classes from '../Template.module.css'
+import classes from './Template.module.css'
 
 //main component
 export default function TemplateSearch(props) {

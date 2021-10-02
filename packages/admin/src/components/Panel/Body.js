@@ -24,7 +24,7 @@ export default function PanelBody(props) {
   } = props
   //build the switch cases
   const cases = routes.filter(route => !!route.view).map((route, key) => (
-    <Route key={key} path={route.href} exact>
+    <Route key={key} path={route.path} exact>
       <route.view
         open={open} 
         close={close} 

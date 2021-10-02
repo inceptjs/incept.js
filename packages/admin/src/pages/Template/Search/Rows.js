@@ -1,8 +1,8 @@
 //vendor imports
 import React from 'react'
 //local imports
-import IconChevronRight from '../components/Icon/regular/chevron-right'
-import Button from '../components/Button'
+import IconChevronRight from '../../../components/Icon/regular/chevron-right'
+import Button from '../../../components/Button'
 import { Trow,  Tcol } from '../../../components/Table'
 
 //main component

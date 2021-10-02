@@ -12,7 +12,7 @@ import Form from './Form'
 import SearchRows from './Search/Rows'
 import Metadata from './Detail/Metadata'
 import store from './store'
-import classes from '../Template.module.css'
+import classes from './Template.module.css'
 
 //main components
 export default function TemplateDetail(props) {
