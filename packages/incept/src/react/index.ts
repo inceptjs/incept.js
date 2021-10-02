@@ -203,8 +203,25 @@ export default class WithReact {
   render(pathname: string): string {
     // Must create a mock window object for components that might need it
     if (global && typeof global.window === 'undefined') {
+      //@ts-ignore
+      global.cancelAnimationFrame = () => {};
+      //@ts-ignore
+      global.requestAnimationFrame = () => {};
       //@ts-ignore im not sure how to do this in ts... my bad.
-      global.window = {};
+      global.window = { 
+        // Quick pollyfill for: This browser doesn't support 
+        // cancelAnimationFrame. Make sure that you load a polyfill 
+        // in older browsers. https://reactjs.org/link/react-polyfills
+        // this happens because of `react-redux` but apparently im the
+        // only one experience this...
+        cancelAnimationFrame: () => {},
+        // Quick pollyfill for: This browser doesn't support 
+        // requestAnimationFrame. Make sure that you load a polyfill 
+        // in older browsers. https://reactjs.org/link/react-polyfills
+        // this happens because of `react-redux` but apparently im the
+        // only one experience this...
+        requestAnimationFrame: () => {},
+      } as Record<string, Function>;
     }
 
     //get router props
@@ -272,7 +289,7 @@ export default class WithReact {
     if (typeof match === 'string') {
       //determine the name (same as develop/webpack entry)
       let name = this.entryFileName(match);
-      chunkConfig.entrypoints = [ path.join('scripts', name) ];
+      chunkConfig.entrypoints = [ path.join('entries', name) ];
     }
 
     //now do the loadable chunking thing..

@@ -69,7 +69,7 @@ export default function webpackPlugin(app: Application) {
   //add routes as bundler entries
   for(const route of react.routes) {
     //determine the name (same as ReactPlugin.render)
-    const name = path.join('scripts', react.entryFileName(route.path));
+    const name = path.join('entries', react.entryFileName(route.path));
     //determine the virtual entry
     const entry = path.join(cwd, `${name}.js`);
     bundler.addEntry(name, [ 

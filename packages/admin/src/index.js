@@ -7,11 +7,11 @@ export default function(app) {
     `${__dirname}/pages/Hello`,
     'admin'
   )
-  app.withReact.route(
+  /*app.withReact.route(
     '/admin/template', 
     `${__dirname}/pages/Template/Search`,
     'admin'
-  )
+  )*/
   
   registerIconComponent(app)
 }
