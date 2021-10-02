@@ -1,8 +1,9 @@
 import http from 'http';
 import { Request, Response } from '@inceptjs/framework';
 
+import '../develop/polyfill';
 import webpack from '../develop/webpack';
-import { logError, logRequest, logResponse } from '../develop/logs'
+import { logError, logRequest, logResponse } from '../develop/logs';
 import Application from '../types/Application';
 
 import dispatch from './dispatch';
