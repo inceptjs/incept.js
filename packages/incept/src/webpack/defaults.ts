@@ -66,5 +66,13 @@ export default {
     ]
   },
   //see: https://webpack.js.org/configuration/stats/
-  stats: 'errors-only'
+  stats: {
+    preset: 'none',
+    colors: false,
+    errors: true,
+    errorDetails: false,
+    errorStack: false,
+    logging: 'warn',
+    warnings: true
+  }
 }

@@ -50,8 +50,6 @@ export default function Panel(props) {
     return () => window.removeEventListener('resize', handleResize, true)
   })
 
-  console.log(menuShown)
-
   const classStates = [ classes['panel'] ];
   if (menuShown) {
     classStates.push(classes['panel-left-open'])

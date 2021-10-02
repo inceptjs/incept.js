@@ -16,6 +16,8 @@ function startDevServer(
   const host = request.params.h || request.params.host || 'localhost';
   //get the app
   const app = request.ctx as Application;
+  //log all errors
+  app.on('error', logError.bind(app));
   //allow public access to the build folder 
   //TODO: should be a custom setting
   app.public(`${app.cwd}/build`, '/build')
@@ -33,8 +35,6 @@ function startDevServer(
   const server = http.createServer(app.handle.bind(app));
   //let others get the http server (like if they want to close it)
   app.plugin('http', server);
-  //log all errors
-  app.on('error', logError.bind(app));
   //log all requests
   app.on('request', logRequest.bind(app));
   //log all responses
