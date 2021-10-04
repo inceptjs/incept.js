@@ -24,21 +24,21 @@ export default function PanelHead({ toggle, crumbs, ambiance }) {
         <IconBell 
           className={classes['panel-head-icon']} 
         />
-        {ambiance && ambiance.ambiance
-          ? (
-            <IconMoon 
-              className={classes['panel-head-icon']} 
-              onClick={ambiance.changeAmbiance} 
-              style={{ marginLeft: 10 }}
-            /> 
-          ) : (
-            <IconSun 
-              className={classes['panel-head-icon']} 
-              onClick={ambiance.changeAmbiance} 
-              style={{ marginLeft: 10 }}
-            />
-          )
-        }
+        <Button transparent onClick={ambiance.changeAmbiance} >
+          {ambiance && ambiance.ambiance
+            ? (
+              <IconMoon 
+                className={classes['panel-head-icon']} 
+                style={{ marginLeft: 10 }}
+              /> 
+            ) : (
+              <IconSun 
+                className={classes['panel-head-icon']} 
+                style={{ marginLeft: 10 }}
+              />
+            )
+          }
+        </Button>
         <IconUser 
           className={classes['panel-head-icon']} 
           style={{ marginLeft: 10 }}

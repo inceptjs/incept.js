@@ -16,7 +16,7 @@ function Item({ href, title, Icon, last }) {
     <>
       {Icon && <Icon className={classes['crumbs-icon']} />}
       {item}
-      {!last && <IconChevronRight className={classes['crumbs-separator']} />}
+      {!last && <IconChevronRight size={16} className={classes['crumbs-separator']} />}
     </>
   )
 }

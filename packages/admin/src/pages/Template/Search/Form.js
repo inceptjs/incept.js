@@ -4,6 +4,7 @@ import React from 'react'
 import IconSearch from '../../../components/Icon/regular/Search'
 import IconFilter from '../../../components/Icon/regular/Filter'
 import Button from '../../../components/Button'
+import Input from '../../../components/Form/Input'
 import classes from '../Template.module.css'
 
 //main component
@@ -19,7 +20,10 @@ export default function SearchForm() {
       >
         <IconFilter size={16} />
       </Button>
-      <input placeholder="Enter Keyword" />
+      <Input 
+        className={classes['search-form-control']} 
+        placeholder="Enter Keyword" 
+      />
       <Button 
         outline 
         secondary 

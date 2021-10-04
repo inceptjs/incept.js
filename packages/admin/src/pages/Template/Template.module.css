@@ -14,8 +14,11 @@
   padding: 2px 4px;
   width: 100%;
 }
-.search-form-input {
-  margin-left: 10px;
+.search-form-control {
+  border-bottom-width: 1px;
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 1px;
   flex: 1;
 }
 .search-form-button {
@@ -41,6 +44,7 @@
 
 @media (min-width: 769px) {
   .search-header {
+    align-items: center;
     display: flex;
     flex-wrap: wrap;
   }

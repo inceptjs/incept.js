@@ -55,6 +55,10 @@ export default function Panel(props) {
     classStates.push(classes['panel-left-open'])
   }
 
+  if (history.length) {
+    classStates.push(classes['panel-righht-open'])
+  }
+
   //render
   return (
     <section className={classStates.join(' ')}>
