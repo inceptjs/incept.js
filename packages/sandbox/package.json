@@ -2,7 +2,7 @@
   "name": "sandbox",
   "version": "0.0.16",
   "scripts": {
-    "dev": "incept dev"
+    "dev": "incept dev -w"
   },
   "incept": [
     "./plugin/api",

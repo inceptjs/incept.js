@@ -14,6 +14,7 @@ function startDevServer(
   //user input
   const port = request.params.p || request.params.port || 3000;
   const host = request.params.h || request.params.host || 'localhost';
+  const write = request.params.w || request.params.write || false;
   //get the app
   const app = request.ctx as Application;
   //log all errors
@@ -22,7 +23,7 @@ function startDevServer(
   //TODO: should be a custom setting
   app.public(`${app.cwd}/build`, '/build')
   //load webpack
-  const {dev, hot} = app.withWebpack.develop();
+  const {dev, hot} = app.withWebpack.develop(!!write);
   app.use(dev);
   app.use(hot);
   //this will transfer data from the response 

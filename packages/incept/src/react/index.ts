@@ -280,14 +280,8 @@ export default class WithReact {
 
     const page = this._page.clone;
 
-    const stats = JSON.parse(
-      this._application.withVirtualFS.readFileSync(
-        path.join(this._application.buildPath, 'stats.json'),
-      ).toString('utf8')
-    );
-
     const chunkConfig = { 
-      stats: stats,
+      statsFile: path.join(this._application.buildPath, 'stats.json'),
       publicPath: this._application.buildURL
     } as ChunkExtractorOptions;
 

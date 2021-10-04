@@ -29,7 +29,7 @@ export default class WithWebpack {
     this.withCompiler = new WebpackCompiler(app.config.webpack);
   }
 
-  develop() {
+  develop(write: boolean = false) {
     const { 
       cwd, 
       withReact: react, 
@@ -42,6 +42,15 @@ export default class WithWebpack {
       const hash = fileinfo.chunk.hash;
       const [ name, extension ] = fileinfo.chunk.id.split('_').slice(-2);
       return `chunks/${name}.${hash}.${extension}`;
+    };
+
+    const loadableConfig = { 
+      filename: 'stats.json'
+    };
+
+    if (write) {
+      //@ts-ignore
+      loadableConfig.writeToDisk = { filename: buildPath }
     }
     
     //withh webpack bundler
@@ -49,10 +58,7 @@ export default class WithWebpack {
       // set the output location
       .setOutput(buildPath, '[name].js', chunkNamer)
       //add loadable (for file chunking)
-      .addPlugin(new LoadablePlugin({ 
-        filename: 'stats.json',
-        //writeToDisk: { filename: buildFolder }
-      }))
+      .addPlugin(new LoadablePlugin(loadableConfig))
       //add css module
       .addPlugin(new MiniCssExtractPlugin)
       //add HOT module (for dev server)
@@ -74,17 +80,23 @@ export default class WithWebpack {
       )).forEach(key => delete require.cache[key])
     });
   
-    bundler.on('loadable-in-memory', 'afterCompile', (compilation: Compilation) => {
-      const loadable = new LoadablePlugin
-      if (!vfs.existsSync(buildPath)) {
-        vfs.mkdirSync(buildPath, { recursive: true });
-      }
-      vfs.writeFileSync(
-        `${buildPath}/stats.json`, 
-        //@ts-ignore `handleEmit()` already stringifies the object
-        loadable.handleEmit(compilation).source()
-      );
-    })
+    if (!write) {
+      bundler.on(
+        'loadable-in-memory', 
+        'afterCompile', 
+        (compilation: Compilation) => {
+          const loadable = new LoadablePlugin
+          if (!vfs.existsSync(buildPath)) {
+            vfs.mkdirSync(buildPath, { recursive: true });
+          }
+          vfs.writeFileSync(
+            `${buildPath}/stats.json`, 
+            //@ts-ignore `handleEmit()` already stringifies the object
+            loadable.handleEmit(compilation).source()
+          );
+        }
+      )
+    }
   
     //For some reason `webpack-dev-middleware` is compiling for the 
     //regular build and another for cache. It makes it look like it's 
@@ -119,7 +131,7 @@ export default class WithWebpack {
     const dev = webpackDevMiddleware(compiler, {
       serverSideRender: true,
       publicPath: this._application.buildURL,
-      writeToDisk: false //true
+      writeToDisk: write
     })
     
     const hot = webpackHotMiddleware(compiler, {
