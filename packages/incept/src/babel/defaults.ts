@@ -18,15 +18,6 @@ export default {
         generateScopedName: '[name]-[local]'
       }
     ],
-    //import images
-    [
-      '@openovate/babel-plugin-file-loader',
-      {
-        extensions: ['png', 'jpg', 'jpeg', 'gif', 'svg'],
-        name: '[md5:hash:base64:7].[ext]',
-        publicPath: '/.build/images'
-      }
-    ],
     //adds react import where jsx is found
     'react-require', 
     //allows to use import as a function

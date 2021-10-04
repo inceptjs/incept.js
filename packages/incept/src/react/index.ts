@@ -5,14 +5,38 @@ import { ChunkExtractor, ChunkExtractorOptions } from '@loadable/server'
 import { StaticRouter, matchPath } from 'react-router';
 import { Request, Response } from '@inceptjs/framework';
 
+import { Application } from '../types/Application';
 import Page from './Page';
 
 export default class WithReact {
-  protected _cwd: string;
+  /**
+   * The app instance
+   */
+  public _application: Application;
+
+  /**
+   * The file path to the App component
+   */
   protected _app: string;
+
+  /**
+   * The page component
+   */
   protected _page: Page;
+
+  /**
+   * The props for the App componennt
+   */
   protected _appProps: Record<string, any> = {};
+
+  /**
+   * Mapping of name to layouts
+   */
   protected _layouts: { [key: string]: string } = {};
+
+  /**
+   * Mapping of path to route file path
+   */
   protected _routes: { [key: string]: StringRoute } = {};
 
   /**
@@ -43,8 +67,8 @@ export default class WithReact {
   /**
    * Sets up the default page and app
    */
-  constructor(cwd: string) {
-    this._cwd = cwd;
+  constructor(app: Application) {
+    this._application = app;
     this._app = `${__dirname}/Page/App`
     this._page = this.makePage()
     this._layouts.default = `${__dirname}/Page/Layout`
@@ -218,7 +242,7 @@ export default class WithReact {
     if (typeof match === 'string') {
       //determine the name (same as develop/webpack entry)
       let name = this.entryFileName(match);
-      page.build = `/.build/scripts/${name}.js`;
+      page.build = path.join(this._application.buildPath, `/scripts/${name}.js`);
     }
 
     //wrap the app
@@ -256,10 +280,16 @@ export default class WithReact {
 
     const page = this._page.clone;
 
-    const chunkConfig: ChunkExtractorOptions = { 
-      statsFile: path.join(this._cwd, '/.build/stats.json'),
-      publicPath: '/.build'
-    }
+    const stats = JSON.parse(
+      this._application.withVirtualFS.readFileSync(
+        path.join(this._application.buildPath, 'stats.json'),
+      ).toString('utf8')
+    );
+
+    const chunkConfig = { 
+      stats: stats,
+      publicPath: this._application.buildURL
+    } as ChunkExtractorOptions;
 
     //get the path match
     const match = this.match(pathname);

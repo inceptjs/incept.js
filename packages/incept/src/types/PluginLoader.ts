@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { EventEmitter, Router, Pluggable, http } from '@inceptjs/framework';
+import { EventEmitter, Router, Pluggable } from '@inceptjs/framework';
 import Exception from './Exception';
 
 export default class PluginLoader {
@@ -73,9 +73,7 @@ export default class PluginLoader {
    * Requires all the files and registers it to the context.
    * You can only bootstrap server files.
    */
-  bootstrap(context?: Pluggable): Pluggable {
-    //if no context
-    context = context || new http.Router;
+  bootstrap(context: Pluggable): Pluggable {
     //config should be a list of files
     for (let pathname of this.config) {
       pathname = this.resolve(pathname);

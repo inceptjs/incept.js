@@ -2,7 +2,6 @@ import http from 'http';
 import { Request, Response } from '@inceptjs/framework';
 
 import '../develop/polyfill';
-import webpack from '../develop/webpack';
 import { logError, logRequest, logResponse } from '../develop/logs';
 import Application from '../types/Application';
 
@@ -23,7 +22,7 @@ function startDevServer(
   //TODO: should be a custom setting
   app.public(`${app.cwd}/build`, '/build')
   //load webpack
-  const {dev, hot} = webpack(app);
+  const {dev, hot} = app.withWebpack.develop();
   app.use(dev);
   app.use(hot);
   //this will transfer data from the response 

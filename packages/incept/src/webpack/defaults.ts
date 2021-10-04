@@ -8,7 +8,7 @@ export default {
   module: {
     rules: [
       {
-        test: /\.(js)$/,
+        test: /\.(jsx?)$/,
         exclude: /node_modules/,
         use: [
           {
@@ -28,9 +28,14 @@ export default {
                 'react-refresh/babel'
               ]
             }
-          },
-          'source-map-loader'
+          }
         ]
+      },
+      {
+        test: /\.jsx?$/,
+        include: /node_modules/,
+        enforce: 'pre',
+        use: ['source-map-loader']
       },
       {
         test: /\.css$/i,
@@ -49,19 +54,6 @@ export default {
             }
           }
         ]
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[md5:hash:base64:7].[ext]',
-              publicPath: '/.build/images',
-              outputPath: 'images'
-            },
-          },
-        ],
       }
     ]
   },

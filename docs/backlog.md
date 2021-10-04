@@ -79,7 +79,7 @@ triggers when loading a SSR entry inherently using `react-redux`.
 
 **@loadable/server**
 
-This is the only reason why I'm building files in dev mode instead of 
+This is the only reason why I would build files in dev mode instead of 
 loading it in memory. see the 
 [loadable docs](https://loadable-components.com/docs/api-loadable-server/) 
 on this.
@@ -90,9 +90,14 @@ const statsFile = path.resolve('../dist/loadable-stats.json')
 const chunkExtractor = new ChunkExtractor({ statsFile })
 ```
 
+What I did was add a webpack hook to compile the stats again and
+save it in VirtualFS then retrieved those contents when rendering.
+
 Implementing loadable in general with chunking based on their docs, 
 though works, is quite clunky and loadable puts some branding in the 
 HTML.
+
+
 
 **Material UI**
 

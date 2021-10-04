@@ -8,7 +8,7 @@ const cwd = process.cwd();
 //this is the arguments
 const argv = process.argv;
 //make an application
-const app = new Application(cwd);
+const app = new Application({ cwd });
 //bootstrap the terminal
 app.bootstrap(terminal);
 //bootstrap development tools
