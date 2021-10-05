@@ -137,6 +137,30 @@ export default class VirtualFS extends MemVolume {
   }
 
   /**
+   * Helper to resolve a path. Checks .js, .jsx, .json, ./index.js, etc.
+   */
+  public resolvePath(
+    request: string, 
+    paths: string[] = [],
+    context: any = fs
+  ): string|boolean {
+    let filename;
+    //1. try absolute pathing
+    if (
+      //1. try absolute pathing
+      !(filename = tryAbsolute(request, context))
+      //2. try relative pathing
+      && !(filename = tryRelative(request, paths, context))
+      //3. try module pathing
+      && !(filename = tryModule(request, paths, context))
+    ) {
+      return false;
+    }
+
+    return filename;
+  }
+
+  /**
    * Reverts the FS patch
    */
   public revertPatch(): Volume {
@@ -272,7 +296,6 @@ export default class VirtualFS extends MemVolume {
    * Calls `route()` before `stat()`
    */
   public stat(path: PathLike, ...args: any) {
-    console.log('stat', path)
     this._resolveFile(path as string);
     //@ts-ignore
     return super.stat(path, ...args);
@@ -309,15 +332,7 @@ export default class VirtualFS extends MemVolume {
       return filename;
     }
 
-    //1. try absolute pathing
-    if (
-      //1. try absolute pathing
-      !(filename = tryAbsolute(request, this))
-      //2. try relative pathing
-      && !(filename = tryRelative(request, paths, this))
-      //3. try module pathing
-      && !(filename = tryModule(request, paths, this))
-    ) {
+    if (!(filename = this.resolvePath(request, paths, this))) {
       return false;
     }
 
@@ -448,6 +463,11 @@ function tryIndex(request: string, fs: any): string|boolean {
 
 function tryExtensions(request: string, fs: any): string|boolean {
   let file = `${request}.js`;
+  if (fs.existsSync(file) && fs.lstatSync(file).isFile()) {
+    return file;
+  }
+
+  file = `${request}.jsx`;
   if (fs.existsSync(file) && fs.lstatSync(file).isFile()) {
     return file;
   }

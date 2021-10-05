@@ -40,20 +40,7 @@ export default {
       {
         test: /\.css$/i,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          }, 
-          {
-            loader: 'css-loader',
-            options: {
-              esModule: true,
-              modules: {
-                localIdentName: '[name]-[local]',
-              }
-            }
-          }
-        ]
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
       }
     ]
   },

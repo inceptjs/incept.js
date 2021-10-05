@@ -178,6 +178,7 @@ export default class WebpackCompiler {
   setOutput(
     path: string, 
     filename: string|Function, 
+    publicPath: string,
     chunkname?: string|Function
   ): WebpackCompiler {
     Exception.require(
@@ -188,8 +189,21 @@ export default class WebpackCompiler {
       typeof filename === 'string',
       'Argument 2 expected string'
     );
+    Exception.require(
+      typeof publicPath === 'string',
+      'Argument 2 expected string'
+    );
+
+    const hotUpdateChunkFilename = 'develop/[id].[fullhash].hot-update.js';
+    const hotUpdateMainFilename = 'develop/[runtime].[fullhash].hot-update.json';
   
-    this._config.output = { path, filename };
+    this._config.output = { 
+      path, 
+      filename, 
+      publicPath,
+      hotUpdateMainFilename,
+      hotUpdateChunkFilename
+    };
 
     if (chunkname) {
       this._config.output.chunkFilename = chunkname;

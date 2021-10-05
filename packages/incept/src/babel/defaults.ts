@@ -4,20 +4,13 @@ export default {
   ],
   extensions: ['.js', '.jsx', '.svg', '.jpg', '.gif', '.png', '.jpeg'],
   presets: [
-    [
-      '@babel/preset-env',
-      { 'exclude': ['transform-regenerator'] }
-    ], 
+    //transforms es6/7 to cjs
+    '@babel/preset-env', 
     //transforms jsx
     '@babel/preset-react'
   ],
   plugins: [
-    //import css server side
-    [
-      '@dr.pogodin/css-modules-transform', {
-        generateScopedName: '[name]-[local]'
-      }
-    ],
+    '@babel/plugin-transform-runtime',
     //adds react import where jsx is found
     'react-require', 
     //allows to use import as a function

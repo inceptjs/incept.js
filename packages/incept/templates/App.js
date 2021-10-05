@@ -1,5 +1,5 @@
 import loadable from '@loadable/component'
-import { Switch, Route } from 'inceptjs/components'
+import { Switch, Route } from 'react-router-dom'
 
 const props = { routes: [] }
 

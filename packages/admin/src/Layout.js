@@ -6,7 +6,7 @@ import Panel from './components/Panel'
 //config imports
 import menu from './config/menu'
 import screens from './config/screens'
-import theme from './config/theme.css'
+import theme from './config/theme.module.css'
 
 export default function AdminLayout({ routes = [], settings = {} }) {
   const [ambiance, setAmbiance] = useState(false)

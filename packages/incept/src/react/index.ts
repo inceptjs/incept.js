@@ -1,7 +1,8 @@
+import fs from 'fs';
 import path from 'path';
 import React, { ComponentType } from 'react'
 import ReactDOMServer from 'react-dom/server'
-import { ChunkExtractor, ChunkExtractorOptions } from '@loadable/server'
+import { ChunkExtractor } from '@loadable/server'
 import { StaticRouter, matchPath } from 'react-router';
 import { Request, Response } from '@inceptjs/framework';
 
@@ -20,6 +21,11 @@ export default class WithReact {
   protected _app: string;
 
   /**
+   * The file path to the client entry
+   */
+  protected _entry: string;
+
+  /**
    * The page component
    */
   protected _page: Page;
@@ -27,17 +33,17 @@ export default class WithReact {
   /**
    * The props for the App componennt
    */
-  protected _appProps: Record<string, any> = {};
+  protected _props: Record<string, string> = {};
 
   /**
    * Mapping of name to layouts
    */
-  protected _layouts: { [key: string]: string } = {};
+  protected _layouts: Record<string, string> = {};
 
   /**
    * Mapping of path to route file path
    */
-  protected _routes: { [key: string]: StringRoute } = {};
+  protected _routes: Record<string, StringRoute> = {};
 
   /**
    * Returns the routes as is path -> file
@@ -58,6 +64,13 @@ export default class WithReact {
   }
 
   /**
+   * Developers can set a custom entry file
+   */
+  set entry(entry: string) {
+    this._entry = entry;
+  }
+
+  /**
    * Developers can set a custom page
    */
   set page(page: Page) {
@@ -69,93 +82,37 @@ export default class WithReact {
    */
   constructor(app: Application) {
     this._application = app;
-    this._app = `${__dirname}/Page/App`
-    this._page = this.makePage()
-    this._layouts.default = `${__dirname}/Page/Layout`
+    this._entry = path.normalize(
+      path.join(__dirname, '../../templates/entry')
+    );
+    this._app = path.normalize(
+      path.join(__dirname, '../../templates/App')
+    );
+    this._layouts.default = path.normalize(
+      path.join(__dirname, '../../templates/Layout')
+    );
+    this._page = this.makePage();
   }
 
   /**
    * sets a config file
    */
   config(name: string, file: string): WithReact {
-    this._appProps[name] = file
+    this._props[name] = file
     return this
   }
 
   /**
-   * Generates the client entry file
+   * Route handler
    */
-  entry(pathname: string): string {
-    const lazy = []
-    const exports = Object.keys(this._appProps)
-    const imports = exports.map(
-      name => `import ${name} from '${this._appProps[name]}'`
-    )
-    //generate routes
-    const routes = this.routes
-    let routesJson = JSON.stringify(routes)
-    for (let i = 0; i < routes.length; i++) {
-      const { path, view } = routes[i]
-      //NOTE: routes should point a full path or node module
-      //change from path to actual object reference
-      routesJson = routesJson.replaceAll(`"${view}"`, `Route_${i + 1}`)
-      
-      //if active href
-      if (path === pathname) {
-        //active import
-        imports.push(`import Route_${i + 1} from '${view}'`)
-      } else {
-        //lazy load
-        lazy.push(
-          `const Route_${i + 1} = loadable(_ => import('${view}'))`
-        )
-      }
-    }
-    exports.push('routes')
-    //import layouts
-    for (const name in this._layouts) {
-      imports.push(
-        `import Layout_${name} from '${this._layouts[name]}'`
-      )
-      //change from name to actual object reference
-      routesJson = routesJson.replaceAll(
-        `"layout":"${name}"`, 
-        `"layout":Layout_${name}`
-      )
+  handle = (request: Request, response: Response): void => {
+    const path = this.match(request.pathname)
+    if (!path) {
+      return
     }
 
-    return [
-      `import React from 'react'`,
-      `import { hydrate } from 'react-dom'`,
-      `import { BrowserRouter } from 'react-router-dom'`,
-      `import loadable from '@loadable/component'`,
-      `import { loadableReady } from '@loadable/component'`,
-      `import App from '${this._app}'`,
-      ...imports,
-      ...lazy,
-      `const routes = ${routesJson}`,
-      `const props = { ${exports.join(', ')} }`,
-      'loadableReady(() => {',
-      '  hydrate(',
-      '    <BrowserRouter><App {...props} /></BrowserRouter>,',
-      `    document.getElementById('__incept_root')`,
-      '  )',
-      '})'
-    ].join("\n")
-  }
-
-  /**
-   * generates a file name based on the router path
-   */
-  entryFileName(path: string): string {
-    path = path.replaceAll(':', '')
-    if (path.indexOf('/') === 0) {
-      path = path.substr(1)
-    }
-    if (!path.length) {
-      path = 'index'
-    }
-    return path
+    response.headers('Content-Type', 'text/html')
+    response.body = this.render(request.pathname)
   }
 
   /**
@@ -164,35 +121,6 @@ export default class WithReact {
   layout(name: string, file: string): WithReact {
     this._layouts[name] = file
     return this
-  }
-
-  /**
-   * Returns the route mapping to loaded component (for server)
-   */
-  load(): ComponentRoute[] {
-    const stringRoutes = this.routes
-    const componentRoutes = []
-    for (const route of stringRoutes) {
-      //routes should point a full path or node module
-      //so we should just require it as is
-      const componentRoute = {
-        path: route.path,
-        view: require(route.view),
-        layout: require(this._layouts[route.layout])
-      }
-
-      //check for imports
-      if (componentRoute.view.default) {
-        componentRoute.view = componentRoute.view.default
-      }
-      if (componentRoute.layout.default) {
-        componentRoute.layout = componentRoute.layout.default
-      }
-
-      componentRoutes.push(componentRoute)
-    }
-  
-    return componentRoutes
   }
 
   /**
@@ -207,6 +135,19 @@ export default class WithReact {
     }
   
     return page
+  }
+
+  /**
+   * Returns the matching route. Logic from `react-router`
+   */
+  match(pathname: string): string|null {
+    for (const path in this._routes) {
+      if (matchPath(pathname, { path, exact: true })) {
+        return path
+      }
+    }
+
+    return null
   }
 
   /**
@@ -225,43 +166,6 @@ export default class WithReact {
    * Renders the page (for server)
    */
   render(pathname: string): string {
-    //get router props
-    const routerProps = { location: pathname, context: {} }
-    //get the app props (like routes)
-    const appProps = Object.assign({}, this._appProps);
-    for (const name in appProps) {
-      appProps[name] = require(appProps[name]);
-    }
-    //add routes to app props
-    appProps.routes = this.load();
-
-    const page = this._page.clone;
-
-    //get the path match
-    const match = this.match(pathname);
-    if (typeof match === 'string') {
-      //determine the name (same as develop/webpack entry)
-      let name = this.entryFileName(match);
-      page.build = path.join(this._application.buildPath, `/scripts/${name}.js`);
-    }
-
-    //wrap the app
-    const App = require(this._app);
-    const Router = React.createElement(
-      StaticRouter,
-      routerProps,
-      React.createElement(App.default || App, appProps)
-    );
-    //render the app now
-    const app = ReactDOMServer.renderToString(Router);
-    
-    return page.render(app);
-  }
-
-  /**
-   * Renders the page (for server)
-   */
-  renderWithChunks(pathname: string): string {
     // Must create a mock window object for components that might need it
     if (global && typeof global.window === 'undefined') {
       //@ts-ignore im not sure how to do this in ts... my bad.
@@ -269,40 +173,23 @@ export default class WithReact {
     }
 
     //get router props
-    const routerProps = { location: pathname, context: {} }
-    //get the app props (like routes)
-    const appProps = Object.assign({}, this._appProps);
-    for (const name in appProps) {
-      appProps[name] = require(appProps[name]);
-    }
-    //add routes to app props
-    appProps.routes = this.load();
+    const routerProps = { location: pathname, context: {} };
 
     const page = this._page.clone;
 
-    const chunkConfig = { 
-      statsFile: path.join(this._application.buildPath, 'stats.json'),
-      publicPath: this._application.buildURL
-    } as ChunkExtractorOptions;
-
-    //get the path match
-    const match = this.match(pathname);
-    if (typeof match === 'string') {
-      //determine the name (same as develop/webpack entry)
-      let name = this.entryFileName(match);
-      chunkConfig.entrypoints = [ path.join('entries', name) ];
-    }
-
     //now do the loadable chunking thing..
     //see: https://loadable-components.com/docs/server-side-rendering/
-    const extractor = new ChunkExtractor(chunkConfig);
+    const extractor = new ChunkExtractor({ 
+      statsFile: path.join(this._application.buildPath, 'stats.json'),
+      publicPath: this._application.buildURL
+    });
 
     //wrap the app
     const App = require(this._app);
     const Router = React.createElement(
       StaticRouter,
       routerProps,
-      React.createElement(App.default || App, appProps)
+      React.createElement(App.default || App)
     );
     //render the app now
     const app = ReactDOMServer.renderToString(
@@ -328,26 +215,75 @@ export default class WithReact {
   }
 
   /**
-   * Route handler
+   * Adds dynamically rendered files to node's FS
    */
-  handle = (request: Request, response: Response): void => {
-    const path = this.match(request.pathname)
-    if (!path) {
-      return
+  virtualize() {
+    const cwd = this._application.cwd;
+    const vfs = this._application.withVirtualFS;
+    const app = vfs.resolvePath(this._app);
+    const entry = vfs.resolvePath(this._entry);
+    //make a virtual cwd
+    vfs.mkdirSync(cwd, { recursive: true });
+    //copy entry to cwd/entry.js
+    if (entry) {
+      vfs.writeFileSync(
+        path.join(cwd, 'entry.js'),
+        fs.readFileSync(entry as string, 'utf8')
+      );
     }
-
-    response.headers('Content-Type', 'text/html')
-    response.body = this.renderWithChunks(request.pathname)
+    //copy App to cwd/App.js
+    if (app) {
+      const App = fs.readFileSync(app as string, 'utf8');
+      const props = this._generateProps();
+      vfs.writeFileSync(
+        path.join(cwd, 'App.js'),
+        App.replace(/\nconst props[^\n]+/g, `\n${props}\n`)
+      );
+    }
   }
 
-  match(pathname: string): string|null {
-    for (const path in this._routes) {
-      if (matchPath(pathname, { path, exact: true })) {
-        return path
-      }
+  private _generateProps(): string {
+    const importClause = `const %s = loadable(_ => import('%s'))`;
+    const routes = this.routes;
+    const exports = Object.keys(this._props);
+    const imports = exports.map(
+      name => importClause
+        .replace('%s', name)
+        .replace('%s', this._props[name])
+    );
+    //generate routes
+    let routesJson = JSON.stringify(this.routes);
+    for (let i = 0; i < routes.length; i++) {
+      const { view } = routes[i];
+      //NOTE: routes should point a full path or node module
+      //change from path to actual object reference
+      routesJson = routesJson.replaceAll(`"${view}"`, `Route_${i + 1}`);
+      imports.push(
+        importClause
+          .replace('%s', `Route_${i + 1}`)
+          .replace('%s', view)
+      );
     }
-
-    return null
+    exports.push('routes');
+    //import layouts
+    for (const name in this._layouts) {
+      imports.push(
+        importClause
+          .replace('%s', `Layout_${name}`)
+          .replace('%s', this._layouts[name])
+      );
+      //change from name to actual object reference
+      routesJson = routesJson.replaceAll(
+        `"layout":"${name}"`, 
+        `"layout":Layout_${name}`
+      );
+    }
+  
+    return [
+      ...imports,
+      `const routes = ${routesJson}`,
+      `const props = { ${exports.join(', ')} }`
+    ].join("\n");
   }
 }
 

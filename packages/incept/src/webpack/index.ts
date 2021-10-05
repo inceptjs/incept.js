@@ -30,18 +30,15 @@ export default class WithWebpack {
   }
 
   develop(write: boolean = false) {
-    const { 
-      cwd, 
-      withReact: react, 
-      withVirtualFS: vfs 
-    } = this._application
+    const { cwd, withVirtualFS: vfs } = this._application
     const bundler = this.withCompiler;
+    const buildURL = this._application.buildURL;
     const buildPath = this._application.buildPath;
   
     const chunkNamer = (fileinfo: Record<string, any>) => {
       const hash = fileinfo.chunk.hash;
       const [ name, extension ] = fileinfo.chunk.id.split('_').slice(-2);
-      return `chunks/${name}.${hash}.${extension}`;
+      return path.join('/chunks', `${name}.${hash}.${extension}`);
     };
 
     const loadableConfig = { 
@@ -53,14 +50,16 @@ export default class WithWebpack {
       loadableConfig.writeToDisk = { filename: buildPath }
     }
     
-    //withh webpack bundler
+    //with webpack bundler
     bundler
       // set the output location
-      .setOutput(buildPath, '[name].js', chunkNamer)
+      .setOutput(buildPath, 'entries/[name].js', buildURL, chunkNamer)
       //add loadable (for file chunking)
       .addPlugin(new LoadablePlugin(loadableConfig))
       //add css module
-      .addPlugin(new MiniCssExtractPlugin)
+      .addPlugin(new MiniCssExtractPlugin({
+        filename: '/styles/[name].[contenthash].css',
+      }))
       //add HOT module (for dev server)
       .addPlugin(new HotModuleReplacementPlugin)
       //add react refresh (for dev server)
@@ -90,7 +89,7 @@ export default class WithWebpack {
             vfs.mkdirSync(buildPath, { recursive: true });
           }
           vfs.writeFileSync(
-            `${buildPath}/stats.json`, 
+            path.join(buildPath, 'stats.json'), 
             //@ts-ignore `handleEmit()` already stringifies the object
             loadable.handleEmit(compilation).source()
           );
@@ -110,27 +109,18 @@ export default class WithWebpack {
       console.log(`compiled in ${time}ms`)
       done = true
     });
-    
-    //add routes as bundler entries
-    for(const route of react.routes) {
-      //determine the name (same as ReactPlugin.render)
-      const name = path.join('entries', react.entryFileName(route.path));
-      //determine the virtual entry
-      const entry = path.join(cwd, `${name}.js`);
-      bundler.addEntry(name, [ 
-        'webpack-hot-middleware/client?path=/__incept', 
-        entry 
-      ]);
-      vfs.mkdirSync(path.dirname(entry), { recursive: true });
-      vfs.writeFileSync(entry, react.entry(route.path));
-    }
+
+    bundler.addEntry('main', [ 
+      'webpack-hot-middleware/client?path=/__incept', 
+      path.join(cwd, 'entry.js')
+    ]);
   
     //build a webpack compiler
     const compiler = bundler.compiler
   
     const dev = webpackDevMiddleware(compiler, {
       serverSideRender: true,
-      publicPath: this._application.buildURL,
+      publicPath: buildURL,
       writeToDisk: write
     })
     

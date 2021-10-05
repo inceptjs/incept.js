@@ -61,7 +61,15 @@ export default class Application extends http.Router {
    * returns the build URL
    */
   get buildURL(): string {
-    return this._config.buildURL
+    let url = this._config.buildURL;
+    if (url[0] !== '/') {
+      url = '/' + url;
+    }
+
+    if (url[url.length - 1] === '/') {
+      url = url.substring(0, url.length - 2);
+    }
+    return url
   }
 
   /**

@@ -17,13 +17,14 @@ function startDevServer(
   const write = request.params.w || request.params.write || false;
   //get the app
   const app = request.ctx as Application;
+  const react = app.withReact;
+  const webpack = app.withWebpack;
   //log all errors
   app.on('error', logError.bind(app));
-  //allow public access to the build folder 
-  //TODO: should be a custom setting
-  app.public(`${app.cwd}/build`, '/build')
+  //virtualize react files
+  react.virtualize();
   //load webpack
-  const {dev, hot} = app.withWebpack.develop(!!write);
+  const {dev, hot} = webpack.develop(!!write);
   app.use(dev);
   app.use(hot);
   //this will transfer data from the response 
@@ -31,7 +32,7 @@ function startDevServer(
   //and events have been ran
   app.use(dispatch);
   //handle react
-  app.get('/**', app.withReact.handle);
+  app.get('/**', react.handle);
   //create the http server
   const server = http.createServer(app.handle.bind(app));
   //let others get the http server (like if they want to close it)
