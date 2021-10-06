@@ -21,8 +21,6 @@ function startDevServer(
   const webpack = app.withWebpack;
   //log all errors
   app.on('error', logError.bind(app));
-  //virtualize react files
-  react.virtualize();
   //load webpack
   const {dev, hot} = webpack.develop(!!write);
   app.use(dev);

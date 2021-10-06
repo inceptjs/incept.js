@@ -1,6 +1,6 @@
 {
   "name": "@inceptjs/types",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Type definitions implementations for core types.",
   "author": "Chris <chris@incept.asia>",
   "license": "MIT",

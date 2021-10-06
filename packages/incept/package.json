@@ -1,6 +1,6 @@
 {
   "name": "inceptjs",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "A pluggable React framework",
   "author": "Chris <chris@incept.asia>",
   "license": "MIT",
@@ -27,11 +27,12 @@
   ],
   "dependencies": {
     "@babel/core": "^7.13.14",
+    "@babel/plugin-transform-runtime": "7.15.0",
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
     "@babel/register": "^7.15.3",
-    "@inceptjs/framework": "^0.0.16",
-    "@inceptjs/virtualfs": "^0.0.16",
+    "@inceptjs/framework": "^0.0.17",
+    "@inceptjs/virtualfs": "^0.0.17",
     "@loadable/babel-plugin": "5.13.2",
     "@loadable/component": "5.15.0",
     "@loadable/server": "5.15.1",
@@ -55,7 +56,6 @@
     "webpack-virtual-modules": "^0.4.3"
   },
   "devDependencies": {
-    "@types/loadable__component": "5.13.4",
     "@types/loadable__server": "^5.12.6",
     "@types/loadable__webpack-plugin": "^5.7.3",
     "@types/lossless-json": "^1.0.1",

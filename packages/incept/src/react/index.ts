@@ -8,6 +8,7 @@ import { Request, Response } from '@inceptjs/framework';
 
 import { Application } from '../types/Application';
 import Page from './Page';
+import { Exception } from '..';
 
 export default class WithReact {
   /**
@@ -59,15 +60,29 @@ export default class WithReact {
   /**
    * Developers can set a custom app
    */
-  set app(App: string) {
-    this._app = App;
+  set app(app: string) {
+    const resolved = this._application.withVirtualFS.resolvePath(app);
+    Exception.require(!!resolved, 'Cannot find module %s', app);
+    const App = fs.readFileSync(resolved as string, 'utf8');
+    const props = this._generateProps();
+    this._application.withVirtualFS.writeFileSync(
+      path.join(this._application.cwd, 'App.js'),
+      App.replace(/\nconst props[^\n]+/g, `\n${props}\n`)
+    );
+    this._app = resolved as string;
   }
 
   /**
    * Developers can set a custom entry file
    */
   set entry(entry: string) {
-    this._entry = entry;
+    const resolved = this._application.withVirtualFS.resolvePath(entry);
+    Exception.require(!!resolved, 'Cannot find module %s', entry);
+    this._application.withVirtualFS.writeFileSync(
+      path.join(this._application.cwd, 'entry.js'),
+      fs.readFileSync(resolved as string, 'utf8')
+    );
+    this._entry = resolved as string;
   }
 
   /**
@@ -82,6 +97,8 @@ export default class WithReact {
    */
   constructor(app: Application) {
     this._application = app;
+    //make a virtual cwd
+    app.withVirtualFS.mkdirSync(app.cwd, { recursive: true });
     this._entry = path.normalize(
       path.join(__dirname, '../../templates/entry')
     );
@@ -98,7 +115,13 @@ export default class WithReact {
    * sets a config file
    */
   config(name: string, file: string): WithReact {
-    this._props[name] = file
+    this._props[name] = file;
+    const App = fs.readFileSync(this._app as string, 'utf8');
+    const props = this._generateProps();
+    this._application.withVirtualFS.writeFileSync(
+      path.join(this._application.cwd, 'App.js'),
+      App.replace(/\nconst props[^\n]+/g, `\n${props}\n`)
+    );
     return this
   }
 
@@ -212,34 +235,6 @@ export default class WithReact {
     });
     
     return page.render(app);
-  }
-
-  /**
-   * Adds dynamically rendered files to node's FS
-   */
-  virtualize() {
-    const cwd = this._application.cwd;
-    const vfs = this._application.withVirtualFS;
-    const app = vfs.resolvePath(this._app);
-    const entry = vfs.resolvePath(this._entry);
-    //make a virtual cwd
-    vfs.mkdirSync(cwd, { recursive: true });
-    //copy entry to cwd/entry.js
-    if (entry) {
-      vfs.writeFileSync(
-        path.join(cwd, 'entry.js'),
-        fs.readFileSync(entry as string, 'utf8')
-      );
-    }
-    //copy App to cwd/App.js
-    if (app) {
-      const App = fs.readFileSync(app as string, 'utf8');
-      const props = this._generateProps();
-      vfs.writeFileSync(
-        path.join(cwd, 'App.js'),
-        App.replace(/\nconst props[^\n]+/g, `\n${props}\n`)
-      );
-    }
   }
 
   private _generateProps(): string {
