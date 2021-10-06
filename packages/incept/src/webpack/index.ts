@@ -116,7 +116,7 @@ export default class WithWebpack {
     ]);
   
     //build a webpack compiler
-    const compiler = bundler.compiler
+    const compiler = bundler.compiler;
   
     const dev = webpackDevMiddleware(compiler, {
       serverSideRender: true,

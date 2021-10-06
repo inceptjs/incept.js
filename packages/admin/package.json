@@ -1,6 +1,6 @@
 {
   "name": "@inceptjs/admin",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Incept Admin",
   "author": "Chris <chris@incept.asia>",
   "license": "MIT",
@@ -12,7 +12,7 @@
   ],
   "dependencies": {
     "boxicons": "2.0.9",
-    "inceptjs": "^0.0.17",
+    "inceptjs": "^0.0.18",
     "react-redux": "^7.2.5",
     "redux-thunk": "^2.3.0",
     "redux": "^4.1.1"

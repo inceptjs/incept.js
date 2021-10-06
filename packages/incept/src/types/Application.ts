@@ -98,10 +98,10 @@ export default class Application extends http.Router {
     this._config = Object.assign({}, defaults, config);
     this._pluginManager = new PluginLoader(this._config.cwd);
     
+    this.withVirtualFS = vfs;
     this.withBabel = new WithBabel;
     this.withReact = new WithReact(this);
     this.withWebpack = new WithWebpack(this);
-    this.withVirtualFS = vfs;
     this.withVirtualFS.patchFS();
   }
 

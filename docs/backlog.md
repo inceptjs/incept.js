@@ -3,6 +3,7 @@
  - Develop `$ incept build` Script
  - Develop `$ incept start` Script
  - Develop `$ incept lint` Script
+ - Develop npx starter called `create-incept-app`
  - Move scripts to a package called `devops`
  - Move babel configuration into a package called `presets`
  - Move webpack configuration into a package called `presets`
@@ -50,13 +51,6 @@ for that.
 There is a huge overlap between Babel and Webpack in terms of intent. 
 If babel is for transpiling and webpack is for bundling, what's up 
 with isomorphic plugins?
-
-**Isomorphic Babel & Webpack**
-
-Both of these projects suffer from plugins that need to be isomorphic 
-being outdated in a matter of years like CSS, SVG, file & url importing.
-I ended up fixing and hosting up a fork of 
-[`babel-plugin-file-loader`](https://github.com/cblanquera/babel-plugin-file-loader)
 
 **webpack-dev-middleware**
 
