@@ -1,7 +1,7 @@
 import path from 'path';
-import React, { ComponentType } from 'react'
-import ReactDOMServer from 'react-dom/server'
-import { ChunkExtractor, ChunkExtractorOptions } from '@loadable/server'
+import React, { ComponentType } from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { ChunkExtractor, ChunkExtractorOptions } from '@loadable/server';
 import { StaticRouter, matchPath } from 'react-router';
 import { Request, Response } from '@inceptjs/framework';
 
@@ -254,9 +254,12 @@ export default class WithReact {
   route(
     path: string, 
     file: string, 
-    layoutName: string = 'default'
+    layout: string = 'default'
   ): WithReact {
-    this._routes[path] = { path, view: file, layout: layoutName }
+    const resolved = this._application.withVirtualFS.resolvePath(file);
+    Exception.require(!!resolved, 'Module not found %s', file);
+    const view = resolved as string;
+    this._routes[path] = { path, view, layout }
     return this
   }
 

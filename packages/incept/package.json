@@ -34,7 +34,6 @@
     "@dr.pogodin/babel-plugin-css-modules-transform": "1.10.0",
     "@inceptjs/framework": "^0.0.19",
     "@inceptjs/virtualfs": "^0.0.19",
-    "@loadable/babel-plugin": "5.13.2",
     "@loadable/component": "5.15.0",
     "@loadable/server": "5.15.1",
     "@loadable/webpack-plugin": "5.15.1",

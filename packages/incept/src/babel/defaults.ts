@@ -13,8 +13,6 @@ export default {
     '@babel/plugin-transform-runtime',
     //adds react import where jsx is found
     'react-require', 
-    //allows to use import as a function
-    '@loadable/babel-plugin',
     //import css server side
     [
       '@dr.pogodin/css-modules-transform', {

@@ -84,7 +84,7 @@ export default class WithWebpack {
         'loadable-in-memory', 
         'afterCompile', 
         (compilation: Compilation) => {
-          const loadable = new LoadablePlugin
+          const loadable = new LoadablePlugin;
           if (!vfs.existsSync(buildPath)) {
             vfs.mkdirSync(buildPath, { recursive: true });
           }

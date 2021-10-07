@@ -54,6 +54,19 @@ There is a huge overlap between Babel and Webpack in terms of intent.
 If babel is for transpiling and webpack is for bundling, what's up 
 with isomorphic plugins?
 
+**@loadable/babel-plugin**
+
+This is not what everyone thinks. This plugin requires that you bundle 
+your server files as well as your client similar to their 
+[github](https://github.com/gregberge/loadable-components/tree/main/examples/server-side-rendering)
+example, otherwise will not work at all. Additionally I thought at 
+first that `@loadable` was this magical sword that magically transpiles 
+CSS and the like, but again would only work if you use `webpack` to 
+bundle your server code. 
+
+> This item is marked as passive, because it was the `@loadable` 
+author's intent to do it that way.
+
 ## Active
 
 **This browser doesn't support requestAnimationFrame. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills**
@@ -141,10 +154,39 @@ const statsFile = path.resolve('../dist/loadable-stats.json')
 const chunkExtractor = new ChunkExtractor({ statsFile })
 ```
 
-Implementing loadable in general with chunking based on their docs, 
-though works, is quite clunky and loadable puts some branding in the 
-HTML.
+The problem with the code above, is that it requires you write your 
+build files to actual files which counters the point of `webpack` 
+allowing `writeToDisk: false`. Additional tooling is required to get 
+this working and the 
+[docs](https://loadable-components.com/docs/server-side-rendering/) is 
+no where near their example in 
+[github](https://github.com/gregberge/loadable-components/tree/main/examples/server-side-rendering)
 
 **UPDATE: 0.0.16** What I did was add a webpack hook to compile the 
 stats again and save it in VirtualFS then retrieved those contents when 
 rendering.
+
+```js
+const vfs = require('@inceptjs/virtualfs')
+const buildURL = '/.build'
+const buildPath = path.join(process.cwd(), '.build')
+const compiler = webpack({ ... })
+compiler.hooks.afterCompile.tap('loadable-in-memory', (compilation: Compilation) => {
+  const loadable = new LoadablePlugin
+  if (!vfs.existsSync(buildPath)) {
+    vfs.mkdirSync(buildPath, { recursive: true })
+  }
+  vfs.writeFileSync(
+    path.join(buildPath, 'stats.json'), 
+    //@ts-ignore `handleEmit()` already stringifies the object
+    loadable.handleEmit(compilation).source()
+  )
+})
+
+...
+
+const extractor = new ChunkExtractor({ 
+  statsFile: path.join(buildPath, 'static/stats.json'),
+  publicPath: buildURL
+})
+```
