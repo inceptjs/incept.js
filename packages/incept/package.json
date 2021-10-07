@@ -35,7 +35,7 @@
     "@inceptjs/framework": "^0.0.19",
     "@inceptjs/virtualfs": "^0.0.19",
     "@loadable/component": "5.15.0",
-    "@loadable/server": "5.15.1",
+    "@loadable/server": "^4.0.5",
     "@loadable/webpack-plugin": "5.15.1",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.1",
     "babel-loader": "^8.2.2",
