@@ -115,7 +115,7 @@ export default class WithWebpack {
       //determine the name (same as ReactPlugin.render)
       const name = react.entryFileName(route.path);
       //determine the virtual entry
-      const entry = path.join(cwd, `${name}.js`);
+      const entry = path.join(cwd, `.build/virtual/${name}.js`);
       bundler.addEntry(name, [ 
         'webpack-hot-middleware/client?path=/__incept', 
         entry 

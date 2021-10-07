@@ -32,7 +32,7 @@ export default {
         ]
       },
       {
-        test: /\.jsx?$/,
+        test: [ /\.jsx?$/, /\.tsx?$/ ],
         include: /node_modules/,
         enforce: 'pre',
         use: ['source-map-loader']

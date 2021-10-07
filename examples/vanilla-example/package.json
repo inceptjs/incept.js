@@ -1,12 +1,12 @@
 {
   "name": "sandbox",
-  "version": "0.0.1",
+  "version": "0.0.20",
   "scripts": {
     "build": "incept build",
     "dev": "incept dev"
   },
   "incept": "./index",
   "dependencies": {
-    "inceptjs": "^0.0.13"
+    "inceptjs": "^0.0.20"
   }
 }
