@@ -30,10 +30,10 @@ export default class WithWebpack {
   }
 
   develop(write: boolean = false) {
-    const { cwd, withVirtualFS: vfs } = this._application
+    const { cwd, withVirtualFS: vfs, withReact: react } = this._application;
     const bundler = this.withCompiler;
     const buildURL = this._application.buildURL;
-    const buildPath = this._application.buildPath;
+    const buildPath = path.join(this._application.buildPath, 'static');
   
     const chunkNamer = (fileinfo: Record<string, any>) => {
       const hash = fileinfo.chunk.hash;
@@ -110,10 +110,19 @@ export default class WithWebpack {
       done = true
     });
 
-    bundler.addEntry('main', [ 
-      'webpack-hot-middleware/client?path=/__incept', 
-      path.join(cwd, 'entry.js')
-    ]);
+    //add routes as bundler entries
+    for(const route of react.routes) {
+      //determine the name (same as ReactPlugin.render)
+      const name = react.entryFileName(route.path);
+      //determine the virtual entry
+      const entry = path.join(cwd, `${name}.js`);
+      bundler.addEntry(name, [ 
+        'webpack-hot-middleware/client?path=/__incept', 
+        entry 
+      ]);
+      vfs.mkdirSync(path.dirname(entry), { recursive: true });
+      vfs.writeFileSync(entry, react.entry(route.path));
+    }
   
     //build a webpack compiler
     const compiler = bundler.compiler;

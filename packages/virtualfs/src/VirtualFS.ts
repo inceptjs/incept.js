@@ -46,11 +46,33 @@ export default class VirtualFS extends MemVolume {
   protected _revertFS: Function|null = null;
 
   /**
+   * Mapping of regex to transformations
+   */
+  protected _transformers: Transformer[] = [];
+
+  /**
    * Original methods map
    */
   protected _originals: Record<string, Function> = {
     existsSync: fs.existsSync.bind(fs)
   };
+  
+  /**
+   * Registers a transformer
+   */
+  public addRule(test: RegExp|Function, callback: Function): VirtualFS {
+    Exception.require(
+      typeof test === 'function' || test instanceof RegExp, 
+      'Argument 1 expecting RegExp or Function'
+    );
+
+    Exception.require(
+      typeof callback === 'function', 
+      'Argument 2 expecting Function'
+    );
+    this._transformers.push({ test, callback });
+    return this;
+ }
 
   /**
    * Calls `route()` before `exists()`
@@ -66,25 +88,6 @@ export default class VirtualFS extends MemVolume {
   public existsSync(path: PathLike): boolean {
     this._resolveFile(path as string);
     return super.existsSync(path);
-  }
-
-  /**
-   * A helper to find a node module
-   */
-  public lookupModule(name: string, parent: string): string|boolean {
-    const module = new Module(parent);
-    //@ts-ignore
-    module.paths = Module._nodeModulePaths(name, module);
-    //@ts-ignore
-    const paths = Module._resolveLookupPaths(name, module);
-    for (const pathname of paths) {
-      const folder = path.join(pathname, name);
-      if (fs.existsSync(folder)) {
-        return folder;
-      }
-    }
-
-    return false;
   }
 
   /**
@@ -124,7 +127,8 @@ export default class VirtualFS extends MemVolume {
    */
   public readFileSync(id: TFileId, ...args: any): TDataOut {
     this._resolveFile(id as string);
-    return super.readFileSync(id, ...args);
+    //transform the results
+    return this.transform(id as string, super.readFileSync(id, ...args));
   }
 
   /**
@@ -132,6 +136,18 @@ export default class VirtualFS extends MemVolume {
    */
   public readFile(id: TFileId, ...args: any) {
     this._resolveFile(id as string);
+    //if there's a callback
+    if (typeof args[args.length - 1] === 'function') {
+      //wrap the callback
+      const callback = args[args.length - 1];
+      args[args.length - 1] = (error: Error, results: string|Buffer) => {
+        if (results) {
+          //so we can transform it
+          results = this.transform(id as string, results);
+        }
+        callback(error, results)
+      };
+    }
     //@ts-ignore
     super.readFile(id, ...args);
   }
@@ -158,6 +174,25 @@ export default class VirtualFS extends MemVolume {
     }
 
     return filename;
+  }
+
+  /**
+   * A helper to resolve a node module
+   */
+  public resolveModule(name: string, parent: string): string|boolean {
+    const module = new Module(parent);
+    //@ts-ignore
+    module.paths = Module._nodeModulePaths(name, module);
+    //@ts-ignore
+    const paths = Module._resolveLookupPaths(name, module);
+    for (const pathname of paths) {
+      const folder = path.join(pathname, name);
+      if (fs.existsSync(folder)) {
+        return folder;
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -313,6 +348,25 @@ export default class VirtualFS extends MemVolume {
   }
 
   /**
+   * Processes all the matching transformers onto the code
+   */
+  public transform(file: string, body: string|Buffer): string|Buffer {
+    for (const transformer of this._transformers) {
+      const valid = typeof transformer.test === 'function' 
+        ? transformer.test(file)
+        : transformer.test.test(file);
+      
+      if(valid) {
+        const transformed = transformer.callback(file, body);
+        if (typeof transformed === 'string') {
+          body = transformed;
+        }
+      }
+    }
+    return body;
+  }
+
+  /**
    * Used to override `Module._findPath()`
    */
   protected _findPath(
@@ -352,11 +406,13 @@ export default class VirtualFS extends MemVolume {
       return this;
     }
 
+    //at this point, the routes are considered
+
     const response = new Response();
     this._emitter.emitSync(file, file, response, this);
   
     if (response.body && typeof response.body === 'object') {
-      response.body = JSON.stringify(response.body, null, 4);
+      response.write(JSON.stringify(response.body, null, 4));
     }
 
     if (typeof response.body !== 'undefined' && response.body !== null) {

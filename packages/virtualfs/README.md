@@ -46,6 +46,18 @@ file. You can also read a virtual file like the following.
 fs.readFileSync('/path/to/assets/foo.js', 'utf8') //--> module.exports = { foo: "foo" }
 ```
 
+## Virtual Node Modules
+
+This also works for defining virtual files in `node_modules`.
+
+```js
+vfs.writeFileSync('/my/project/node_modules/foo.js', 'module.exports = { foo: "foo" }')
+
+//... somewhere in /my/project
+const foo = require('foo')
+console.log(foo.foo) //--> "foo"
+```
+
 ## Virtual File Routing
 
 Just call `route()` to make virtual file routes. Once they are 
@@ -60,19 +72,48 @@ vfs.route('/my/post/:id/info.json', (filename, res, vfs) => {
 })
 
 fs.readFileSync('/my/post/1/info.json').toString() //--> { id: 1 }
-require(test).id //--> 1
+require('/my/post/1/info.json').id //--> 1
 ```
 
-## Virtual Node Modules
+When a route is requested by `readFileSync()`, it gets computed and 
+written to the VFS in a lazy way. 
 
-This also works for defining virtual files in `node_modules`.
+> Using routes on VFS could be problematic with `webpack` because it 
+uses `enhanced-resolve` and that uses `fs.stat()` on folders to 
+determine if a file exists. 
+
+Since routes like `/my/post/:id/info.json` have an unlimited 
+permutation, it would not be possible for VFS to populate stats in a 
+directory. It could still work however, if all the possible 
+permutations were pre-written to VFS.
+
+### Transforming files
+
+Virtual modules has a basic transformer that sits on top that you can 
+use optionally. 
 
 ```js
-vfs.writeFileSync('/my/project/node_modules/foo.js', 'module.exports = { foo: "foo" }')
+vfs.addRule(/\.(js)$/, (file, code) => {
+  return code + ';console.log("transformed");'
+})
+```
 
-//... somewhere in /my/project
-const foo = require('foo')
-console.log(foo.foo) //--> "foo"
+> If you are using babel to transform files, you can still use babel 
+without interupting your work flow. 
+
+You can optionally replace `@babel/register` with virtual modules like 
+the following snippet.
+
+```js
+const babel = require('@babel/core')
+vfs.addRule(/\.(js)$/, (file, code) => {
+  return babel.transform(code, {
+    presets: [
+      '@babel/preset-env',
+      '@babel/preset-react'
+    ]
+  }).code
+})
 ```
 
 ### Stop/Start

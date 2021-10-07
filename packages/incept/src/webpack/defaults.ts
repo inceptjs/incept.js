@@ -3,7 +3,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 export default {
   mode: 'development',
   resolve: {
-    extensions: ['.js', '.json', '.css']
+    extensions: ['.js', '.jsx', '.json', '.css']
   },
   module: {
     rules: [
@@ -39,10 +39,27 @@ export default {
       },
       {
         test: /\.css$/i,
-        exclude: /node_modules/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          }, 
+          {
+            loader: 'css-loader',
+            options: {
+              esModule: true,
+              modules: {
+                localIdentName: '[name]-[local]',
+              }
+            }
+          }
+        ]
       }
     ]
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all'
+    }
   },
   //see: https://webpack.js.org/configuration/stats/
   stats: {

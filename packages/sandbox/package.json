@@ -1,8 +1,8 @@
 {
   "name": "sandbox",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "scripts": {
-    "dev": "incept dev"
+    "dev": "incept dev -w"
   },
   "incept": [
     "./plugin/api",
@@ -11,7 +11,7 @@
     "@inceptjs/admin"
   ],
   "dependencies": {
-    "inceptjs": "^0.0.18",
-    "@inceptjs/admin": "^0.0.18"
+    "inceptjs": "^0.0.19",
+    "@inceptjs/admin": "^0.0.19"
   }
 }

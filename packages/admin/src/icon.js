@@ -1,7 +1,7 @@
 import fs from 'fs'
 export default function registerIconComponent(app) {
   const vfs = app.withVirtualFS
-  const module = vfs.lookupModule('boxicons', __dirname)
+  const module = vfs.resolveModule('boxicons', __dirname)
   if (!module) {
     //we need boxicons module in order for this to work
     return;

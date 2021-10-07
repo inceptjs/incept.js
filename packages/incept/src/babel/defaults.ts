@@ -1,6 +1,6 @@
 export default {
   ignore: [
-    /node_modules[\\/](?!@incept\/admin)/
+    /node_modules/
   ],
   extensions: ['.js', '.jsx', '.svg', '.jpg', '.gif', '.png', '.jpeg'],
   presets: [
@@ -14,6 +14,12 @@ export default {
     //adds react import where jsx is found
     'react-require', 
     //allows to use import as a function
-    '@loadable/babel-plugin'
+    '@loadable/babel-plugin',
+    //import css server side
+    [
+      '@dr.pogodin/css-modules-transform', {
+        generateScopedName: '[name]-[local]'
+      }
+    ]
   ]
 }

@@ -38,6 +38,8 @@
 Adventures in developing a modern React framework. The following items,
 I'm looking for help or clarity.
 
+## Passive
+
 **Babel**
 
 To me, Babel's original intent is to start using ES6/7 now, React's JSX
@@ -52,14 +54,7 @@ There is a huge overlap between Babel and Webpack in terms of intent.
 If babel is for transpiling and webpack is for bundling, what's up 
 with isomorphic plugins?
 
-**webpack-dev-middleware**
-
-For some reason `webpack-dev-middleware` is compiling for the 
-regular build and another for cache. It makes it look like it's 
-compiling the same thing twice and could be mistaken for a bug.
-all this does is make sure when the compile is complete it is 
-logged once. I added a hook to suppress this from showing on the 
-console twice and silenced logging.
+## Active
 
 **This browser doesn't support requestAnimationFrame. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills**
 **This browser doesn't support cancelAnimationFrame. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills**
@@ -70,6 +65,68 @@ I'm not sure why this warning is triggered as soon as I import
 but i can't find it in their source. When you install `react-dom` you can 
 find it in `node_modules/scheduler/cjs/scheduler.development.js:102` and
 triggers when loading a SSR entry inherently using `react-redux`.
+
+Adding a polyfill like the following seemed to suppress that warning.
+
+```js
+if (global) {
+  if (typeof global.window === 'undefined') {
+    global.window = {} as any
+  }
+
+  global.window.cancelAnimationFrame = () => {};
+  global.window.requestAnimationFrame = () => { return 0; };
+}
+```
+
+**webpack-dev-middleware**
+
+For some reason `webpack-dev-middleware` is compiling for the 
+regular build and another for cache. It makes it look like it's 
+compiling the same thing twice and could be mistaken for a bug.
+all this does is make sure when the compile is complete it is 
+logged once. I added a hook to suppress this from showing on the 
+console twice and silenced logging.
+
+**webpack-hot-middleware**
+
+The latest version of `webpack-hot-middleware` writes files to your 
+build folder. You can change the directory by adding to webpack's output
+config like the following, but the plugin still routes incorrectly.
+
+```json
+{
+  "output": {
+    ...
+    "hotUpdateChunkFilename": "develop/[id].[fullhash].hot-update.js",
+    "hotUpdateMainFilename": "develop/[runtime].[fullhash].hot-update.json"
+  }
+}
+```
+
+But setting the paths like the above will result in the module calling
+`GET /.builddevelop/main.fcb46c918fa3bdee3fd0.hot-update.json`. 
+Fortunately it still renders an output and hot is only in dev mode, so 
+it's less severe.
+
+**Isomorphic Babel & Webpack**
+
+Both of these projects suffer from plugins that need to be isomorphic 
+being outdated in a matter of years like CSS, SVG, file & url importing.
+I ended up fixing and hosting up a fork of 
+[`babel-plugin-file-loader`](https://github.com/cblanquera/babel-plugin-file-loader)
+
+**Material UI**
+
+Encountering errors with `useLayoutEffect` when rendering on the server
+*(SSR)* even on MUI v5 which just released while developing this 
+project. Plus I'm not a big fan of `styled-components` syntax nor the
+v4 version of styling. They shouldn't be dog feed any of those to people 
+exclusively. Just allow to add `className` or `style` to their 
+components. I was very disappointed when I couldn't even use their 
+icons without triggering a warning.
+
+## Closed
 
 **@loadable/server**
 
@@ -84,21 +141,10 @@ const statsFile = path.resolve('../dist/loadable-stats.json')
 const chunkExtractor = new ChunkExtractor({ statsFile })
 ```
 
-What I did was add a webpack hook to compile the stats again and
-save it in VirtualFS then retrieved those contents when rendering.
-
 Implementing loadable in general with chunking based on their docs, 
 though works, is quite clunky and loadable puts some branding in the 
 HTML.
 
-
-
-**Material UI**
-
-Encountering errors with `useLayoutEffect` when rendering on the server
-*(SSR)* even on MUI v5 which just released while developing this 
-project. Plus I'm not a big fan of `styled-components` syntax nor the
-v4 version of styling. They shouldn't be dog feed any of those to people 
-exclusively. Just allow to add `className` or `style` to their 
-components. I was very disappointed when I couldn't even use their 
-icons without triggering a warning.
+**UPDATE: 0.0.16** What I did was add a webpack hook to compile the 
+stats again and save it in VirtualFS then retrieved those contents when 
+rendering.

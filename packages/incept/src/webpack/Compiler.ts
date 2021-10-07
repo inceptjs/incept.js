@@ -85,7 +85,7 @@ export default class WebpackCompiler {
     if (!this._config.entry) {
       this._config.entry = {};
     }
-  
+
     this._config.entry[name] = file;
     return this;
   }
