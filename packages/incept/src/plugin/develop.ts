@@ -51,6 +51,8 @@ function startDevServer(
   //let the user know what just happened
   app.emit('log', `Server start @ ${host}:${port}`, 'success');
   app.emit('log', 'Press `CTRL+C` to exit');
+  app.plugin('server', server);
+  app.emit('dev-ready');
 }
 
 export default function developPlugin(ctx: Application) {
