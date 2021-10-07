@@ -36,9 +36,9 @@ export default class WithWebpack {
     const buildPath = path.join(this._application.buildPath, 'static');
   
     const chunkNamer = (fileinfo: Record<string, any>) => {
-      const hash = fileinfo.chunk.hash;
-      const [ name, extension ] = fileinfo.chunk.id.split('_').slice(-2);
-      return path.join('/chunks', `${name}.${hash}.${extension}`);
+      const name = fileinfo.chunk.name.replace(/_js$/, '').split('_').pop();
+      const hash = fileinfo.chunk.renderedHash;
+      return path.join('chunks', `${name}.${hash}.js`);
     };
 
     const loadableConfig = { 
