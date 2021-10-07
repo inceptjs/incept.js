@@ -57,6 +57,8 @@ export default {
     ]
   },
   optimization: {
+    moduleIds: 'named',
+    chunkIds: 'named',
     splitChunks: {
       chunks: 'all'
     }

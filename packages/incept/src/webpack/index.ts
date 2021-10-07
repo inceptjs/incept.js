@@ -102,12 +102,12 @@ export default class WithWebpack {
     //compiling the same thing twice and could be mistaken for a bug.
     //all this does is make sure when the compile is complete it is 
     //logged once. TODO: Find a better solution...
-    let done = false
+    let done = false;
     bundler.on('display-ready', 'done', (stats: Stats) => {
-      if (done) return
-      const time = stats.compilation.endTime - stats.compilation.startTime
-      console.log(`compiled in ${time}ms`)
-      done = true
+      if (done) return;
+      const time = stats.compilation.endTime - stats.compilation.startTime;
+      console.log(`compiled in ${time}ms`);
+      done = true;
     });
 
     //add routes as bundler entries

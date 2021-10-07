@@ -215,8 +215,10 @@ export default class WithReact {
    * Defines a new layout
    */
   layout(name: string, file: string): WithReact {
-    this._layouts[name] = file
-    return this
+    const resolved = this._application.withVirtualFS.resolvePath(file);
+    Exception.require(!!resolved, 'Module not found %s', file);
+    this._layouts[name] = resolved as string;
+    return this;
   }
 
   /**
@@ -264,51 +266,66 @@ export default class WithReact {
   render(pathname: string): string {
     //get router props
     const routerProps = { location: pathname, context: {} };
-
-    const page = this._page.clone;
-
+    //make app props
+    const appProps: Record<string, any> = {};
+    for (const key in this._props) {
+      const prop = require(this._props[key]);
+      appProps[key] = prop.default || prop;
+    }
+    //make a chunk extractor config
     const chunkConfig = { 
       statsFile: path.join(this._application.buildPath, 'static/stats.json'),
       publicPath: this._application.buildURL
     } as ChunkExtractorOptions;
 
-    //get the path match
+    //see if we can find a matching route for this path
     const match = this.match(pathname);
     if (typeof match === 'string') {
+      //we only need to load the active entry point 
+      //to the `ChunkExtractor` on the server
       chunkConfig.entrypoints = [ this.entryFileName(match) ];
+      //we only need to load the active route 
+      //to the app props on the server
+      const view = require(this._routes[match].view);
+      const layout = require(this._layouts[this._routes[match].layout]);
+      appProps.routes = [{
+        path: this._routes[match].path,
+        view: view.default || view,
+        layout: layout.default || layout
+      }];
     }
 
     //now do the loadable chunking thing..
     //see: https://loadable-components.com/docs/server-side-rendering/
     const extractor = new ChunkExtractor(chunkConfig);
 
-    //wrap the app
+    //wrap the app with the server router (vs BrowserRouter)
     const App = require(this._app);
     const Router = React.createElement(
       StaticRouter,
       routerProps,
-      React.createElement(App.default || App)
+      React.createElement(App.default || App, appProps)
     );
     //render the app now
     const app = ReactDOMServer.renderToString(
       extractor.collectChunks(Router)
     );
 
+    //clone the page
+    const page = this._page.clone;
     //add links to head
     extractor.getLinkElements().forEach(link => {
       page.head.addChild(link);
     });
-
     //add styles to head
     extractor.getStyleElements().forEach(style => {
       page.head.addChild(style);
     });
-
     //add scripts to body
     extractor.getScriptElements().forEach(script => {
       page.body.addChild(script);
     });
-    
+    //render the page
     return page.render(app);
   }
 }
