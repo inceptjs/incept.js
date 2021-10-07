@@ -4,7 +4,7 @@
   "description": "Type definitions implementations for core types.",
   "author": "Chris <chris@incept.asia>",
   "license": "MIT",
-  "homepage": "https://github.com/inceptjs/incept.js#readme",
+  "homepage": "https://github.com/inceptjs/incept.js/tree/main/packages/types",
   "bugs": {
     "url": "https://github.com/inceptjs/incept.js/issues"
   },

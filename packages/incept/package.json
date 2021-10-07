@@ -4,7 +4,7 @@
   "description": "A pluggable React framework",
   "author": "Chris <chris@incept.asia>",
   "license": "MIT",
-  "homepage": "https://github.com/inceptjs/incept.js#readme",
+  "homepage": "https://github.com/inceptjs/incept.js/tree/main/packages/incept",
   "bugs": {
     "url": "https://github.com/inceptjs/incept.js/issues"
   },

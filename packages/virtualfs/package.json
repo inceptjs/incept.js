@@ -4,7 +4,7 @@
   "description": "Incept virtual file system",
   "author": "Chris <chris@incept.asia>",
   "license": "MIT",
-  "homepage": "https://github.com/inceptjs/incept.js#readme",
+  "homepage": "https://github.com/inceptjs/incept.js/tree/main/packages/virtualfs",
   "bugs": {
     "url": "https://github.com/inceptjs/incept.js/issues"
   },
