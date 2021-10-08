@@ -69,8 +69,7 @@
     "@types/webpack-dev-middleware": "^5.0.2",
     "@types/webpack-hot-middleware": "^2.25.5",
     "chai": "^4.3.4",
-    "mocha": "^8.4.0",
-    "node-fetch": "^2.6.5",
-    "ts-mocha": "^8.0.0"
+    "mocha": "^9.1.2",
+    "node-fetch": "^2.6.5"
   }
 }
