@@ -72,7 +72,7 @@ export default class VirtualFS extends MemVolume {
     );
     this._transformers.push({ test, callback });
     return this;
- }
+  }
 
   /**
    * Calls `route()` before `exists()`
@@ -108,6 +108,18 @@ export default class VirtualFS extends MemVolume {
   public lstatSync(path: PathLike, options?: IStatOptions): Stats {
     this._resolveFile(path as string);
     return super.lstatSync(path);
+  }
+
+  /**
+   * A helper to provide a list of node_modules starting from the path
+   */
+  public modulePaths(pathname: string, parent?: string): string[] {
+    parent = parent || path.dirname(pathname);
+    const module = new Module(path.dirname(parent));
+    //@ts-ignore
+    module.paths = Module._nodeModulePaths(pathname, module);
+    //@ts-ignore
+    return Module._resolveLookupPaths(pathname, module);
   }
 
   /**
@@ -180,11 +192,7 @@ export default class VirtualFS extends MemVolume {
    * A helper to resolve a node module
    */
   public resolveModule(name: string, parent: string): string|boolean {
-    const module = new Module(parent);
-    //@ts-ignore
-    module.paths = Module._nodeModulePaths(name, module);
-    //@ts-ignore
-    const paths = Module._resolveLookupPaths(name, module);
+    const paths = this.modulePaths(name, parent);
     for (const pathname of paths) {
       const folder = path.join(pathname, name);
       if (fs.existsSync(folder)) {

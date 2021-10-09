@@ -1,7 +1,6 @@
 import webpack, { Compiler, Stats } from 'webpack'
 
 import Exception from './Exception'
-import defaults from './defaults'
 
 type Event = {
   event: string,
@@ -18,7 +17,7 @@ export default class WebpackCompiler {
   /**
    * Webpack config
    */
-  protected _config: Record<string, any>;
+  public config: Record<string, any>;
 
   /**
    * Webpack events
@@ -30,7 +29,7 @@ export default class WebpackCompiler {
    */
   get compiler(): Compiler {
     //make the compiler
-    const compiler = webpack(this._config);
+    const compiler = webpack(this.config);
     //add events
     //@ts-ignore 
     this._events.forEach(event => compiler.hooks[event.event].tap(
@@ -42,35 +41,31 @@ export default class WebpackCompiler {
   }
 
   /**
-   * Returns the webpack config
-   */
-  get config(): Record<string, any> {
-    return Object.assign({}, this._config);
-  }
-
-  /**
-   * Manually resets the config (Use with caution) 
-   */
-  set config(config: Record<string, any>) {
-    this._config = config;
-  }
-
-  /**
    * Sets the mode in config
    */
   set mode(mode: string) {
-    this._config.mode = mode;
+    this.config.mode = mode;
+  }
+
+  /**
+   * Sets the name in config
+   */
+  set name(name: string) {
+    this.config.name = name;
+  }
+
+  /**
+   * Sets the target in config
+   */
+  set target(target: string) {
+    this.config.target = target;
   }
 
   /**
    * Sets the webpack config
    */
   constructor(config: Record<string, any> = {}) {
-    this._config = Object.assign({}, defaults, config);
-    //make sure there are plugins
-    if (!this._config.plugins) {
-      this._config.plugins = [];
-    }
+    this.config = config;
   }
 
   /**
@@ -82,11 +77,11 @@ export default class WebpackCompiler {
       'Argument 1 expected string'
     );
 
-    if (!this._config.entry) {
-      this._config.entry = {};
+    if (!this.config.entry) {
+      this.config.entry = {};
     }
 
-    this._config.entry[name] = file;
+    this.config.entry[name] = file;
     return this;
   }
 
@@ -94,7 +89,7 @@ export default class WebpackCompiler {
    * Adds a plugin to the webpack config
    */
   addPlugin(plugin: any): WebpackCompiler {
-    this._config.plugins.push(plugin);
+    this.config.plugins.push(plugin);
     return this;
   }
 
@@ -102,7 +97,7 @@ export default class WebpackCompiler {
    * Adds a rule to the config
    */
   addRule(rule: Record<string, any>): WebpackCompiler {
-    this._config.module.rules.push(rule);
+    this.config.module.rules.push(rule);
     return this;
   }
 
@@ -170,45 +165,6 @@ export default class WebpackCompiler {
 
     this._events.push({ event, plugin, callback })
     return this
-  }
-
-  /**
-   * Adds an output to the webpack config
-   */
-  setOutput(
-    path: string, 
-    filename: string|Function, 
-    publicPath: string,
-    chunkname?: string|Function
-  ): WebpackCompiler {
-    Exception.require(
-      typeof path === 'string',
-      'Argument 1 expected string'
-    );
-    Exception.require(
-      typeof filename === 'string',
-      'Argument 2 expected string'
-    );
-    Exception.require(
-      typeof publicPath === 'string',
-      'Argument 2 expected string'
-    );
-
-    const hotUpdateChunkFilename = 'develop/[id].[fullhash].hot-update.js';
-    const hotUpdateMainFilename = 'develop/[runtime].[fullhash].hot-update.json';
-  
-    this._config.output = { 
-      path, 
-      filename, 
-      publicPath,
-      hotUpdateMainFilename,
-      hotUpdateChunkFilename
-    };
-
-    if (chunkname) {
-      this._config.output.chunkFilename = chunkname;
-    }
-    return this;
   }
 
   /**

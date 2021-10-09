@@ -12,7 +12,10 @@ import WithReact from '../react';
 const defaults = {
   buildPath: '.build',
   buildURL: '/.build',
-  webpack: {}
+  webpack: {
+    server: {},
+    static: {}
+  }
 };
 
 export default class Application extends http.Router {

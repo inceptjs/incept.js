@@ -95,9 +95,9 @@ export default class WithReact {
   }
 
   /**
-   * Generates the client entry file
+   * Generates code to use for virtual entries
    */
-  entry(pathname: string): string {
+  compile(pathname?: string): Record<string, any> {
     const importClause = `import %s from '%s'`;
     const loadableClause = `  const %s = loadable(_ => import(/* webpackChunkName: '%s' */'%s'))`;
     const routes = this.routes;
@@ -165,37 +165,8 @@ export default class WithReact {
       );
     }
 
-    return [
-      `import React from 'react'`,
-      `import { hydrate } from 'react-dom'`,
-      `import { BrowserRouter } from 'react-router-dom'`,
-      `import loadable, { loadableReady } from '@loadable/component'`,
-      `import App from '${this._app}'`,
-      ...imports,
-      'loadableReady(() => {',
-      ...loadables,
-      `  const routes = ${routesJson}`,
-      `  const props = { ${exports.join(', ')} }`,
-      '  hydrate(',
-      '    <BrowserRouter><App {...props} /></BrowserRouter>,',
-      `    document.getElementById('__incept_root')`,
-      '  )',
-      '})'
-    ].join("\n")
-  }
-
-  /**
-   * generates a file name based on the router path
-   */
-  entryFileName(path: string): string {
-    path = path.replaceAll(':', '')
-    if (path.indexOf('/') === 0) {
-      path = path.substr(1)
-    }
-    if (!path.length) {
-      path = 'index'
-    }
-    return path
+    const app = this._app;
+    return { app, imports, exports, loadables, routesJson };
   }
 
   /**
@@ -269,63 +240,54 @@ export default class WithReact {
   render(pathname: string): string {
     //get router props
     const routerProps = { location: pathname, context: {} };
-    //make app props
-    const appProps: Record<string, any> = {};
-    for (const key in this._props) {
-      const prop = require(this._props[key]);
-      appProps[key] = prop.default || prop;
-    }
-    //make a chunk extractor config
-    const chunkConfig = { 
+
+    //now do the loadable chunking thing..
+    //see: https://loadable-components.com/docs/server-side-rendering/
+    const server = new ChunkExtractor({ 
+      statsFile: path.join(this._application.buildPath, 'server/stats.json'),
+      publicPath: this._application.buildURL
+    });
+
+    const { default: App } = server.requireEntrypoint();
+    //chunk extractor client config could be dynamic...
+    const clientConfig: ChunkExtractorOptions = { 
       statsFile: path.join(this._application.buildPath, 'static/stats.json'),
       publicPath: this._application.buildURL
-    } as ChunkExtractorOptions;
-
+    };
     //see if we can find a matching route for this path
     const match = this.match(pathname);
     if (typeof match === 'string') {
       //we only need to load the active entry point 
       //to the `ChunkExtractor` on the server
-      chunkConfig.entrypoints = [ this.entryFileName(match) ];
-      //we only need to load the active route 
-      //to the app props on the server
-      const view = require(this._routes[match].view);
-      const layout = require(this._layouts[this._routes[match].layout]);
-      appProps.routes = [{
-        path: this._routes[match].path,
-        view: view.default || view,
-        layout: layout.default || layout
-      }];
+      clientConfig.entrypoints = [ 
+        this._application.withWebpack.clientEntryFileName(match) 
+      ];
     }
 
-    //now do the loadable chunking thing..
-    //see: https://loadable-components.com/docs/server-side-rendering/
-    const extractor = new ChunkExtractor(chunkConfig);
+    const client = new ChunkExtractor(clientConfig);
 
-    //wrap the app with the server router (vs BrowserRouter)
-    const App = require(this._app);
     const Router = React.createElement(
       StaticRouter,
       routerProps,
-      React.createElement(App.default || App, appProps)
+      React.createElement(App)
     );
     //render the app now
     const app = ReactDOMServer.renderToString(
-      extractor.collectChunks(Router)
+      client.collectChunks(Router)
     );
 
     //clone the page
     const page = this._page.clone;
     //add links to head
-    extractor.getLinkElements().forEach(link => {
+    client.getLinkElements().forEach(link => {
       page.head.addChild(link);
     });
     //add styles to head
-    extractor.getStyleElements().forEach(style => {
+    client.getStyleElements().forEach(style => {
       page.head.addChild(style);
     });
     //add scripts to body
-    extractor.getScriptElements().forEach(script => {
+    client.getScriptElements().forEach(script => {
       page.body.addChild(script);
     });
     //render the page

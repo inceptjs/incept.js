@@ -1,6 +1,7 @@
 export default {
   ignore: [
-    /node_modules/
+    /node_modules/,
+    /\.build\/server\/entries\/main\.js/,
   ],
   extensions: ['.js', '.jsx', '.svg', '.jpg', '.gif', '.png', '.jpeg'],
   presets: [
@@ -12,12 +13,6 @@ export default {
   plugins: [
     '@babel/plugin-transform-runtime',
     //adds react import where jsx is found
-    'react-require', 
-    //import css server side
-    [
-      '@dr.pogodin/css-modules-transform', {
-        generateScopedName: '[name]-[local]'
-      }
-    ]
+    'react-require'
   ]
 }

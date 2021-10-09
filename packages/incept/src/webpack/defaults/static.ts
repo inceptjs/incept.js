@@ -1,10 +1,27 @@
+import path from 'path';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { Application } from '../../types/Application';
 
-export default {
-  mode: 'development',
+export default (app: Application) => ({
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.css']
   },
+  output: { 
+    path: path.join(app.buildPath, 'static'), 
+    filename: 'entries/[name].js', 
+    publicPath: app.buildURL,
+    //this is so the chunks can be identified easier
+    chunkFilename: (fileinfo: Record<string, any>) => {
+      const name = fileinfo.chunk.name.replace(/_js$/, '').split('_').pop();
+      const hash = fileinfo.chunk.renderedHash;
+      return path.join('chunks', `${name}.${hash}.js`);
+    }
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '/styles/[name].[contenthash].css'
+    })
+  ],
   module: {
     rules: [
       {
@@ -14,18 +31,21 @@ export default {
           {
             loader: 'babel-loader',
             options: {
-              presets: [
-                [
-                  '@babel/preset-env',
-                  { 'exclude': ['transform-regenerator'] }
-                ], 
-                '@babel/preset-react'
-              ],
+              presets: ['@babel/preset-react', [
+                '@babel/preset-env', {
+                  exclude: ['transform-regenerator'],
+                  useBuiltIns: 'entry',
+                  corejs: 'core-js@3',
+                  modules: false 
+                }
+              ]],
               plugins: [
                 //adds react import where jsx is found
-                'react-require',
-                //updates on react component changes (for dev)
-                'react-refresh/babel'
+                'react-require', 
+                //need to call `import()` transpile before loadable
+                '@babel/plugin-syntax-dynamic-import', 
+                //transpile `loadable()` syntax
+                '@loadable/babel-plugin'
               ]
             }
           }
@@ -59,9 +79,7 @@ export default {
   optimization: {
     moduleIds: 'named',
     chunkIds: 'named',
-    splitChunks: {
-      chunks: 'all'
-    }
+    splitChunks: { chunks: 'all' }
   },
   //see: https://webpack.js.org/configuration/stats/
   stats: {
@@ -73,4 +91,4 @@ export default {
     logging: 'warn',
     warnings: true
   }
-}
+})
