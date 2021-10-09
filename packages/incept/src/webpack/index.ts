@@ -167,11 +167,11 @@ export default class WithWebpack {
       .bundle(Target.Server, Mode.Development, write)
       .compiler;
 
-    server.run((error, stats) => {
-      if (error) {
-        throw error;
-      }
-    });
+    if (!write) {
+      server.outputFileSystem = withVirtualFS;
+    }
+
+    server.run((error) => { if (error) throw error });
   
     const dev = webpackDevMiddleware(client, {
       serverSideRender: true,
