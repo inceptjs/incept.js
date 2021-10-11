@@ -1,4 +1,4 @@
-import Application from './types/Application';
+import Application from '../types/Application';
 
 import develop from './plugin/develop';
 import terminal from './plugin/terminal';

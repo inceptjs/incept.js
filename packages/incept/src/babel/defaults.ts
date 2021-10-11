@@ -1,9 +1,6 @@
 export default {
-  ignore: [
-    /node_modules/,
-    /\.build\/server\/entries\/main\.js/,
-  ],
-  extensions: ['.js', '.jsx', '.svg', '.jpg', '.gif', '.png', '.jpeg'],
+  ignore: [ /node_modules/ ],
+  extensions: [ '.js', '.jsx' ],
   presets: [
     //transforms es6/7 to cjs
     '@babel/preset-env', 
