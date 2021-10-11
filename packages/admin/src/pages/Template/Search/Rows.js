@@ -1,7 +1,7 @@
 //vendor imports
 import React from 'react'
+import IconChevronRight from '@inceptjs/icons/regular/chevron-right'
 //local imports
-import IconChevronRight from '../../../components/Icon/regular/chevron-right'
 import Button from '../../../components/Button'
 import { Trow,  Tcol } from '../../../components/Table'
 

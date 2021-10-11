@@ -1,11 +1,11 @@
 //vendor imports
 import React from 'react'
 //local imports
-import IconMenu from '../Icon/regular/Menu'
-import IconSun from '../Icon/regular/Sun'
-import IconMoon from '../Icon/regular/Moon'
-import IconUser from '../Icon/regular/user-circle'
-import IconBell from '../Icon/regular/Bell'
+import IconMenu from '@inceptjs/icons/regular/Menu'
+import IconSun from '@inceptjs/icons/regular/Sun'
+import IconMoon from '@inceptjs/icons/regular/Moon'
+import IconUser from '@inceptjs/icons/regular/user-circle'
+import IconBell from '@inceptjs/icons/regular/Bell'
 import Crumbs from '../Crumbs'
 import Button from '../Button'
 //self imports

@@ -1,10 +1,12 @@
 import path from 'path';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { Application } from '../../types/Application';
+import { VirtualFSWebpackPlugin } from '@inceptjs/virtualfs';
 
 export default (app: Application) => ({
   resolve: {
-    extensions: ['.js', '.jsx', '.json', '.css']
+    extensions: [ '.js', '.jsx', '.json', '.css' ],
+    plugins: [ new VirtualFSWebpackPlugin ]
   },
   output: { 
     path: path.join(app.buildPath, 'static'), 

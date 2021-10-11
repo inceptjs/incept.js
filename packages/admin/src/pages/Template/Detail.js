@@ -1,9 +1,9 @@
 //vendor imports
 import React, { useState, useEffect } from 'react'
+import IconEdit from '@inceptjs/icons/regular/Edit'
+import IconCopy from '@inceptjs/icons/regular/Copy'
+import IconRemove from '@inceptjs/icons/regular/X'
 //local imports
-import IconEdit from '../../components/Icon/regular/Edit'
-import IconCopy from '../../components/Icon/regular/Copy'
-import IconRemove from '../../components/Icon/regular/X'
 import Button from '../../components/Button'
 import Screen from '../../components/Screen'
 import { Table, Thead } from '../../components/Table'

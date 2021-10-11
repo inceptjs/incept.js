@@ -2,7 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 //local imports
-import IconChevronLeft from '../Icon/regular/chevron-left'
+import IconChevronLeft from '@inceptjs/icons/regular/chevron-left'
 //self imports
 import classes from './Screen.module.css'
 

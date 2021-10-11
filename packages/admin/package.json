@@ -11,7 +11,7 @@
     "./src"
   ],
   "dependencies": {
-    "boxicons": "2.0.9",
+    "@inceptjs/icons": "^0.0.21",
     "inceptjs": "^0.0.21",
     "react-redux": "^7.2.5",
     "redux-thunk": "^2.3.0",

@@ -78,15 +78,6 @@ require('/my/post/1/info.json').id //--> 1
 When a route is requested by `readFileSync()`, it gets computed and 
 written to the VFS in a lazy way. 
 
-> Using routes on VFS could be problematic with `webpack` because it 
-uses `enhanced-resolve` and that uses `fs.stat()` on folders to 
-determine if a file exists. 
-
-Since routes like `/my/post/:id/info.json` have an unlimited 
-permutation, it would not be possible for VFS to populate stats in a 
-directory. It could still work however, if all the possible 
-permutations were pre-written to VFS.
-
 ### Transforming files
 
 Virtual modules has a basic transformer that sits on top that you can 
@@ -126,4 +117,30 @@ stop virtual modules like this.
 vfs.revertPatch()
 
 vm.patchFS()
+```
+
+## Wepack Plugin
+
+Using routes on VFS could be problematic with `webpack` because it 
+uses `enhanced-resolve` and that uses `fs.stat()` on folders to 
+determine if a file exists. 
+
+Since routes like `/my/post/:id/info.json` have an unlimited 
+permutation, it would not be possible for VFS to populate stats in a 
+directory. It could still work however, if all the possible 
+permutations were pre-written to VFS.
+
+Therefore we created a webpack plugin you can insert as a plugin 
+resolver in your `webpack` config.
+
+```js
+const { VirtualFSWebpackPlugin } = require('@inceptjs/virtualfs')
+
+module.exports = {
+  resolve: {
+    ...
+    plugins: [ new VirtualFSWebpackPlugin ]
+  },
+  ...
+}
 ```

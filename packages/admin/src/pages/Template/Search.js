@@ -1,8 +1,8 @@
 //vendor imports
 import React, { useState, useEffect } from 'react'
+import IconPlus from '@inceptjs/icons/regular/Plus'
+import IconCamera from '@inceptjs/icons/regular/Camera'
 //local imports
-import IconPlus from '../../components/Icon/regular/Plus'
-import IconCamera from '../../components/Icon/regular/Camera'
 import Button from '../../components/Button'
 import { Table, Thead } from '../../components/Table'
 //self imports

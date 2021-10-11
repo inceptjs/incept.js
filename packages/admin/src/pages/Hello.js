@@ -1,4 +1,4 @@
-import Alarm from '../components/Icon/regular/Alarm'
+import Alarm from '@inceptjs/icons/regular/Alarm'
 import Button from '../components/Button'
 
 export default function Hello(props) {

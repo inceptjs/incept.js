@@ -1,8 +1,8 @@
 //vendor imports
 import React from 'react'
 //vendor icons
-import IconHome from '../Icon/regular/home'
-import IconChevronRight from '../Icon/regular/chevron-right'
+import IconHome from '@inceptjs/icons/regular/home'
+import IconChevronRight from '@inceptjs/icons/regular/chevron-right'
 import { Link } from 'react-router-dom'
 
 import classes from './Crumbs.module.css'

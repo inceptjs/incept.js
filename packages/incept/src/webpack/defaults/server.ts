@@ -2,12 +2,14 @@ import path from 'path';
 import nodeExternals from 'webpack-node-externals';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { Application } from '../../types/Application';
+import { VirtualFSWebpackPlugin } from '@inceptjs/virtualfs';
 
 export default (app: Application) => {
   return {
     target: 'node',
     resolve: {
-      extensions: ['.js', '.jsx', '.json', '.css']
+      extensions: ['.js', '.jsx', '.json', '.css'],
+      plugins: [ new VirtualFSWebpackPlugin ]
     },
     externals: [
       nodeExternals({

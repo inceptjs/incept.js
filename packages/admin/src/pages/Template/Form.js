@@ -1,7 +1,7 @@
 //vendor imports
 import React from 'react'
+import IconCheck from '@inceptjs/icons/regular/Check'
 //local imports
-import IconCheck from '../../components/Icon/regular/Check'
 import Button from '../../components/Button'
 import Screen from '../../components/Screen'
 //self imports

@@ -1,4 +1,5 @@
 import { Response } from '@inceptjs/framework';
-import VirtualFS from './VirtualFS';
-export default new VirtualFS;
-export { VirtualFS, Response };
+import VirtualFS, { vfs } from './VirtualFS';
+import VirtualFSWebpackPlugin from './WebpackPlugin';
+export default vfs;
+export { VirtualFS , VirtualFSWebpackPlugin, Response };

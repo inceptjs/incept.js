@@ -1,8 +1,8 @@
 //vendor imports
 import React from 'react'
+import IconSearch from '@inceptjs/icons/regular/Search'
+import IconFilter from '@inceptjs/icons/regular/Filter'
 //local imports
-import IconSearch from '../../../components/Icon/regular/Search'
-import IconFilter from '../../../components/Icon/regular/Filter'
 import Button from '../../../components/Button'
 import Input from '../../../components/Form/Input'
 import classes from '../Template.module.css'

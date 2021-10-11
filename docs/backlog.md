@@ -1,12 +1,7 @@
 # Backlog
 
- - Develop `$ incept build` Script
- - Develop `$ incept start` Script
- - Develop `$ incept lint` Script
  - Develop npx starter called `create-incept-app`
  - Move scripts to a package called `devops`
- - Move babel configuration into a package called `presets`
- - Move webpack configuration into a package called `presets`
  - Move admin/icons into a package called `icons`
  - Build EventRPC
  - Build Admin Builder *(in ts)*

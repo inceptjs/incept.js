@@ -2,7 +2,7 @@
 import React from 'react'
 //local imports
 import Button from '../Button'
-import IconChevronLeft from '../Icon/regular/chevron-left'
+import IconChevronLeft from '@inceptjs/icons/regular/chevron-left'
 //self imports
 import Menu from './Menu'
 import classes from './Panel.module.css'

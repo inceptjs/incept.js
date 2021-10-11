@@ -1,6 +1,6 @@
-const { expect } = require('chai')
 const fs = require('fs')
 const path = require('path')
+const { expect } = require('chai')
 const VirtualFS = require('../dist/VirtualFS').default
 
 describe('Base Tests', () => {
@@ -34,6 +34,21 @@ describe('Base Tests', () => {
     
     expect(fs.readFileSync(file).toString()).to.equal(code)
     expect(require(file)).to.equal('Static')
+  })
+
+  it('Should require a node module', () => {
+    const dirname = path.dirname(__dirname)
+    this.vfs.mkdirSync(
+      path.join(dirname, 'node_modules'),
+      { recursive: true }
+    )
+    this.vfs.writeFileSync(
+      path.join(dirname, 'node_modules/foo.js'), 
+      'module.exports = { foo: "foo" }'
+    )
+
+    const foo = require('foo')
+    expect(foo.foo).to.equal('foo')
   })
 
   it('Should require from relative files', () => {

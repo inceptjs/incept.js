@@ -1,8 +1,8 @@
-import IconCog from '../components/Icon/regular/Cog'
-import IconData from '../components/Icon/regular/Data'
-import IconCode from '../components/Icon/regular/code-alt'
-import IconCamera from '../components/Icon/regular/Camera'
-import IconCoffee from '../components/Icon/regular/Coffee'
+import IconCog from '@inceptjs/icons/regular/Cog'
+import IconData from '@inceptjs/icons/regular/Data'
+import IconCode from '@inceptjs/icons/regular/code-alt'
+import IconCamera from '@inceptjs/icons/regular/Camera'
+import IconCoffee from '@inceptjs/icons/regular/Coffee'
 
 export default [
   {

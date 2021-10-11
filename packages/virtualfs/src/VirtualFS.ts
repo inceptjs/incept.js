@@ -552,6 +552,9 @@ function tryExtensions(request: string, fs: any): string|boolean {
   return false;
 }
 
+const vfs = new VirtualFS;
+export { vfs };
+
 export type Transformer = {
   test: RegExp|Function;
   callback: Function;

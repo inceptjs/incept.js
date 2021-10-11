@@ -1,5 +1,4 @@
-import registerIconComponent from './icon'
-
+import '@inceptjs/icons'
 export default function(app) {
   app.withReact.layout('admin', `${__dirname}/Layout`)
   app.withReact.route(
@@ -12,6 +11,4 @@ export default function(app) {
     `${__dirname}/pages/Template/Search`,
     'admin'
   )
-  
-  registerIconComponent(app)
 }
