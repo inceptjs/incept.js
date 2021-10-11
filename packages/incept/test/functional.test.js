@@ -3,8 +3,8 @@ const { expect } = require('chai')
 const fetch = require('node-fetch')
 const config = require('../dist/babel/defaults').default
 const Application = require('../dist/types/Application').default
-const develop = require('../dist/plugin/develop').default
-const terminal = require('../dist/plugin/terminal').default
+const develop = require('../dist/terminal/plugin/develop').default
+const terminal = require('../dist/terminal/plugin/terminal').default
 
 const cwd = path.join(__dirname, 'sandbox')
 
@@ -17,7 +17,7 @@ describe('Functional Tests', async () => {
     app.bootstrap(develop)
     app.load()
     app.plugin('terminal').emit(cwd, ['npm', 'run', 'dev', '--port=8080'])
-    app.on('dev-ready', () => done())
+    app.on('develop-ready', () => done())
   })
 
   it('Should load home page', async () => {
