@@ -126,6 +126,11 @@ export default class VirtualFS extends MemVolume {
    * Merges the VirtualFS into Node's FS
    */
   public patchFS(): VirtualFS {
+    //if it's already patched
+    if (typeof this._revertFS === 'function') {
+      return this;
+    }
+
     this._revertFS = patchFS(this);
     //@ts-ignore
     this._originals._findPath = Module._findPath;
@@ -212,8 +217,11 @@ export default class VirtualFS extends MemVolume {
       this._revertFS = null;
     }
 
-    //@ts-ignore
-    Module._findPath = this._originals._findPath;
+    if (typeof this._originals._findPath === 'function') {
+      //@ts-ignore
+      Module._findPath = this._originals._findPath;
+      delete this._originals._findPath;
+    }
   
     return this;
   }
