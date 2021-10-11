@@ -1,14 +1,33 @@
 import path from 'path';
-import { Stats, Compilation, HotModuleReplacementPlugin } from 'webpack';
 import LoadablePlugin from '@loadable/webpack-plugin';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
+import { Stats, Compilation, HotModuleReplacementPlugin } from 'webpack';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 
 import { Application } from '../types/Application';
 
 import defaults from './defaults';
 import WebpackCompiler from './Compiler';
+
+const statsReporting = {
+  cached: false,
+  colors: true,
+  assets: false,
+  chunks: false,
+  chunkModules: false,
+  chunkOrigins: false,
+  errors: true,
+  errorDetails: true,
+  hash: false,
+  modules: false,
+  timings: false,
+  warnings: false,
+  version: false,
+  children: false,
+  reasons: false,
+  source: false,
+};
 
 export default class WithWebpack {
   /**
@@ -23,6 +42,9 @@ export default class WithWebpack {
     this._application = app;
   }
 
+  /**
+   * Configures the bundler for client or server
+   */
   bundle(
     target: Target = Target.Static,
     mode: Mode = Mode.Development, 
@@ -30,7 +52,7 @@ export default class WithWebpack {
   ) {
     //---------------------------------------------------------------//
     // Common Configuration
-    const { cwd, withVirtualFS: vfs, withReact: react } = this._application;
+    const { cwd, withVirtualFS: vfs } = this._application;
     const bundler = new WebpackCompiler(Object.assign(
       defaults[target](this._application), 
       this._application.config.webpack[target]
@@ -40,7 +62,9 @@ export default class WithWebpack {
     //set dev or prod mode
     config.mode = mode;
     //setup the `@loadable/webpack-plugin` config
-    const loadableConfig: Record<string, any> = { filename: 'stats.json' };
+    const loadableConfig: Record<string, any> = { 
+      filename: 'stats.json' 
+    };
     //if we are writing to disk
     if (write) {
       //tell loadable where we are writing this to
@@ -83,22 +107,16 @@ export default class WithWebpack {
     bundler.on('display-ready', 'done', (stats: Stats) => {
       if (done) return;
       const time = stats.compilation.endTime - stats.compilation.startTime;
-      console.log(`compiled ${target} in ${time}ms`);
+      this._application.emit('log', `compiled ${target} in ${time}ms`);
       done = true;
     });
+
+    //set the entry location
+    bundler.addEntry('main', path.join(cwd, `.build/virtual/${target}.js`));
 
     //---------------------------------------------------------------//
     // Target: Static
     if (target === Target.Static) {
-      //add routes as bundler entries
-      for(const route of react.routes) {
-        //determine the name (same as ReactPlugin.render)
-        const name = this.clientEntryFileName(route.path);
-        //determine the virtual entry
-        const entry = path.join(cwd, `.build/virtual/${name}.js`);
-        bundler.addEntry(name, entry);
-      }
-
       //if Mode: Development
       if (mode === Mode.Development) {
         //add hot to all entries
@@ -120,15 +138,10 @@ export default class WithWebpack {
           }
         }));
         //updates on react component changes (for dev)
-        config.module.rules[0].use[0].options.plugins.push('react-refresh/babel');
+        config.module.rules[0].use[0].options.plugins.push(
+          'react-refresh/babel'
+        );
       }
-    }
-    
-    //---------------------------------------------------------------//
-    // Target: Server
-    if (target === Target.Server) {
-      const entry = path.join(cwd, `.build/virtual/_server.js`);
-      bundler.addEntry('main', entry);
     }
 
     return bundler
@@ -141,23 +154,22 @@ export default class WithWebpack {
     const { 
       cwd, 
       buildURL, 
-      withVirtualFS, 
-      withReact 
+      withVirtualFS
     } = this._application;
 
-    //add routes as bundler entries
-    for(const route of withReact.routes) {
-      //determine the name (same as ReactPlugin.render)
-      const name = this.clientEntryFileName(route.path);
-      //determine the virtual entry
-      const entry = path.join(cwd, `.build/virtual/${name}.js`);
-      withVirtualFS.mkdirSync(path.dirname(entry), { recursive: true });
-      withVirtualFS.writeFileSync(entry, this.clientEntryCode(route.path));
-    }
+    const staticEntry = path.join(cwd, `.build/virtual/static.js`);
+    withVirtualFS.mkdirSync(
+      path.dirname(staticEntry), 
+      { recursive: true }
+    );
+    withVirtualFS.writeFileSync(staticEntry, this.clientEntryCode());
 
-    const entry = path.join(cwd, `.build/virtual/_server.js`);
-    withVirtualFS.mkdirSync(path.dirname(entry), { recursive: true });
-    withVirtualFS.writeFileSync(entry, this.serverEntryCode());
+    const serverEntry = path.join(cwd, `.build/virtual/server.js`);
+    withVirtualFS.mkdirSync(
+      path.dirname(serverEntry), 
+      { recursive: true }
+    );
+    withVirtualFS.writeFileSync(serverEntry, this.serverEntryCode());
     
     const client = this
       .bundle(Target.Static, Mode.Development, write)
@@ -171,7 +183,24 @@ export default class WithWebpack {
       server.outputFileSystem = withVirtualFS;
     }
 
-    server.run((error) => { if (error) throw error });
+    server.run((error, stats) => {
+      if (error) {
+        this._application.emit('log', error, 'error');
+      } else if (stats?.hasErrors()) {
+        this._application.emit('log', stats.toString(statsReporting));
+      }
+
+      server.watch({}, (error, stats) => {
+        if (error) {
+          this._application.emit('log', error, 'error');
+        } else if (stats?.hasErrors()) {
+          this._application.emit('log', stats.toString(statsReporting));
+        } else {
+          //clear the require cache
+          delete require.cache[serverEntry];
+        }
+      });
+    });
   
     const dev = webpackDevMiddleware(client, {
       serverSideRender: true,
@@ -191,14 +220,14 @@ export default class WithWebpack {
   /**
    * Generates a client entry file
    */
-  clientEntryCode(pathname: string): string {
+  clientEntryCode(): string {
     const { 
       app, 
       imports, 
       exports, 
       loadables, 
       routesJson 
-    } = this._application.withReact.compile(pathname);
+    } = this._application.withReact.compile();
 
     return [
       `import React from 'react'`,
@@ -217,20 +246,6 @@ export default class WithWebpack {
       '  )',
       '})'
     ].join("\n")
-  }
-
-  /**
-   * generates a file name based on the router path
-   */
-  clientEntryFileName(path: string): string {
-    path = path.replaceAll(':', '')
-    if (path.indexOf('/') === 0) {
-      path = path.substr(1)
-    }
-    if (!path.length) {
-      path = 'index'
-    }
-    return path
   }
 
   /**

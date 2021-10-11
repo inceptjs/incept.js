@@ -54,19 +54,6 @@ There is a huge overlap between Babel and Webpack in terms of intent.
 If babel is for transpiling and webpack is for bundling, what's up 
 with isomorphic plugins?
 
-**@loadable/babel-plugin**
-
-This is not what everyone thinks. This plugin requires that you bundle 
-your server files as well as your client similar to their 
-[github](https://github.com/gregberge/loadable-components/tree/main/examples/server-side-rendering)
-example, otherwise will not work at all. Additionally I thought at 
-first that `@loadable` was this magical sword that magically transpiles 
-CSS and the like, but again would only work if you use `webpack` to 
-bundle your server code. 
-
-> This item is marked as passive, because it was the `@loadable` 
-author's intent to do it that way.
-
 ## Active
 
 **This browser doesn't support requestAnimationFrame. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills**
@@ -121,13 +108,6 @@ But setting the paths like the above will result in the module calling
 `GET /.builddevelop/main.fcb46c918fa3bdee3fd0.hot-update.json`. 
 Fortunately it still renders an output and hot is only in dev mode, so 
 it's less severe.
-
-**Isomorphic Babel & Webpack**
-
-Both of these projects suffer from plugins that need to be isomorphic 
-being outdated in a matter of years like CSS, SVG, file & url importing.
-I ended up fixing and hosting up a fork of 
-[`babel-plugin-file-loader`](https://github.com/cblanquera/babel-plugin-file-loader)
 
 **Material UI**
 
@@ -190,3 +170,30 @@ const extractor = new ChunkExtractor({
   publicPath: buildURL
 })
 ```
+
+**@loadable/babel-plugin**
+
+This is not what everyone thinks. This plugin requires that you bundle 
+your server files as well as your client similar to their 
+[github](https://github.com/gregberge/loadable-components/tree/main/examples/server-side-rendering)
+example, otherwise will not work at all. Additionally I thought at 
+first that `@loadable` was this magical sword that magically transpiles 
+CSS and the like, but again would only work if you use `webpack` to 
+bundle your server code. 
+
+> This item is marked as passive, because it was the `@loadable` 
+author's intent to do it that way.
+
+**UPDATE: 0.0.21** I ended up drinking the `@loadable` kool aid so this 
+is being used now. 
+
+**Isomorphic Babel & Webpack**
+
+Both of these projects suffer from plugins that need to be isomorphic 
+being outdated in a matter of years like CSS, SVG, file & url importing.
+I ended up fixing and hosting up a fork of 
+[`babel-plugin-file-loader`](https://github.com/cblanquera/babel-plugin-file-loader)
+
+**UPDATE: 0.0.21** Made a separate bundler to render `<App />` on the 
+server side and passed it to to the `@loadable` kool aid. Removed 
+`babel-plugin-file-loader` and `@dr.pogodin/babel-plugin-css-modules-transform` 

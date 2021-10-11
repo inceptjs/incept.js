@@ -1,7 +1,7 @@
 import path from 'path';
 import React, { ComponentType } from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { ChunkExtractor, ChunkExtractorOptions } from '@loadable/server';
+import { ChunkExtractor } from '@loadable/server';
 import { StaticRouter, matchPath } from 'react-router';
 import { Request, Response } from '@inceptjs/framework';
 
@@ -97,9 +97,11 @@ export default class WithReact {
   /**
    * Generates code to use for virtual entries
    */
-  compile(pathname?: string): Record<string, any> {
+  compile(): Record<string, any> {
     const importClause = `import %s from '%s'`;
-    const loadableClause = `  const %s = loadable(_ => import(/* webpackChunkName: '%s' */'%s'))`;
+    const loadableClause = 'const %s = loadable('
+      + '_ => import(/* webpackChunkName: '
+      + `'%s' */'%s'))`;
     const routes = this.routes;
     const loadables = [];
     const exports = Object.keys(this._props);
@@ -111,31 +113,21 @@ export default class WithReact {
     let activeLayout = '';
     let routesJson = JSON.stringify(this.routes);
     for (let i = 0; i < routes.length; i++) {
-      const { path, view, layout } = routes[i];
+      const { view } = routes[i];
       //NOTE: routes should point a full path or node module
       //change from path to actual object reference
       routesJson = routesJson.replaceAll(`"${view}"`, `Route_${i + 1}`);
 
-      //if active href
-      if (path === pathname) {
-        //active import
-        imports.push(importClause
+      loadables.push(
+        loadableClause
           .replace('%s', `Route_${i + 1}`)
+          .replace('%s', view
+            .replaceAll('/', '_')
+            .replaceAll('.', '_')
+            .replace(/^_*/, '')
+          )
           .replace('%s', view)
-        );
-        activeLayout = layout;
-      } else {
-        loadables.push(
-          loadableClause
-            .replace('%s', `Route_${i + 1}`)
-            .replace('%s', view
-              .replaceAll('/', '_')
-              .replaceAll('.', '_')
-              .replace(/^_*/, '')
-            )
-            .replace('%s', view)
-        );
-      } 
+      );
     }
     exports.push('routes');
     //import layouts
@@ -244,27 +236,20 @@ export default class WithReact {
     //now do the loadable chunking thing..
     //see: https://loadable-components.com/docs/server-side-rendering/
     const server = new ChunkExtractor({ 
-      statsFile: path.join(this._application.buildPath, 'server/stats.json'),
+      statsFile: path.join(
+        this._application.buildPath, 
+        'server/stats.json'
+      ),
       publicPath: this._application.buildURL
     });
-
     const { default: App } = server.requireEntrypoint();
-    //chunk extractor client config could be dynamic...
-    const clientConfig: ChunkExtractorOptions = { 
-      statsFile: path.join(this._application.buildPath, 'static/stats.json'),
+    const client = new ChunkExtractor({ 
+      statsFile: path.join(
+        this._application.buildPath, 
+        'static/stats.json'
+      ),
       publicPath: this._application.buildURL
-    };
-    //see if we can find a matching route for this path
-    const match = this.match(pathname);
-    if (typeof match === 'string') {
-      //we only need to load the active entry point 
-      //to the `ChunkExtractor` on the server
-      clientConfig.entrypoints = [ 
-        this._application.withWebpack.clientEntryFileName(match) 
-      ];
-    }
-
-    const client = new ChunkExtractor(clientConfig);
+    });
 
     const Router = React.createElement(
       StaticRouter,

@@ -12,7 +12,7 @@ export default (app: Application) => ({
     publicPath: app.buildURL,
     //this is so the chunks can be identified easier
     chunkFilename: (fileinfo: Record<string, any>) => {
-      const name = fileinfo.chunk.name.replace(/_js$/, '').split('_').pop();
+      const name = fileinfo.chunk.id.replace(/_js$/, '').split('_').pop();
       const hash = fileinfo.chunk.renderedHash;
       return path.join('chunks', `${name}.${hash}.js`);
     }

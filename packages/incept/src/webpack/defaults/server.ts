@@ -21,7 +21,7 @@ export default (app: Application) => {
       libraryTarget: 'commonjs2',
       //this is so the chunks can be identified easier
       chunkFilename: (fileinfo: Record<string, any>) => {
-        const name = fileinfo.chunk.name.replace(/_js$/, '').split('_').pop();
+        const name = fileinfo.chunk.id.replace(/_js$/, '').split('_').pop();
         const hash = fileinfo.chunk.renderedHash;
         return path.join('chunks', `${name}.${hash}.js`);
       }
@@ -86,7 +86,8 @@ export default (app: Application) => {
     },
     optimization: {
       moduleIds: 'named',
-      chunkIds: 'named'
+      chunkIds: 'named',
+      splitChunks: { chunks: 'all' }
     },
     //see: https://webpack.js.org/configuration/stats/
     stats: {
