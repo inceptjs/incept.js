@@ -4,10 +4,12 @@
 
 ## Read More
 
+ - [incept](https://github.com/inceptjs/incept.js/tree/main/packages/incept)
  - [types](https://github.com/inceptjs/incept.js/tree/main/packages/types)
  - [framework](https://github.com/inceptjs/incept.js/tree/main/packages/framework)
  - [virtualfs](https://github.com/inceptjs/incept.js/tree/main/packages/virtualfs)
- - [incept](https://github.com/inceptjs/incept.js/tree/main/packages/incept)
+ - [icons](https://github.com/inceptjs/incept.js/tree/main/packages/icons)
+ - [admin](https://github.com/inceptjs/incept.js/tree/main/packages/admin)
 
 ## Installing
 

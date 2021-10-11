@@ -1,5 +1,4 @@
 import { vfs } from './VirtualFS';
-import { Resolver, ResolveRequest } from 'enhanced-resolve';
 
 export default class VirtualFSPlugin {
   /**
@@ -23,11 +22,15 @@ export default class VirtualFSPlugin {
   /**
    * Resolves
    */
-	apply(resolver: Resolver) {
+	apply(resolver: any) {
 		const target = resolver.ensureHook(this.target);
 		resolver
 			.getHook(this.source)
-			.tapAsync('VirtualFSPlugin', (request: ResolveRequest, resolveContext, callback) => {
+			.tapAsync('VirtualFSPlugin', (
+        request: Record<string, any>, 
+        resolveContext: Record<string, any>, 
+        callback: Function
+      ) => {
         if (!request.request) {
           return callback();
         }
