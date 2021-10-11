@@ -239,8 +239,7 @@ export default class WithReact {
       statsFile: path.join(
         this._application.buildPath, 
         'server/stats.json'
-      ),
-      publicPath: this._application.buildURL
+      )
     });
     const { default: App } = server.requireEntrypoint();
     const client = new ChunkExtractor({ 

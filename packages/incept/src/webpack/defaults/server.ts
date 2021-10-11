@@ -23,12 +23,12 @@ export default (app: Application) => {
       chunkFilename: (fileinfo: Record<string, any>) => {
         const name = fileinfo.chunk.id.replace(/_js$/, '').split('_').pop();
         const hash = fileinfo.chunk.renderedHash;
-        return path.join('chunks', `${name}.${hash}.js`);
+        return `chunks/${name}.${hash}.js`;
       }
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: '/styles/[name].[contenthash].css'
+        filename: 'styles/[name].[contenthash].css'
       })
     ],
     module: {

@@ -1,4 +1,5 @@
 import http from 'http';
+import path from 'path';
 import { Request, Response } from '@inceptjs/framework';
 
 import './develop/polyfill';
@@ -6,31 +7,30 @@ import { logError, logRequest, logResponse } from './develop/logs';
 import Application from '../../types/Application';
 
 import dispatch from './dispatch';
+import { StringRoute } from '../../react';
 
-function startDevServer(
+function startProductionServer(
   request: Request, 
   response: Response
 ): void {
   //user input
   const port = request.params.p || request.params.port || 3000;
   const host = request.params.h || request.params.host || 'localhost';
-  const write = request.params.w || request.params.write || false;
   //get the app
   const app = request.ctx as Application;
   const react = app.withReact;
-  const webpack = app.withWebpack;
   //log all errors
   app.on('error', logError.bind(app));
-  //load webpack
-  const {dev, hot} = webpack.develop(!!write);
-  app.use(dev);
-  app.use(hot);
   //this will transfer data from the response 
   //object to ServerResponse when the routes 
   //and events have been ran
   app.use(dispatch);
   //handle react
-  app.get('/**', react.handle);
+  react.routes.forEach((route: StringRoute) => { 
+    app.get(route.path, react.handle);
+  });
+  //open up the build path
+  app.public(path.join(app.buildPath, 'static'), '/.build')
   //create the http server
   const server = http.createServer(app.handle.bind(app));
   //let others get the http server (like if they want to close it)
@@ -52,9 +52,9 @@ function startDevServer(
   app.emit('log', `Server start @ ${host}:${port}`, 'success');
   app.emit('log', 'Press `CTRL+C` to exit');
   app.plugin('server', server);
-  app.emit('develop-ready');
+  app.emit('production-ready');
 }
 
-export default function developPlugin(ctx: Application) {
-  ctx.on('dev', startDevServer);
+export default function startPlugin(ctx: Application) {
+  ctx.on('start', startProductionServer);
 }

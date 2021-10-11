@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 import LoadablePlugin from '@loadable/webpack-plugin';
 import webpackDevMiddleware from 'webpack-dev-middleware';
@@ -148,73 +149,39 @@ export default class WithWebpack {
   }
 
   /**
-   * Client development configuration
+   * Builds the bundles
    */
-  develop(write: boolean = false) {
-    const { 
-      cwd, 
-      buildURL, 
-      withVirtualFS
-    } = this._application;
+  build() {
+    const { buildPath } = this._application;
 
-    const staticEntry = path.join(cwd, `.build/virtual/static.js`);
-    withVirtualFS.mkdirSync(
+    if (fs.existsSync(buildPath)) {
+      //remove the build path
+      fs.rmSync(buildPath, { recursive: true });
+    }
+
+    const staticEntry = path.join(buildPath, `virtual/static.js`);
+    fs.mkdirSync(
       path.dirname(staticEntry), 
       { recursive: true }
     );
-    withVirtualFS.writeFileSync(staticEntry, this.clientEntryCode());
+    fs.writeFileSync(staticEntry, this.clientEntryCode());
 
-    const serverEntry = path.join(cwd, `.build/virtual/server.js`);
-    withVirtualFS.mkdirSync(
+    const serverEntry = path.join(buildPath, `virtual/server.js`);
+    fs.mkdirSync(
       path.dirname(serverEntry), 
       { recursive: true }
     );
-    withVirtualFS.writeFileSync(serverEntry, this.serverEntryCode());
+    fs.writeFileSync(serverEntry, this.serverEntryCode());
     
-    const client = this
-      .bundle(Target.Static, Mode.Development, write)
-      .compiler;
+    this.bundle(Target.Static, Mode.Production, true)
+      .compiler
+      .run(this.report);
     
-    const server = this
-      .bundle(Target.Server, Mode.Development, write)
-      .compiler;
-
-    if (!write) {
-      server.outputFileSystem = withVirtualFS;
-    }
-
-    server.run((error, stats) => {
-      if (error) {
-        this._application.emit('log', error, 'error');
-      } else if (stats?.hasErrors()) {
-        this._application.emit('log', stats.toString(statsReporting));
-      }
-
-      server.watch({}, (error, stats) => {
-        if (error) {
-          this._application.emit('log', error, 'error');
-        } else if (stats?.hasErrors()) {
-          this._application.emit('log', stats.toString(statsReporting));
-        } else {
-          //clear the require cache
-          delete require.cache[serverEntry];
-        }
-      });
-    });
+    this.bundle(Target.Server, Mode.Production, true)
+      .compiler
+      .run(this.report);
   
-    const dev = webpackDevMiddleware(client, {
-      serverSideRender: true,
-      publicPath: buildURL,
-      writeToDisk: write
-    });
-    
-    const hot = webpackHotMiddleware(client, {
-      log: false,
-      path: '/__incept',
-      heartbeat: 10 * 1000
-    });
-  
-    return { client, server, dev, hot }
+    return this;
   }
 
   /**
@@ -246,6 +213,77 @@ export default class WithWebpack {
       '  )',
       '})'
     ].join("\n")
+  }
+
+  /**
+   * Development configuration
+   */
+  develop(write: boolean = false) {
+    const { 
+      buildPath, 
+      buildURL, 
+      withVirtualFS
+    } = this._application;
+
+    const staticEntry = path.join(buildPath, 'virtual/static.js');
+    withVirtualFS.mkdirSync(
+      path.dirname(staticEntry), 
+      { recursive: true }
+    );
+    withVirtualFS.writeFileSync(staticEntry, this.clientEntryCode());
+
+    const serverEntry = path.join(buildPath, 'virtual/server.js');
+    withVirtualFS.mkdirSync(
+      path.dirname(serverEntry), 
+      { recursive: true }
+    );
+    withVirtualFS.writeFileSync(serverEntry, this.serverEntryCode());
+    
+    const client = this
+      .bundle(Target.Static, Mode.Development, write)
+      .compiler;
+    
+    const server = this
+      .bundle(Target.Server, Mode.Development, write)
+      .compiler;
+
+    if (!write) {
+      server.outputFileSystem = withVirtualFS;
+    }
+
+    server.run((error, stats) => {
+      this.report(error, stats);
+      server.watch({}, (error, stats) => {
+        this.report(error, stats);
+        //clear the require cache
+        delete require.cache[serverEntry];
+      });
+    });
+  
+    const dev = webpackDevMiddleware(client, {
+      serverSideRender: true,
+      publicPath: buildURL,
+      writeToDisk: write
+    });
+    
+    const hot = webpackHotMiddleware(client, {
+      log: false,
+      path: '/__incept',
+      heartbeat: 10 * 1000
+    });
+  
+    return { client, server, dev, hot }
+  }
+
+  /**
+   * The callback after calling `webpack.run()`
+   */
+  report = (error: Error|undefined, stats: Stats|undefined) => {
+    if (error) {
+      this._application.emit('log', error, 'error');
+    } else if (stats?.hasErrors()) {
+      this._application.emit('log', stats.toString(statsReporting));
+    }
   }
 
   /**

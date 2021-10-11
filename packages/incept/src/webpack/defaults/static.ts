@@ -9,17 +9,17 @@ export default (app: Application) => ({
   output: { 
     path: path.join(app.buildPath, 'static'), 
     filename: 'entries/[name].js', 
-    publicPath: app.buildURL,
+    publicPath: app.buildURL + path.sep,
     //this is so the chunks can be identified easier
     chunkFilename: (fileinfo: Record<string, any>) => {
       const name = fileinfo.chunk.id.replace(/_js$/, '').split('_').pop();
       const hash = fileinfo.chunk.renderedHash;
-      return path.join('chunks', `${name}.${hash}.js`);
+      return `chunks/${name}.${hash}.js`;
     }
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '/styles/[name].[contenthash].css'
+      filename: 'styles/[name].[contenthash].css'
     })
   ],
   module: {

@@ -1,5 +1,7 @@
 import Application from '../types/Application';
 
+import build from './plugin/build';
+import start from './plugin/start';
 import develop from './plugin/develop';
 import terminal from './plugin/terminal';
 
@@ -13,6 +15,10 @@ const app = new Application({ cwd });
 app.bootstrap(terminal);
 //bootstrap development tools
 app.bootstrap(develop);
+//bootstrap build tool
+app.bootstrap(build);
+//bootstrap start tool
+app.bootstrap(start);
 //bootstrap the server plugins 
 //(which usually are defined in the project)
 app.load();

@@ -88,27 +88,6 @@ all this does is make sure when the compile is complete it is
 logged once. I added a hook to suppress this from showing on the 
 console twice and silenced logging.
 
-**webpack-hot-middleware**
-
-The latest version of `webpack-hot-middleware` writes files to your 
-build folder. You can change the directory by adding to webpack's output
-config like the following, but the plugin still routes incorrectly.
-
-```json
-{
-  "output": {
-    ...
-    "hotUpdateChunkFilename": "develop/[id].[fullhash].hot-update.js",
-    "hotUpdateMainFilename": "develop/[runtime].[fullhash].hot-update.json"
-  }
-}
-```
-
-But setting the paths like the above will result in the module calling
-`GET /.builddevelop/main.fcb46c918fa3bdee3fd0.hot-update.json`. 
-Fortunately it still renders an output and hot is only in dev mode, so 
-it's less severe.
-
 **Material UI**
 
 Encountering errors with `useLayoutEffect` when rendering on the server
