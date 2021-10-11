@@ -1,6 +1,6 @@
 {
   "name": "@inceptjs/icons",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "Virtual React BoxIcons",
   "author": "Chris <chris@incept.asia>",
   "license": "MIT",
@@ -26,7 +26,7 @@
   ],
   "dependencies": {
     "boxicons": "2.0.9",
-    "@inceptjs/virtualfs": "^0.0.21"
+    "@inceptjs/virtualfs": "^0.0.22"
   },
   "devDependencies": {
     "@types/node": "^16.9.4",
