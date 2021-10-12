@@ -1,8 +1,13 @@
 import path from 'path';
+import crypto from 'crypto';
 import nodeExternals from 'webpack-node-externals';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { Application } from '../../types/Application';
 import { VirtualFSWebpackPlugin } from '@inceptjs/virtualfs';
+import { Application } from '../../types/Application';
+
+function salt(id: string): string {
+  return crypto.createHash('md5').update(id).digest('hex');
+}
 
 export default (app: Application) => {
   return {
@@ -24,13 +29,23 @@ export default (app: Application) => {
       //this is so the chunks can be identified easier
       chunkFilename: (fileinfo: Record<string, any>) => {
         const name = fileinfo.chunk.id.replace(/_js$/, '').split('_').pop();
-        const hash = fileinfo.chunk.renderedHash;
+        const hash = salt(fileinfo.chunk.id);
         return `chunks/${name}.${hash}.js`;
       }
     },
     plugins: [
       new MiniCssExtractPlugin({
-        filename: 'styles/[name].[contenthash].css'
+        //filename: 'styles/[name].[contenthash].css',
+        filename: (pathData: Record<string, any>) => {
+          const name = pathData.chunk.id.replace(/_js$/, '').split('_').pop();
+          const hash = salt(pathData.chunk.id);
+          return `styles/${name}.${hash}.css`;
+        },
+        chunkFilename: (pathData: Record<string, any>) => {
+          const name = pathData.chunk.id.replace(/_js$/, '').split('_').pop();
+          const hash = salt(pathData.chunk.id);
+          return `styles/${name}.${hash}.css`;
+        }
       })
     ],
     module: {
@@ -70,16 +85,12 @@ export default (app: Application) => {
         {
           test: /\.css$/i,
           use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-            }, 
+            { loader: MiniCssExtractPlugin.loader }, 
             {
               loader: 'css-loader',
               options: {
                 esModule: true,
-                modules: {
-                  localIdentName: '[name]-[local]',
-                }
+                modules: { localIdentName: '[name]-[local]-[hash:base64:5]' }
               }
             }
           ]
