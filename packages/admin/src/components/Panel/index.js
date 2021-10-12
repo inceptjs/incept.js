@@ -56,7 +56,7 @@ export default function Panel(props) {
   }
 
   if (history.length) {
-    classStates.push(classes['panel-righht-open'])
+    classStates.push(classes['panel-right-open'])
   }
 
   //render

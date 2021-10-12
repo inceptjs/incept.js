@@ -7,6 +7,7 @@ import IconRemove from '@inceptjs/icons/regular/X'
 import Button from '../../components/Button'
 import Screen from '../../components/Screen'
 import { Table, Thead } from '../../components/Table'
+import { Tabs, TabItem, TabPanel } from '../../components/Tabs'
 //self imports
 import Form from './Form'
 import SearchRows from './Search/Rows'
@@ -51,18 +52,26 @@ export default function TemplateDetail(props) {
     <>
       <Screen.Head title="Template Detail" onClick={prev} />
       <Screen.Body withFoot2>
-        <Metadata row={row} />
-        <Table>
-          <Thead sticky-top sticky-left>ID</Thead>
-          <Thead sticky-top>Image</Thead>
-          <Thead sticky-top>Name</Thead>
-          <Thead sticky-top>Bio</Thead>
-          <Thead sticky-top>Active</Thead>
-          <Thead sticky-top>Created</Thead>
-          <Thead sticky-top>Updated</Thead>
-          <Thead sticky-top sticky-right>&nbsp;</Thead>
-          <SearchRows tbody rows={row.friends} detail={detail} />
-        </Table>
+        <Tabs active={1}>
+          <TabItem>Information</TabItem>
+          <TabItem>Friends</TabItem>
+          <TabPanel>
+            <Metadata row={row} />
+          </TabPanel>
+          <TabPanel>
+          <Table>
+            <Thead sticky-top sticky-left>ID</Thead>
+            <Thead sticky-top>Image</Thead>
+            <Thead sticky-top>Name</Thead>
+            <Thead sticky-top>Bio</Thead>
+            <Thead sticky-top>Active</Thead>
+            <Thead sticky-top>Created</Thead>
+            <Thead sticky-top>Updated</Thead>
+            <Thead sticky-top sticky-right>&nbsp;</Thead>
+            <SearchRows tbody rows={row.friends} detail={detail} />
+          </Table>
+          </TabPanel>
+        </Tabs>
       </Screen.Body>
       <Screen.Foot>
         <Button 

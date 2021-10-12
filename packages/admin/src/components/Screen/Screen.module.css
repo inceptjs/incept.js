@@ -34,10 +34,7 @@
   font-size: 15px;
   font-weight: bold;
   line-height: 18px;
-  margin-bottom: 0;
-  margin-left: 0;
-  margin-right: 0;
-  margin-top: -4;
+  margin: -4px 0 0;
   overflow: hidden;
   text-transform: uppercase;
   text-overflow: ellipsis;

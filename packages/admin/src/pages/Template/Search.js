@@ -62,7 +62,7 @@ export default function TemplateSearch(props) {
         <Thead stickyTop>Active</Thead>
         <Thead stickyTop>Created</Thead>
         <Thead stickyTop>Updated</Thead>
-        <Thead stickyTop stickyRight>{'&nbsp;'}</Thead>
+        <Thead stickyTop stickyRight>{' '}</Thead>
         <SearchRows tbody rows={rows} detail={detail} />
       </Table>
     </>
