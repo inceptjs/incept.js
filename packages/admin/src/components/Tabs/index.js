@@ -35,18 +35,26 @@ function getPanels(children) {
 }
 
 export default function Tabs(props) {
-  const { value, onChange, className, style, children } = props
+  const { onChange, className, style, children } = props
   const classNames = [ classes['tabs'] ]
   if (className) {
     classNames.push(className)
   }
-  const [ index, setTab ] = useState(value)
   const selectTab = (e) => {
-    console.log(e.target)
+    if (!tabList.current) {
+      return
+    }
+
+    Array.from(tabList.current.children).forEach((child, i) => {
+      if (child === e.target) {
+        onChange(i)
+      }
+    })
   }
 
   const tabs = getTabs(children)
   const panels = getPanels(children)
+  const tabList = React.createRef()
 
   return (
     <div
@@ -54,6 +62,7 @@ export default function Tabs(props) {
       style={style}
     >
       {tabs.length && <ul 
+        ref={tabList}
         className={classes['tab-list']} 
         onClick={selectTab}
       >

@@ -8,21 +8,29 @@ import classes from './Table.module.css'
 export default function TableHead(props) {
   //styles
   const style = {}
+  let stickies = 0
   if (props.stickyLeft) {
     style.position = 'sticky'
-    style.zIndex = 4
+    style.zIndex = 2
     style.left = 0
+    stickies++
   }
   if (props.stickyRight) {
     style.position = 'sticky'
-    style.zIndex = 4
+    style.zIndex = 2
     style.right = 0
+    stickies++
   }
   if (props.stickyTop) {
     style.position = 'sticky'
-    style.zIndex = 3
+    style.zIndex = 2
     style.top = 0
+    stickies++
   } 
+
+  if (stickies) {
+    style.zIndex += stickies
+  }
   if (props.noWrap) {
     style.whiteSpace = 'nowrap'
   }

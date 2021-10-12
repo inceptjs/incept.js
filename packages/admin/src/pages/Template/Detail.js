@@ -21,6 +21,7 @@ export default function TemplateDetail(props) {
   const { id, backward, forward, notify } = props
   //setup states
   const [ row, setRow ] = useState(false)
+  const [ activeTab, setTab ] = useState(0)
   //setup actions
   const prev = () => backward(1)
   const form = () => forward(
@@ -52,24 +53,24 @@ export default function TemplateDetail(props) {
     <>
       <Screen.Head title="Template Detail" onClick={prev} />
       <Screen.Body withFoot2>
-        <Tabs active={1}>
-          <TabItem>Information</TabItem>
-          <TabItem>Friends</TabItem>
-          <TabPanel>
+        <Tabs onChange={setTab}>
+          <TabItem active={activeTab === 0}>Information</TabItem>
+          <TabItem active={activeTab === 1}>Friends</TabItem>
+          <TabPanel active={activeTab === 0} style={{ padding: 10 }}>
             <Metadata row={row} />
           </TabPanel>
-          <TabPanel>
-          <Table>
-            <Thead sticky-top sticky-left>ID</Thead>
-            <Thead sticky-top>Image</Thead>
-            <Thead sticky-top>Name</Thead>
-            <Thead sticky-top>Bio</Thead>
-            <Thead sticky-top>Active</Thead>
-            <Thead sticky-top>Created</Thead>
-            <Thead sticky-top>Updated</Thead>
-            <Thead sticky-top sticky-right>&nbsp;</Thead>
-            <SearchRows tbody rows={row.friends} detail={detail} />
-          </Table>
+          <TabPanel active={activeTab === 1} style={{ padding: 10 }}>
+            <Table>
+              <Thead stickyTop stickyLeft>ID</Thead>
+              <Thead stickyTop>Image</Thead>
+              <Thead stickyTop>Name</Thead>
+              <Thead stickyTop>Bio</Thead>
+              <Thead stickyTop>Active</Thead>
+              <Thead stickyTop>Created</Thead>
+              <Thead stickyTop>Updated</Thead>
+              <Thead stickyTop stickyRight>{' '}</Thead>
+              <SearchRows tbody rows={row.friends} detail={detail} />
+            </Table>
           </TabPanel>
         </Tabs>
       </Screen.Body>

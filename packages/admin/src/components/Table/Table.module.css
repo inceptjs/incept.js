@@ -8,22 +8,22 @@
   width: 100%;
 }
 .table-head {
-  background-color: var(--bg-inset);
+  background-color: var(--bg-secondary);
   padding: 20px 10px;
   position: relative;
   text-align: left;
 }
 .table-foot {
-  background-color: var(--bg-inset);
+  background-color: var(--bg-secondary);
   padding: 20px 10px;
   position: relative;
   text-align: left;
 }
 .table-row {
-  background-color: var(--bg-secondary);
+  background-color: var(--bg-accent);
 }
 .table-row-striped {
-  background-color: var(--bg-accent);
+  background-color: var(--bg-inset);
 }
 .table-col {
   background-color: inherit;
