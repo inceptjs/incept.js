@@ -24,9 +24,21 @@ export default function Button(props) {
   }
 
   const classNames = [
-    classes[`btn`], 
+    classes['btn'], 
     classes[`btn-${key}-${layout}`]
   ]
+
+  if ('stretch' in props) {
+    classNames.push(classes['btn-stretch'])
+  } else if ('stretch-2' in props) {
+    classNames.push(classes['btn-stretch-2'])
+  } else if ('stretch-3' in props) {
+    classNames.push(classes['btn-stretch-3'])
+  } else if ('stretch-4' in props) {
+    classNames.push(classes['btn-stretch-4'])
+  } else if ('stretch-5' in props) {
+    classNames.push(classes['btn-stretch-5'])
+  } 
 
   if (props.className) {
     classNames.push(props.className)

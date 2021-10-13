@@ -3,13 +3,12 @@ import React from 'react'
 import IconSearch from '@inceptjs/icons/regular/Search'
 import IconFilter from '@inceptjs/icons/regular/Filter'
 //local imports
+import { InputField } from '../../../components/Form'
 import Button from '../../../components/Button'
-import Input from '../../../components/Form/Input'
 import classes from '../Template.module.css'
 
 //main component
 export default function SearchForm() {
-
   return (
     <form className={classes['search-form']}>
       <Button 
@@ -20,7 +19,7 @@ export default function SearchForm() {
       >
         <IconFilter size={16} />
       </Button>
-      <Input 
+      <InputField 
         className={classes['search-form-control']} 
         placeholder="Enter Keyword" 
       />

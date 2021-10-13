@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import TabItem from './Tab'
 import TabPanel from './Panel'
 import classes from './Tabs.module.css'

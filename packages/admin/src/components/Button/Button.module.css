@@ -8,6 +8,21 @@
   justify-content: center;
   padding: 10px;
 }
+.btn-stretch {
+  width: 100%;
+}
+.btn-stretch-2 {
+  width: 50%;
+}
+.btn-stretch-3 {
+  width: 33.33%;
+}
+.btn-stretch-4 {
+  width: 25%;
+}
+.btn-stretch-5 {
+  width: 20%;
+}
 .btn-icon {
   margin-right: 3px;
 }

@@ -48,6 +48,7 @@
   left: 0;
   overflow-x: hidden;
   overflow-y: auto;
+  padding-bottom: 6px;
   position: absolute;
   right: 0;
   top: 56px;
