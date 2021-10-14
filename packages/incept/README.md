@@ -1,6 +1,7 @@
-# Incept JS
-
-An Unopinionated Typed React Web Framework
+<p align="center">
+  <img src="https://www.incept.asia/images/logo/incept-logo-square-1.png" height="128" />
+  <h1 align="center">incept.js</h1>
+</p>
 
 > Still developing and testing. Not ready for production use.
 
