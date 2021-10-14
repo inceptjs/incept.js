@@ -5,10 +5,19 @@
 
 <p align="center">
   <a aria-label="NPM version" href="https://www.npmjs.com/package/inceptjs">
-    <img src="https://img.shields.io/npm/v/inceptjs.svg?style=for-the-badge">
+    <img src="https://img.shields.io/npm/v/inceptjs.svg?style=for-the-badge" />
   </a>
-  <a aria-label="License" href="https://github.com/vercel/next.js/blob/canary/license.md">
-    <img src="https://img.shields.io/npm/l/inceptjs.svg?style=for-the-badge">
+  <a aria-label="License" href="https://github.com/inceptjs/incept.js/blob/main/LICENSE">
+    <img src="https://img.shields.io/npm/l/inceptjs.svg?style=for-the-badge" />
+  </a>
+  <a aria-label="Downloads" href="https://www.npmjs.com/package/inceptjs">
+    <img src="https://img.shields.io/npm/dm/inceptjs.svg?style=for-the-badge" />
+  </a>
+  <a aria-label="Activity" href="https://github.com/inceptjs/incept.js">
+    <img src="https://img.shields.io/github/commit-activity/m/inceptjs/incept.js?style=for-the-badge" />
+  </a>
+  <a aria-label="Last Commit" href="https://github.com/inceptjs/incept.js/commits/main">
+    <img src="https://img.shields.io/github/last-commit/inceptjs/incept.js?style=for-the-badge" />
   </a>
 </p>
 
