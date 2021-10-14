@@ -5,10 +5,10 @@
 
 <p align="center">
   <a aria-label="NPM version" href="https://www.npmjs.com/package/inceptjs">
-    <img src="https://img.shields.io/npm/v/inceptjs.svg?style=for-the-badge&labelColor=000000">
+    <img src="https://img.shields.io/npm/v/inceptjs.svg?style=for-the-badge">
   </a>
   <a aria-label="License" href="https://github.com/vercel/next.js/blob/canary/license.md">
-    <img src="https://img.shields.io/npm/l/inceptjs.svg?style=for-the-badge&labelColor=000000">
+    <img src="https://img.shields.io/npm/l/inceptjs.svg?style=for-the-badge">
   </a>
 </p>
 
