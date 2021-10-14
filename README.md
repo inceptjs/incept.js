@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://www.incept.asia/images/logo/incept-logo-square-2.png" height="128" />
+  <img src="https://raw.githubusercontent.com/inceptjs/incept.js/main/docs/assets/incept-logo-square-2.png" height="128" />
 </p>
 
 <p align="center">
