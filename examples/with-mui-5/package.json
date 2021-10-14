@@ -1,0 +1,19 @@
+{
+  "name": "sandbox",
+  "version": "0.0.21",
+  "scripts": {
+    "build": "incept build",
+    "dev": "incept dev"
+  },
+  "incept": "./server",
+  "dependencies": {
+    "@emotion/cache": "^11.4.0",
+    "@emotion/react": "^11.4.1",
+    "@emotion/server": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
+    "@fontsource/roboto": "^4.5.1",
+    "@mui/icons-material": "^5.0.3",
+    "@mui/material": "^5.0.3",
+    "inceptjs": "^0.0.21"
+  }
+}
