@@ -44,7 +44,7 @@ export default class WithWebpack {
   }
 
   /**
-   * Configures the bundler for client or server
+   * Configures the bundler for static or server
    */
   bundle(
     target: Target = Target.Static,
@@ -71,7 +71,7 @@ export default class WithWebpack {
       //tell loadable where we are writing this to
       loadableConfig.writeToDisk = { filename: buildPath };
     } else {
-      //this is a trick to load the stats in memory usin virtualFS
+      //this is a trick to load the stats in memory using virtualFS
       bundler.on(
         'loadable-in-memory', 
         'afterCompile', 
@@ -116,78 +116,70 @@ export default class WithWebpack {
     bundler.addEntry('main', path.join(cwd, `.build/virtual/${target}.js`));
 
     //---------------------------------------------------------------//
-    // Target: Static
-    if (target === Target.Static) {
-      //if Mode: Development
-      if (mode === Mode.Development) {
-        //add hot to all entries
-        for (const entry in config.entry) {
-          config.entry[entry] = [
-            'webpack-hot-middleware/client?path=/__incept', 
-            config.entry[entry] 
-          ];
-        }
-        //add to the output
-        config.output.hotUpdateMainFilename = 'develop/[runtime].[fullhash].hot-update.json';
-        config.output.hotUpdateChunkFilename = 'develop/[id].[fullhash].hot-update.js';
-        //add HOT module
-        bundler.addPlugin(new HotModuleReplacementPlugin);
-        //add react refresh
-        bundler.addPlugin(new ReactRefreshWebpackPlugin({
-          overlay: {
-            sockIntegration: 'whm'
-          }
-        }));
-        //updates on react component changes (for dev)
-        config.module.rules[0].use[0].options.plugins.push(
-          'react-refresh/babel'
-        );
+    // Target: Static, Mode: Development
+    if (target === Target.Static && mode === Mode.Development) {
+      //add hot to all entries
+      for (const entry in config.entry) {
+        config.entry[entry] = [
+          'webpack-hot-middleware/client?path=/__incept', 
+          config.entry[entry] 
+        ];
       }
+      //add to the output
+      config.output.hotUpdateMainFilename = 'develop/[runtime].[fullhash].hot-update.json';
+      config.output.hotUpdateChunkFilename = 'develop/[id].[fullhash].hot-update.js';
+      //add HOT module
+      bundler.addPlugin(new HotModuleReplacementPlugin);
+      //add react refresh
+      bundler.addPlugin(new ReactRefreshWebpackPlugin({
+        overlay: {
+          sockIntegration: 'whm'
+        }
+      }));
+      //updates on react component changes (for dev)
+      config.module.rules[0].use[0].options.plugins.push(
+        'react-refresh/babel'
+      );
     }
 
     return bundler
   }
 
   /**
-   * Builds the bundles
+   * `$ incept build` - Builds the bundles
    */
   build() {
+    //get build folder from app config
     const { buildPath } = this._application;
-
+    //if there is a build folder
     if (fs.existsSync(buildPath)) {
       //remove the build path
       fs.rmSync(buildPath, { recursive: true });
     }
 
+    //make a static entry file
     const staticEntry = path.join(buildPath, `virtual/static.js`);
-    fs.mkdirSync(
-      path.dirname(staticEntry), 
-      { recursive: true }
-    );
-    fs.writeFileSync(staticEntry, this.clientEntryCode());
-
+    fs.mkdirSync(path.dirname(staticEntry), { recursive: true });
+    fs.writeFileSync(staticEntry, this.staticEntryCode());
+    //make a server entry file
     const serverEntry = path.join(buildPath, `virtual/server.js`);
-    fs.mkdirSync(
-      path.dirname(serverEntry), 
-      { recursive: true }
-    );
+    fs.mkdirSync(path.dirname(serverEntry), { recursive: true });
     fs.writeFileSync(serverEntry, this.serverEntryCode());
-    
-    this.bundle(Target.Static, Mode.Production, true)
-      .compiler
-      .run(this.report);
-    
-    this.bundle(Target.Server, Mode.Production, true)
-      .compiler
-      .run(this.report);
+    //bundle both the server and static files...
+    this
+      .bundle(Target.Static, Mode.Production, true)
+      .compiler.run(this.report);
+    this
+      .bundle(Target.Server, Mode.Production, true)
+      .compiler.run(this.report);
   
     return this;
   }
 
   /**
-   * Generates a client entry file
+   * Generates a static entry file
    */
-  clientEntryCode(): string {
+  staticEntryCode(): string {
     const { 
       app, 
       imports, 
@@ -216,63 +208,60 @@ export default class WithWebpack {
   }
 
   /**
-   * Development configuration
+   * `$ incept dev` - Development configuration
    */
   develop(write: boolean = false) {
     const { 
       buildPath, 
       buildURL, 
-      withVirtualFS
+      withVirtualFS: vfs
     } = this._application;
 
+    //make a static entry file (virtually)
     const staticEntry = path.join(buildPath, 'virtual/static.js');
-    withVirtualFS.mkdirSync(
-      path.dirname(staticEntry), 
-      { recursive: true }
-    );
-    withVirtualFS.writeFileSync(staticEntry, this.clientEntryCode());
-
+    vfs.mkdirSync(path.dirname(staticEntry), { recursive: true });
+    vfs.writeFileSync(staticEntry, this.staticEntryCode());
+    //make a server entry file (virtually)
     const serverEntry = path.join(buildPath, 'virtual/server.js');
-    withVirtualFS.mkdirSync(
-      path.dirname(serverEntry), 
-      { recursive: true }
-    );
-    withVirtualFS.writeFileSync(serverEntry, this.serverEntryCode());
-    
-    const client = this
+    vfs.mkdirSync(path.dirname(serverEntry), { recursive: true });
+    vfs.writeFileSync(serverEntry, this.serverEntryCode());
+    //get both the server and static webpack compilers
+    const staticCompiler = this
       .bundle(Target.Static, Mode.Development, write)
       .compiler;
-    
-    const server = this
+    const serverCompiler = this
       .bundle(Target.Server, Mode.Development, write)
       .compiler;
-
+    //if we are not writing to disk
     if (!write) {
-      server.outputFileSystem = withVirtualFS;
+      //change the compiler's fs to VirtualFS
+      serverCompiler.outputFileSystem = vfs;
     }
-
-    server.run((error, stats) => {
+    //bundle the server files
+    serverCompiler.run((error, stats) => {
       this.report(error, stats);
-      server.watch({}, (error, stats) => {
+      //now watch for changes...
+      serverCompiler.watch({}, (error, stats) => {
         this.report(error, stats);
         //clear the require cache
         delete require.cache[serverEntry];
       });
     });
   
-    const dev = webpackDevMiddleware(client, {
+    //setup webpack-dev-middleware
+    const dev = webpackDevMiddleware(staticCompiler, {
       serverSideRender: true,
       publicPath: buildURL,
       writeToDisk: write
     });
-    
-    const hot = webpackHotMiddleware(client, {
+    //setup webpack-hot-middleware
+    const hot = webpackHotMiddleware(staticCompiler, {
       log: false,
       path: '/__incept',
       heartbeat: 10 * 1000
     });
-  
-    return { client, server, dev, hot }
+    //return useful things
+    return { staticCompiler, serverCompiler, dev, hot };
   }
 
   /**

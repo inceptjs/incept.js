@@ -1,7 +1,8 @@
 import { Request } from '@inceptjs/framework';
 
-import { logError } from './develop/logs';
 import Application from '../../types/Application';
+
+import { logError } from '../logs';
 
 function buildWebpackBundles(request: Request): void {
   //get the app

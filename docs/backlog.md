@@ -5,6 +5,22 @@
  - Move admin/icons into a package called `icons`
  - Build EventRPC
  - Build Admin Builder *(in ts)*
+   - Fields
+     - Select
+     - Checkbox
+     - Switch
+     - Radio
+     - Datetime / Date Range
+     - Number Range
+     - Password
+     - Color
+     - Tag
+     - Wysiwyg
+     - Markdown
+     - Code Editor
+     - Star Rating
+     - Slider / Multi slider
+     - Auto complete
    - Dashboard
    - Admin
      - Profiles
@@ -51,29 +67,6 @@ with isomorphic plugins?
 
 ## Active
 
-**This browser doesn't support requestAnimationFrame. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills**
-**This browser doesn't support cancelAnimationFrame. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills**
-
-I'm not sure why this warning is triggered as soon as I import 
-`react-redux`. The source of this console error comes from 
-[scheduler](https://github.com/facebook/react/tree/main/packages/scheduler),
-but i can't find it in their source. When you install `react-dom` you can 
-find it in `node_modules/scheduler/cjs/scheduler.development.js:102` and
-triggers when loading a SSR entry inherently using `react-redux`.
-
-Adding a polyfill like the following seemed to suppress that warning.
-
-```js
-if (global) {
-  if (typeof global.window === 'undefined') {
-    global.window = {} as any
-  }
-
-  global.window.cancelAnimationFrame = () => {};
-  global.window.requestAnimationFrame = () => { return 0; };
-}
-```
-
 **webpack-dev-middleware**
 
 For some reason `webpack-dev-middleware` is compiling for the 
@@ -82,16 +75,6 @@ compiling the same thing twice and could be mistaken for a bug.
 all this does is make sure when the compile is complete it is 
 logged once. I added a hook to suppress this from showing on the 
 console twice and silenced logging.
-
-**Material UI**
-
-Encountering errors with `useLayoutEffect` when rendering on the server
-*(SSR)* even on MUI v5 which just released while developing this 
-project. Plus I'm not a big fan of `styled-components` syntax nor the
-v4 version of styling. They shouldn't be dog feed any of those to people 
-exclusively. Just allow to add `className` or `style` to their 
-components. I was very disappointed when I couldn't even use their 
-icons without triggering a warning.
 
 ## Closed
 
@@ -171,3 +154,47 @@ I ended up fixing and hosting up a fork of
 **UPDATE: 0.0.21** Made a separate bundler to render `<App />` on the 
 server side and passed it to to the `@loadable` kool aid. Removed 
 `babel-plugin-file-loader` and `@dr.pogodin/babel-plugin-css-modules-transform` 
+
+**Warning: requestAnimationFrame**
+
+> This browser doesn't support requestAnimationFrame. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills
+> This browser doesn't support cancelAnimationFrame. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills
+
+I'm not sure why this warning is triggered as soon as I import 
+`react-redux`. The source of this console error comes from 
+[scheduler](https://github.com/facebook/react/tree/main/packages/scheduler),
+but i can't find it in their source. When you install `react-dom` you can 
+find it in `node_modules/scheduler/cjs/scheduler.development.js:102` and
+triggers when loading a SSR entry inherently using `react-redux`.
+
+Adding a polyfill like the following seemed to suppress that warning.
+
+```js
+if (global) {
+  if (typeof global.window === 'undefined') {
+    global.window = {} as any
+  }
+
+  global.window.cancelAnimationFrame = () => {};
+  global.window.requestAnimationFrame = () => { return 0; };
+}
+```
+
+**UPDATE: 0.0.22** Actually removing this polyfill seemed to remove 
+this warning. Lesson learned is don't make a `global.window` polyfill.
+
+**Warning: Material UI: useLayoutEffect**
+
+Encountering errors with `useLayoutEffect` when rendering on the server
+*(SSR)* even on MUI v5 which just released while developing this 
+project.
+
+> useLayoutEffect does nothing on the server, because its effect cannot 
+be encoded into the server renderer's output format. This will lead to 
+a mismatch between the initial, non-hydrated UI and the intended UI. 
+To avoid this, useLayoutEffect should only be used in components that 
+render exclusively on the client. See 
+https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+
+**UPDATE: 0.0.22** Actually removing this polyfill seemed to remove 
+this warning. Lesson learned is don't make a `global.window` polyfill.

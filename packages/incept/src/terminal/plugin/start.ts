@@ -2,12 +2,11 @@ import http from 'http';
 import path from 'path';
 import { Request, Response } from '@inceptjs/framework';
 
-import './develop/polyfill';
-import { logError, logRequest, logResponse } from './develop/logs';
+import { StringRoute } from '../../react';
 import Application from '../../types/Application';
+import { logError, logRequest, logResponse } from '../logs';
 
 import dispatch from './dispatch';
-import { StringRoute } from '../../react';
 
 function startProductionServer(
   request: Request, 
@@ -54,6 +53,7 @@ function startProductionServer(
   app.plugin('server', server);
   app.emit('production-ready');
 }
+
 
 export default function startPlugin(ctx: Application) {
   ctx.on('start', startProductionServer);

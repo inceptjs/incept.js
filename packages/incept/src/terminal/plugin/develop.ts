@@ -1,9 +1,10 @@
 import http from 'http';
 import { Request, Response } from '@inceptjs/framework';
 
-import './develop/polyfill';
-import { logError, logRequest, logResponse } from './develop/logs';
+import { StringRoute } from '../../react';
 import Application from '../../types/Application';
+
+import { logError, logRequest, logResponse } from '../logs';
 
 import dispatch from './dispatch';
 
@@ -30,7 +31,9 @@ function startDevServer(
   //and events have been ran
   app.use(dispatch);
   //handle react
-  app.get('/**', react.handle);
+  react.routes.forEach((route: StringRoute) => { 
+    app.get(route.path, react.handle);
+  });
   //create the http server
   const server = http.createServer(app.handle.bind(app));
   //let others get the http server (like if they want to close it)

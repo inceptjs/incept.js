@@ -165,13 +165,18 @@ export default class WithReact {
    * Route handler
    */
   handle = (request: Request, response: Response): void => {
-    const path = this.match(request.pathname)
-    if (!path) {
-      return
+    //let anything override the default behaviour
+    if (typeof response.body === 'string' 
+      || typeof response.body?.pipe === 'function'
+    ) {
+      return;
     }
-
-    response.headers('Content-Type', 'text/html')
-    response.body = this.render(request.pathname)
+    //if no matching react routes
+    if (!this.match(request.pathname)) {
+      return;
+    }
+    response.headers('Content-Type', 'text/html');
+    response.write(this.render(request.pathname));
   }
 
   /**
@@ -201,10 +206,10 @@ export default class WithReact {
   /**
    * Returns the matching route. Logic from `react-router`
    */
-  match(pathname: string): string|null {
+  match(pathname: string): StringRoute|null {
     for (const path in this._routes) {
       if (matchPath(pathname, { path, exact: true })) {
-        return path
+        return this._routes[path]
       }
     }
 
@@ -232,7 +237,6 @@ export default class WithReact {
   render(pathname: string): string {
     //get router props
     const routerProps = { location: pathname, context: {} };
-
     //now do the loadable chunking thing..
     //see: https://loadable-components.com/docs/server-side-rendering/
     const server = new ChunkExtractor({ 

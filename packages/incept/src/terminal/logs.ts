@@ -8,21 +8,21 @@ import {
 /**
  * Sends the error to the logger
  */
-function logError(this: EventEmitter, error: Error): void {
+ function logError(this: EventEmitter, error: Error): void {
   //@ts-ignore
   if (error.code === 404) {
-    return
+    return;
   }
 
-  this.emit('log', error, 'error')
+  this.emit('log', error, 'error');
 }
 
 /**
  * Logs that a new request has been made
  */
 function logRequest(this: EventEmitter, request: Request): void {
-  const message = `REQ: ${request.method} ${request.pathname}`
-  this.emit('log', message, 'system')
+  const message = `REQ: ${request.method} ${request.pathname}`;
+  this.emit('log', message, 'system');
 }
 
 /**
@@ -51,7 +51,7 @@ function logResponse(
       break
   }
 
-  this.emit('log', `RES: ${code} ${text}`, type)
+  this.emit('log', `RES: ${code} ${text}`, type);
 }
 
-export { logError, logRequest, logResponse }
+export { logError, logRequest, logResponse };
