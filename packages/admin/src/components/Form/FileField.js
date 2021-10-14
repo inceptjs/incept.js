@@ -112,8 +112,7 @@ export default function FileField(props) {
   const exceeded = filtered.length >= safeLimit
   
   const styles = {
-    foot: { backgroundColor: 'transparent', padding: 0 },
-    button: { width: '100%' }
+    foot: { backgroundColor: 'transparent', padding: 0 }
   }
 
   return (
