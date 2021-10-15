@@ -1,8 +1,6 @@
 # Backlog
 
  - Develop npx starter called `create-incept-app`
- - Move scripts to a package called `devops`
- - Move admin/icons into a package called `icons`
  - Build EventRPC
  - Build Admin Builder *(in ts)*
    - Fields
