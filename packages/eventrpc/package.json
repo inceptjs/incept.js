@@ -1,5 +1,6 @@
 {
   "name": "@incept/eventrpc",
+  "private": true,
   "version": "0.0.23",
   "description": "A pluggable React framework",
   "author": "Chris <chris@incept.asia>",
