@@ -15,7 +15,7 @@
   <a aria-label="Activity" href="https://github.com/inceptjs/incept.js">
     <img src="https://img.shields.io/github/commit-activity/m/inceptjs/incept.js?style=for-the-badge" />
   </a>
-  <a aria-label="Last Commit" href="https://github.com/inceptjs/incept.js/commits/main">
+  <a aria-label="Last Commit" href="https://github.com/inceptjs/incept.js/commits/canary">
     <img src="https://img.shields.io/github/last-commit/inceptjs/incept.js?style=for-the-badge" />
   </a>
 </p>

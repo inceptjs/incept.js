@@ -1,15 +1,13 @@
 import path from 'path'
 import ReactDOMServer from 'react-dom/server'
-import CssBaseline from '@mui/material/CssBaseline'
-
 import { ChunkExtractor } from '@loadable/server'
-import { ThemeProvider } from '@mui/material/styles'
 import { CacheProvider } from '@emotion/react'
+import { ChakraProvider } from '@chakra-ui/react'
 
 import theme from '../client/theme'
 import createEmotionCache from '../client/createEmotionCache'
 
-function muiHandler(req, res) {
+function chakraHandler(req, res) {
   //let anything override this behaviour
   if (typeof res.body === 'string' 
     || typeof res.body?.pipe === 'function'
@@ -41,10 +39,9 @@ function muiHandler(req, res) {
 
   //wrap everything needed around the app
   const Wrapper = <CacheProvider value={cache}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <ChakraProvider theme={theme}>
       <StaticRouter {...routerProps}><App /></StaticRouter>
-    </ThemeProvider>
+    </ChakraProvider>
   </CacheProvider>
   //render the app now
   const app = ReactDOMServer.renderToString(
@@ -72,14 +69,14 @@ function muiHandler(req, res) {
 export default async function(app) {
   const routes = app.withReact.routes
   for (const route of routes) {
-    app.get(route.path, muiHandler.bind(app), 1)
+    app.get(route.path, chakraHandler.bind(app), 1)
   }
 
-  app.withReact.layout('mui', path.join(app.cwd, 'client/Layout'))
+  app.withReact.layout('chakra', path.join(app.cwd, 'client/Layout'))
 
   //make a public
   app.public(path.join(app.cwd, 'public'), '/')
   //react routes
   app.withReact.route('/', path.join(app.cwd, 'pages/Home'))
-  app.withReact.route('/about', path.join(app.cwd, 'pages/About'), 'mui')
+  app.withReact.route('/about', path.join(app.cwd, 'pages/About'), 'chakra')
 }

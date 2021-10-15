@@ -1,7 +1,6 @@
 import React from 'react'
-import CssBaseline from '@mui/material/CssBaseline'
-import { ThemeProvider } from '@mui/material/styles'
 import { CacheProvider } from '@emotion/react'
+import { ChakraProvider } from '@chakra-ui/react'
 
 import theme from './theme'
 import createEmotionCache from './createEmotionCache'
@@ -11,10 +10,9 @@ export default function Layout({ children }) {
   return (
     <div>
       <CacheProvider value={cache}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
+        <ChakraProvider theme={theme}>
           {children}
-        </ThemeProvider>
+        </ChakraProvider>
       </CacheProvider>
     </div>
   )
