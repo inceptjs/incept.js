@@ -9,15 +9,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.CNB_WORKFLOW }}
           issuesOpened: |
             👋 @{{ author }}
-            Thank you for raising an issue! Please understand that this 
-            is an open source project looking for more contributors 
-            therefore, it will take some time to get back to you. In the 
-            meantime, please make sure you have given as much context 
-            as possible.
+            Thank you for raising an issue! Please understand that this is an open source project looking for more contributors therefore, it will take some time to get back to you. In the meantime, please make sure you have given as much context as possible.
           pullRequestOpened: |
             👋 @{{ author }}
-            Thank you for raising your pull request. Please understand 
-            that this is an open source project looking for more 
-            contributors therefore, it will take some time to review 
-            your submission. In the meantime, please make sure you have 
-            followed our contributing guidelines. 
+            Thank you for raising your pull request. Please understand that this is an open source project looking for more contributors therefore, it will take some time to review your submission. In the meantime, please make sure you have followed our contributing guidelines. 
