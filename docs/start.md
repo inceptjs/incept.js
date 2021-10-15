@@ -81,9 +81,9 @@ system. The code above does the following.
  - Uses `app.public()` to allow people to access the public folder freely
  - Adds two react specific routes with `app.withReact.route()`
 
-One thing you'll notice unique with `inceptjs`, is the `pages` folder is 
-not actually required and you could technically place your files 
-anywhere. 
+> NOTE: One thing you will already notice unique with Incept, is the 
+`pages` folder is not actually required and you could technically place 
+your files anywhere. 
 
 Last thing to do is to make two folders called `public` and `pages` in 
 the project folder. Inside of the `pages` folder make two files with the
