@@ -224,10 +224,14 @@ export default (app) => {
 
  - [Configuration and Options](./config.md)
  - [React Page, App and Layouts](./layouts.md)
-
+ 
 ## Concepts
 
+ - [Types](./types.md)
+ - [TaskQueue](./taskqueue.md)
  - [EventEmitter](./events.md)
+ - [Routing](./routing.md)
+ - [Store](./store.md)
  - [Exceptions](./exception.md)
 
 ## Resources

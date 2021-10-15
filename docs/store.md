@@ -168,3 +168,11 @@ store.has(...paths)
 ```js
 store.has(...paths, value)
 ```
+
+## Concepts
+
+ - [Types](./types.md)
+ - [TaskQueue](./taskqueue.md)
+ - [EventEmitter](./events.md)
+ - [Routing](./routing.md)
+ - [Exceptions](./exception.md)

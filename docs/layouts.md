@@ -211,7 +211,11 @@ priority is set to `1`.
 
 ## Concepts
 
+ - [Types](./types.md)
+ - [TaskQueue](./taskqueue.md)
  - [EventEmitter](./events.md)
+ - [Routing](./routing.md)
+ - [Store](./store.md)
  - [Exceptions](./exception.md)
 
 ## Resources
