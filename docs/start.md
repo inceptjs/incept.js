@@ -119,7 +119,7 @@ To start developing your application run `npm run dev` or `yarn dev` and
 visit http://localhost:3000 to view your application.
 
 There's a lot of things that `incept dev` will take care of automatically
-and out of the box including the following. 
+out of the box including the following. 
 
  - Babel transpilations
  - Webpack bundling and code splitting
@@ -135,4 +135,4 @@ production ready.
  - [How Plugins Work](./plugins.md)
  - [Configuration and Options](./config.md)
  - [Installing UI Libraries](./uilib.md)
- - [Writing My Own Bash Commands](./config.md)
+ - [Writing My Own Bash Commands](./terminal.md)
