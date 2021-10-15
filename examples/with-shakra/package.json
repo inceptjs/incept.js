@@ -4,13 +4,16 @@
     "build": "incept build",
     "dev": "incept dev"
   },
-  "incept": "./server",
+  "incept": [
+    "./plugin/shakra", 
+    "./plugin/static"
+  ],
   "dependencies": {
     "@chakra-ui/react": "^1.6.9",
     "@emotion/cache": "^11.4.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "framer-motion": "^4.1.17",
-    "inceptjs": "^0.0.22"
+    "inceptjs": "^0.0.23"
   }
 }

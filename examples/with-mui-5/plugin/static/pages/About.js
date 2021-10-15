@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'inceptjs/components'
 import Button from '@mui/material/Button'
 
 export default function About() {

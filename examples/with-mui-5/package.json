@@ -4,7 +4,10 @@
     "build": "incept build",
     "dev": "incept dev"
   },
-  "incept": "./server",
+  "incept": [
+    "./plugin/mui5", 
+    "./plugin/static"
+  ],
   "dependencies": {
     "@emotion/cache": "^11.4.0",
     "@emotion/react": "^11.4.1",
@@ -12,6 +15,6 @@
     "@fontsource/roboto": "^4.5.1",
     "@mui/icons-material": "^5.0.3",
     "@mui/material": "^5.0.3",
-    "inceptjs": "^0.0.22"
+    "inceptjs": "^0.0.23"
   }
 }

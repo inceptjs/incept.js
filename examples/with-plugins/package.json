@@ -9,6 +9,6 @@
     "./plugin/static"
   ],
   "dependencies": {
-    "inceptjs": "^0.0.22"
+    "inceptjs": "^0.0.23"
   }
 }
