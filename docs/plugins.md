@@ -204,5 +204,5 @@ assuming you did `npm i @inceptjs/admin`.
 
  - [Configuration and Options](./config.md)
  - [Installing UI Libraries](./uilib.md)
- - [React App and Layouts](./layouts.md)
+ - [React Page, App and Layouts](./layouts.md)
  - [Writing My Own Bash Commands](./terminal.md)

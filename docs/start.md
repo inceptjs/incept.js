@@ -133,6 +133,7 @@ production ready.
 ## Read More
 
  - [How Plugins Work](./plugins.md)
+ - [React Page, App and Layouts](./layouts.md)
  - [Configuration and Options](./config.md)
  - [Installing UI Libraries](./uilib.md)
  - [Writing My Own Bash Commands](./terminal.md)

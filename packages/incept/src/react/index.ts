@@ -41,6 +41,13 @@ export default class WithReact {
   protected _routes: Record<string, StringRoute> = {};
 
   /**
+   * Returns the current HTML Document
+   */
+  get page() {
+    return this._page;
+  }
+
+  /**
    * Returns the routes as is path -> file
    */
   get routes(): StringRoute[] {
