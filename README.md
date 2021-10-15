@@ -23,14 +23,12 @@
 
 > Still developing and testing. Not ready for production use.
 
-## Read More
+## Read the Docs
 
- - [incept](https://github.com/inceptjs/incept.js/tree/main/packages/incept)
- - [types](https://github.com/inceptjs/incept.js/tree/main/packages/types)
- - [framework](https://github.com/inceptjs/incept.js/tree/main/packages/framework)
- - [virtualfs](https://github.com/inceptjs/incept.js/tree/main/packages/virtualfs)
- - [icons](https://github.com/inceptjs/incept.js/tree/main/packages/icons)
- - [admin](https://github.com/inceptjs/incept.js/tree/main/packages/admin)
+Documenting this project is an on going process as new features are 
+released. Check back frequently for any changes.
+
+[Getting Started](./docs/start.md)
 
 ## Contributing
 
