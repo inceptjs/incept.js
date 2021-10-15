@@ -353,3 +353,8 @@ export default function(app) {
   }
 }
 ```
+
+## Resources
+
+ - [Babel](https://babeljs.io/)
+ - [Webpack](https://webpack.js.org/)

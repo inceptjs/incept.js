@@ -75,7 +75,7 @@ export default function App(props) {
 }
 ```
 
-> Switch, Route, Link are from `react-router-dom`.
+> NOTE: Switch, Route, Link are from `react-router-dom`.
 
 `props.routes` is an array with the following data structure.
 
@@ -131,3 +131,89 @@ route will use this `default` layout because none was specified compared
 to `pages/About` which will use `another` layout. Once a layout is 
 inclluded with `app.withReact.layout()`, other plugins will be able to 
 use it.
+
+## Server Side Rendering
+
+The default handler for SSR looks like the following.
+
+```js
+import ReactDOMServer from 'react-dom/server'
+import { ChunkExtractor } from '@loadable/server'
+
+function handler(req, res) {
+  //let anything override this behaviour
+  if (typeof res.body === 'string' 
+    || typeof res.body?.pipe === 'function'
+  ) {
+    return;
+  }
+  //get route
+  const route = this.withReact.match(req.pathname)
+  //if no matching react routes 
+  //or the layout isn't mui (remove this if you want to mui everything)
+  if (!route || route.layout !== 'mui') {
+    return
+  }
+
+  //get router props
+  const routerProps = { location: pathname, context: {} }
+  //now do the loadable chunking thing..
+  //see: https://loadable-components.com/docs/server-side-rendering/
+  const server = new ChunkExtractor({ 
+    statsFile: path.join(this.buildPath, 'server/stats.json')
+  })
+  const { default: App } = server.requireEntrypoint();
+  const client = new ChunkExtractor({ 
+    statsFile: path.join(this.buildPath, 'static/stats.json'),
+    publicPath: this.buildURL
+  })
+
+  //wrap everything needed around the app
+  const Router = <StaticRouter {...routerProps}><App /></StaticRouter>
+  //render the app now
+  const app = ReactDOMServer.renderToString(
+    client.collectChunks(Router)
+  );
+
+  //clone the page
+  const page = this._page.clone
+  //add links to head
+  client.getLinkElements().forEach(link => {
+    page.head.addChild(link)
+  })
+  //add styles to head
+  client.getStyleElements().forEach(style => {
+    page.head.addChild(style)
+  })
+  //add scripts to body
+  client.getScriptElements().forEach(script => {
+    page.body.addChild(script)
+  })
+  //render the page
+  return page.render(app)
+}
+```
+
+Overriding this handler can be done within a plugin like the following.
+
+```js
+export default async function(app) {
+  const routes = app.withReact.routes
+  for (const route of routes) {
+    app.get(route.path, handler.bind(app), 1)
+  }
+}
+```
+
+> NOTE: It's important to set a priority above `0` when calling 
+`app.get(route.path, handler.bind(app), 1)`, in which this case the 
+priority is set to `1`.
+
+## Concepts
+
+ - [EventEmitter](./events.md)
+ - [Exceptions](./exception.md)
+
+## Resources
+
+ - [React Router](https://reactrouter.com/)

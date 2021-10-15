@@ -15,7 +15,7 @@ following ways.
  - **React `<App />`** - Can override `<App />`
  - **Plugin Registry** - Can register new methods for other plugins to use
 
-> It's important to understand that you can define your folder 
+> NOTE: It's important to understand that you can define your folder 
 structure how ever you like. Incept just cares about where to start 
 looking for files.
 
@@ -223,6 +223,15 @@ export default (app) => {
 ## Read More
 
  - [Configuration and Options](./config.md)
- - [Installing UI Libraries](./uilib.md)
  - [React Page, App and Layouts](./layouts.md)
- - [Writing My Own Bash Commands](./terminal.md)
+
+## Concepts
+
+ - [EventEmitter](./events.md)
+ - [Exceptions](./exception.md)
+
+## Resources
+
+ - [Babel](https://babeljs.io/)
+ - [Webpack](https://webpack.js.org/)
+ - [React Router](https://reactrouter.com/)

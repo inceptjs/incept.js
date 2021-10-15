@@ -56,8 +56,8 @@ to offset the need to manage those files. You can add the flag
 
 The key `incept` from the above example `"incept": [ "./index" ]` is 
 used to declare the plugins that will be used for the project. Incept is 
-built around this allowing plugins to originate from the project as well 
-as `node_modules`.
+built around this, allowing plugins to originate from the project as 
+well as `node_modules`.
 
 In the project folder create a file called `index.js` and add the 
 following code.
@@ -135,5 +135,14 @@ production ready.
  - [How Plugins Work](./plugins.md)
  - [React Page, App and Layouts](./layouts.md)
  - [Configuration and Options](./config.md)
- - [Installing UI Libraries](./uilib.md)
- - [Writing My Own Bash Commands](./terminal.md)
+
+## Concepts
+
+ - [EventEmitter](./events.md)
+ - [Exceptions](./exception.md)
+
+## Resources
+
+ - [Babel](https://babeljs.io/)
+ - [Webpack](https://webpack.js.org/)
+ - [React Router](https://reactrouter.com/)

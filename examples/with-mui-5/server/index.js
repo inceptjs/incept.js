@@ -48,7 +48,7 @@ function muiHandler(req, res) {
   </CacheProvider>
   //render the app now
   const app = ReactDOMServer.renderToString(
-    client.collectChunks(Router)
+    client.collectChunks(Wrapper)
   );
 
   //clone the page
