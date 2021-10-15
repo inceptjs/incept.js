@@ -25,8 +25,8 @@
     "./src"
   ],
   "dependencies": {
-    "boxicons": "2.0.9",
-    "@inceptjs/virtualfs": "^0.0.22"
+    "@inceptjs/virtualfs": "^0.0.22",
+    "boxicons": "2.0.9"
   },
   "devDependencies": {
     "@types/node": "^16.9.4",
