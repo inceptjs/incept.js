@@ -76,7 +76,7 @@ export default async function(app) {
 
 Incept will automatically call the exported function and pass its 
 context so you can freely define how your plugin interacts with the 
-system. The code above does the fallowing.
+system. The code above does the following.
 
  - Uses `app.public()` to allow people to access the public folder freely
  - Adds two react specific routes with `app.withReact.route()`
