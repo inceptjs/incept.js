@@ -1,6 +1,6 @@
 {
   "name": "@inceptjs/virtualfs",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "Incept virtual file system",
   "author": "Chris <chris@incept.asia>",
   "license": "MIT",
@@ -22,7 +22,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@inceptjs/framework": "^0.0.22",
+    "@inceptjs/framework": "^0.0.23",
     "memfs": "^3.3.0"
   },
   "devDependencies": {

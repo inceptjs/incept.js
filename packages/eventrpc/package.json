@@ -1,5 +1,5 @@
 {
-  "name": "inceptjs",
+  "name": "@incept/eventrpc",
   "version": "0.0.23",
   "description": "A pluggable React framework",
   "author": "Chris <chris@incept.asia>",
@@ -31,8 +31,8 @@
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-react": "^7.14.5",
     "@babel/register": "^7.15.3",
-    "@inceptjs/framework": "^0.0.23",
-    "@inceptjs/virtualfs": "^0.0.23",
+    "@inceptjs/framework": "^0.0.22",
+    "@inceptjs/virtualfs": "^0.0.22",
     "@loadable/babel-plugin": "^5.13.2",
     "@loadable/component": "^5.15.0",
     "@loadable/server": "^5.15.1",

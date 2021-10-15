@@ -1,6 +1,6 @@
 {
   "name": "@inceptjs/admin",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "Incept Admin",
   "author": "Chris <chris@incept.asia>",
   "license": "MIT",
@@ -11,9 +11,9 @@
     "./src"
   ],
   "dependencies": {
-    "@inceptjs/icons": "^0.0.22",
+    "@inceptjs/icons": "^0.0.23",
     "ace-builds": "^1.4.12",
-    "inceptjs": "^0.0.22",
+    "inceptjs": "^0.0.23",
     "inputmask": "^5.0.6",
     "react-ace": "^9.4.3",
     "react-redux": "^7.2.5",

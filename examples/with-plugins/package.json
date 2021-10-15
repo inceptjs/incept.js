@@ -1,6 +1,5 @@
 {
-  "name": "sandbox",
-  "version": "0.0.21",
+  "private": true,
   "scripts": {
     "build": "incept build",
     "dev": "incept dev"
@@ -10,6 +9,6 @@
     "./plugin/static"
   ],
   "dependencies": {
-    "inceptjs": "^0.0.21"
+    "inceptjs": "^0.0.22"
   }
 }
