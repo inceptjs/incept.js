@@ -11,6 +11,12 @@ import { Application } from '../types/Application';
 import defaults from './defaults';
 import WebpackCompiler from './Compiler';
 
+const importClause = `import %s from '%s'`;
+
+const loadableClause = 'const %s = loadable('
+  + '_ => import(/* webpackChunkName: '
+  + `'%s' */'%s'))`;
+
 const statsReporting = {
   cached: false,
   colors: true,
@@ -180,13 +186,60 @@ export default class WithWebpack {
    * Generates a static entry file
    */
   staticEntryCode(): string {
-    const { 
-      app, 
-      imports, 
-      exports, 
-      loadables, 
-      routesJson 
-    } = this._application.withReact.compile();
+    const { app, props, layouts, routes } = this._application.withReact;
+    const loadables = [];
+    const exports = Object.keys(props);
+    const imports = exports.map(name => importClause
+      .replace('%s', name)
+      .replace('%s', props[name])
+    );
+    //generate routes
+    let routesJson = JSON.stringify(routes);
+    //change route paths to object references
+    for (let i = 0; i < routes.length; i++) {
+      const { view } = routes[i];
+      routesJson = routesJson.replaceAll(`"${view}"`, `Route_${i + 1}`);
+      loadables.push(
+        loadableClause
+          .replace('%s', `Route_${i + 1}`)
+          .replace('%s', view
+            .replaceAll('/', '_')
+            .replaceAll('.', '_')
+            .replace(/^_*/, '')
+          )
+          .replace('%s', view)
+      );
+    }
+    //change layout paths to object references
+    for (const layout of layouts) {
+      loadables.push(loadableClause
+        .replace('%s', `Layout_${layout.name}`)
+        .replace('%s', layout.static
+          .replaceAll('/', '_')
+          .replaceAll('.', '_')
+          .replace(/^_*/, '')
+        )
+        .replace('%s', layout.static)
+      );
+      
+      //change from name to actual object reference
+      routesJson = routesJson.replaceAll(
+        `"layout":"${layout.name}"`, 
+        `"layout":Layout_${layout.name}`
+      );
+    }
+    //change missing layouts to default object reference
+    for(const route of routes) {
+      //if the route layout name is not found in the list of layouts
+      if (!layouts.filter(layout => layout.name === route.layout).length) {
+        //change from name to the default layout reference
+        routesJson = routesJson.replaceAll(
+          `"layout":"${route.layout}"`, 
+          `"layout":Layout_default`
+        );
+      }
+    }
+    exports.push('routes');
 
     return [
       `import React from 'react'`,
@@ -279,13 +332,60 @@ export default class WithWebpack {
    * Generates a server entry file
    */
   serverEntryCode(): string {
-    const { 
-      app, 
-      imports, 
-      exports, 
-      loadables, 
-      routesJson 
-    } = this._application.withReact.compile();
+    const { app, props, layouts, routes } = this._application.withReact;
+    const loadables = [];
+    const exports = Object.keys(props);
+    const imports = exports.map(name => importClause
+      .replace('%s', name)
+      .replace('%s', props[name])
+    );
+    //generate routes
+    let routesJson = JSON.stringify(routes);
+    //change route paths to object references
+    for (let i = 0; i < routes.length; i++) {
+      const { view } = routes[i];
+      routesJson = routesJson.replaceAll(`"${view}"`, `Route_${i + 1}`);
+      loadables.push(
+        loadableClause
+          .replace('%s', `Route_${i + 1}`)
+          .replace('%s', view
+            .replaceAll('/', '_')
+            .replaceAll('.', '_')
+            .replace(/^_*/, '')
+          )
+          .replace('%s', view)
+      );
+    }
+    //change layout paths to object references
+    for (const layout of layouts) {
+      loadables.push(loadableClause
+        .replace('%s', `Layout_${layout.name}`)
+        .replace('%s', layout.server
+          .replaceAll('/', '_')
+          .replaceAll('.', '_')
+          .replace(/^_*/, '')
+        )
+        .replace('%s', layout.server)
+      );
+      
+      //change from name to actual object reference
+      routesJson = routesJson.replaceAll(
+        `"layout":"${layout.name}"`, 
+        `"layout":Layout_${layout.name}`
+      );
+    }
+    //change missing layouts to default object reference
+    for(const route of routes) {
+      //if the route layout name is not found in the list of layouts
+      if (!layouts.filter(layout => layout.name === route.layout).length) {
+        //change from name to the default layout reference
+        routesJson = routesJson.replaceAll(
+          `"layout":"${route.layout}"`, 
+          `"layout":Layout_default`
+        );
+      }
+    }
+    exports.push('routes');
 
     return [
       `import React from 'react'`,

@@ -7,7 +7,7 @@ import { Request, Response } from '@inceptjs/framework';
 
 import { Application } from '../types/Application';
 import Exception from './Exception';
-import Page from './Page';
+import Document from './Document';
 
 export default class WithReact {
   /**
@@ -23,7 +23,7 @@ export default class WithReact {
   /**
    * The page component
    */
-  protected _page: Page;
+  protected _document: Document;
 
   /**
    * The props for the App componennt
@@ -33,7 +33,7 @@ export default class WithReact {
   /**
    * Mapping of name to layouts
    */
-  protected _layouts: Record<string, string> = {};
+  protected _layouts: Record<string, StringLayout> = {};
 
   /**
    * Mapping of path to route file path
@@ -41,10 +41,35 @@ export default class WithReact {
   protected _routes: Record<string, StringRoute> = {};
 
   /**
+   * Developers can set a custom app
+   */
+  get app(): string {
+    return this._app;
+  }
+
+  /**
    * Returns the current HTML Document
    */
-  get page() {
-    return this._page;
+  get document() {
+    return this._document;
+  }
+
+  /**
+   * Returns all the layouts
+   */
+  get layouts() {
+    const layouts = [];
+    for (const name in this._layouts) {
+      layouts.push(this._layouts[name]);
+    }
+    return layouts;
+  }
+
+  /**
+   * Returns the props as name -> file
+   */
+  get props(): Record<string, string> {
+    return Object.assign({}, this._props);
   }
 
   /**
@@ -70,8 +95,8 @@ export default class WithReact {
   /**
    * Developers can set a custom page
    */
-  set page(page: Page) {
-    this._page = page
+  set document(document: Document) {
+    this._document = document
   }
 
   /**
@@ -83,14 +108,14 @@ export default class WithReact {
     app.withVirtualFS.mkdirSync(app.cwd, { recursive: true });
     //set a default app
     this.app = path.normalize(
-      path.join(__dirname, './Page/App')
+      path.join(__dirname, './Document/App')
     );
     //set a default layout
-    this._layouts.default = path.normalize(
-      path.join(__dirname, './Page/Layout')
-    );
+    this.layout('default', path.normalize(
+      path.join(__dirname, './Document/Layout')
+    ));
     //set a default page
-    this._page = this.makePage();
+    this._document = this.makeDocument();
   }
 
   /**
@@ -99,72 +124,6 @@ export default class WithReact {
   config(name: string, file: string): WithReact {
     this._props[name] = file
     return this
-  }
-
-  /**
-   * Generates code to use for virtual entries
-   */
-  compile(): Record<string, any> {
-    const importClause = `import %s from '%s'`;
-    const loadableClause = 'const %s = loadable('
-      + '_ => import(/* webpackChunkName: '
-      + `'%s' */'%s'))`;
-    const routes = this.routes;
-    const loadables = [];
-    const exports = Object.keys(this._props);
-    const imports = exports.map(name => importClause
-      .replace('%s', name)
-      .replace('%s', this._props[name])
-    );
-    //generate routes
-    let routesJson = JSON.stringify(this.routes);
-    //change route paths to object references
-    for (let i = 0; i < routes.length; i++) {
-      const { view } = routes[i];
-      routesJson = routesJson.replaceAll(`"${view}"`, `Route_${i + 1}`);
-      loadables.push(
-        loadableClause
-          .replace('%s', `Route_${i + 1}`)
-          .replace('%s', view
-            .replaceAll('/', '_')
-            .replaceAll('.', '_')
-            .replace(/^_*/, '')
-          )
-          .replace('%s', view)
-      );
-    }
-    //change layout paths to object references
-    for (const name in this._layouts) {
-      loadables.push(loadableClause
-        .replace('%s', `Layout_${name}`)
-        .replace('%s', this._layouts[name]
-          .replaceAll('/', '_')
-          .replaceAll('.', '_')
-          .replace(/^_*/, '')
-        )
-        .replace('%s', this._layouts[name])
-      );
-      
-      //change from name to actual object reference
-      routesJson = routesJson.replaceAll(
-        `"layout":"${name}"`, 
-        `"layout":Layout_${name}`
-      );
-    }
-    //change missing layouts to default object reference
-    for (let i = 0; i < routes.length; i++) {
-      const { layout } = routes[i];
-      if (!this._layouts[layout]) {
-        //change from name to actual object reference
-        routesJson = routesJson.replaceAll(
-          `"layout":"${name}"`, 
-          `"layout":Layout_default`
-        );
-      }
-    }
-    exports.push('routes');
-    const app = this._app;
-    return { app, imports, exports, loadables, routesJson };
   }
 
   /**
@@ -188,10 +147,37 @@ export default class WithReact {
   /**
    * Defines a new layout
    */
-  layout(name: string, file: string): WithReact {
-    const resolved = this._application.withVirtualFS.resolvePath(file);
-    Exception.require(!!resolved, 'Module not found %s', file);
-    this._layouts[name] = resolved as string;
+  layout(
+    name: string, 
+    staticPath: string, 
+    serverPath?: string
+  ): WithReact {
+    // use virtual fs
+    const vfs = this._application.withVirtualFS;
+    //resolve the static path
+    const resolvedStaticPath = vfs.resolvePath(staticPath);
+    Exception.require(
+      !!resolvedStaticPath, 
+      'Module not found %s', 
+      staticPath
+    );
+    //if no server path 
+    if (!serverPath) {
+      //use the static path
+      serverPath = staticPath;
+    }
+    //resolve the server path
+    const resolvedServerPath = vfs.resolvePath(serverPath);
+    Exception.require(
+      !!resolvedServerPath, 
+      'Module not found %s', 
+      serverPath
+    );
+    this._layouts[name] = {
+      name,
+      server: resolvedServerPath as string,
+      static: resolvedStaticPath as string
+    };
     return this;
   }
 
@@ -199,14 +185,14 @@ export default class WithReact {
    * Returns a new page that developers can manipulate 
    * and send back using `ReactPlugin.page = page`
    */
-  makePage(props: Record<string, any> = {}): Page {
-    const page = new Page
+  makeDocument(props: Record<string, any> = {}): Document {
+    const document = new Document
 
     if (typeof props === 'object') {
-      page.props = Object.assign({}, props)
+      document.props = Object.assign({}, props)
     }
   
-    return page
+    return document;
   }
 
   /**
@@ -270,22 +256,22 @@ export default class WithReact {
       client.collectChunks(Router)
     );
 
-    //clone the page
-    const page = this._page.clone;
+    //clone the document
+    const document = this._document.clone;
     //add links to head
     client.getLinkElements().forEach(link => {
-      page.head.addChild(link);
+      document.head.addChild(link);
     });
     //add styles to head
     client.getStyleElements().forEach(style => {
-      page.head.addChild(style);
+      document.head.addChild(style);
     });
     //add scripts to body
     client.getScriptElements().forEach(script => {
-      page.body.addChild(script);
+      document.body.addChild(script);
     });
     //render the page
-    return page.render(app);
+    return document.render(app);
   }
 }
 
@@ -293,6 +279,12 @@ export type StringRoute = {
   path: string, 
   view: string,
   layout: string 
+};
+
+export type StringLayout = { 
+  name: string, 
+  static: string,
+  server: string 
 };
 
 export type ComponentRoute = { 

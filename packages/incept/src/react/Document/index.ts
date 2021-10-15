@@ -13,7 +13,7 @@ import Exception from '../Exception'
  * Page that can be configired and rendered 
  * to an HTML document string
  */
-export default class Page {
+export default class Document {
   /**
    * The build file to include
    */
@@ -43,7 +43,7 @@ export default class Page {
    * Returns a cloned page
    */
    get clone() {
-    const page = new Page;
+    const page = new Document;
     page._build = this._build;
     page._htmlProps = { ...this._htmlProps };
     page._title = this._title;
