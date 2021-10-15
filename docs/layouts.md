@@ -1,4 +1,4 @@
-# React Page, App and Layouts
+# React Document, App and Layouts
 
 When working with `react` apps it is common to want to eventually 
 manipulate the `<App />` container and HTML Document. Additionally
@@ -21,36 +21,36 @@ The purposes of providing these layers to developers are the following.
  - **`<App />`** - Ability to wrap providers for cache, store or theming to affect globally. 
  - **React Layouts** - Ability to use a set of providers in particular sections.
 
-## React Page
+## React Document
 
-Creating a new page can be done inside of a plugin. It is also possible 
-to customize the current page by accessing `app.withReact.page`.
+Creating a new document can be done inside of a plugin. It is also possible 
+to customize the current document by accessing `app.withReact.document`.
 
 ```js
 export default function(app) {
   const react = app.withReact
-  const page = react.makePage()
+  const document = react.makeDocument()
   //... customize here ...
-  react.page = page
+  react.document = document
 }
 ```
 
-Once a page is created, the following methods and properties are 
+Once a document is created, the following methods and properties are 
 available.
 
 ```js
-//changes the page title
-page.title = 'My Document'
+//changes the document title
+document.title = 'My Document'
 //add attribues to the <html> tag
-page.props = { className: 'www-document' }
+document.props = { className: 'www-document' }
 //add attribues to the <head> tag
-page.head.props = { className: 'www-head' }
+document.head.props = { className: 'www-head' }
 //add a react element to the <head> tag
-page.head.addChild(<link rel="favicon" href="/favicon.ico" />)
+document.head.addChild(<link rel="favicon" href="/favicon.ico" />)
 //add attribues to the <body> tag
-page.body.props = { className: 'www-body' }
+document.body.props = { className: 'www-body' }
 //add a react element to the <body> tag
-page.body.addChild(<script src="/scripts/jquery.min.js" />)
+document.body.addChild(<script src="/scripts/jquery.min.js" />)
 ```
 
 ## `<App />`
@@ -96,7 +96,7 @@ export default function(app) {
 }
 ```
 
-> WARNING: This will affect all page components. Using layouts is much 
+> WARNING: This will affect all document components. Using layouts is much 
 safer.
 
 ## React Layouts
@@ -119,16 +119,16 @@ export default function(app) {
   react.layout('default', path.join(__dirname, 'DefaultLayout.js'))
   react.layout('another', path.join(__dirname, 'AnotherLayout.js'))
   //uses the default layout
-  react.route('/', path.join(__dirname, 'pages/Home'))
+  react.route('/', path.join(__dirname, 'documents/Home'))
   //uses another layout
-  react.route('/about', path.join(__dirname, 'pages/About'), 'another')
+  react.route('/about', path.join(__dirname, 'documents/About'), 'another')
 }
 ```
 
 The `default` layout name is a special layout that is used by all 
-routes that did not specify a layout. For example the `pages/Home`
+routes that did not specify a layout. For example the `documents/Home`
 route will use this `default` layout because none was specified compared 
-to `pages/About` which will use `another` layout. Once a layout is 
+to `documents/About` which will use `another` layout. Once a layout is 
 inclluded with `app.withReact.layout()`, other plugins will be able to 
 use it.
 
@@ -175,22 +175,22 @@ function handler(req, res) {
     client.collectChunks(Router)
   );
 
-  //clone the page
-  const page = this._page.clone
+  //clone the document
+  const document = this._document.clone
   //add links to head
   client.getLinkElements().forEach(link => {
-    page.head.addChild(link)
+    document.head.addChild(link)
   })
   //add styles to head
   client.getStyleElements().forEach(style => {
-    page.head.addChild(style)
+    document.head.addChild(style)
   })
   //add scripts to body
   client.getScriptElements().forEach(script => {
-    page.body.addChild(script)
+    document.body.addChild(script)
   })
-  //render the page
-  return page.render(app)
+  //render the document
+  return document.render(app)
 }
 ```
 

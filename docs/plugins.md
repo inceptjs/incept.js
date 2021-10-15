@@ -223,7 +223,7 @@ export default (app) => {
 ## Read More
 
  - [Configuration and Options](./config.md)
- - [React Page, App and Layouts](./layouts.md)
+ - [React Document, App and Layouts](./layouts.md)
  
 ## Concepts
 

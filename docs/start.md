@@ -133,7 +133,7 @@ production ready.
 ## Read More
 
  - [How Plugins Work](./plugins.md)
- - [React Page, App and Layouts](./layouts.md)
+ - [React Document, App and Layouts](./layouts.md)
  - [Configuration and Options](./config.md)
 
 ## Concepts
