@@ -117,14 +117,11 @@ export default class WithReact {
       .replace('%s', this._props[name])
     );
     //generate routes
-    let activeLayout = '';
     let routesJson = JSON.stringify(this.routes);
+    //change route paths to object references
     for (let i = 0; i < routes.length; i++) {
       const { view } = routes[i];
-      //NOTE: routes should point a full path or node module
-      //change from path to actual object reference
       routesJson = routesJson.replaceAll(`"${view}"`, `Route_${i + 1}`);
-
       loadables.push(
         loadableClause
           .replace('%s', `Route_${i + 1}`)
@@ -136,26 +133,17 @@ export default class WithReact {
           .replace('%s', view)
       );
     }
-    exports.push('routes');
-    //import layouts
+    //change layout paths to object references
     for (const name in this._layouts) {
-      if (name === activeLayout) {
-        //active layout
-        imports.push(importClause
-          .replace('%s', `Layout_${name}`)
-          .replace('%s', this._layouts[name])
-        );
-      } else {
-        loadables.push(loadableClause
-          .replace('%s', `Layout_${name}`)
-          .replace('%s', this._layouts[name]
-            .replaceAll('/', '_')
-            .replaceAll('.', '_')
-            .replace(/^_*/, '')
-          )
-          .replace('%s', this._layouts[name])
-        );
-      }
+      loadables.push(loadableClause
+        .replace('%s', `Layout_${name}`)
+        .replace('%s', this._layouts[name]
+          .replaceAll('/', '_')
+          .replaceAll('.', '_')
+          .replace(/^_*/, '')
+        )
+        .replace('%s', this._layouts[name])
+      );
       
       //change from name to actual object reference
       routesJson = routesJson.replaceAll(
@@ -163,7 +151,18 @@ export default class WithReact {
         `"layout":Layout_${name}`
       );
     }
-
+    //change missing layouts to default object reference
+    for (let i = 0; i < routes.length; i++) {
+      const { layout } = routes[i];
+      if (!this._layouts[layout]) {
+        //change from name to actual object reference
+        routesJson = routesJson.replaceAll(
+          `"layout":"${name}"`, 
+          `"layout":Layout_default`
+        );
+      }
+    }
+    exports.push('routes');
     const app = this._app;
     return { app, imports, exports, loadables, routesJson };
   }
