@@ -54,9 +54,10 @@ to offset the need to manage those files. You can add the flag
 
 ### Plugins
 
-The key `incept` is used to declare the plugins that will be used for 
-the project. Incept is built around this allowing plugins to originate 
-from the project as well as `node_modules`.
+The key `incept` from the above example `"incept": [ "./index" ]` is 
+used to declare the plugins that will be used for the project. Incept is 
+built around this allowing plugins to originate from the project as well 
+as `node_modules`.
 
 In the project folder create a file called `index.js` and add the 
 following code.
