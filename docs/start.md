@@ -3,8 +3,8 @@
 Thanks for considering Incept for your next project. Please understand 
 that this is an open source project still in development and currently 
 is looking for more contributors. For now, we do not recommend using 
-Incept on a production level till it's fully released. This 
-documentation is provided to review the product and it's concepts.
+Incept on a production level till it is fully released. This 
+documentation is provided to review the product and its concepts.
 
 If you have any questions, please join the community on 
 [Github Discussions](https://github.com/inceptjs/incept.js/discussions).
