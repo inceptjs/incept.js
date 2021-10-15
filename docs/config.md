@@ -1,8 +1,9 @@
 # Configuration and Options
 
-> We cannot support most issues created where the cause was changing 
-the `webpack` or `babel` configuration. In the future, we will harden up
-this feature in order for it to be supported. For now it's free for all.
+> WARNINNG: We cannot support most issues created where the cause was 
+changing the `webpack` or `babel` configuration. In the future, we will 
+harden up this feature in order for it to be supported. For now it's 
+free for all.
 
 ## General Options
 
@@ -20,7 +21,8 @@ The default configuration for the application is exactly the following.
 }
 ```
 
-To access the configuration of an app you can do the following.
+To access the configuration of an app, the following can be done inside 
+of a plugin.
 
 ```js
 export default function(app) {
@@ -34,6 +36,8 @@ export default function(app) {
 
 ## Configuring Babel
 
+Incept uses `@babel/register` to transpile files. You can also 
+*kind of* customize `babel` through `app.withBabel.register()`. 
 The default configuration for `babel` is exactly the following.
 
 ```js
@@ -51,7 +55,7 @@ The default configuration for `babel` is exactly the following.
 }
 ```
 
-You can change this configuration by doing the following.
+To customize `babel`, the following can be done inside of a plugin. 
 
 ```js
 export default function(app) {
@@ -73,10 +77,11 @@ export default function(app) {
 > WARNING: This could cause errors if not configured correctly.
 
 What `app.withBabel.register()` will do is re-register babel for plugins 
-that use `require()` after it has been registered again. In this case 
-it's important that you prefer plugins that use 
+that use `require()` after it has been registered again. This does not 
+merge with the current configuration, but rather hard resets it. Also 
+in this case it's important that you consider placing plugins that use 
 `app.withBabel.register()` first in your plugin tree in order for other 
-plugins to see the benefits. It's important for third party plugin 
+plugins to see the benefits. It is also important for third party plugin 
 creators to note this for their consumers.
 
 ## Configuring Webpack
@@ -314,8 +319,8 @@ export default (app: Application) => ({
 })
 ```
 
-To access the configuration of either the server or static configuration 
-you can do the following.
+To customize `webpack` for ether the server or static, the following 
+can be done inside of a plugin. 
 
 ```js
 export default function(app) {

@@ -75,7 +75,7 @@ export default emitter
 Then in `./package.json` in your project root folder add the following
 `incept` key.
 
-```json
+```js
 {
   ...
   "incept": [ "./plugin/api" ],
@@ -112,7 +112,7 @@ The `./plugin/api/plugin.json` would look like the following.
 
 The `./plugin/api/packages.json` would look like the following.
 
-```json
+```js
 {
   ...
   "incept": [ "./router", "./events" ],
@@ -174,7 +174,7 @@ only way to tell `webpack` what files to bundle.
 Finally in `./package.json` in your project root folder add the following
 `incept` key.
 
-```json
+```js
 {
   ...
   "incept": [ "./plugin/api", "./plugin/static" ],
@@ -191,12 +191,32 @@ You can include plugins developed by the community through `npm` like
 this where `@inceptjs/admin` is an example third party plugin and 
 assuming you did `npm i @inceptjs/admin`.
 
-```json
-# FILE: ./package.json
+```js
+// FILE: ./package.json
 {
   ...
   "incept": [ "./plugin/api", "./plugin/static", "@inceptjs/admin" ],
   ...
+}
+```
+
+## Plugin Namespace
+
+A plugin can also claim a namespace within the project like the 
+following.
+
+```js
+export default (app) => {
+  app.plugin('my_plugin', { foo: 'bar' })
+}
+```
+
+Once a namespace is claimed no other plugins can claim it. Other plugins 
+that would like to access the `my_plugin` namespace can do so like this.
+
+```js
+export default (app) => {
+  console.log(app.plugin('my_plugin').foo) //--> bar
 }
 ```
 

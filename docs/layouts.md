@@ -3,10 +3,11 @@
 When working with `react` apps it is common to want to eventually 
 manipulate the `<App />` container and HTML Document. Additionally
 amongst [Jamstack](https://jamstack.org/) platforms developers 
-eventually want to use different layouts for different sections.
+eventually want to use different layouts for different sections of 
+their app.
 
-In Incept, developers can customize these at any stage. The order of 
-rendering looks like the following.
+Developers in Incept can customize `react` components at any stage. The 
+order of rendering looks like the following.
 
 ```
   |- HTML
@@ -16,13 +17,14 @@ rendering looks like the following.
 
 The purposes of providing these layers to developers are the following.
 
- - **HTML document** - You may want to add links, additional scripts, SEO or analytics tags. 
- - **`<App />`** - You may want to wrap meta components for cache, store or theming to affect globally. 
- - **React Layouts** - You may want a different cache, store or theming for a particular section.
+ - **HTML document** - Ability to add links, styles, additional scripts, SEO or analytics tags. 
+ - **`<App />`** - Ability to wrap providers for cache, store or theming to affect globally. 
+ - **React Layouts** - Ability to use a set of providers in particular sections.
 
 ## React Page
 
-To create a new page, you can do so like the following.
+Creating a new page can be done inside of a plugin. It is also possible 
+to customize the current page by accessing `app.withReact.page`.
 
 ```js
 export default function(app) {
@@ -33,7 +35,8 @@ export default function(app) {
 }
 ```
 
-The following quickly describes how pages can be customized.
+Once a page is created, the following methods and properties are 
+available.
 
 ```js
 //changes the page title
@@ -52,7 +55,7 @@ page.body.addChild(<script src="/scripts/jquery.min.js" />)
 
 ## `<App />`
 
-The default app looks similar to the following.
+The default `<App />` looks similar to the following.
 
 ```js
 import { Switch, Route } from 'inceptjs/components'
@@ -72,7 +75,19 @@ export default function App(props) {
 }
 ```
 
-To use a different `<App />` you can do so like the following.
+> Switch, Route, Link are from `react-router-dom`.
+
+`props.routes` is an array with the following data structure.
+
+```js
+{
+  path: string, //the route path like /post/detail/:id
+  view: Component, //the component assigned to this route
+  layout: Component, //the layout to use when rending this route
+}
+```
+
+To use a custom `<App />` the following can be done inside of a plugin.
 
 ```js
 import path from 'path'
@@ -86,8 +101,8 @@ safer.
 
 ## React Layouts
 
-You can make as many layouts as is needed in your project. The default 
-layout looks similar to the following.
+A project can use one or many layouts in Incept. The default layout 
+looks similar to the following.
 
 ```js
 export default function Layout({ children }) {
@@ -95,7 +110,7 @@ export default function Layout({ children }) {
 }
 ```
 
-To declare and use layouts can be done like the following.
+Layouts can be declared and used inside of a plugin like the following.
 
 ```js
 import path from 'path'
@@ -104,8 +119,15 @@ export default function(app) {
   react.layout('default', path.join(__dirname, 'DefaultLayout.js'))
   react.layout('another', path.join(__dirname, 'AnotherLayout.js'))
   //uses the default layout
-  react.route('/', `${__dirname}/pages/Home`)
+  react.route('/', path.join(__dirname, 'pages/Home'))
   //uses another layout
-  react.route('/about', `${__dirname}/pages/About`, 'another')
+  react.route('/about', path.join(__dirname, 'pages/About'), 'another')
 }
 ```
+
+The `default` layout name is a special layout that is used by all 
+routes that did not specify a layout. For example the `pages/Home`
+route will use this `default` layout because none was specified compared 
+to `pages/About` which will use `another` layout. Once a layout is 
+inclluded with `app.withReact.layout()`, other plugins will be able to 
+use it.

@@ -25,7 +25,7 @@ yarn add inceptjs
 
 Open `package.json` and add the following values.
 
-```json
+```js
 {
   ...
   "scripts": {
