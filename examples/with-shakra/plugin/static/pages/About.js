@@ -5,7 +5,7 @@ export default function About() {
   return (
     <div>
       <h1>About</h1>
-      <Button variant="contained">
+      <Button colorScheme="blue">
         <Link to="/">Home</Link>
       </Button>
     </div>

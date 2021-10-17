@@ -7,10 +7,12 @@ import createEmotionCache from './createEmotionCache'
 export default function ShhakraLayout({ children }) {
   const cache = createEmotionCache()
   return (
-    <CacheProvider value={cache}>
-      <ChakraProvider theme={theme}>
-        {children}
-      </ChakraProvider>
-    </CacheProvider>
+    <div>
+      <CacheProvider value={cache}>
+        <ChakraProvider theme={theme}>
+          {children}
+        </ChakraProvider>
+      </CacheProvider>
+    </div>
   )
 }
