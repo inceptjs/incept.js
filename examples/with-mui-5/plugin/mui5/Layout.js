@@ -10,8 +10,10 @@ export default function MUI5Layout({ children }) {
   return (
     <CacheProvider value={cache}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {children}
+        <div>
+          <CssBaseline />
+          {children}
+        </div>
       </ThemeProvider>
     </CacheProvider>
   )
