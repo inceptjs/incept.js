@@ -168,6 +168,22 @@ export default class WebpackCompiler {
   }
 
   /**
+   * Pushes a new plugin to an existing rule to the config
+   */
+  pushRule(
+    test: RegExp|string|(RegExp|string)[], 
+    plugin: string|Record<string, any>
+  ): WebpackCompiler {
+    for (const rule of this.config.module.rules) {
+      if (rule.test.toString().indexOf(test.toString()) !== -1) {
+        rule.use.push(plugin);
+        break;
+      }
+    }
+    return this;
+  }
+
+  /**
    * Watches files
    */
   watch(config: Record<string, any>, callback: Function) {

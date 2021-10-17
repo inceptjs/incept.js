@@ -38,6 +38,16 @@ const statsReporting = {
 
 export default class WithWebpack {
   /**
+   * The server compiler
+   */
+  public withServerCompiler: WebpackCompiler;
+
+  /**
+   * The app instance
+   */
+  public withStaticCompiler: WebpackCompiler;
+  
+  /**
    * The app instance
    */
   protected _application: Application;
@@ -47,6 +57,14 @@ export default class WithWebpack {
    */
   constructor(app: Application) {
     this._application = app;
+    this.withServerCompiler = new WebpackCompiler(Object.assign(
+      defaults.server(this._application), 
+      this._application.config.webpack.server
+    ))
+    this.withStaticCompiler = new WebpackCompiler(Object.assign(
+      defaults.static(this._application), 
+      this._application.config.webpack.static
+    ))
   }
 
   /**
@@ -60,7 +78,11 @@ export default class WithWebpack {
     //---------------------------------------------------------------//
     // Common Configuration
     const { cwd, withVirtualFS: vfs } = this._application;
-    const bundler = new WebpackCompiler(Object.assign(
+    const bundler = target === Target.Server
+      ? this.withServerCompiler
+      : this.withStaticCompiler
+    
+    new WebpackCompiler(Object.assign(
       defaults[target](this._application), 
       this._application.config.webpack[target]
     ));
