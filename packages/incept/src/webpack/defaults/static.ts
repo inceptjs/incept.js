@@ -10,7 +10,7 @@ function salt(id: string): string {
 
 export default (app: Application) => ({
   resolve: {
-    extensions: [ '.js', '.jsx', '.json', '.css' ],
+    extensions: [ '.js', '.jsx', '.json', '.css', '.ts', 'tsx' ],
     plugins: [ new VirtualFSWebpackPlugin ]
   },
   output: { 
@@ -58,6 +58,38 @@ export default (app: Application) => ({
               plugins: [
                 //adds react import where jsx is found
                 'react-require', 
+                //need to call `import()` transpile before loadable
+                '@babel/plugin-syntax-dynamic-import', 
+                //transpile `loadable()` syntax
+                '@loadable/babel-plugin'
+              ]
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(tsx?)$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                '@babel/preset-react',
+                [
+                  '@babel/preset-env', 
+                  {
+                    exclude: ['transform-regenerator'],
+                    corejs: false,
+                    modules: 'commonjs' 
+                  }
+                ], 
+                [
+                  '@babel/preset-typescript',
+                  { isTSX: true, allExtensions: true }
+                ]
+              ],
+              plugins: [
                 //need to call `import()` transpile before loadable
                 '@babel/plugin-syntax-dynamic-import', 
                 //transpile `loadable()` syntax

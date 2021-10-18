@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "incept build",
+    "dev": "incept dev"
+  },
+  "incept": [
+    "./src/api",
+    "./src/static"
+  ],
+  "dependencies": {
+    "inceptjs": "^0.0.23"
+  },
+  "devDependencies": {
+    "@types/node": "^16.9.4",
+    "@types/react": "^17.0.30",
+    "@types/react-dom": "^17.0.9"
+  }
+}

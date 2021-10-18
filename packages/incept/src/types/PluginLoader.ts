@@ -148,6 +148,18 @@ export default class PluginLoader {
     if (!fs.existsSync(file) || !fs.lstatSync(file).isFile()) {
       file = path.resolve(pathname, 'index.js');
     }
+    //8. Check for index.ts
+    if (!fs.existsSync(file) || !fs.lstatSync(file).isFile()) {
+      file = path.resolve(pathname, 'index.ts');
+    }
+    //9. Check for plugin.ts
+    if (!fs.existsSync(file) || !fs.lstatSync(file).isFile()) {
+      file = path.resolve(pathname, 'plugin.ts');
+    }
+    //10. Check for [pathname].js
+    if (!fs.existsSync(file) || !fs.lstatSync(file).isFile()) {
+      file = pathname + '.ts';
+    }
 
     Exception.require (
       fs.existsSync(file) && fs.lstatSync(file).isFile(),
