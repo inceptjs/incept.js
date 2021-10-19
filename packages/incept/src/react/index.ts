@@ -3,11 +3,12 @@ import React, { ComponentType } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { ChunkExtractor } from '@loadable/server';
 import { StaticRouter, matchPath } from 'react-router';
+import { Helmet } from 'react-helmet';
 import { Request, Response } from '@inceptjs/framework';
 
 import { Application } from '../types/Application';
 import Exception from './Exception';
-import Document from './Document';
+import Document from './components/Document';
 
 export default class WithReact {
   /**
@@ -23,7 +24,7 @@ export default class WithReact {
   /**
    * The page component
    */
-  protected _document: Document;
+  protected _document: Function;
 
   /**
    * The props for the App componennt
@@ -45,13 +46,6 @@ export default class WithReact {
    */
   get app(): string {
     return this._app;
-  }
-
-  /**
-   * Returns the current HTML Document
-   */
-  get document() {
-    return this._document;
   }
 
   /**
@@ -95,7 +89,7 @@ export default class WithReact {
   /**
    * Developers can set a custom page
    */
-  set document(document: Document) {
+  set document(document: Function) {
     this._document = document
   }
 
@@ -108,14 +102,14 @@ export default class WithReact {
     app.withVirtualFS.mkdirSync(app.cwd, { recursive: true });
     //set a default app
     this.app = path.normalize(
-      path.join(__dirname, './Document/App')
+      path.join(__dirname, './components/App')
     );
     //set a default layout
     this.layout('default', path.normalize(
-      path.join(__dirname, './Document/Layout')
+      path.join(__dirname, './components/Layout')
     ));
     //set a default page
-    this._document = this.makeDocument();
+    this._document = Document;
   }
 
   /**
@@ -140,8 +134,9 @@ export default class WithReact {
     if (!this.match(request.pathname)) {
       return;
     }
+
     response.headers('Content-Type', 'text/html');
-    response.write(this.render(request.pathname));
+    response.write(this.render(request.pathname, response));
   }
 
   /**
@@ -182,20 +177,6 @@ export default class WithReact {
   }
 
   /**
-   * Returns a new page that developers can manipulate 
-   * and send back using `ReactPlugin.page = page`
-   */
-  makeDocument(props: Record<string, any> = {}): Document {
-    const document = new Document
-
-    if (typeof props === 'object') {
-      document.props = Object.assign({}, props)
-    }
-  
-    return document;
-  }
-
-  /**
    * Returns the matching route. Logic from `react-router`
    */
   match(pathname: string): StringRoute|null {
@@ -226,9 +207,14 @@ export default class WithReact {
   /**
    * Renders the page (for server)
    */
-  render(pathname: string): string {
+  render(pathname: string, response: Response): string {
     //get router props
     const routerProps = { location: pathname, context: {} };
+    //get app props
+    const appProps = response.body 
+      && response.body.constructor instanceof Object
+      ? response.body
+      : {}
     //now do the loadable chunking thing..
     //see: https://loadable-components.com/docs/server-side-rendering/
     const server = new ChunkExtractor({ 
@@ -249,29 +235,44 @@ export default class WithReact {
     const Router = React.createElement(
       StaticRouter,
       routerProps,
-      React.createElement(App)
+      React.createElement(App, appProps)
     );
     //render the app now
     const app = ReactDOMServer.renderToString(
       client.collectChunks(Router)
     );
+    const helmet = Helmet.renderStatic();
 
     //clone the document
-    const document = this._document.clone;
-    //add links to head
-    client.getLinkElements().forEach(link => {
-      document.head.addChild(link);
+    const document = this._document({
+      App() {
+        return React.createElement('div', {
+          id: '__incept_root',
+          dangerouslySetInnerHTML: { __html: app }
+        })
+      },
+      title: helmet.title.toComponent(),
+      meta: helmet.meta.toComponent(),
+      base: helmet.base.toComponent(),
+      links: [
+        ...Array.from(client.getLinkElements()),
+        //@ts-ignore helmet tests show it should be an array
+        ...Array.from(helmet.link.toComponent())
+      ],
+      styles: [
+        ...Array.from(client.getStyleElements()),
+        //@ts-ignore helmet tests show it should be an array
+        ...Array.from(helmet.style.toComponent())
+      ],
+      scripts: [
+        ...Array.from(client.getScriptElements()),
+        //@ts-ignore helmet tests show it should be an array
+        ...Array.from(helmet.script.toComponent())
+      ],
     });
-    //add styles to head
-    client.getStyleElements().forEach(style => {
-      document.head.addChild(style);
-    });
-    //add scripts to body
-    client.getScriptElements().forEach(script => {
-      document.body.addChild(script);
-    });
-    //render the page
-    return document.render(app);
+
+    const markup = ReactDOMServer.renderToStaticMarkup(document)
+    return `<!DOCTYPE html>${markup}`
   }
 }
 

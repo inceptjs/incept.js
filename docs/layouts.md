@@ -23,34 +23,69 @@ The purposes of providing these layers to developers are the following.
 
 ## React Document
 
-Creating a new document can be done inside of a plugin. It is also possible 
-to customize the current document by accessing `app.withReact.document`.
+The default `Document` looks like the following.
 
 ```js
-export default function(app) {
-  const react = app.withReact
-  const document = react.makeDocument()
-  //... customize here ...
-  react.document = document
+export default function Document(props) {
+  const App = props.App
+
+  return (
+    <html {...props.htmlProps}>
+      <head>
+        {props.title}
+        {props.meta}
+        {props.links}
+        {props.styles}
+      </head>
+      <body {...props.bodyProps}>
+        <App />
+        {props.scripts}
+      </body>
+    </html>
+  )
 }
 ```
 
-Once a document is created, the following methods and properties are 
-available.
+You can change default document inside of a plugin like the following. 
 
 ```js
-//changes the document title
-document.title = 'My Document'
-//add attribues to the <html> tag
-document.props = { className: 'www-document' }
-//add attribues to the <head> tag
-document.head.props = { className: 'www-head' }
-//add a react element to the <head> tag
-document.head.addChild(<link rel="favicon" href="/favicon.ico" />)
-//add attribues to the <body> tag
-document.body.props = { className: 'www-body' }
-//add a react element to the <body> tag
-document.body.addChild(<script src="/scripts/jquery.min.js" />)
+import Document from './Document'
+
+export default function(app) {
+  app.withReact.document = Document
+}
+```
+
+> NOTE: Documents are used globally and shared across all pages. 
+
+In some cases you may want to change elements in the head for example 
+changing the `<head><title>` or adding SEO. This can be done with the 
+use of the `<Head>` component.
+
+```js
+import { Head } from 'inceptjs/components'
+<Head>
+  <title>About</title>
+  <meta name="description" content="About My Page" />
+</Head>
+```
+
+The `<Head>` component accepts tags normally accepted in the `<head>` 
+HTML tag including the following.
+
+ - base
+ - link
+ - meta
+ - noscript
+ - script
+ - style
+ - title
+
+You can also use `<Head>` to add attributes to the `<html>` and `<body>`
+tags like the following.
+
+```js
+<Head bodyAttributes={{ id: 'foo' }} htmlAttributes={{ id: 'bar' }} />
 ```
 
 ## `<App />`
