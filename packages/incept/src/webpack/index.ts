@@ -98,6 +98,15 @@ export default class WithWebpack {
     if (write) {
       //tell loadable where we are writing this to
       loadableConfig.writeToDisk = { filename: buildPath };
+      //if development mode
+      if (mode === Mode.Development) {
+        bundler.config.cache = {
+          // https://webpack.js.org/configuration/other-options/#cache
+          type: 'filesystem',
+          cacheDirectory: buildPath,
+          name: 'cache'
+        };
+      }
     } else {
       //this is a trick to load the stats in memory using virtualFS
       bundler.on(
@@ -142,7 +151,7 @@ export default class WithWebpack {
 
     //set the entry location
     bundler.addEntry('main', path.join(cwd, `.build/virtual/${target}.js`));
-
+    
     //---------------------------------------------------------------//
     // Target: Static, Mode: Development
     if (target === Target.Static && mode === Mode.Development) {
