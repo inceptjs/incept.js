@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { EventEmitter, Router, Pluggable } from '@inceptjs/framework';
+import { EventEmitter, Router } from '@inceptjs/framework';
+import Pluggable from '@inceptjs/framework/dist/presets/Pluggable';
 import Exception from './Exception';
 
 export default class PluginLoader {

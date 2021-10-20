@@ -1,4 +1,4 @@
-import { Pluggable } from '@inceptjs/framework';
+import Pluggable from '@inceptjs/framework/dist/presets/Pluggable';
 
 import TerminalPlugin from '..';
 

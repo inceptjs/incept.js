@@ -1,5 +1,4 @@
 import {
-  Pluggable,
   Request,
   Response,
   Router,
@@ -19,6 +18,7 @@ import {
 } from '@inceptjs/framework'
 
 import http from '@inceptjs/framework/dist/presets/http';
+import Pluggable from '@inceptjs/framework/dist/presets/Pluggable';
 
 import Application from './types/Application'
 import PluginLoader from './types/PluginLoader'

@@ -1,8 +1,8 @@
 import { 
   EventEmitter, 
-  HTTPRequest, 
-  HTTPResponse 
-} from '@inceptjs/framework';
+  Request, 
+  Response 
+} from '@inceptjs/framework/dist/presets/http';
 
 const emitter = new EventEmitter
 
@@ -10,8 +10,8 @@ const emitter = new EventEmitter
  * Translates response back into the original payload
  */
 emitter.on('dispatch', async function dispatchResponse(
-  request: HTTPRequest, 
-  response: HTTPResponse
+  request: Request, 
+  response: Response
 ) {
   const sr = response.resource;
   //if it was already sent off 
