@@ -1,3 +1,3 @@
-import { Exception } from "@inceptjs/types";
+import { Exception } from '@inceptjs/types';
 
 export default class FrameworkException extends Exception {}

@@ -1,5 +1,5 @@
 import path from 'path';
-import { http } from '@inceptjs/framework';
+import http from '@inceptjs/framework/dist/presets/http';
 import vfs, { VirtualFS } from '@inceptjs/virtualfs';
 
 import Exception from './Exception';
