@@ -1,4 +1,4 @@
-import Application from '../types/Application';
+import app from '../app'
 
 import build from './plugin/build';
 import start from './plugin/start';
@@ -9,8 +9,6 @@ import terminal from './plugin/terminal';
 const cwd = process.cwd();
 //this is the arguments
 const argv = process.argv;
-//make an application
-const app = new Application({ cwd });
 //bootstrap the terminal
 app.bootstrap(terminal);
 //bootstrap development tools
@@ -24,5 +22,3 @@ app.bootstrap(start);
 app.load();
 //now let the terminal take over...
 app.plugin('terminal').emit(cwd, argv);
-
-export default app;

@@ -210,11 +210,6 @@ export default class WithReact {
   render(pathname: string, response: Response): string {
     //get router props
     const routerProps = { location: pathname, context: {} };
-    //get app props
-    const appProps = response.body 
-      && response.body.constructor instanceof Object
-      ? response.body
-      : {}
     //now do the loadable chunking thing..
     //see: https://loadable-components.com/docs/server-side-rendering/
     const server = new ChunkExtractor({ 
@@ -235,7 +230,7 @@ export default class WithReact {
     const Router = React.createElement(
       StaticRouter,
       routerProps,
-      React.createElement(App, appProps)
+      React.createElement(App)
     );
     //render the app now
     const app = ReactDOMServer.renderToString(

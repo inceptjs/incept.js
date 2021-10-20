@@ -23,8 +23,10 @@ import Pluggable from '@inceptjs/framework/dist/presets/Pluggable';
 import Application from './types/Application'
 import PluginLoader from './types/PluginLoader'
 
+import app from './app'
 
 export {
+  app,
   Application,
   PluginLoader,
   //pass through
