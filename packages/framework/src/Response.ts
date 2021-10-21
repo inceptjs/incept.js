@@ -93,6 +93,50 @@ export default class Response extends Store {
   }
 
   /**
+   * Parses body by content type
+   */
+  parse() {
+    const types: string[] = [ 'Content-Type', 'content-type' ];
+    for (const key of types) {
+      const type = this.headers(key)?.trim();
+      switch(true) {
+        case type === 'text/json':
+        case type === 'application/json':
+          return this.parseJSON();
+        case type === 'application/x-www-form-urlencoded':
+          return this.parseURLEncoded();
+        case type.indexOf('multipart/form-data') === 0:
+          return this.parseFormData();
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * Parses body by multipart/form-data
+   */
+  parseFormData() {
+    const store = new Store;
+    return store.withFormData.set(this.body).get();
+  }
+
+  /**
+   * Parses body by application/json
+   */
+  parseJSON() {
+    return JSON.parse(this.body.toString());
+  }
+
+  /**
+   * Parses body by urlencoded
+   */
+  parseURLEncoded() {
+    const store = new Store;
+    return store.withQuery.set(this.body.toString()).get();
+  }
+
+  /**
    * Returns the response status. If value 
    * is provided, then sets the status
    */
