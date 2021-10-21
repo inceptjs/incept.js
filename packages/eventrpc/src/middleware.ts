@@ -1,6 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import jsonrpc, { JsonRpcError } from 'jsonrpc-lite';
-import { EventEmitter } from '@inceptjs/framework';
+import { EventEmitter, Request, Response } from '@inceptjs/framework';
 
 const defaultNext = (error: Error) => { if(error) throw error };
 
@@ -9,23 +9,30 @@ export default function createMiddleware(
   routepath = '/eventrpc'
 ): Function {
   function Middleware(
-    req: IncomingMessage, 
-    res: ServerResponse, 
+    im: IncomingMessage, 
+    sr: ServerResponse, 
     next: Function
   ) {
     next = next || defaultNext;
-    if (req.url !== routepath) {
+    if (im.url !== routepath) {
       return next();
     }
 
-    const chunks: (string|Buffer)[] = [];
-    req.on('data', function (data: string|Buffer) {
+    const req = new Request();
+    const res = new Response();
+    req.set('resource', im)
+    res.set('resource', sr)
+
+    const chunks: Buffer[] = [];
+    im.on('data', function (data: Buffer) {
       chunks.push(data)
     });
 
-    req.on('end', async() => {
-      //get payload
-      let payload = JSON.parse(chunks.join(''));
+    im.on('end', async() => {
+      //write the chunks to req body
+      req.write(Buffer.concat(chunks))
+      //so we can parse it
+      let payload = req.parseJSON();
       //if payload is not an object
       if (typeof payload !== 'object') {
         //we cannot process
@@ -38,26 +45,25 @@ export default function createMiddleware(
         return next();
       }
 
-      const method = payload.method;
-      let args = payload.params || [];
-      if (!Array.isArray(args)) {
-        args = [args];
-      }
+      //get the event
+      const event = payload.method;
+      //set the params
+      req.set('params', payload.params);
 
       //placeholder for response
       let response = null;
 
       try {
-        serverEmitter.emit(method, ...args);
-        response = jsonrpc.success(payload.id, args)
+        serverEmitter.emit(event, req, res);
+        response = jsonrpc.success(payload.id, res.body)
       } catch(error) {
         response = jsonrpc.error(payload.id, error as JsonRpcError);
       }
 
       //send it off
-      res.setHeader('Content-Type', 'text/json');
-      res.write(JSON.stringify(response));
-      res.end();
+      sr.setHeader('Content-Type', 'text/json');
+      sr.write(JSON.stringify(response));
+      sr.end();
 
       return next();
     });

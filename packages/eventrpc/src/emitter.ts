@@ -70,7 +70,7 @@ export default class RPCEmitter extends EventEmitter {
     const { id, key, fetch, ...fetchOptions } = options;
     this._id = id || 1;
     this._key = key || shortid.generate();
-    this._fetch = fetch || window.fetch;
+    this._fetch = fetch || window.fetch.bind(window);
     this._options = Object.assign({}, defaults, fetchOptions);
   }
 
@@ -85,7 +85,7 @@ export default class RPCEmitter extends EventEmitter {
 
     //try to emit locally first
     const status = await super.emit.call(this, event, req, res);
-    if (status !== Statuses.NOT_FOUND) {
+    if (status.code !== Statuses.NOT_FOUND.code) {
       return status;
     }
 
