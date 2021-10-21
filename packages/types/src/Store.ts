@@ -17,6 +17,11 @@ export default class Store {
   public withArgs: Args;
 
   /**
+   * Parser for multipart/form-data
+   */
+  public withFormData: FormData;
+
+  /**
    * Parser for path notations
    */
   public withPath: Path;
@@ -32,6 +37,7 @@ export default class Store {
   constructor(data: Record<string, any> = {}) {
     this.data = data;
     this.withArgs = new Args(this);
+    this.withFormData = new FormData(this);
     this.withPath = new Path(this);
     this.withQuery = new Query(this);
   }
@@ -190,6 +196,24 @@ export default class Store {
   }
 }
 
+export class File {
+  public data: Buffer|string;
+  public name: string;
+  public type: string;
+
+  constructor(file: FileType) {
+    this.data = file.data;
+    this.name = file.name;
+    this.type = file.type;
+  }
+}
+
+export type FileType  = {
+  data: Buffer|string;
+  name: string;
+  type: string;
+}
+
 class Args {
   /**
    * The main store
@@ -234,17 +258,17 @@ class Args {
           key = arg.substr(2);
           // --foo value
           if ((i + 1) < j && args[i + 1][0] !== '-') {
-            this.format(path, key, args[i + 1]);
+            this._format(path, key, args[i + 1]);
             i++;
             continue;
           }
           // --foo
-          this.format(path, key, true);
+          this._format(path, key, true);
           continue;
         }
 
         // --bar=baz
-        this.format(
+        this._format(
           path,
           arg.substr(2, equalPosition - 2), 
           arg.substr(equalPosition + 1)
@@ -256,7 +280,7 @@ class Args {
       if (arg.substr(0, 1) === '-') {
         // -k=value
         if (arg.substr(2, 1) === '=') {
-          this.format(path, arg.substr(1, 1), arg.substr(3));
+          this._format(path, arg.substr(1, 1), arg.substr(3));
           continue;
         }
 
@@ -264,12 +288,12 @@ class Args {
         const chars = arg.substr(1);
         for (let k = 0; k < chars.length; k++) {
           key = chars[k];
-          this.format(path, key, true);
+          this._format(path, key, true);
         }
 
         // -a value1 -abc value2
         if ((i + 1) < j && args[i + 1][0] !== '-') {
-          this.format(path, key, args[i + 1], true);
+          this._format(path, key, args[i + 1], true);
           i++;
         }
 
@@ -277,7 +301,7 @@ class Args {
       }
 
       if (equalPosition !== -1) {
-        this.format(
+        this._format(
           path,
           arg.substr(0, equalPosition), 
           arg.substr(equalPosition + 1)
@@ -287,7 +311,7 @@ class Args {
 
       if (arg.length) {
         // plain-arg
-        this.format(path, index++, arg);
+        this._format(path, index++, arg);
       }
     }
     
@@ -298,7 +322,7 @@ class Args {
    * Determines whether to set or push 
    * formatted values to the store
    */
-  format(
+  protected _format(
     path: Index[], 
     key: Index, 
     value: any, 
@@ -480,6 +504,193 @@ class Query {
     });
 
     return this.store;
+  }
+}
+
+class FormData {
+  /**
+   * The main store
+   */
+  public store: Store;
+
+  /**
+   * Sets the store 
+   */
+  constructor(store: Store) {
+    this.store = store;
+  }
+
+  set(...path: any[]): Store {
+    if (path.length < 1) {
+      return this.store;
+    }
+
+    const formData = path.pop();
+    const formDataBuffer = typeof formData === 'string' 
+      ? Buffer.from(formData)
+      : formData;
+    const boundary = this._getBoundary(formDataBuffer);
+    let part: Buffer[] = [];
+    
+    for (let i = 0; i < formDataBuffer.length; i++) {
+      //get line
+      const line = this._getLine(formDataBuffer, i);
+      //if no line
+      if (line === null) {
+        //we are done
+        break;
+      }
+      //get the line buffer
+      const buffer = line.buffer;
+      if (buffer.toString().indexOf(boundary) === 0) {
+        if (part.length) {
+          this._setPart(path, this._getPart(part));
+        }
+        //if it's the last boundary
+        if (buffer.toString() === `${boundary}--`) {
+          break;
+        }
+        part = [];
+      } else {
+        part.push(buffer);
+      }
+
+      i = line.i;
+    }
+
+    return this.store;
+  }
+
+  protected _getBoundary(buffer: Buffer): string|null {
+    const boundary = this._getLine(buffer, 0)?.buffer;
+    if (!boundary) {
+      return null;
+    }
+    return boundary.slice(0, boundary.length - 1).toString();
+  }
+
+  protected _getLine(buffer: Buffer, i: number): Record<string, any>|null {
+    const line = [];
+    for (; i < buffer.length; i++) {
+      const current = buffer[i];
+      line.push(current);
+
+      if (current === 0x0a || current === 0x0d) {
+        return { i, buffer: Buffer.from(line) };
+      }
+    }
+
+    if (line.length) {
+      return { i, buffer: Buffer.from(line) };
+    }
+
+    return null;    
+  }
+
+  protected _getPart(lines: Buffer[]): Record<string, any> {
+    const headerLines = [];
+    do { //get the header lines
+      headerLines.push(lines.shift()?.toString());
+    } while(lines.length 
+      && !(lines[0].length === 1 
+        && (lines[0][0] === 0x0a 
+          || lines[0][0] === 0x0d
+        )
+      )
+    );
+    //we need to trim the \n from the last line
+    const last = lines[lines.length - 1];
+    lines[lines.length - 1] = last.slice(0, last.length - 1);
+    //the rest of the lines is the body
+    const body = Buffer.concat(lines.slice(1));
+    //parse headers
+    const headers: Record<string, string> = {};
+    //for each header line
+    for (const line of headerLines) {
+      //if the line has a `:`
+      if (line && line.indexOf(':') !== -1) {
+        //then we can split it
+        const [ key, value ] = line.toString().split(':', 2);
+        //now set it to headers
+        headers[key.trim().toLowerCase()] = value.trim();
+      }
+    }
+    //extract the form data from content-disposition
+    const form: Record<string, any> = {};
+    if (typeof headers['content-disposition'] === 'string') {
+      headers['content-disposition'].split(';').forEach(disposition => {
+        const matches = disposition
+          .trim()
+          .match(/^([a-zA-Z0-9_\-]+)=["']([^"']+)["']$/);
+        
+        if (matches && matches.length > 2) {
+          form[matches[1]] = matches[2];
+        }
+      });
+    }
+    
+    return { headers, body, form };
+  }
+
+  protected _setPart(path: string[], part: Record<string, any>) {
+    if (!part.form.name) {
+      return this;
+    }
+    
+    //change path to N notation
+    const separator = '~~' + Math.floor(Math.random() * 10000) + '~~';
+    const keys = part.form.name
+      .replace(/\]\[/g, separator)
+      .replace('[', separator)
+      .replace(/\[/g, '')
+      .replace(/\]/g, '')
+      .split(separator);
+
+    keys.map((key: any) => {
+      const index = parseInt(key);
+      //if its a possible integer
+      if (!isNaN(index) && key.indexOf('.') === -1) {
+        return index;
+      }
+
+      return key;
+    })
+
+    //get store paths
+    const paths = path.concat(keys);
+    //if there is not a filename
+    if (!part.form.filename) {
+      const value = part.body.toString();
+      //try parsing JSON
+      if (/(^\{.*\}$)|(^\[.*\]$)/.test(value)) {
+        try {
+          return this.store.set(...paths, JSON.parse(value));
+        } catch(e) {}
+      }
+
+      //try parsing float
+      if (!isNaN(parseFloat(value))) {
+        this.store.set(...paths, parseFloat(value));
+      //try parsing true
+      } else if (value === 'true') {
+        this.store.set(...paths, true);
+      //try parsing false
+      } else if (value === 'false') {
+        this.store.set(...paths, false);
+      //try parsing null
+      } else if (value === 'null') {
+        this.store.set(...paths, null);
+      } else {
+        this.store.set(...paths, value);
+      }
+      return this;
+    }
+    //if we are here it's a filename
+    this.store.set(...paths, new File({
+      data: part.body,
+      name: part.form.filename,
+      type: part.headers['content-type']
+    }));
   }
 }
 

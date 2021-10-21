@@ -109,4 +109,39 @@ describe('Store', () => {
     const expected3 = '{"foo":{"bar":{"a":[{"b":1},2,true],"b":[true,true],"c":true,"d":["one","two",3]}}}'
     expect(JSON.stringify(store3.get())).to.equal(expected3)
   })
+
+  it('Should set by form data', () => {
+    const store1 = new Store
+    store1.withFormData.set(multipart)
+
+    expect(store1.get('text')).to.equal('text default')
+
+    const file1 = store1.get('uploads', 0)
+    expect(file1.name).to.equal('somebinary.dat')
+    expect(file1.type).to.equal('application/octet-stream')
+    expect(file1.data.toString()).to.equal('some binary data...maybe the bits of a image..')
+    
+    const file2 = store1.get('uploads', 1)
+    expect(file2.name).to.equal('sometext.txt')
+    expect(file2.type).to.equal('text/plain')
+    expect(file2.data.toString()).to.equal('hello world')
+    
+  })
 })
+
+const multipart =
+`------WebKitFormBoundaryDtbT5UpPj83kllfw
+Content-Disposition: form-data; name="uploads[]"; filename="somebinary.dat"
+Content-Type: application/octet-stream
+
+some binary data...maybe the bits of a image..
+------WebKitFormBoundaryDtbT5UpPj83kllfw
+Content-Disposition: form-data; name="text"
+
+text default
+------WebKitFormBoundaryDtbT5UpPj83kllfw
+Content-Disposition: form-data; name="uploads[]"; filename="sometext.txt"
+Content-Type: text/plain
+
+hello world
+------WebKitFormBoundaryDtbT5UpPj83kllfw--` 
