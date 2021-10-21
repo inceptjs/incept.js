@@ -654,7 +654,7 @@ class FormData {
       }
 
       return key;
-    })
+    });
 
     //get store paths
     const paths = path.concat(keys);
