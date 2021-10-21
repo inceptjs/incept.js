@@ -125,7 +125,21 @@ describe('Store', () => {
     expect(file2.name).to.equal('sometext.txt')
     expect(file2.type).to.equal('text/plain')
     expect(file2.data.toString()).to.equal('hello world')
+
+    const store2 = new Store
+    store2.withFormData.set('foo', 'bar', multipart)
+
+    expect(store2.get('foo', 'bar', 'text')).to.equal('text default')
+
+    const file3 = store2.get('foo', 'bar', 'uploads', 0)
+    expect(file3.name).to.equal('somebinary.dat')
+    expect(file3.type).to.equal('application/octet-stream')
+    expect(file3.data.toString()).to.equal('some binary data...maybe the bits of a image..')
     
+    const file4 = store2.get('foo', 'bar', 'uploads', 1)
+    expect(file4.name).to.equal('sometext.txt')
+    expect(file4.type).to.equal('text/plain')
+    expect(file4.data.toString()).to.equal('hello world')
   })
 })
 
