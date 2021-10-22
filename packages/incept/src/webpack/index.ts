@@ -389,15 +389,25 @@ export default class WithWebpack {
     }
     //change layout paths to object references
     for (const layout of layouts) {
-      loadables.push(loadableClause
-        .replace('%s', `Layout_${layout.name}`)
-        .replace('%s', layout.server
-          .replaceAll('/', '_')
-          .replaceAll('.', '_')
-          .replace(/^_*/, '')
+      //if the server and static layout is the same
+      if (layout.server === layout.static) {
+        //push it on loadable
+        loadables.push(loadableClause
+          .replace('%s', `Layout_${layout.name}`)
+          .replace('%s', layout.server
+            .replaceAll('/', '_')
+            .replaceAll('.', '_')
+            .replace(/^_*/, '')
+          )
+          .replace('%s', layout.server)
+        );
+      } else {
+        //don't let loadable handle this
+        imports.push(importClause
+          .replace('%s', `Layout_${layout.name}`)
+          .replace('%s', layout.server)
         )
-        .replace('%s', layout.server)
-      );
+      }
       
       //change from name to actual object reference
       routesJson = routesJson.replaceAll(

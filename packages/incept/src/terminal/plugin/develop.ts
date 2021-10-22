@@ -6,7 +6,8 @@ import Application from '../../types/Application';
 
 import { logError, logRequest, logResponse } from '../logs';
 
-import dispatch from './dispatch';
+import requestMiddleware from './request';
+import dispatchMiddleware from './dispatch';
 
 function startDevServer(
   request: Request, 
@@ -26,10 +27,12 @@ function startDevServer(
   const {dev, hot} = webpack.develop(!!write);
   app.use(dev);
   app.use(hot);
+  //this will parse form data
+  app.use(requestMiddleware);
   //this will transfer data from the response 
   //object to ServerResponse when the routes 
   //and events have been ran
-  app.use(dispatch);
+  app.use(dispatchMiddleware);
   //handle react
   react.routes.forEach((route: StringRoute) => { 
     app.get(route.path, react.handle);
