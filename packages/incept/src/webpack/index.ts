@@ -228,15 +228,15 @@ export default class WithWebpack {
     let routesJson = JSON.stringify(routes);
     //change route paths to object references
     for (let i = 0; i < routes.length; i++) {
-      const { view } = routes[i];
+      const { path, view } = routes[i];
       routesJson = routesJson.replaceAll(`"${view}"`, `Route_${i + 1}`);
       loadables.push(
         loadableClause
           .replace('%s', `Route_${i + 1}`)
-          .replace('%s', view
+          .replace('%s', `route_${path}`
             .replaceAll('/', '_')
             .replaceAll('.', '_')
-            .replace(/^_*/, '')
+            .replace(/__/, '_')
           )
           .replace('%s', view)
       );
@@ -245,11 +245,7 @@ export default class WithWebpack {
     for (const layout of layouts) {
       loadables.push(loadableClause
         .replace('%s', `Layout_${layout.name}`)
-        .replace('%s', layout.static
-          .replaceAll('/', '_')
-          .replaceAll('.', '_')
-          .replace(/^_*/, '')
-        )
+        .replace('%s', `layout_${layout.name}`)
         .replace('%s', layout.static)
       );
       
@@ -374,40 +370,27 @@ export default class WithWebpack {
     let routesJson = JSON.stringify(routes);
     //change route paths to object references
     for (let i = 0; i < routes.length; i++) {
-      const { view } = routes[i];
+      const { path, view } = routes[i];
       routesJson = routesJson.replaceAll(`"${view}"`, `Route_${i + 1}`);
       loadables.push(
         loadableClause
           .replace('%s', `Route_${i + 1}`)
-          .replace('%s', view
+          .replace('%s', `route_${path}`
             .replaceAll('/', '_')
             .replaceAll('.', '_')
-            .replace(/^_*/, '')
+            .replace(/__/, '_')
           )
           .replace('%s', view)
       );
     }
     //change layout paths to object references
     for (const layout of layouts) {
-      //if the server and static layout is the same
-      if (layout.server === layout.static) {
-        //push it on loadable
-        loadables.push(loadableClause
-          .replace('%s', `Layout_${layout.name}`)
-          .replace('%s', layout.server
-            .replaceAll('/', '_')
-            .replaceAll('.', '_')
-            .replace(/^_*/, '')
-          )
-          .replace('%s', layout.server)
-        );
-      } else {
-        //don't let loadable handle this
-        imports.push(importClause
-          .replace('%s', `Layout_${layout.name}`)
-          .replace('%s', layout.server)
-        )
-      }
+      //push it on loadable
+      loadables.push(loadableClause
+        .replace('%s', `Layout_${layout.name}`)
+        .replace('%s', `layout_${layout.name}`)
+        .replace('%s', layout.server)
+      );
       
       //change from name to actual object reference
       routesJson = routesJson.replaceAll(
