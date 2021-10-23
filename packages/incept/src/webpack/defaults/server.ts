@@ -2,7 +2,7 @@ import path from 'path';
 import crypto from 'crypto';
 import nodeExternals from 'webpack-node-externals';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { VirtualFSWebpackPlugin } from '@inceptjs/virtualfs';
+import VMWebpackPlugin from 'virtual_modules-webpack';
 import { Application } from '../../types/Application';
 
 function salt(id: string): string {
@@ -10,17 +10,13 @@ function salt(id: string): string {
 }
 
 export default (app: Application) => {
-  return {
+  const defaults = {
     target: 'node',
     resolve: {
       extensions: [ '.js', '.jsx', '.json', '.css', '.ts', 'tsx' ],
-      plugins: [ new VirtualFSWebpackPlugin ]
+      plugins: [ new VMWebpackPlugin ]
     },
-    externals: [
-      nodeExternals({
-        additionalModuleDirs: app.withVirtualFS.modulePaths(app.cwd)
-      })
-    ],
+    externals: [],
     externalsPresets: { node: true },
     output: { 
       path: path.join(app.buildPath, 'server'), 
@@ -144,5 +140,12 @@ export default (app: Application) => {
       logging: 'warn',
       warnings: true
     }
-  }
+  };
+
+  defaults.externals.push(
+    //@ts-ignore Argument of type 'ExternalItem' is not assignable to parameter of type 'never'.
+    nodeExternals({ additionalModuleDirs: app.withVirtual.modulePaths(app.cwd) })
+  );
+
+  return defaults;
 }

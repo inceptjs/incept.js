@@ -77,7 +77,7 @@ export default class WithWebpack {
   ) {
     //---------------------------------------------------------------//
     // Common Configuration
-    const { cwd, withVirtualFS: vfs } = this._application;
+    const { cwd, withVirtual: vm } = this._application;
     const bundler = target === Target.Server
       ? this.withServerCompiler
       : this.withStaticCompiler
@@ -108,16 +108,16 @@ export default class WithWebpack {
         };
       }
     } else {
-      //this is a trick to load the stats in memory using virtualFS
+      //this is a trick to load the stats in memory using virtual modules
       bundler.on(
         'loadable-in-memory', 
         'afterCompile', 
         (compilation: Compilation) => {
           const loadable = new LoadablePlugin;
-          if (!vfs.existsSync(buildPath)) {
-            vfs.mkdirSync(buildPath, { recursive: true });
+          if (!vm.existsSync(buildPath)) {
+            vm.mkdirSync(buildPath, { recursive: true });
           }
-          vfs.writeFileSync(
+          vm.writeFileSync(
             path.join(buildPath, 'stats.json'), 
             //@ts-ignore `handleEmit()` already stringifies the object
             loadable.handleEmit(compilation).source()
@@ -294,17 +294,17 @@ export default class WithWebpack {
     const { 
       buildPath, 
       buildURL, 
-      withVirtualFS: vfs
+      withVirtual: vm
     } = this._application;
 
     //make a static entry file (virtually)
     const staticEntry = path.join(buildPath, 'virtual/static.js');
-    vfs.mkdirSync(path.dirname(staticEntry), { recursive: true });
-    vfs.writeFileSync(staticEntry, this.staticEntryCode());
+    vm.mkdirSync(path.dirname(staticEntry), { recursive: true });
+    vm.writeFileSync(staticEntry, this.staticEntryCode());
     //make a server entry file (virtually)
     const serverEntry = path.join(buildPath, 'virtual/server.js');
-    vfs.mkdirSync(path.dirname(serverEntry), { recursive: true });
-    vfs.writeFileSync(serverEntry, this.serverEntryCode());
+    vm.mkdirSync(path.dirname(serverEntry), { recursive: true });
+    vm.writeFileSync(serverEntry, this.serverEntryCode());
     //get both the server and static webpack compilers
     const staticCompiler = this
       .bundle(Target.Static, Mode.Development, write)
@@ -314,8 +314,8 @@ export default class WithWebpack {
       .compiler;
     //if we are not writing to disk
     if (!write) {
-      //change the compiler's fs to VirtualFS
-      serverCompiler.outputFileSystem = vfs;
+      //change the compiler's fs to virtual modules
+      serverCompiler.outputFileSystem = vm;
     }
     //bundle the server files
     serverCompiler.run((error, stats) => {

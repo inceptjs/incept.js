@@ -1,6 +1,6 @@
 import path from 'path';
 import http from '@inceptjs/framework/dist/presets/http';
-import vfs, { VirtualFS } from '@inceptjs/virtualfs';
+import vm, { VirtualFS } from 'virtual_modules';
 
 import Exception from './Exception';
 import PluginLoader from './PluginLoader';
@@ -32,7 +32,7 @@ export default class Application extends http.Router {
   /**
    * Connects to the VirtualFS plugin
    */
-  public withVirtualFS: VirtualFS;
+  public withVirtual: VirtualFS;
 
   /**
    * Connects to the Webpack plugin
@@ -101,11 +101,11 @@ export default class Application extends http.Router {
     this._config = Object.assign({}, defaults, config);
     this._pluginManager = new PluginLoader(this._config.cwd);
     
-    this.withVirtualFS = vfs;
+    this.withVirtual = vm;
     this.withBabel = new WithBabel;
     this.withReact = new WithReact(this);
     this.withWebpack = new WithWebpack(this);
-    this.withVirtualFS.patchFS();
+    this.withVirtual.patchFS();
   }
 
   /**

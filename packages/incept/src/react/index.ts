@@ -81,7 +81,7 @@ export default class WithReact {
    * Developers can set a custom app
    */
   set app(app: string) {
-    const resolved = this._application.withVirtualFS.resolvePath(app);
+    const resolved = this._application.withVirtual.resolvePath(app);
     Exception.require(!!resolved, 'Module not found %s', app);
     this._app = resolved as string;
   }
@@ -99,7 +99,7 @@ export default class WithReact {
   constructor(app: Application) {
     this._application = app;
     //make a virtual cwd
-    app.withVirtualFS.mkdirSync(app.cwd, { recursive: true });
+    app.withVirtual.mkdirSync(app.cwd, { recursive: true });
     //set a default app
     this.app = path.normalize(
       path.join(__dirname, './components/App')
@@ -147,10 +147,10 @@ export default class WithReact {
     staticPath: string, 
     serverPath?: string
   ): WithReact {
-    // use virtual fs
-    const vfs = this._application.withVirtualFS;
+    // use virtual virtual modules
+    const vm = this._application.withVirtual;
     //resolve the static path
-    const resolvedStaticPath = vfs.resolvePath(staticPath);
+    const resolvedStaticPath = vm.resolvePath(staticPath);
     Exception.require(
       !!resolvedStaticPath, 
       'Module not found %s', 
@@ -162,7 +162,7 @@ export default class WithReact {
       serverPath = staticPath;
     }
     //resolve the server path
-    const resolvedServerPath = vfs.resolvePath(serverPath);
+    const resolvedServerPath = vm.resolvePath(serverPath);
     Exception.require(
       !!resolvedServerPath, 
       'Module not found %s', 
@@ -197,7 +197,7 @@ export default class WithReact {
     file: string, 
     layout: string = 'default'
   ): WithReact {
-    const resolved = this._application.withVirtualFS.resolvePath(file);
+    const resolved = this._application.withVirtual.resolvePath(file);
     Exception.require(!!resolved, 'Module not found %s', file);
     const view = resolved as string;
     this._routes[path] = { path, view, layout }

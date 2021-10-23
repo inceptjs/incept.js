@@ -1,7 +1,7 @@
 import path from 'path';
 import crypto from 'crypto';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import { VirtualFSWebpackPlugin } from '@inceptjs/virtualfs';
+import VMWebpackPlugin from 'virtual_modules-webpack';
 import { Application } from '../../types/Application';
 
 function salt(id: string): string {
@@ -11,7 +11,7 @@ function salt(id: string): string {
 export default (app: Application) => ({
   resolve: {
     extensions: [ '.js', '.jsx', '.json', '.css', '.ts', 'tsx' ],
-    plugins: [ new VirtualFSWebpackPlugin ]
+    plugins: [ new VMWebpackPlugin ]
   },
   output: { 
     path: path.join(app.buildPath, 'static'), 

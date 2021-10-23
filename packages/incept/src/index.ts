@@ -20,13 +20,14 @@ import {
 import http from '@inceptjs/framework/dist/presets/http';
 import Pluggable from '@inceptjs/framework/dist/presets/Pluggable';
 
-import Application from './types/Application'
-import PluginLoader from './types/PluginLoader'
+import Application from './types/Application';
+import PluginLoader from './types/PluginLoader';
 
-import app from './app'
+import app from './app';
+
+export default app;
 
 export {
-  app,
   Application,
   PluginLoader,
   //pass through
@@ -48,4 +49,4 @@ export {
   Queue,
   Status,
   Task
-}
+};

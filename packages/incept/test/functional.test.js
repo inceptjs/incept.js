@@ -12,12 +12,16 @@ describe('Functional Tests', async () => {
   const app = new Application({ cwd })
   before((done) => {
     require('@babel/register')(config)
+    app.on('develop-ready', () => done())
     //from boot.ts
     app.bootstrap(terminal)
     app.bootstrap(develop)
     app.load()
     app.plugin('terminal').emit(cwd, ['npm', 'run', 'dev', '--port=8080'])
-    app.on('develop-ready', () => done())
+  })
+
+  after(() => {
+    app.plugin('server').close()
   })
 
   it('Should load home page', async () => {
