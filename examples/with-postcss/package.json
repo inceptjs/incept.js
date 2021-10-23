@@ -1,8 +1,9 @@
 {
   "private": true,
   "scripts": {
+    "dev": "incept dev",
     "build": "incept build",
-    "dev": "incept dev"
+    "start": "incept start"
   },
   "incept": [
     "./plugin/postcss",
@@ -10,7 +11,7 @@
   ],
   "dependencies": {
     "autoprefixer": "^10.3.7",
-    "inceptjs": "^0.0.23",
+    "inceptjs": "^0.0.26",
     "postcss": "^8.3.9",
     "postcss-loader": "^6.2.0",
     "postcss-preset-env": "^6.7.0"

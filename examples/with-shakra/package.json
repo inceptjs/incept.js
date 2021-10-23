@@ -1,8 +1,9 @@
 {
   "private": true,
   "scripts": {
+    "dev": "incept dev",
     "build": "incept build",
-    "dev": "incept dev"
+    "start": "incept start"
   },
   "incept": [
     "./plugin/shakra", 
@@ -14,6 +15,6 @@
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "framer-motion": "^4.1.17",
-    "inceptjs": "^0.0.23"
+    "inceptjs": "^0.0.26"
   }
 }

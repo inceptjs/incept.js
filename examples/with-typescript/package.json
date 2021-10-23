@@ -1,15 +1,16 @@
 {
   "private": true,
   "scripts": {
+    "dev": "incept dev",
     "build": "incept build",
-    "dev": "incept dev"
+    "start": "incept start"
   },
   "incept": [
     "./src/api",
     "./src/static"
   ],
   "dependencies": {
-    "inceptjs": "^0.0.23"
+    "inceptjs": "^0.0.26"
   },
   "devDependencies": {
     "@types/node": "^16.9.4",

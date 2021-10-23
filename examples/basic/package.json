@@ -1,11 +1,12 @@
 {
   "private": true,
   "scripts": {
+    "dev": "incept dev",
     "build": "incept build",
-    "dev": "incept dev"
+    "start": "incept start"
   },
   "incept": "./index",
   "dependencies": {
-    "inceptjs": "^0.0.23"
+    "inceptjs": "^0.0.26"
   }
 }
