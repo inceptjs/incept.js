@@ -1,6 +1,6 @@
 {
   "name": "@inceptjs/types",
-  "version": "0.0.23",
+  "version": "0.0.26",
   "description": "Type definitions implementations for core types.",
   "author": "Chris <chris@incept.asia>",
   "license": "MIT",
@@ -22,8 +22,8 @@
     "build": "tsc"
   },
   "devDependencies": {
+    "@types/node": "^16.9.4",
     "chai": "^4.3.4",
     "mocha": "^9.1.2"
-  },
-  "gitHead": "0932e5051eb13e1cff8c7c2e9c7263078ebbd7a2"
+  }
 }
