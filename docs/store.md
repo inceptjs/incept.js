@@ -133,7 +133,7 @@ store.withPath.set('a,long,path,to', 'any kind of value', ',')
 You can set a store using arguments from the command line.
 
 ```js
-store.withArgs.set('--name John+Doe -vfs --phone=555-2424 -e john@doe.com')
+store.withArgs.set('--name John+Doe -abc --phone=555-2424 -e john@doe.com')
 ```
 
 <a name="api"></a>

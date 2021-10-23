@@ -98,20 +98,20 @@ no where near their example in
 [github](https://github.com/gregberge/loadable-components/tree/main/examples/server-side-rendering)
 
 **UPDATE: 0.0.16** What I did was add a webpack hook to compile the 
-stats again and save it in VirtualFS then retrieved those contents when 
+stats again and save it in Virtual Modules then retrieved those contents when 
 rendering.
 
 ```js
-const vfs = require('@inceptjs/virtualfs')
+const vm = require('virtual_modules')
 const buildURL = '/.build'
 const buildPath = path.join(process.cwd(), '.build')
 const compiler = webpack({ ... })
 compiler.hooks.afterCompile.tap('loadable-in-memory', (compilation: Compilation) => {
   const loadable = new LoadablePlugin
-  if (!vfs.existsSync(buildPath)) {
-    vfs.mkdirSync(buildPath, { recursive: true })
+  if (!vm.existsSync(buildPath)) {
+    vm.mkdirSync(buildPath, { recursive: true })
   }
-  vfs.writeFileSync(
+  vm.writeFileSync(
     path.join(buildPath, 'stats.json'), 
     //@ts-ignore `handleEmit()` already stringifies the object
     loadable.handleEmit(compilation).source()
