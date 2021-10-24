@@ -1,6 +1,6 @@
 {
   "name": "@inceptjs/framework",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "description": "Defines basic framework concepts",
   "author": "Chris <chris@incept.asia>",
   "license": "MIT",
@@ -22,7 +22,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@inceptjs/types": "^0.0.27",
+    "@inceptjs/types": "^0.0.28",
     "cookie": "^0.4.1",
     "mime": "^2.5.2",
     "node-fetch": "^2.6.5"
