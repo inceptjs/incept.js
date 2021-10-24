@@ -11,7 +11,7 @@
   ],
   "dependencies": {
     "autoprefixer": "^10.3.7",
-    "inceptjs": "^0.0.26",
+    "inceptjs": "^0.0.28",
     "postcss": "^8.3.9",
     "postcss-loader": "^6.2.0",
     "postcss-preset-env": "^6.7.0"

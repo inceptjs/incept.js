@@ -16,6 +16,6 @@
     "@fontsource/roboto": "^4.5.1",
     "@mui/icons-material": "^5.0.3",
     "@mui/material": "^5.0.3",
-    "inceptjs": "^0.0.26"
+    "inceptjs": "^0.0.28"
   }
 }

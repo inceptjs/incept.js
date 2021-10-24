@@ -7,6 +7,6 @@
   },
   "incept": "./index",
   "dependencies": {
-    "inceptjs": "^0.0.26"
+    "inceptjs": "^0.0.28"
   }
 }

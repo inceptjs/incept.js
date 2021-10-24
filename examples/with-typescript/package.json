@@ -10,7 +10,7 @@
     "./src/static"
   ],
   "dependencies": {
-    "inceptjs": "^0.0.26"
+    "inceptjs": "^0.0.28"
   },
   "devDependencies": {
     "@types/node": "^16.9.4",

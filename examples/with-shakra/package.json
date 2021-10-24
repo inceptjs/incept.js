@@ -15,6 +15,6 @@
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "framer-motion": "^4.1.17",
-    "inceptjs": "^0.0.26"
+    "inceptjs": "^0.0.28"
   }
 }
