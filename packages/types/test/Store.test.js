@@ -108,6 +108,13 @@ describe('Store', () => {
     store3.withArgs.set('foo', 'bar', '--a.b=1 --a 2 -ab -bc -d one -d=two --d=3')
     const expected3 = '{"foo":{"bar":{"a":[{"b":1},2,true],"b":[true,true],"c":true,"d":["one","two",3]}}}'
     expect(JSON.stringify(store3.get())).to.equal(expected3)
+
+    const store4 = new Store
+    store4.withArgs.set('foo', 'bar', '--host=127.0.0.1 --port 8080')
+    const expected4 = '{"foo":{"bar":{"host":"127.0.0.1","port":8080}}}'
+    expect(JSON.stringify(store4.get())).to.equal(expected4)
+
+
   })
 
   it('Should set by form data', () => {

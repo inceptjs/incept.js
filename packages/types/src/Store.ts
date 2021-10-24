@@ -338,10 +338,10 @@ class Args {
       case value === 'false':
         value = false;
         break;
-      case !isNaN(parseFloat(value)):
+      case !isNaN(value) && !isNaN(parseFloat(value)):
         value = parseFloat(value);
         break;
-      case !isNaN(parseInt(value)):
+      case !isNaN(value) && !isNaN(parseInt(value)):
         value = parseInt(value);
         break;
     }
