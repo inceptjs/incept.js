@@ -203,7 +203,7 @@ export default class Router extends EventEmitter {
     });
 
     //handle the route
-    const event = request.method + ' ' + request.pathname
+    const event = request.method + ' ' + request.pathname;
     const route = this.route(event);
     await route.handle(request, response);
 

@@ -35,7 +35,6 @@ export default class HTTPRouter extends Pluggable {
     }
 
     //create a new payload
-    //create a new payload
     const request = this.makeRequest({ 
       context: this, 
       resource: im 
@@ -46,7 +45,7 @@ export default class HTTPRouter extends Pluggable {
     });
 
     //handle the route
-    const event = request.method + ' ' + request.pathname
+    const event = request.method + ' ' + request.pathname;
     const route = this.route(event);
     await route.handle(request, response);
 
@@ -70,8 +69,33 @@ export default class HTTPRouter extends Pluggable {
       return new Request(url, requestInit);
     }
 
-    if (typeof requestInit?.resource?.url === 'string') {
-      return new Request(requestInit.resource.url, requestInit);
+    if (requestInit?.resource instanceof IncomingMessage) {
+      const resource = requestInit.resource;
+      //determine protocol
+      //@ts-ignore
+      let protocol = resource.connection && resource.connection.encrypted 
+        ? 'https' 
+        : 'http';
+      if (resource.headers['x-forwarded-proto']
+        && resource.headers['x-forwarded-proto'].length
+      ) {
+        if (Array.isArray(resource.headers['x-forwarded-proto'])) {
+          protocol = resource.headers['x-forwarded-proto'][0];
+        } else {
+          protocol = resource.headers['x-forwarded-proto'];
+        }
+
+        protocol = protocol.trim();
+        // Note: X-Forwarded-Proto is normally only ever a
+        //       single value, but this is to be safe.
+        if (protocol.indexOf(',') !== -1) {
+          protocol = protocol.substring(0, protocol.indexOf(',')).trim();
+        }
+      }
+
+      //not set url
+      const host = resource.headers.host;
+      return new Request(protocol + '://' + host + resource.url, requestInit);
     }
 
     return new Request(null, requestInit || {});
