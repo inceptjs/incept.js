@@ -69,6 +69,13 @@ export default abstract class Body {
   }
 
   /**
+   * Custom: Returns true if there is a body
+   */
+  get filled(): boolean {
+    return this._body !== null && typeof this._body !== 'undefined';
+  }
+
+  /**
    * Custom: Returns the hash from the URL
    */
   get hash(): string {

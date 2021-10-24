@@ -54,9 +54,13 @@ describe('Response', () => {
   it('Should parse body', async() => {
     const response = new Response
 
+    expect(response.filled).to.equal(false)
+
     response.write('foo=bar')
     const queryParsed = await response.fromURLQuery()
     expect(queryParsed.foo).to.equal('bar')
+
+    expect(response.filled).to.equal(true)
 
     response.write(multipart)
     const multipartParsed = await response.fromFormData()
