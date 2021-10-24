@@ -77,7 +77,7 @@ export default class HTTPRequest extends Request {
     const host = resource.headers.host;
     this._url = new URL(protocol + '://' + host + resource.url);
     //put query into params
-    Object.assign(this.params, this.query);
+    this.params = Object.assign(this.params.get(), this.query);
     //set headers
     if (typeof resource.headers === 'object') {
       //@ts-ignore missing the following properties from type 

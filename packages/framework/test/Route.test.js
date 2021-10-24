@@ -9,12 +9,12 @@ describe('Route', () => {
     const req = new Request
     const res = new Response
 
-    req.params.foo = 'bar'
+    req.params.set('foo', 'bar')
 
     let prepared = false
     emitter.on('request', req => {
       expect(emitter.event.event).to.equal('request')
-      expect(req.params.foo).to.equal('bar')
+      expect(req.params.get('foo')).to.equal('bar')
       prepared = true
     })
 
@@ -26,7 +26,7 @@ describe('Route', () => {
     let processed = false
     emitter.on('foobar', req => {
       expect(emitter.event.event).to.equal('foobar')
-      expect(req.params.foo).to.equal('bar')
+      expect(req.params.get('foo')).to.equal('bar')
       processed = true
     })
 

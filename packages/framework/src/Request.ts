@@ -1,4 +1,5 @@
 import { Headers, Request as NativeRequest } from 'node-fetch';
+import { Store } from '@inceptjs/types'
 
 import Body from './Body';
 import Exception from './Exception';
@@ -95,7 +96,7 @@ export default class Request extends Body {
   /**
    * Request params used to stage data
    */
-  protected _params: Record<string, any> = {};
+  protected _params: Store = new Store;
 
   /**
    * Request redirect mode
@@ -164,7 +165,7 @@ export default class Request extends Body {
   /**
    * Custom: returns custom parameters
    */
-  get params(): Record<string, any> {
+  get params(): Store {
     return this._params;
   }
 
@@ -202,7 +203,7 @@ export default class Request extends Body {
       data.constructor === Object, 
       'Value expected Object'
     );
-    this._params = data;
+    this._params.set(data);
   }
 
   /**
@@ -213,7 +214,7 @@ export default class Request extends Body {
     //set the URL
     if (typeof url === 'string') {
       this._url = new URL(url);
-      Object.assign(this.params, this.query);
+      this.params = Object.assign(this.params.get(), this.query);
     }
     //set the cache mode
     this._cache = init.cache || RequestCaches.DEFAULT;

@@ -17,11 +17,11 @@ describe('Request', () => {
   it('Should set/get params', async() => {
     const request = new Request
   
-    request.params.foo = 'bar'
-    expect(request.params.foo).to.equal('bar')
+    request.params.set('foo', 'bar')
+    expect(request.params.get('foo')).to.equal('bar')
 
     request.params = { foo: 'bar' }
-    expect(request.params.foo).to.equal('bar')
+    expect(request.params.get('foo')).to.equal('bar')
     expect(() => request.params = 'foo').to.throw()
   })
   it('Should get correct URL parameters', async() => {
