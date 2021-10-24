@@ -2,54 +2,73 @@ const { expect } = require('chai')
 const { Response } = require('../dist')
 
 describe('Response', () => {
-  it('Should set/get header/body/status', () => {
+  it('Should set/get status', () => {
     const response = new Response
-    response.headers('Content-Type', 'text/html')
-    expect(response.headers('Content-Type')).to.equal('text/html')
-    expect(response.headers['Content-Type']).to.equal('text/html')
 
-    response.body = 'hello'
-    expect(response.body).to.equal('hello')
-
-    response.status(200, 'OK')
-    const status = response.status()
-    expect(status.code).to.equal(200)
-    expect(status.text).to.equal('OK')
+    response.setStatus(200, 'OK')
+    expect(response.status).to.equal(200)
+    expect(response.statusText).to.equal('OK')
   })
 
-  it('Should not allow setting header directly', () => {
-    const response = new Response
-    response.headers('Content-Type', 'text/html')
-    response.headers['Content-Type'] = 'text/json'
-    expect(response.headers['Content-Type']).to.equal('text/html')
+  it('Should read json', async() => {
+    const res = new Response({foo: 'bar'})
+    const actual = await res.json()
+    expect(actual.foo).to.equal('bar')
   })
 
-  it('Should parse body', () => {
+  it('Should read text', async() => {
+    const res = new Response('foobar')
+    const actual = await res.text()
+    expect(actual).to.equal('foobar')
+  })
+
+  it('Should read blob', async() => {
+    const res = new Response('foobar')
+    const actual = await res.blob()
+    expect(await actual.text()).to.equal('foobar')
+  })
+
+  it('Should read form data', async() => {
+    const res = new Response('foobar')
+    const actual = await res.blob()
+    expect(await actual.text()).to.equal('foobar')
+  })
+
+  it('Should read array buffer', async() => {
+    const res = new Response('foobar')
+    const actual = await res.arrayBuffer()
+    expect(actual.byteLength).to.equal(6)
+  })
+
+  it('Should read headers', async() => {
+    const res = new Response({foo: 'bar'}, {
+      headers: { 'content-type': 'application/json' }
+    })
+    expect(res.headers.get('content-type')).to.equal('application/json')
+
+    res.headers.append('Accept', 'text/json')
+    res.headers.append('Accept', 'application/json')
+    expect(res.headers.get('accept')).to.equal('text/json, application/json')
+  })
+
+  it('Should parse body', async() => {
     const response = new Response
 
-    response.headers('Content-Type', 'text/json')
-    response.write('{"foo":"bar"}')
-    expect(response.parse().foo).to.equal('bar')
-    
-    response.headers('Content-Type', 'application/json')
-    expect(response.parse().foo).to.equal('bar')
-
-    response.headers('Content-Type', 'application/x-www-form-urlencoded')
     response.write('foo=bar')
-    expect(response.parse().foo).to.equal('bar')
+    const queryParsed = await response.fromURLQuery()
+    expect(queryParsed.foo).to.equal('bar')
 
-    response.headers('Content-Type', 'multipart/form-data')
     response.write(multipart)
-    const parsed = response.parse()
-    expect(parsed.foo).to.equal('bar')
+    const multipartParsed = await response.fromFormData()
+    expect(multipartParsed.foo).to.equal('bar')
 
-    expect(parsed.uploads[0].name).to.equal('somebinary.dat')
-    expect(parsed.uploads[0].type).to.equal('application/octet-stream')
-    expect(parsed.uploads[0].data.toString()).to.equal('some binary data...maybe the bits of a image..')
+    expect(multipartParsed.uploads[0].name).to.equal('somebinary.dat')
+    expect(multipartParsed.uploads[0].type).to.equal('application/octet-stream')
+    expect(multipartParsed.uploads[0].data.toString()).to.equal('some binary data...maybe the bits of a image..')
     
-    expect(parsed.uploads[1].name).to.equal('sometext.txt')
-    expect(parsed.uploads[1].type).to.equal('text/plain')
-    expect(parsed.uploads[1].data.toString()).to.equal('hello world')
+    expect(multipartParsed.uploads[1].name).to.equal('sometext.txt')
+    expect(multipartParsed.uploads[1].type).to.equal('text/plain')
+    expect(multipartParsed.uploads[1].data.toString()).to.equal('hello world')
   })
 })
 

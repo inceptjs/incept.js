@@ -35,12 +35,15 @@ export default class HTTPRouter extends Pluggable {
     }
 
     //create a new payload
-    const request = this.makeRequest({}, im);
-    const response = this.makeResponse({}, sr);
-
-    //add context
-    request.ctx = this;
-    response.ctx = this;
+    //create a new payload
+    const request = this.makeRequest({ 
+      context: this, 
+      resource: im 
+    });
+    const response = this.makeResponse({ 
+      context: this, 
+      resource: sr 
+    });
 
     //handle the route
     const event = request.method + ' ' + request.pathname
@@ -57,21 +60,28 @@ export default class HTTPRouter extends Pluggable {
   /**
    * Makes a new request object (IoC)
    */
-  makeRequest(
-    data: Record<string, any>, 
-    resource: IncomingMessage
-  ): Request {
-    return new Request(data, resource);
+  makeRequest(init: Record<string, any>|null = null): Request {
+    if (init === null) {
+      return new Request;
+    }
+
+    const { url, ...requestInit } = init;
+    if (typeof url === 'string') {
+      return new Request(url, requestInit);
+    }
+
+    if (typeof requestInit?.resource?.url === 'string') {
+      return new Request(requestInit.resource.url, requestInit);
+    }
+
+    return new Request(null, requestInit || {});
   }
 
   /**
    * Makes a new response object (IoC)
    */
-  makeResponse(
-    data: Record<string, any>, 
-    resource: ServerResponse
-  ): Response {
-    return new Response(data, resource);
+  makeResponse(init: Record<string, any>|null = null): Response {
+    return new Response(null, init || {});
   }
 
   /**
@@ -105,8 +115,11 @@ export default class HTTPRouter extends Pluggable {
         }
       }
 
-      response.headers('Content-Type', mime.getType(file));
-      response.body = fs.createReadStream(file);
+      const mimeType = mime.getType(file);
+      if (typeof mimeType === 'string') {
+        response.headers.set('Content-Type', mimeType);
+      }
+      response.write(fs.createReadStream(file));
     }, 10000);
 
     return this;

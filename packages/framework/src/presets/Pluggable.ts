@@ -12,10 +12,23 @@ import {
   Task
 } from '@inceptjs/types';
 
+import Request, {
+  RequestOptions,
+  RequestMethods,
+  RequestCaches,
+  RequestCredentials,
+  RequestModes,
+  RequestRedirects,
+  RequestReferrers
+} from '../Request';
+
+import Response, {
+  ResponseOptions,
+  ResponseTypes
+} from '../Response';
+
 import Route from '../Route';
 import Router from '../Router';
-import Request from '../Request';
-import Response from '../Response';
 import Exception from '../Exception';
 
 export default class Pluggable extends Router {
@@ -95,5 +108,14 @@ export {
   Event,
   Queue,
   Status,
-  Task
+  Task,
+  RequestOptions,
+  RequestMethods,
+  RequestCaches,
+  RequestCredentials,
+  RequestModes,
+  RequestRedirects,
+  RequestReferrers,
+  ResponseOptions,
+  ResponseTypes
 };

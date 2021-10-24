@@ -6,6 +6,33 @@ import Response from './Response';
 import Exception from './Exception';
 
 /**
+ * Abstraction defining what an event is
+ */
+ export interface Params {
+  /**
+   * The name of the event
+   */
+  event: string;
+
+  /**
+   * The regexp pattern of the event
+   */
+  pattern: RegExp;
+
+  /**
+   * `args` from the dynamic * pathing
+   * ex. /foo/bar/*
+   */
+  args: any[];
+
+  /**
+   * `params` from the dynamic : pathing
+   * ex. /foo/:bar/zoo
+   */
+  params: Record<string, any>;
+}
+
+/**
  * Allows requests to be routed to a callback to be processed
  */
 export default class Router extends EventEmitter {
@@ -149,8 +176,8 @@ export default class Router extends EventEmitter {
    * Handles an incoming request
    */
   handle: Function = async (
-    req: Record<string, any>, 
-    res: Record<string, any>
+    req: string|Record<string, any>|null = null, 
+    res: Record<string, any>|null = null
   ) => {
     Exception.require(
       typeof req === 'object',
@@ -166,12 +193,14 @@ export default class Router extends EventEmitter {
     await this.emit('open', req, res);
 
     //create a new payload
-    const request = this.makeRequest({}, req);
-    const response = this.makeResponse({}, res);
-
-    //add context
-    request.ctx = this;
-    response.ctx = this;
+    const request = this.makeRequest({ 
+      context: this, 
+      resource: req 
+    });
+    const response = this.makeResponse({ 
+      context: this, 
+      resource: res 
+    });
 
     //handle the route
     const event = request.method + ' ' + request.pathname
@@ -222,15 +251,28 @@ export default class Router extends EventEmitter {
   /**
    * Makes a new request object (IoC)
    */
-  makeRequest(data?: Record<string, any>, resource?: any): Request {
-    return new Request({}, resource)
+  makeRequest(init: Record<string, any>|null = null): Request {
+    if (init === null) {
+      return new Request;
+    }
+
+    const { url, ...requestInit } = init;
+    if (typeof url === 'string') {
+      return new Request(url, requestInit);
+    }
+
+    if (typeof requestInit?.resource?.url === 'string') {
+      return new Request(requestInit.resource.url, requestInit);
+    }
+
+    return new Request(null, requestInit || {});
   }
 
   /**
    * Makes a new response object (IoC)
    */
-  makeResponse(data?: Record<string, any>, resource?: any): Response {
-    return new Response({}, resource)
+  makeResponse(init: Record<string, any>|null = null): Response {
+    return new Response(null, init || {});
   }
 
   /**
@@ -445,8 +487,8 @@ export default class Router extends EventEmitter {
       'Argument 2 expected Request'
     );
 
-    response.status({ code: 307, text: 'Temporary Redirect' })
-    response.headers('Location', path)
+    response.setStatus(307, 'Temporary Redirect')
+    response.headers.set('Location', path)
     return this;
   }
 
@@ -608,31 +650,4 @@ export default class Router extends EventEmitter {
 
     return this;
   }
-}
-
-/**
- * Abstraction defining what an event is
- */
-export interface Params {
-  /**
-   * The name of the event
-   */
-  event: string;
-
-  /**
-   * The regexp pattern of the event
-   */
-  pattern: RegExp;
-
-  /**
-   * `args` from the dynamic * pathing
-   * ex. /foo/bar/*
-   */
-  args: any[];
-
-  /**
-   * `params` from the dynamic : pathing
-   * ex. /foo/:bar/zoo
-   */
-  params: Record<string, any>;
 }

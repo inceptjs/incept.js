@@ -1,113 +1,105 @@
-import { Store } from '@inceptjs/types';
 import { IncomingMessage } from 'http';
+import { Headers } from 'node-fetch';
+import cookie from 'cookie';
 
-import Request from '../../Request';
+import Request, {
+  RequestOptions,
+  RequestMethods,
+  RequestCaches,
+  RequestCredentials,
+  RequestModes,
+  RequestRedirects,
+  RequestReferrers
+} from '../../Request';
+
+export {
+  RequestOptions,
+  RequestMethods,
+  RequestCaches,
+  RequestCredentials,
+  RequestModes,
+  RequestRedirects,
+  RequestReferrers
+}
 
 export default class HTTPRequest extends Request {
   /**
+   * The HTTP version
+   */
+  protected _version: string = '';
+
+  /**
+   * The HTTP Cookies
+   */
+  protected _cookies: Record<string, string|number> = {};
+
+  /**
    * Returns all cookies
    */
-  get cookies(): Record<string, any>|null {
-    return this.get('cookies');
-  }
-
-  /**
-   * Returns the query data
-   */
-  get query(): string|null {
-    //self starter
-    if (!this.has('query')) {
-      this.set('query', {});
-    }
-    return this.get('query');
-  }
-
-  /**
-   * Returns session data
-   */
-  get session(): Record<string, any>|null {
-    return this.get('session');
+  get cookies(): Record<string, string|number> {
+    return Object.assign({}, this._cookies);
   }
 
   /**
    * Maps resource
    */
-  constructor(data: Record<string, any>, resource: IncomingMessage) {
-    super(data, resource);
-    map(resource, this);
-  }
-}
-
-/**
- * Maps resource
- */
-function map(resource: IncomingMessage, request: Request): void {
-  //determine protocol
-  //@ts-ignore
-  let protocol = resource.connection && resource.connection.encrypted 
-    ? 'https' 
-    : 'http';
-  if (resource.headers['x-forwarded-proto']
-    && resource.headers['x-forwarded-proto'].length
-  ) {
-    if (Array.isArray(resource.headers['x-forwarded-proto'])) {
-      protocol = resource.headers['x-forwarded-proto'][0];
-    } else {
-      protocol = resource.headers['x-forwarded-proto'];
+  constructor(url: string|null = null, init: RequestOptions = {}) {
+    super(url, init);
+    if (!(init.resource instanceof IncomingMessage)) {
+      return;
     }
 
-    protocol = protocol.trim();
-    // Note: X-Forwarded-Proto is normally only ever a
-    //       single value, but this is to be safe.
-    if (protocol.indexOf(',') !== -1) {
-      protocol = protocol.substring(0, protocol.indexOf(',')).trim();
+    const resource = init.resource as IncomingMessage;
+
+    //determine protocol
+    //@ts-ignore
+    let protocol = resource.connection && resource.connection.encrypted 
+      ? 'https' 
+      : 'http';
+    if (resource.headers['x-forwarded-proto']
+      && resource.headers['x-forwarded-proto'].length
+    ) {
+      if (Array.isArray(resource.headers['x-forwarded-proto'])) {
+        protocol = resource.headers['x-forwarded-proto'][0];
+      } else {
+        protocol = resource.headers['x-forwarded-proto'];
+      }
+
+      protocol = protocol.trim();
+      // Note: X-Forwarded-Proto is normally only ever a
+      //       single value, but this is to be safe.
+      if (protocol.indexOf(',') !== -1) {
+        protocol = protocol.substring(0, protocol.indexOf(',')).trim();
+      }
     }
-  }
 
-  //load a URL to help mapping
-  const host = resource.headers.host;
-  const url = new URL(protocol + '://' + host + resource.url);
+    //not set url
+    const host = resource.headers.host;
+    this._url = new URL(protocol + '://' + host + resource.url);
+    //put query into params
+    Object.assign(this.params, this.query);
+    //set headers
+    if (typeof resource.headers === 'object') {
+      //@ts-ignore missing the following properties from type 
+      //'string[][]': length, pop, push, etc.
+      //but MDN says Headers accepts Object.
+      //see: https://developer.mozilla.org/en-US/docs/Web/API/Headers/Headers
+      //see: https://github.com/node-fetch/node-fetch/blob/96f9ae27c938e30e4915c72125a53c7c725fec36/src/headers.js#L60
+      this._headers = new Headers(Object.assign({}, resource.headers))
+    }
 
-  //LEGEND:
-  // url.hash - #foo
-  // url.host - 127.0.0.1:3000
-  // url.hostname - 127.0.0.1
-  // url.href - http://127.0.0.1:3000/some/path?lets=dothis
-  // url.origin - http://127.0.0.1:3000
-  // url.password - ??
-  // url.pathname - /some/path
-  // url.port - 3000
-  // url.protocol - http:
-  // url.search - ?lets=dothis
-  request
-    .set('hash', url.hash)
-    .set('host', url.host)
-    .set('hostname', url.hostname)
-    .set('href', url.href)
-    .set('origin', url.origin)
-    .set('password', url.password)
-    .set('pathname', url.pathname)
-    .set('port', parseInt(url.port))
-    .set('protocol', url.protocol)
-    .set('search', url.search);
+    //set version
+    if (typeof resource.httpVersion === 'string') {
+      this._version = resource.httpVersion;
+    }
 
-  //set headers
-  request.set('headers', Object.assign({}, resource.headers));
-  //set version
-  request.set('version', resource.httpVersion);
-  //set method
-  request.set('method', (resource.method || 'GET').toUpperCase());
-  //set status code
-  request.set('status', 'code', Object.assign({}, resource.statusCode));
+    //set method
+    this._method = (resource.method || RequestMethods.GET).toUpperCase();
 
-  //parse search to query
-  if (url.search.length) {
-    const query = new Store;
-    const params = query.withQuery.set(
-      url.search.substr(1)
-    );
-    request.set('query', params);
-    //also add to params
-    request.set('params', { ...request.params, params });
+    //set cookies
+    const cookies = this.headers.get('cookie');
+    if (typeof cookies === 'string' && cookies.length) {
+      this._cookies = cookie.parse(cookies);
+    }
   }
 }

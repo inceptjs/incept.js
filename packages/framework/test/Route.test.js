@@ -45,19 +45,19 @@ describe('Route', () => {
 
     errored = false
     emitter.on('foobar', (req, res) => {
-      res.body = { foo: 'bar' }
+      res.write({ foo: 'bar' })
     })
 
     await route.handle(req, res)
     expect(errored).to.equal(false)
-    expect(res.body.foo).to.equal('bar')
+    expect((await res.json()).foo).to.equal('bar')
 
-    res.body = { foo: 'zoo' }
+    res.write({ foo: 'zoo' })
     emitter.on('request', () => {
       return false
     })
 
     await route.handle(req, res)
-    expect(res.body.foo).to.equal('zoo')
+    expect((await res.json()).foo).to.equal('zoo')
   })
 })

@@ -13,10 +13,23 @@ import {
 } from '@inceptjs/types';
 
 import Router from './Router';
-import Request from './Request';
-import Response from './Response';
 import Exception from './Exception';
 import Route from '../../Route';
+
+import Request, {
+  RequestOptions,
+  RequestMethods,
+  RequestCaches,
+  RequestCredentials,
+  RequestModes,
+  RequestRedirects,
+  RequestReferrers
+} from './Request';
+
+import Response, {
+  ResponseOptions,
+  ResponseTypes
+} from './Response';
 
 export default {
   Route,
@@ -43,5 +56,14 @@ export {
   Event,
   Queue,
   Status,
-  Task
+  Task,
+  RequestOptions,
+  RequestMethods,
+  RequestCaches,
+  RequestCredentials,
+  RequestModes,
+  RequestRedirects,
+  RequestReferrers,
+  ResponseOptions,
+  ResponseTypes
 };

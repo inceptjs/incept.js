@@ -1,174 +1,187 @@
-import { Reflection, Store } from '@inceptjs/types';
+import { Headers, Response as NativeResponse } from 'node-fetch';
+import { Status } from '@inceptjs/types';
 
+import Body from './Body';
 import Exception from './Exception';
 
-type Scalar = string|number|boolean;
+
+export type ResponseOptions = {
+  body?: any;
+  context?: any;
+  headers?: Headers|Record<string, string>;
+  resource?: any;
+  status?: number;
+  statusText?: string;
+  type?: ResponseTypes;
+  url?: string;
+};
+
+export enum ResponseTypes {
+  Basic = 'basic',
+  CORS = 'cors'
+};
 
 /**
- * Simple response object irrespective of where it came from. 
- * This is useful as an interface to extend for routing that 
- * did not originate from an HTTP server scenario like sockets 
- * or client side routing
+ * Implementation of the WHATWG Fetch API response class
+ * see: https://fetch.spec.whatwg.org/#response-class
+ * see: https://developer.mozilla.org/en-US/docs/Web/API/Response
  */
-export default class Response extends Store {
+export default class Response extends Body {
   /**
-   * Pointer linking to the original resource
+   * Whether if the response was from a redirected RUL
    */
-  protected _resource: any;
+  protected _redirected: boolean = false;
 
   /**
-   * The context is where the response was created
+   * The status code and text
    */
-  protected _context: Record<string, any>;
+  protected _status: Status;
 
   /**
-   * Returns the response
+   * Type of response: basic, cors
    */
-  get body(): any {
-    return this.get('body');
+  protected _type: ResponseTypes;
+
+  /**
+   * A boolean indicating whether the response was successful 
+   * (status in the range 200–299) or not.
+   */
+  get ok(): boolean {
+    return 200 <= this._status.code && this._status.code <= 299; 
+  } 
+
+  /**
+   * Indicates whether or not the response is the result of a redirect 
+   * (that is, its URL list has more than one entry).
+   */
+  get redirected(): boolean {
+    return this._redirected;
   }
 
   /**
-   * Returns a response status code
+   * The status code of the response. (This will be 200 for a success).
    */
-  get ctx(): Record<string, any> {
-    return this._context;
+  get status(): number {
+    return this._status.code; 
+  } 
+
+  /**
+   * The status message corresponding to the status code. 
+   * (e.g., OK for 200).
+   */
+  get statusText(): string {
+    return this._status.text; 
+  } 
+
+  /**
+   * The type of the response (e.g., basic, cors).
+   */
+  get type(): ResponseTypes {
+    return this._type; 
   }
 
   /**
-   * Returns a response status code
+   * The type of the response (e.g., basic, cors).
    */
-  get code(): number {
-    return this.get('status', 'code') || 0;
+  set type(type: ResponseTypes) {
+    this._type = type; 
+  } 
+
+  /**
+   * Sets the body and options
+   */
+  constructor(body: any = null, init: ResponseOptions = {}) {
+    super(body, init);
+    if (typeof init.url === 'string') {
+      this._url = new URL(init.url);
+    }
+    this._type = init.type || ResponseTypes.Basic;
+    this._status = {
+      code: init.status || 0,
+      text: init.statusText || ''
+    }
   }
 
   /**
-   * Returns all the headers as a function setter
+   * Clones the Response reseting all states
+   * see: https://developer.mozilla.org/en-US/docs/Web/API/Response/clone
    */
-  get headers(): Function {
-    //we do this to disallow manipulating the header loosely
-    //so it can be called like `res.header('foo', 'bar')`
-    const callable = (name: string, value?: Scalar) => {
-      if (typeof value === 'undefined') {
-        return this.get('header', name);
+  clone() {
+    return new Response(this._body, this._getInit());
+  }
+
+  /**
+   * Updates the url and status. The original one 
+   * returns a new Response, but this one doesn't.
+   * see: https://developer.mozilla.org/en-US/docs/Web/API/Response/redirect
+   */
+  redirect(url: string, status?: number|Status): Response {
+    this._redirected = true;
+    this._url = new URL(url);
+    if (typeof status === 'number') {
+      this._status.code = status;
+    } else {
+      if (typeof status?.code === 'number') {
+        this._status.code = status.code;
       }
 
-      return this.set('header', name, value);
+      if (typeof status?.text === 'string') {
+        this._status.text = status.text;
+      }
+    }
+
+    return this;
+  }
+
+  /**
+   * Custom: sets the status
+   */
+  setStatus(code: number|Status, text?: string): Response {
+    if (typeof code === 'number') {
+      Exception.require(
+        typeof text === 'string', 
+        'Argument 2 expected string'
+      );
+      //@ts-ignore Type 'string | undefined' is not assignable to 
+      //type 'string'. - But is covered by `Exception.require`.
+      this._status = { code, text };
+      return this;
+    }
+
+    const status = code as Status;
+
+    Exception.require(
+      typeof status.code === 'number'
+      && typeof status.text === 'string',
+      'Argument 1 exprected number or Status'
+    );
+
+    this._status = status;
+    return this;
+  }
+
+  /**
+   * Returns initial options based on what's currently set
+   */
+  protected _getInit(): Record<string, any> {
+    return {
+      status: this._status.code,
+      text: this._status.text,
+      type: this._type,
+      url: this.url !== ''? this.url: undefined
     };
-    //attach the current route the callable
-    //so it can be called like `res.header.Location`
-    Reflection.assign(callable, this.get('header') || {});
-    return callable;
   }
 
   /**
    * Returns the original response resource
    */
-  get resource(): any {
-    return this._resource;
-  }
-
-  /**
-   * Sets the context
-   */
-  set ctx(value: Record<string, any>) {
-    this._context = value;
-  }
-
-  /**
-   * Sets the response body. Accepts any value but 
-   * should error if it is not eventually a string/number
-   */
-  set body(value: any) {
-    this.set('body', value);
-  }
-
-  /**
-   * Sets the data and resource
-   */
-  constructor(data?: Record<string, any>, resource?: any) {
-    super(data);
-    this._resource = resource;
-    this._context = {}
-  }
-
-  /**
-   * Parses body by content type
-   */
-  parse() {
-    const types: string[] = [ 'Content-Type', 'content-type' ];
-    for (const key of types) {
-      const type = this.headers(key)?.trim();
-      switch(true) {
-        case type === 'text/json':
-        case type === 'application/json':
-          return this.parseJSON();
-        case type === 'application/x-www-form-urlencoded':
-          return this.parseURLEncoded();
-        case type.indexOf('multipart/form-data') === 0:
-          return this.parseFormData();
-      }
+  protected _getResource(): NativeResponse {
+    let body = this._body || null;
+    if (body?.constructor === Object 
+      && typeof body.pipe !== 'function'
+    ) {
+      body = JSON.stringify(body);
     }
-
-    return null;
-  }
-
-  /**
-   * Parses body by multipart/form-data
-   */
-  parseFormData() {
-    const store = new Store;
-    return store.withFormData.set(this.body).get();
-  }
-
-  /**
-   * Parses body by application/json
-   */
-  parseJSON() {
-    return JSON.parse(this.body.toString());
-  }
-
-  /**
-   * Parses body by urlencoded
-   */
-  parseURLEncoded() {
-    const store = new Store;
-    return store.withQuery.set(this.body.toString()).get();
-  }
-
-  /**
-   * Returns the response status. If value 
-   * is provided, then sets the status
-   */
-  status(code?: any, text?: string) {
-    const typeOfCode = typeof code;
-    if (typeOfCode === 'undefined') {
-      return this.get('status');
-    }
-
-    if (typeOfCode === 'object') {
-      const status = code;
-      Exception.require(
-        typeof status.code === 'number', 
-        'Value of `code` expected to be a number'
-      );
-
-      Exception.require(
-        typeof status.text === 'string', 
-        'Value of `text` expected to be a string'
-      );
-
-      return this.set('status', status);
-    }
-
-    return this.set('status', { code, text })
-  }
-
-  /**
-   * Alias For setting the body (what people traditionally expect)
-   */
-  write(body: any): this {
-    this.set('body', body);
-    return this;
+    return new NativeResponse(body, this._getInit());
   }
 }

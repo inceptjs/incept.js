@@ -1,5 +1,12 @@
-import Response from '../../Response';
+import cookie from 'cookie';
+
 import Exception from '../../Exception';
+import Response, {
+  ResponseOptions,
+  ResponseTypes
+} from '../../Response';
+
+export { ResponseOptions, ResponseTypes };
 
 export default class HTTPResponse extends Response {
   /**
@@ -42,19 +49,8 @@ export default class HTTPResponse extends Response {
       typeof value === 'object', 
       'Argument 3 expected Object'
     );
-    this.set('cookies', name, { value, options });
-    return this;
-  }
-
-  /**
-   * Sets session data
-   * 
-   * @param {(...*)} args 
-   * 
-   * @returns {Response}
-   */
-  setSession(...args: any[]): Response {
-    this.set('session', ...args);
+    const serialized = cookie.serialize(name, String(value), options);
+    this.headers.append('Set-Cookie', serialized);
     return this;
   }
 }

@@ -174,14 +174,10 @@ export default class Route {
 
     try {
       //emit a response event
-      status = await this.router.emit(
-        'response', 
-        request, 
-        response
-      );
+      status = await this.router.emit('response', request, response);
     } catch(error) {
       //if there is an error
-      response.status(Statuses.ERROR);
+      response.setStatus(Statuses.ERROR);
       status = await this.router.emit('error', error, request, response);
     }
 
@@ -334,7 +330,7 @@ export default class Route {
       status = await this.router.emit('request', request, response);
     } catch(error) {
       //if there is an error
-      response.status(Statuses.ERROR);
+      response.setStatus(Statuses.ERROR);
       status = await this.router.emit('error', error, request, response);
     }
 
@@ -363,7 +359,7 @@ export default class Route {
       status = await this.router.emit(this.event, request, response);
     } catch(error) {
       //if there is an error
-      response.status(Statuses.ERROR);
+      response.setStatus(Statuses.ERROR);
       status = await this.router.emit('error', error, request, response);
     }
 
@@ -378,8 +374,8 @@ export default class Route {
     //NOTE: it's okay if there is no body as 
     //      long as there is a status code
     //ex. like in the case of a reirect
-    if (!response.body && !response.code) {
-      response.status(Statuses.NOT_FOUND);
+    if (!response.body && !response.status) {
+      response.setStatus(Statuses.NOT_FOUND);
       const exception = Exception
         .for(Statuses.NOT_FOUND.text)
         .withCode(Statuses.NOT_FOUND.code);
@@ -395,7 +391,7 @@ export default class Route {
     //if no status was set
     if (!response.status) {
       //make it okay
-      response.status(Statuses.OK);
+      response.setStatus(Statuses.OK);
     }
 
     //if the status was incomplete (308)
