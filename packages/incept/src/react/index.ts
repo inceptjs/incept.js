@@ -135,7 +135,7 @@ export default class WithReact {
       return;
     }
 
-    response.headers('Content-Type', 'text/html');
+    response.headers.set('Content-Type', 'text/html');
     response.write(this.render(request.pathname, response));
   }
 

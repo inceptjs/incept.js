@@ -1,7 +1,8 @@
 import { 
   EventEmitter, 
   Request, 
-  Response 
+  Response,
+  Statuses
 } from '@inceptjs/framework/dist/presets/http';
 
 const emitter = new EventEmitter
@@ -20,44 +21,28 @@ emitter.on('dispatch', async function dispatchResponse(
     return;
   }
 
-  sr.statusCode = parseInt(response.get('status', 'code')) || 200;
-  sr.statusMessage = response.get('status', 'text') || 'OK';
+  sr.statusCode = response.status || Statuses.OK.code;
+  sr.statusMessage = response.statusText || Statuses.OK.text;
 
   //copy all the headers to the server response
-  const headers = response.get('header')
-  if (headers 
-    && typeof headers === 'object' 
-    && Object.keys(headers).length
-  ) {
-    Object.keys(headers).forEach(name => {
-      sr.setHeader(name, headers[name]);
-    });
+  for (const pair of response.headers.entries()) {
+    sr.setHeader(pair[0], pair[1]);
   }
-    
+
   //get the body
   let body = response.body;
 
   //if the response body is streamable
-  if (body && typeof body.pipe === 'function') {
+  if (typeof body?.pipe === 'function') {
     //pipe it through
     body.pipe(sr);
     //end of pipe will end the connection
+  } else if (typeof body?.pipeTo === 'function') {
+    //pipe it through
+    body.pipeTo(sr);
+    //end of pipe will end the connection
   } else {
-    //dispatch event gave every opporitunity to change the 
-    //body into a string. If it's still an object here
-    //then we need to convert it to a string (let's just JSONify it)
-    if (body && typeof body === 'object') {
-      body = JSON.stringify(Object.assign({}, body));
-    }
-
-    if (body !== null && String(body).length) {
-      //send off the response
-      //and close the connection
-      sr.end(String(body));
-    } else {
-      //just close the connection
-      sr.end();
-    }
+    sr.end(body);
   }
 });
 

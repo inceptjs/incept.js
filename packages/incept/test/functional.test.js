@@ -8,7 +8,8 @@ const terminal = require('../dist/terminal/plugin/terminal').default
 
 const cwd = path.join(__dirname, 'sandbox')
 
-describe('Functional Tests', async () => {
+describe('Functional Tests', async function() {
+  this.timeout(10000); 
   const app = new Application({ cwd })
   before((done) => {
     require('@babel/register')(config)
@@ -17,7 +18,7 @@ describe('Functional Tests', async () => {
     app.bootstrap(terminal)
     app.bootstrap(develop)
     app.load()
-    app.plugin('terminal').emit(cwd, ['npm', 'run', 'dev', '--port=8080'])
+    app.plugin('terminal').emit(cwd, ['npm', 'run', 'dev', '--host=127.0.0.1', '--port=8080'])
   })
 
   after(() => {

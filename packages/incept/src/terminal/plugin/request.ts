@@ -21,8 +21,7 @@ emitter.on('request', async function postputProcessor(
 
   const im = request.resource;
   const form = formidable({ multiples: true });
- 
-  
+
   await new Promise((resolve, reject) => {
     form.parse(im, (error: Error, fields, files) => {
       if (error) {
@@ -58,7 +57,7 @@ emitter.on('request', async function postputProcessor(
           //now loop through each value
           values.forEach(value => {
             //and set the value
-            request.set('params', ...keys, value)
+            request.params.set(...keys, value)
           });
         });
       });

@@ -1,5 +1,8 @@
 import chalk from 'chalk';
-import { Request, Response, Router } from '@inceptjs/framework';
+import { Router, Statuses } from '@inceptjs/framework';
+
+import TerminalRequest from '../types/TerminalRequest';
+import TerminalResponse from '../types/TerminalResponse';
 
 import Exception from './Exception';
 
@@ -23,7 +26,10 @@ export default class TerminalPlugin {
   /**
    * Dispatches the response
    */
-  async dispatch(request: Request, response: Response): Promise<boolean> {
+  async dispatch(
+    request: TerminalRequest, 
+    response: TerminalResponse
+  ): Promise<boolean> {
     //get the body
     let body = response.body;
     //if no body
@@ -33,9 +39,10 @@ export default class TerminalPlugin {
 
     //we need to consider all events including `user-search`
     //where it's most likely silent
+    const output = request.params.get('output');
 
     //if raw output
-    if (request.params.output === 'raw') {
+    if (output === 'raw') {
       if (typeof body === 'object') {
         body = JSON.stringify(body);
       }
@@ -44,7 +51,7 @@ export default class TerminalPlugin {
     }
 
     //if boundary output
-    if (request.params.output === 'boundary') {
+    if (output === 'boundary') {
       const boundary = 'boundary-------------------------';
       if (typeof body === 'object') {
         body = JSON.stringify(body);
@@ -62,8 +69,8 @@ export default class TerminalPlugin {
     }
 
     //if interactive output
-    if (request.params.output === 'interactive') {
-      fx(request.get('argv', 2), body);
+    if (output === 'interactive') {
+      fx(request.argv[2], body);
       return true;
     }
 
@@ -76,14 +83,12 @@ export default class TerminalPlugin {
    */
   async emit(cwd: string, argv: string[]): Promise<boolean> {
     //create a new payload
-    const request = new Request;
-    const response = new Response;
-
-    //add context
-    request.ctx = this._context;
-    response.ctx = this._context;
-    //add cwd and argsv
-    request.set('cwd', cwd).set('argv', argv);
+    const request = new TerminalRequest(cwd, argv, {
+      context: this._context
+    });
+    const response = new TerminalResponse(null, {
+      context: this._context
+    });
 
     //if no command
     if (argv.length < 3) {
@@ -100,9 +105,10 @@ export default class TerminalPlugin {
     //get the event and populate request
     const args = argv.slice(2);
     const event = args.shift() as string;
-    request.withArgs.set('params', args);
+    //set params
+    request.params = Object.assign(request.params.get(), request.args(3));
     //suppress 404 error
-    response.status(200, 'OK');
+    response.setStatus(Statuses.OK);
     //handle the route
     const route = this._context.route(event);
     await route.handle(request, response);

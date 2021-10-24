@@ -33,7 +33,8 @@ function logResponse(
   request: Request, 
   response: Response
 ): void {
-  const { code, text } = response.get('status') || Statuses.OK
+  const code = response.status || Statuses.OK.code;
+  const text = response.statusText || Statuses.OK.text;
 
   let type = 'info';
   switch(true) {

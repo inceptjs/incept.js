@@ -14,9 +14,10 @@ function startDevServer(
   response: Response
 ): void {
   //user input
-  const port = request.params.p || request.params.port || 3000;
-  const host = request.params.h || request.params.host || 'localhost';
-  const write = request.params.w || request.params.write || false;
+  const params = request.params.get();
+  const port = params.p || params.port || 3000;
+  const host = params.h || params.host || 'localhost';
+  const write = params.w || params.write || false;
   //get the app
   const app = request.ctx as Application;
   const react = app.withReact;
