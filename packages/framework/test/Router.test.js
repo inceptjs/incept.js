@@ -8,12 +8,12 @@ describe('Router', () => {
     const req = new Request
     const res = new Response
 
-    req.params.set('foo', 'bar')
+    req.params.foo = 'bar'
 
     let prepared = false
     router.on('request', req => {
       expect(router.event.event).to.equal('request')
-      expect(req.params.get('foo')).to.equal('bar')
+      expect(req.params.foo).to.equal('bar')
       prepared = true
     })
 
@@ -25,7 +25,7 @@ describe('Router', () => {
     let processed = false
     router.on('foobar', () => {
       expect(router.event.event).to.equal('foobar')
-      expect(req.params.get('foo')).to.equal('bar')
+      expect(req.params.foo).to.equal('bar')
       processed = true
     })
 
