@@ -165,8 +165,8 @@ export default class Response extends Body {
    */
   protected _getInit(): Record<string, any> {
     return {
-      status: this._status.code,
-      text: this._status.text,
+      status: this._status.code || undefined,
+      text: this._status.text || undefined,
       type: this._type,
       url: this.url !== ''? this.url: undefined
     };
