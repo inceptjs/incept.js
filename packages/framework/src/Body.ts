@@ -54,7 +54,15 @@ export default abstract class Body {
   }
   
   /**
-   * Returns context is where the body is currently managed
+   * Custom: returns true if the body is streamable
+   */
+  get streamable(): any {
+    return typeof this._body?.pipe === 'function' 
+      || typeof this._body?.pipeTo === 'function';
+  }
+  
+  /**
+   * Custom: Returns context is where the body is currently managed
    */
   get ctx(): any {
     return this._context;
@@ -105,6 +113,16 @@ export default abstract class Body {
   }
 
   /**
+   * Custom: Returns the nameof the body
+   */
+  get nameof(): string|null {
+    if (typeof this._body?.constructor?.name === 'string') {
+      return this._body.constructor.name;
+    }
+    return null;
+  }
+
+  /**
    * Custom: Returns the origin from the URL
    */
   get origin(): string {
@@ -149,7 +167,7 @@ export default abstract class Body {
     }
 
     const query = new Store;
-    return query.withQuery.set(queryString);
+    return query.withQuery.set(queryString).get();
   }
 
   /**
@@ -164,6 +182,16 @@ export default abstract class Body {
    */
   get search(): string {
     return this._url? this._url.search: '';
+  }
+
+  /**
+   * Custom: Returns the typeof body
+   */
+  get typeof(): string {
+    if (this._body === null) {
+      return 'undefined';
+    }
+    return typeof this._body;
   }
 
   /**
@@ -192,7 +220,7 @@ export default abstract class Body {
       body = init.body;
     }
     //set body
-    this._body = body;
+    this.write(body);
     //set the context
     this._context = init.context || null;
     //set the resource
@@ -233,24 +261,6 @@ export default abstract class Body {
   }
 
   /**
-   * Custom: Parses body by content type
-   */
-  async parse() {
-    const type = this.headers.get('content-type');
-    switch(true) {
-      case type === 'text/json':
-      case type === 'application/json':
-        return await this.json();
-      case type === 'application/x-www-form-urlencoded':
-        return await this.fromURLQuery();
-      case type?.indexOf('multipart/form-data') === 0:
-        return await this.fromFormData();
-    }
-
-    return null;
-  }
-
-  /**
    * Custom: Returns the body converted to an object using 
    * multipart/form-data parsing
    */
@@ -277,6 +287,44 @@ export default abstract class Body {
     this._disturbed = true;
     const response = this._getResource();
     return await response.json();
+  }
+
+  /**
+   * Custom: Parses body by content type
+   */
+  async parse() {
+    const type = this.headers.get('content-type');
+    switch(true) {
+      case type === 'text/json':
+      case type === 'application/json':
+        return await this.json();
+      case type === 'application/x-www-form-urlencoded':
+        return await this.fromURLQuery();
+      case type?.indexOf('multipart/form-data') === 0:
+        return await this.fromFormData();
+    }
+
+    return null;
+  }
+
+  /**
+   * Custom: alias to pipeTo
+   */
+  pipe(destination: any): Body {
+    return this.pipeTo(destination);
+  }
+
+  /**
+   * Custom: pipeTo
+   */
+  pipeTo(destination: any): Body {
+    Exception.require(this.streamable, 'Body is not streamable');
+    if (typeof this._body?.pipe === 'function') {
+      this._body.pipe(destination);
+    } else if (typeof this._body?.pipeTo === 'function') {
+      this._body.pipeTo(destination);
+    }
+    return this;
   }
 
   /**
