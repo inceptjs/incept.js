@@ -4,6 +4,11 @@ import { Store } from '@inceptjs/types'
 import Body from './Body';
 import Exception from './Exception';
 
+type RouteParams = {
+  args: string[];
+  params: Record<string, any>;
+}
+
 export type RequestOptions = {
   body?: any;
   cache?: string;
@@ -19,12 +24,13 @@ export type RequestOptions = {
 };
 
 export enum RequestMethods {
+  CONNECT = 'CONNECT',
+  DELETE = 'DELETE',
   GET = 'GET',
+  HEAD = 'HEAD',
+  OPTIONS = 'OPTIONS',
   POST = 'POST',
   PUT = 'PUT',
-  DELETE = 'DELETE',
-  CONNECT = 'CONNECT',
-  OPTIONS = 'OPTIONS',
   TRACE = 'TRACE'
 };
 
@@ -69,6 +75,11 @@ export enum RequestReferrers {
  */
 export default class Request extends Body {
   /**
+   * Request args used to stage data
+   */
+  protected _args: any[] = [];
+
+  /**
    * Request cache mode
    */
   protected _cache: string;
@@ -107,6 +118,13 @@ export default class Request extends Body {
    * Request referrer mode
    */
   protected _referrer: string;
+ 
+  /**
+   * Custom: returns custom args
+   */
+  get args(): any[] {
+    return this._args;
+  }
 
   /**
    * Contains the cache mode of the request (e.g., default, 
@@ -165,8 +183,8 @@ export default class Request extends Body {
   /**
    * Custom: returns custom parameters
    */
-  get params(): Store {
-    return this._params;
+  get params() {
+    return this._params.get();
   }
 
   /**
@@ -196,6 +214,17 @@ export default class Request extends Body {
   }
 
   /**
+   * Custom: sets args
+   */
+  set args(args: any[]) {
+    Exception.require(
+      Array.isArray(args), 
+      'Value expected Array<amy>'
+    );
+    this._args = [];
+  }
+
+  /**
    * Custom: sets parameters
    */
   set params(data: Record<string, any>) {
@@ -213,8 +242,12 @@ export default class Request extends Body {
     super(null, init);
     //set the URL
     if (typeof url === 'string') {
-      this._url = new URL(url);
-      this.params = Object.assign(this.params.get(), this.query);
+      try {
+        this._url = new URL(url);  
+      } catch(e) {
+        this._url = new URL(this._unknownHost(url));  
+      }
+      this.assign(this.query);
     }
     //set the cache mode
     this._cache = init.cache || RequestCaches.DEFAULT;
@@ -223,7 +256,7 @@ export default class Request extends Body {
     //set the integrity
     this._integrity = init.integrity;
     //set the metbod
-    this._method = init.method || RequestMethods.GET;
+    this._method = (init.method || RequestMethods.GET).toUpperCase();
     //set the mode
     this._mode = init.mode || RequestModes.CORS;
     //set the redirect mode
@@ -233,11 +266,176 @@ export default class Request extends Body {
   }
 
   /**
+   * Custom: soft merges the given hashes to the params
+   */
+  assign(...hashes: Object[]): Request {
+    for(let i = 0; i < hashes.length; i++) {
+      Exception.require(
+        hashes[i].constructor === Object, 
+        'Argument %s expected Object',
+        i + 1
+      )
+    }
+    this.params = Object.assign(this.params, ...hashes);
+    return this;
+  }
+
+  /**
    * Clones the Response reseting all states
    * see: https://developer.mozilla.org/en-US/docs/Web/API/Request/clone
    */
   clone() {
     return new Response(this.url, this._getInit());
+  }
+
+  /**
+   * Custom: returns the arg of the given index
+   */
+  arg(index: number) {
+    Exception.require(
+      typeof index === 'number', 
+      'Argument 1 expected number'
+    );
+    return this._args[index];
+  }
+
+  /**
+   * Custom: returns the value of the name
+   */
+  get(...path: (string|number)[]) {
+    Exception.require(
+      typeof path[0] === 'string', 
+      'Argument 1 expected string'
+    );
+    return this._params.get(...path);
+  }
+
+  /**
+   * Custom: pushes to the args
+   */
+  push(value: any): Request {
+    this._args.push(value);
+    return this;
+  }
+
+  /**
+   * Custom: Returns parameters based on given route path
+   */
+  routeParams(routepath: string): RouteParams {
+    Exception.require(
+      typeof routepath === 'string', 
+      'Argument 1 expected String'
+    );
+
+    //this is what we will be returning
+    const route: RouteParams = { args: [], params: {} };
+
+    if (!this.pathname.length) {
+      return route;
+    }
+
+    //convert path to a regex pattern
+    const pattern = `^${routepath}$`
+      //replace the :variable-_name01
+      .replace(/(\:[a-zA-Z0-9\-_]+)/g, '*')
+      //replace the stars
+      //* -> ([^/]+)
+      //@ts-ignore Property 'replaceAll' does not exist on type 'string'
+      //but it does exist according to MDN...
+      .replaceAll('*', '([^/]+)')
+      //** -> ([^/]+)([^/]+) -> (.*)
+      .replaceAll('([^/]+)([^/]+)', '(.*)');
+
+    //find all the matches
+    const matches = Array.from(this.pathname.matchAll(pattern));
+    //if no matches
+    if (!Array.isArray(matches[0]) || !matches[0].length) {
+      return route;
+    }
+
+    //find and organize all the dynamic parameters for mapping
+    const map = Array.from(
+      routepath.matchAll(/(\:[a-zA-Z0-9\-_]+)|(\*\*)|(\*)/g)
+    ).map(match => match[0]);
+    //loop through the matches
+    matches[0].slice().forEach((param, i) => {
+      //skip the first one (GET)
+      if (!i) {
+        return;
+      }
+
+      //so matches will look like
+      // [ '/foo/bar', 'foo', 'bar' ]
+      //and map will look like
+      // [ ':foo', ':bar' ]
+
+      //if it's a * param
+      if (typeof map[i - 1] !== 'string' 
+        || map[i - 1].indexOf('*') === 0
+      ) {
+        //if no / in param
+        if (param.indexOf('/') === -1) {
+          //single push
+          return route.args.push(param);
+        }
+
+        //push multiple values
+        return Array.prototype.push.apply(
+          route.args, 
+          param.split('/')
+        );
+      }
+
+      //if it's a :parameter
+      if (typeof map[i - 1] === 'string') {
+        route.params[map[i - 1].substr(1)] = param;
+      }
+    });
+
+    return route;
+  }
+
+  /**
+   * Custom: sets a value to the params
+   */
+  set(...path: any[]): Request {
+    Exception.require(
+      typeof path[0] === 'string' || path[0]?.constructor === Object, 
+      'Argument 1 expected string'
+    );
+    Exception.require(
+      path.length > 1 || path[0]?.constructor === Object, 
+      'Argument 2 expected'
+    );
+    this._params.set(...path);
+    return this;
+  }
+
+  /**
+   * Custom: unshifts to the args
+   */
+  unshift(value: any): Request {
+    this._args.unshift(value);
+    return this;
+  }
+
+  /**
+   * Custom: resets body
+   */
+  write(body: any, safe: boolean = true): Body {
+    const readOnly = [
+      RequestMethods.GET,
+      RequestMethods.HEAD,
+      RequestMethods.DELETE
+    ];
+    //@ts-ignore Argument of type 'string' is not assignable to 
+    //parameter of type 'RequestMethods'.
+    if (!safe && readOnly.indexOf(this._method) !== -1) {
+      //make it a POST
+      this._method = RequestMethods.POST;
+    }
+    this._body = body;
+    return this;
   }
 
   /**
@@ -267,5 +465,16 @@ export default class Request extends Body {
    */
   protected _getResource(): NativeRequest {
     return new NativeRequest(this.url, this._getInit());
+  }
+
+  /**
+   * Adds a default host to invalid URLs
+   */
+  private _unknownHost(url: string) {
+    if (url.indexOf('/') !== 0) {
+      url = '/' + url;
+    }
+  
+    return `http://unknownhost${url}`;
   }
 };
