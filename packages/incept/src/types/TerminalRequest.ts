@@ -37,7 +37,7 @@ export default class TerminalRequest extends Request {
   /**
    * Returns the parsed args
    */
-  args(start: number = 0): Record<string, any> {
+  slice(start: number = 0): Record<string, any> {
     const args = this.argv.slice(2);
     const store = new Store;
     return store.withArgs.set(args).get();

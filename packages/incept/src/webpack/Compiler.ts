@@ -1,17 +1,17 @@
-import webpack, { Compiler, Stats } from 'webpack'
+import webpack, { Compiler, Stats } from 'webpack';
 
-import Exception from './Exception'
+import Exception from './Exception';
 
 type Event = {
   event: string,
   plugin: string,
   callback: Function
-}
+};
 
 type PostCompile = {
   stats: Stats,
   compiler: Compiler
-}
+};
 
 export default class WebpackCompiler {
   /**

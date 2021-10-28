@@ -1,3 +1,5 @@
+import path from 'path';
+
 export default {
   ignore: [ /node_modules/ ],
   extensions: [ '.js', '.jsx', '.ts', '.tsx' ],
@@ -14,6 +16,10 @@ export default {
   ],
   plugins: [
     '@babel/plugin-transform-runtime',
+    //ignores files
+    [path.join(__dirname, 'ignore'), { 
+      except: [ '.js', '.jsx', '.ts', '.tsx' ] 
+    }],
     //adds react import where jsx is found
     'react-require'
   ]

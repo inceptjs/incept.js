@@ -57,7 +57,7 @@ emitter.on('request', async function postputProcessor(
           //now loop through each value
           values.forEach(value => {
             //and set the value
-            request.params.set(...keys, value)
+            request.set(...keys, value)
           });
         });
       });

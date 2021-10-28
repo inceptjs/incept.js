@@ -1,5 +1,5 @@
 import path from 'path';
-import React, { ComponentType } from 'react';
+import React, { Attributes, ComponentType } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { ChunkExtractor } from '@loadable/server';
 import { StaticRouter, matchPath } from 'react-router';
@@ -7,8 +7,9 @@ import { Helmet } from 'react-helmet';
 import { Request, Response } from '@inceptjs/framework';
 
 import { Application } from '../types/Application';
-import Exception from './Exception';
 import Document from './components/Document';
+import Exception from './Exception';
+import getProps from './props';
 
 export default class WithReact {
   /**
@@ -123,20 +124,27 @@ export default class WithReact {
   /**
    * Route handler
    */
-  handle = (request: Request, response: Response): void => {
+  handle = async (request: Request, response: Response) => {
     //let anything override the default behaviour
-    if (typeof response.body === 'string' 
-      || typeof response.body?.pipe === 'function'
+    if (response.typeof === 'string' 
+      || response.streamable === 'function'
     ) {
       return;
     }
-    //if no matching react routes
-    if (!this.match(request.pathname)) {
+
+    //if no react match
+    const route = this.match(request.pathname);
+    if (!route) {
+      return;
+    }
+
+    const rendered = await this.render(route, request, response);
+    if (typeof rendered !== 'string') {
       return;
     }
 
     response.headers.set('Content-Type', 'text/html');
-    response.write(this.render(request.pathname, response));
+    response.write(rendered);
   }
 
   /**
@@ -182,7 +190,7 @@ export default class WithReact {
   match(pathname: string): StringRoute|null {
     for (const path in this._routes) {
       if (matchPath(pathname, { path, exact: true })) {
-        return this._routes[path]
+        return this._routes[path];
       }
     }
 
@@ -207,9 +215,27 @@ export default class WithReact {
   /**
    * Renders the page (for server)
    */
-  render(pathname: string, response: Response): string {
+  async render(
+    route: StringRoute, 
+    request: Request, 
+    response: Response
+  ): Promise<string> {
+    //make server props
+    const serverProps: ServerProps = { 
+      req: request, 
+      res: response
+    };
+    //load view (this would be problematic if not for babel-ignore)
+    const routeProps = getProps({
+      //@ts-ignore
+      location: { pathname: request.pathname},
+      match: { params: request.routeParams(route.path) }
+    });
+    //add route props to server props
+    const view = require(route.view);
+    serverProps.routeProps = await routeProps(view.default || view);
     //get router props
-    const routerProps = { location: pathname, context: {} };
+    const routerProps = { location: request.pathname, context: {} };
     //now do the loadable chunking thing..
     //see: https://loadable-components.com/docs/server-side-rendering/
     const server = new ChunkExtractor({ 
@@ -230,15 +256,25 @@ export default class WithReact {
     const Router = React.createElement(
       StaticRouter,
       routerProps,
-      React.createElement(App)
+      React.createElement(App, serverProps)
     );
-    //render the app now
+
+    //render the chunks now
     const app = ReactDOMServer.renderToString(
       client.collectChunks(Router)
     );
     const helmet = Helmet.renderStatic();
 
-    //clone the document
+    const scriptProp = React.createElement('script', { 
+      id: '__incept_props', 
+      key: '__incept_props',
+      type: 'application/json',
+      dangerouslySetInnerHTML: {
+        __html: JSON.stringify(serverProps.routeProps)
+      }
+    });
+
+    //create the document
     const document = this._document({
       App() {
         return React.createElement('div', {
@@ -260,6 +296,7 @@ export default class WithReact {
         ...Array.from(helmet.style.toComponent())
       ],
       scripts: [
+        scriptProp,
         ...Array.from(client.getScriptElements()),
         //@ts-ignore helmet tests show it should be an array
         ...Array.from(helmet.script.toComponent())
@@ -270,6 +307,12 @@ export default class WithReact {
     return `<!DOCTYPE html>${markup}`
   }
 }
+
+export type ServerProps = Attributes & {
+  req: Request;
+  res: Response;
+  routeProps?: Attributes
+};
 
 export type StringRoute = { 
   path: string, 
@@ -287,4 +330,10 @@ export type ComponentRoute = {
   path: string, 
   view: ComponentType , 
   layout: ComponentType 
+};
+
+export type RouteProps = Attributes & {
+  req: Request;
+  res: Response;
+  routeProps: Record<string, any>;
 };

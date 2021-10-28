@@ -13,9 +13,8 @@ import WebpackCompiler from './Compiler';
 
 const importClause = `import %s from '%s'`;
 
-const loadableClause = 'const %s = loadable('
-  + '_ => import(/* webpackChunkName: '
-  + `'%s' */'%s'))`;
+const loadableClause = 
+  `const %s = loadable(_ => import(/* webpackChunkName: '%s' */'%s'))`;
 
 const statsReporting = {
   cached: false,
@@ -214,80 +213,6 @@ export default class WithWebpack {
   }
 
   /**
-   * Generates a static entry file
-   */
-  staticEntryCode(): string {
-    const { app, props, layouts, routes } = this._application.withReact;
-    const loadables = [];
-    const exports = Object.keys(props);
-    const imports = exports.map(name => importClause
-      .replace('%s', name)
-      .replace('%s', props[name])
-    );
-    //generate routes
-    let routesJson = JSON.stringify(routes);
-    //change route paths to object references
-    for (let i = 0; i < routes.length; i++) {
-      const { path, view } = routes[i];
-      routesJson = routesJson.replaceAll(`"${view}"`, `Route_${i + 1}`);
-      loadables.push(
-        loadableClause
-          .replace('%s', `Route_${i + 1}`)
-          .replace('%s', `route_${path}`
-            .replaceAll('/', '_')
-            .replaceAll('.', '_')
-            .replace(/__/, '_')
-          )
-          .replace('%s', view)
-      );
-    }
-    //change layout paths to object references
-    for (const layout of layouts) {
-      loadables.push(loadableClause
-        .replace('%s', `Layout_${layout.name}`)
-        .replace('%s', `layout_${layout.name}`)
-        .replace('%s', layout.static)
-      );
-      
-      //change from name to actual object reference
-      routesJson = routesJson.replaceAll(
-        `"layout":"${layout.name}"`, 
-        `"layout":Layout_${layout.name}`
-      );
-    }
-    //change missing layouts to default object reference
-    for(const route of routes) {
-      //if the route layout name is not found in the list of layouts
-      if (!layouts.filter(layout => layout.name === route.layout).length) {
-        //change from name to the default layout reference
-        routesJson = routesJson.replaceAll(
-          `"layout":"${route.layout}"`, 
-          `"layout":Layout_default`
-        );
-      }
-    }
-    exports.push('routes');
-
-    return [
-      `import React from 'react'`,
-      `import { hydrate } from 'react-dom'`,
-      `import { BrowserRouter } from 'react-router-dom'`,
-      `import loadable, { loadableReady } from '@loadable/component'`,
-      `import App from '${app}'`,
-      ...imports,
-      'loadableReady(() => {',
-      ...loadables,
-      `  const routes = ${routesJson}`,
-      `  const props = { ${exports.join(', ')} }`,
-      '  hydrate(',
-      '    <BrowserRouter><App {...props} /></BrowserRouter>,',
-      `    document.getElementById('__incept_root')`,
-      '  )',
-      '})'
-    ].join("\n")
-  }
-
-  /**
    * `$ incept dev` - Development configuration
    */
   develop(write: boolean = false) {
@@ -413,13 +338,91 @@ export default class WithWebpack {
 
     return [
       `import React from 'react'`,
-      `import loadable, { loadableReady } from '@loadable/component'`,
+      `import { loadable } from 'inceptjs/dist/loadable'`,
       `import App from '${app}'`,
       ...imports,
       ...loadables,
       `const routes = ${routesJson}`,
       `const props = { ${exports.join(', ')} }`,
-      'export default () => (<App {...props} />)'
+      'export default (serverProps) => (<App serverProps={serverProps} {...props} />)'
+    ].join("\n")
+  }
+
+  /**
+   * Generates a static entry file
+   */
+  staticEntryCode(): string {
+    const { app, props, layouts, routes } = this._application.withReact;
+    const loadables = [];
+    const exports = Object.keys(props);
+    const imports = exports.map(name => importClause
+      .replace('%s', name)
+      .replace('%s', props[name])
+    );
+    //generate routes
+    let routesJson = JSON.stringify(routes);
+    //change route paths to object references
+    for (let i = 0; i < routes.length; i++) {
+      const { path, view } = routes[i];
+      routesJson = routesJson.replaceAll(`"${view}"`, `Route_${i + 1}`);
+      loadables.push(
+        loadableClause
+          .replace('%s', `Route_${i + 1}`)
+          .replace('%s', `route_${path}`
+            .replaceAll('/', '_')
+            .replaceAll('.', '_')
+            .replace(/__/, '_')
+          )
+          .replace('%s', view)
+      );
+    }
+    //change layout paths to object references
+    for (const layout of layouts) {
+      loadables.push(loadableClause
+        .replace('%s', `Layout_${layout.name}`)
+        .replace('%s', `layout_${layout.name}`)
+        .replace('%s', layout.static)
+      );
+      
+      //change from name to actual object reference
+      routesJson = routesJson.replaceAll(
+        `"layout":"${layout.name}"`, 
+        `"layout":Layout_${layout.name}`
+      );
+    }
+    //change missing layouts to default object reference
+    for(const route of routes) {
+      //if the route layout name is not found in the list of layouts
+      if (!layouts.filter(layout => layout.name === route.layout).length) {
+        //change from name to the default layout reference
+        routesJson = routesJson.replaceAll(
+          `"layout":"${route.layout}"`, 
+          `"layout":Layout_default`
+        );
+      }
+    }
+    exports.push('routes');
+
+    return [
+      `import React from 'react'`,
+      `import { hydrate } from 'react-dom'`,
+      `import { BrowserRouter } from 'react-router-dom'`,
+      `import { loadable, loadableReady } from 'inceptjs/dist/loadable'`,
+      `import App from '${app}'`,
+      ...imports,
+      'loadableReady(() => {',
+      ...loadables,
+      `  const routes = ${routesJson}`,
+      `  const props = { ${exports.join(', ')} }`,
+      '  const serverProps = {}',
+      '  try {',
+      '    serverProps.routeProps = JSON.parse(window.__incept_props.innerText)',
+      '  } catch(e){}',
+      '  hydrate(',
+      '    <BrowserRouter><App serverProps={serverProps} {...props} /></BrowserRouter>,',
+      `    document.getElementById('__incept_root')`,
+      '  )',
+      '})'
     ].join("\n")
   }
 }

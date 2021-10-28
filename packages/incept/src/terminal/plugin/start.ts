@@ -13,7 +13,7 @@ function startProductionServer(
   response: Response
 ): void {
   //user input
-  const params = request.params.get();
+  const params = request.params;
   const port = params.p || params.port || 3000;
   const host = params.h || params.host || 'localhost';
   //get the app

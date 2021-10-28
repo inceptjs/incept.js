@@ -39,7 +39,7 @@ export default class TerminalPlugin {
 
     //we need to consider all events including `user-search`
     //where it's most likely silent
-    const output = request.params.get('output');
+    const output = request.params.output;
 
     //if raw output
     if (output === 'raw') {
@@ -106,7 +106,7 @@ export default class TerminalPlugin {
     const args = argv.slice(2);
     const event = args.shift() as string;
     //set params
-    request.params = Object.assign(request.params.get(), request.args(3));
+    request.assign(request.slice(3));
     //suppress 404 error
     response.setStatus(Statuses.OK);
     //handle the route

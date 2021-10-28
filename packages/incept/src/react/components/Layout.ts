@@ -1,7 +1,18 @@
-import { ReactNode } from 'react'
+import React, { Attributes, ComponentType } from 'react'
 
-type Props = { children: ReactNode[] }
+type ComponentRoute = { 
+  path: string; 
+  view: ComponentType;
+  layout: ComponentType;
+};
 
-export default function DefaultLayout({ children }: Props) {
-  return children
+type LayoutProps = Attributes & { 
+  view: ComponentType;
+  routes: ComponentRoute[];
+  routeProps: Attributes;
+}
+
+export default function DefaultLayout(props: LayoutProps) {
+  const { view, /*routes,*/ routeProps } = props;
+  return React.createElement(view, routeProps);
 }

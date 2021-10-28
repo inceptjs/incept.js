@@ -14,7 +14,7 @@ function startDevServer(
   response: Response
 ): void {
   //user input
-  const params = request.params.get();
+  const params = request.params;
   const port = params.p || params.port || 3000;
   const host = params.h || params.host || 'localhost';
   const write = params.w || params.write || false;
@@ -25,7 +25,7 @@ function startDevServer(
   //log all errors
   app.on('error', logError.bind(app));
   //load webpack
-  const {dev, hot} = webpack.develop(!!write);
+  const { dev, hot } = webpack.develop(!!write);
   app.use(dev);
   app.use(hot);
   //this will parse form data
