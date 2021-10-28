@@ -1,3 +1,5 @@
+import { Exception } from ".";
+
 type Index = string|number;
 
 /**
@@ -6,11 +8,6 @@ type Index = string|number;
  * data store.
  */
 export default class Store {
-  /**
-   * The raw data
-   */
-  public data: Record<string, any>;
-
   /**
    * Parser for terminal args
    */
@@ -32,10 +29,40 @@ export default class Store {
   public withQuery: Query;
 
   /**
+   * The raw data
+   */
+  protected _data: Record<string, any>;
+
+  /**
+   * Returns the raw data
+   */
+  get data(): Record<string, any> {
+    return this._data;
+  }
+
+  /**
+   * Returns the length
+   */
+  get length(): number {
+    return Object.keys(this._data).length;
+  }
+
+  /**
+   * Safely sets the data
+   */
+  set data(data: Record<string, any>) {
+    Exception.require(
+      data?.constructor === Object, 
+      'Argument 1 expected Object'
+    );
+    this._data = data;
+  }
+
+  /**
    * Sets the initial data
    */
   constructor(data: Record<string, any> = {}) {
-    this.data = data;
+    this._data = data;
     this.withArgs = new Args(this);
     this.withFormData = new FormData(this);
     this.withPath = new Path(this);
@@ -71,7 +98,7 @@ export default class Store {
    */
   get(...path: Index[]): any {
     if (!path.length) {
-      return this.data;
+      return this._data;
     }
 
     if (!this.has(...path)) {
@@ -79,7 +106,7 @@ export default class Store {
     }
 
     const last = path.pop() as Index;
-    let pointer = this.data;
+    let pointer = this._data;
 
     path.forEach(step => pointer = pointer[step]);
 
@@ -96,7 +123,7 @@ export default class Store {
 
     let found = true;
     const last = path.pop() as Index;
-    let pointer = this.data;
+    let pointer = this._data;
 
     path.forEach(step => {
       if (!found) {
@@ -127,7 +154,7 @@ export default class Store {
     }
 
     const last = path.pop() as Index;
-    let pointer = this.data;
+    let pointer = this._data;
 
     path.forEach(step => {
       pointer = pointer[step];
@@ -155,7 +182,7 @@ export default class Store {
     }
 
     const value = path.pop();
-    let last = path.pop(), pointer = this.data;
+    let last = path.pop(), pointer = this._data;
 
     path.forEach((step, i) => {
       if (step === null || step === '') {
@@ -176,7 +203,7 @@ export default class Store {
     pointer[last] = value;
 
     //loop through the steps one more time fixing the objects
-    pointer = this.data;
+    pointer = this._data;
     path.forEach((step) => {
       const next = pointer[step]
       //if next is not an array and next should be an array
