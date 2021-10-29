@@ -7,8 +7,8 @@
     "mocha": "^9.1.2"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap --hoist",
+    "bootstrap": "lerna bootstrap --hoist && sh scripts/hoist.sh",
     "build": "lerna run build --stream",
-    "test": "mocha"
+    "test": "lerna run test"
   }
 }
