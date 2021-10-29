@@ -338,7 +338,7 @@ export default class WithWebpack {
 
     return [
       `import React from 'react'`,
-      `import { loadable } from 'inceptjs/dist/loadable'`,
+      `import { loadable } from 'inceptjs/loadable'`,
       `import App from '${app}'`,
       ...imports,
       ...loadables,
@@ -407,7 +407,7 @@ export default class WithWebpack {
       `import React from 'react'`,
       `import { hydrate } from 'react-dom'`,
       `import { BrowserRouter } from 'react-router-dom'`,
-      `import { loadable, loadableReady } from 'inceptjs/dist/loadable'`,
+      `import { loadable, loadableReady } from 'inceptjs/loadable'`,
       `import App from '${app}'`,
       ...imports,
       'loadableReady(() => {',
