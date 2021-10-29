@@ -1,5 +1,5 @@
 {
-  "name": "incept-example-with-mui-5",
+  "name": "incept-example-features",
   "private": true,
   "scripts": {
     "dev": "incept dev",
@@ -7,8 +7,10 @@
     "start": "incept start"
   },
   "incept": [
-    "./plugin/mui5", 
-    "./plugin/static"
+    "./plugin/api",
+    "./plugin/static",
+    "./plugin/www",
+    "@inceptjs/admin"
   ],
   "dependencies": {
     "@emotion/cache": "^11.4.0",
@@ -17,6 +19,7 @@
     "@fontsource/roboto": "^4.5.1",
     "@mui/icons-material": "^5.0.3",
     "@mui/material": "^5.0.3",
-    "inceptjs": "^0.0.29"
+    "inceptjs": "^0.0.29",
+    "@inceptjs/admin": "^0.0.29"
   }
 }

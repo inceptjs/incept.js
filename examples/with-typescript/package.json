@@ -1,4 +1,5 @@
 {
+  "name": "incept-example-with-typescript",
   "private": true,
   "scripts": {
     "dev": "incept dev",
@@ -10,7 +11,7 @@
     "./src/static"
   ],
   "dependencies": {
-    "inceptjs": "^0.0.28"
+    "inceptjs": "^0.0.29"
   },
   "devDependencies": {
     "@types/node": "^16.9.4",
