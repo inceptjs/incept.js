@@ -14,9 +14,6 @@
     "target": "es6",
     "skipLibCheck": true
   },
-  "exclude": [
-    "tests",
-    "dist",
-    "node_modules"
-  ]
+  "include": [ "src/**/*.ts" ],
+  "exclude": [ "tests", "dist", "node_modules" ]
 }
