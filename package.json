@@ -1,14 +1,15 @@
 {
-  "name": "root",
   "private": true,
-  "devDependencies": {
-    "chai": "^4.3.4",
-    "lerna": "^4.0.0",
-    "mocha": "^9.1.2"
-  },
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
   "scripts": {
-    "bootstrap": "lerna bootstrap --hoist && sh scripts/hoist.sh",
-    "build": "lerna run build --stream",
-    "test": "lerna run test"
+    "dev": "cd example && npm run dev",
+    "build": "npm run build:ui",
+    "build:ui": "cd packages/ui && npm run build"
+  },
+  "devDependencies": {
+    "npm-run-all": "4.1.5"
   }
 }

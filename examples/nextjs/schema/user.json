@@ -1,0 +1,375 @@
+{
+  "name": "user",
+  "singular": "User",
+  "plural": "Users",
+  "description": "Manage users",
+  "icon": "user",
+  "group": "",
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "string",
+      "data": {
+        "type": "VARCHAR",
+        "length": 255,
+        "required": true,
+        "unique": true,
+        "unsigned": false
+      },
+      "field": {
+        "type": "string",
+        "method": "none",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "type": "string",
+        "sticky": true,
+        "method": "none",
+        "attributes": {}
+      },
+      "view": {
+        "type": "string",
+        "method": "none",
+        "attributes": {}
+      },
+      "default": "cuid()",
+      "searchable": false,
+      "filterable": false,
+      "sortable": false
+    },
+    {
+      "label": "Name",
+      "name": "name",
+      "type": "string",
+      "data": {
+        "type": "VARCHAR",
+        "length": 255,
+        "required": true,
+        "unique": false,
+        "unsigned": false
+      },
+      "field": {
+        "type": "string",
+        "method": "input",
+        "attributes": {
+          "type": "text"
+        }
+      },
+      "validation": [
+        {
+          "method": "required",
+          "parameters": [],
+          "message": "Name is required"
+        }
+      ],
+      "list": {
+        "type": "string",
+        "sticky": false,
+        "method": "none",
+        "attributes": {}
+      },
+      "view": {
+        "type": "string",
+        "method": "none",
+        "attributes": {}
+      },
+      "searchable": true,
+      "filterable": false,
+      "sortable": false
+    },
+    {
+      "label": "Username",
+      "name": "username",
+      "type": "string",
+      "data": {
+        "type": "VARCHAR",
+        "length": 255,
+        "required": true,
+        "unique": true,
+        "unsigned": false
+      },
+      "field": {
+        "type": "string",
+        "method": "input",
+        "attributes": {
+          "type": "text"
+        }
+      },
+      "validation": [
+        {
+          "method": "required",
+          "parameters": [],
+          "message": "Username is required"
+        }
+      ],
+      "list": {
+        "type": "string",
+        "sticky": false,
+        "method": "none",
+        "attributes": {}
+      },
+      "view": {
+        "type": "string",
+        "method": "none",
+        "attributes": {}
+      },
+      "searchable": true,
+      "filterable": false,
+      "sortable": false
+    },
+    {
+      "label": "Pasword",
+      "name": "password",
+      "type": "string",
+      "data": {
+        "type": "VARCHAR",
+        "length": 255,
+        "required": true,
+        "unique": false,
+        "unsigned": false
+      },
+      "field": {
+        "type": "string",
+        "method": "password",
+        "attributes": {}
+      },
+      "validation": [
+        {
+          "method": "required",
+          "parameters": [],
+          "message": "Password is required"
+        },
+        {
+          "method": "cgte",
+          "parameters": [8],
+          "message": "Should be at least 8 characters"
+        }
+      ],
+      "list": {
+        "type": "string",
+        "sticky": false,
+        "method": "hide",
+        "attributes": {}
+      },
+      "view": {
+        "type": "string",
+        "method": "hide",
+        "attributes": {}
+      },
+      "searchable": false,
+      "filterable": false,
+      "sortable": false
+    },
+    {
+      "label": "Role",
+      "name": "role",
+      "type": "string",
+      "data": {
+        "type": "VARCHAR",
+        "length": 255,
+        "required": true,
+        "unique": false,
+        "unsigned": false
+      },
+      "field": {
+        "type": "string",
+        "method": "select",
+        "attributes": {
+          "options": [
+            {
+              "label": "User",
+              "value": "user"
+            },
+            {
+              "label": "Admin",
+              "value": "admin"
+            }
+          ]
+        }
+      },
+      "validation": [
+        {
+          "method": "required",
+          "parameters": [],
+          "message": "Role is required"
+        },
+        {
+          "method": "option",
+          "parameters": [["user", "admin"]],
+          "message": "Should be either user or admin"
+        }
+      ],
+      "list": {
+        "type": "string",
+        "sticky": false,
+        "method": "none",
+        "attributes": {}
+      },
+      "view": {
+        "type": "string",
+        "method": "none",
+        "attributes": {}
+      },
+      "default": "user",
+      "searchable": false,
+      "filterable": true,
+      "sortable": false
+    },
+    {
+      "label": "Last Login",
+      "name": "lastLoginAt",
+      "type": "Date",
+      "data": {
+        "type": "DATETIME",
+        "required": false,
+        "unique": false,
+        "unsigned": false
+      },
+      "field": {
+        "type": "string",
+        "method": "none",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "type": "string",
+        "sticky": false,
+        "method": "date",
+        "attributes": {
+          "format": "pretty"
+        }
+      },
+      "view": {
+        "type": "string",
+        "method": "date",
+        "attributes": {
+          "format": "pretty"
+        }
+      },
+      "searchable": false,
+      "filterable": false,
+      "sortable": true
+    },
+    {
+      "label": "Active",
+      "name": "active",
+      "type": "boolean",
+      "data": {
+        "type": "BOOLEAN",
+        "required": false,
+        "unique": false,
+        "unsigned": false
+      },
+      "field": {
+        "type": "boolean",
+        "method": "switch",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "type": "string",
+        "sticky": false,
+        "method": "yesno",
+        "attributes": {}
+      },
+      "view": {
+        "type": "string",
+        "method": "yesno",
+        "attributes": {}
+      },
+      "searchable": false,
+      "filterable": true,
+      "sortable": false
+    },
+    {
+      "label": "Created",
+      "name": "createdAt",
+      "type": "Date",
+      "data": {
+        "type": "DATETIME",
+        "required": true,
+        "unique": false,
+        "unsigned": false
+      },
+      "field": {
+        "type": "string",
+        "method": "none",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "type": "string",
+        "sticky": false,
+        "method": "date",
+        "attributes": {
+          "format": "pretty"
+        }
+      },
+      "view": {
+        "type": "string",
+        "method": "date",
+        "attributes": {
+          "format": "pretty"
+        }
+      },
+      "default": "now()",
+      "searchable": false,
+      "filterable": false,
+      "sortable": true
+    },
+    {
+      "label": "Updated",
+      "name": "updatedAt",
+      "type": "Date",
+      "data": {
+        "type": "DATETIME",
+        "required": true,
+        "unique": false,
+        "unsigned": false
+      },
+      "field": {
+        "type": "string",
+        "method": "none",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "type": "string",
+        "sticky": false,
+        "method": "date",
+        "attributes": {
+          "format": "pretty"
+        }
+      },
+      "view": {
+        "type": "string",
+        "method": "date",
+        "attributes": {
+          "format": "pretty"
+        }
+      },
+      "default": "updated()",
+      "searchable": false,
+      "filterable": false,
+      "sortable": true
+    }
+  ],
+  "relations": [
+    {
+      "name": "company",
+      "type": 0,
+      "label": "Company"
+    }
+  ],
+  "rest": {
+    "create": {
+      "type": "app|user|public",
+      "method": "post",
+      "path": "/user",
+      "event": "user-create",
+      "body": {}
+    }
+  }
+}

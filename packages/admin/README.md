@@ -1,5 +1,20 @@
 # Incept Admin
 
-A GUI to build admin dashboards.
+Turn key admin interfaces.
 
-> Still developing and testing. Not ready for production use.
+## Install
+
+```bash
+$ npm install @inceptjs/admin
+```
+
+## Usage
+
+```js
+import {
+  UserSearchPage,
+  UserCreatePage,
+  UserDetailPage,
+  UserRemovePage
+} from '@inceptjs/admin';
+```

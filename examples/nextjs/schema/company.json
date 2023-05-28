@@ -1,0 +1,251 @@
+{
+  "name": "company",
+  "singular": "Company",
+  "plural": "Companies",
+  "description": "Manage companies",
+  "icon": "shop",
+  "group": "",
+  "columns": [
+    {
+      "label": "ID",
+      "name": "id",
+      "type": "string",
+      "data": {
+        "type": "VARCHAR",
+        "length": 255,
+        "required": true,
+        "unique": true,
+        "unsigned": false
+      },
+      "field": {
+        "type": "string",
+        "method": "none",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "type": "string",
+        "sticky": true,
+        "method": "none",
+        "attributes": {}
+      },
+      "view": {
+        "type": "string",
+        "method": "none",
+        "attributes": {}
+      },
+      "default": "cuid()",
+      "searchable": false,
+      "filterable": false,
+      "sortable": false
+    },
+    {
+      "label": "Name",
+      "name": "name",
+      "type": "string",
+      "data": {
+        "type": "VARCHAR",
+        "length": 255,
+        "required": true,
+        "unique": true,
+        "unsigned": false
+      },
+      "field": {
+        "type": "string",
+        "method": "input",
+        "attributes": {
+          "type": "text"
+        }
+      },
+      "validation": [
+        {
+          "method": "required",
+          "parameters": [],
+          "message": "Name is required"
+        }
+      ],
+      "list": {
+        "type": "string",
+        "sticky": false,
+        "method": "none",
+        "attributes": {}
+      },
+      "view": {
+        "type": "string",
+        "method": "none",
+        "attributes": {}
+      },
+      "searchable": true,
+      "filterable": false,
+      "sortable": false
+    },
+    {
+      "label": "References",
+      "name": "references",
+      "type": "Record<string, string>",
+      "data": {
+        "type": "JSON",
+        "required": true,
+        "unique": false,
+        "unsigned": false
+      },
+      "field": {
+        "type": "Record<string, string>",
+        "method": "metadata",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "type": "undefined",
+        "sticky": false,
+        "method": "hide",
+        "attributes": {}
+      },
+      "view": {
+        "type": "Record<string, string>",
+        "method": "metadata",
+        "attributes": {}
+      },
+      "default": {},
+      "searchable": false,
+      "filterable": false,
+      "sortable": false
+    },
+    {
+      "label": "Files",
+      "name": "files",
+      "type": "Record<string, string>",
+      "data": {
+        "type": "JSON",
+        "required": true,
+        "unique": false,
+        "unsigned": false
+      },
+      "field": {
+        "type": "Record<string, string>",
+        "method": "metafiles",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "type": "undefined",
+        "sticky": false,
+        "method": "hide",
+        "attributes": {}
+      },
+      "view": {
+        "type": "Record<string, string>",
+        "method": "metalinks",
+        "attributes": {}
+      },
+      "default": {},
+      "searchable": false,
+      "filterable": false,
+      "sortable": false
+    },
+    {
+      "label": "Active",
+      "name": "active",
+      "type": "boolean",
+      "data": {
+        "type": "BOOLEAN",
+        "required": false,
+        "unique": false,
+        "unsigned": false
+      },
+      "field": {
+        "type": "boolean",
+        "method": "switch",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "type": "string",
+        "sticky": false,
+        "method": "yesno",
+        "attributes": {}
+      },
+      "view": {
+        "type": "string",
+        "method": "yesno",
+        "attributes": {}
+      },
+      "searchable": false,
+      "filterable": true,
+      "sortable": false
+    },
+    {
+      "label": "Created",
+      "name": "createdAt",
+      "type": "Date",
+      "data": {
+        "type": "DATETIME",
+        "required": true,
+        "unique": false,
+        "unsigned": false
+      },
+      "field": {
+        "type": "string",
+        "method": "none",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "type": "string",
+        "sticky": false,
+        "method": "date",
+        "attributes": {
+          "format": "pretty"
+        }
+      },
+      "view": {
+        "type": "string",
+        "method": "date",
+        "attributes": {
+          "format": "pretty"
+        }
+      },
+      "default": "now()",
+      "searchable": false,
+      "filterable": false,
+      "sortable": true
+    },
+    {
+      "label": "Updated",
+      "name": "updatedAt",
+      "type": "Date",
+      "data": {
+        "type": "DATETIME",
+        "required": true,
+        "unique": false,
+        "unsigned": false
+      },
+      "field": {
+        "type": "string",
+        "method": "none",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "type": "string",
+        "sticky": false,
+        "method": "date",
+        "attributes": {
+          "format": "pretty"
+        }
+      },
+      "view": {
+        "type": "string",
+        "method": "date",
+        "attributes": {
+          "format": "pretty"
+        }
+      },
+      "default": "updated()",
+      "searchable": false,
+      "filterable": false,
+      "sortable": true
+    }
+  ],
+  "relations": []
+}

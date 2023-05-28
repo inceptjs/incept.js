@@ -1,4 +1,4 @@
-import { Exception } from ".";
+import Exception from './Exception';
 
 type Index = string|number;
 
@@ -96,13 +96,13 @@ export default class Store {
   /**
    * Retrieves the data stored specified by the path
    */
-  get(...path: Index[]): any {
+  get<T = any>(...path: Index[]): Record<string, any>|T|undefined {
     if (!path.length) {
       return this._data;
     }
 
     if (!this.has(...path)) {
-      return null;
+      return undefined;
     }
 
     const last = path.pop() as Index;
@@ -597,7 +597,7 @@ class FormData {
   }
 
   protected _getLine(buffer: Buffer, i: number): Record<string, any>|null {
-    const line = [];
+    const line: number[] = [];
     for (; i < buffer.length; i++) {
       const current = buffer[i];
       line.push(current);
@@ -615,7 +615,7 @@ class FormData {
   }
 
   protected _getPart(lines: Buffer[]): Record<string, any> {
-    const headerLines = [];
+    const headerLines: (string|undefined)[] = [];
     do { //get the header lines
       headerLines.push(lines.shift()?.toString());
     } while(lines.length 

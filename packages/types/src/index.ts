@@ -1,23 +1,13 @@
-import EventEmitter, { Event, Emitter } from './EventEmitter';
+import EventEmitter from './EventEmitter';
 import Exception from './Exception';
-import Reflection from './Reflection';
-import Statuses, { Status } from './Status';
-import Store, { File, FileType } from './Store';
-import TaskQueue, { Task, Queue } from './TaskQueue';
+import Statuses from './Statuses';
+import Store from './Store';
+import TaskQueue from './TaskQueue';
 
 export {
   EventEmitter,
   Exception,
-  File,
-  Reflection,
   Statuses,
   Store,
-  TaskQueue,
-  //types
-  Emitter,
-  Event,
-  FileType,
-  Queue,
-  Status,
-  Task
-}
+  TaskQueue
+};

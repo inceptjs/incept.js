@@ -1,4 +1,4 @@
-import Status from './Status';
+import Statuses, { Status } from './Statuses';
 import TaskQueue, { Task, Queue } from './TaskQueue';
 import Exception from './Exception';
 
@@ -8,16 +8,16 @@ import Exception from './Exception';
  * on an action. With events you can add extra functionality
  * right after the event has triggered.
  */
-export default class EventEmitter {
+export default class EventEmitter<Args extends any[]> {
   /**
    * A listener map to task queues
    */
-  public readonly listeners: Record<string, Task[]> = {};
+  public readonly listeners: Record<string, Task<Args>[]> = {};
 
   /**
    * Static event data analyzer
    */
-  public event: Event = {
+  public event: Event<Args> = {
     event: 'idle',
     pattern: 'idle',
     parameters: []
@@ -31,14 +31,14 @@ export default class EventEmitter {
   /**
    * Returns a new task queue (defined like this so it can be overloaded)
    */
-  static makeQueue(): TaskQueue {
-    return new TaskQueue();
+  static makeQueue<Args extends any[]>() {
+    return new TaskQueue<Args>();
   }
 
   /**
    * Calls all the callbacks of the given event passing the given arguments
    */
-  async emit(event: string, ...args: any[]) {
+  async emit(event: string, ...args: Args) {
     Exception.require(
       typeof event === 'string', 
       'Argument 1 expected String'
@@ -49,44 +49,42 @@ export default class EventEmitter {
     //if there are no events found
     if (!Object.keys(matches).length) {
       //report a 404
-      return Status.NOT_FOUND;
+      return Statuses.NOT_FOUND;
     }
 
-    const queue = EventEmitter.makeQueue();
+    const queue = EventEmitter.makeQueue<Args>();
 
     Object.keys(matches).forEach((key: string) => {
-      const match = matches[key]
-      const event = match.pattern
+      const match = matches[key];
+      const event = match.pattern;
       //if no direct observers
       if (typeof this.listeners[event] === 'undefined') {
-        return
+        return;
       }
 
       //add args on to match
-      match.args = args
+      match.args = args;
 
       //then loop the observers
       this.listeners[event].forEach(listener => {
-        queue.add(async (...args: any[]) => {
+        queue.add(async (...args) => {
           //set the current
-          this.event = Object.assign({}, match, listener)
+          this.event = Object.assign({}, match, listener);
           //if this is the same event, call the 
           //method, if the method returns false
-          if (await listener.callback(...args) === false) {
-            return false
-          }
+          return await listener.callback(...args);
         }, listener.priority)
       })
     })
 
     //call the callbacks
-    return await queue.run(...args)
+    return await queue.run(...args);
   }
 
   /**
    * Calls all the callbacks of the given event passing the given arguments
    */
-  emitSync(event: string, ...args: any[]) {
+  emitSync(event: string, ...args: Args) {
     Exception.require(
       typeof event === 'string', 
       'Argument 1 expected String'
@@ -97,44 +95,42 @@ export default class EventEmitter {
     //if there are no events found
     if (!Object.keys(matches).length) {
       //report a 404
-      return Status.NOT_FOUND;
+      return Statuses.NOT_FOUND;
     }
 
-    const queue = EventEmitter.makeQueue();
+    const queue = EventEmitter.makeQueue<Args>();
 
     Object.keys(matches).forEach((key: string) => {
-      const match = matches[key]
-      const event = match.pattern
+      const match = matches[key];
+      const event = match.pattern;
       //if no direct observers
       if (typeof this.listeners[event] === 'undefined') {
-        return
+        return;
       }
 
       //add args on to match
-      match.args = args
+      match.args = args;
 
       //then loop the observers
       this.listeners[event].forEach(listener => {
-        queue.add((...args: any[]) => {
+        queue.add((...args) => {
           //set the current
-          this.event = Object.assign({}, match, listener)
+          this.event = Object.assign({}, match, listener);
           //if this is the same event, call the 
           //method, if the method returns false
-          if (listener.callback(...args) === false) {
-            return false
-          }
-        }, listener.priority)
+          return listener.callback(...args);
+        }, listener.priority);
       })
     })
 
     //call the callbacks
-    return queue.runSync(...args)
+    return queue.runSync(...args);
   }
 
   /**
    * Returns a list of callbacks that will trigger when event is called
    */
-  inspect(event: string): Task[] {
+  inspect(event: string): Task<Args>[] {
     Exception.require(
       typeof event === 'string', 
       'Argument 1 expected String'
@@ -147,12 +143,12 @@ export default class EventEmitter {
       return []
     }
 
-    const queue = EventEmitter.makeQueue()
+    const queue = EventEmitter.makeQueue<Args>();
     Object.keys(matches).forEach(key => {
-      const event = matches[key].pattern
+      const event = matches[key].pattern;
       //if no direct observers
       if (typeof this.listeners[event] === 'undefined') {
-        return
+        return;
       }
 
       //then loop the observers
@@ -162,19 +158,19 @@ export default class EventEmitter {
     })
 
     //return the callbacks
-    return queue.tasks
+    return queue.tasks;
   }
 
   /**
    * Returns possible event matches
    */
-  match(event: string): Record<string, Event> {
+  match(event: string): Record<string, Event<Args>> {
     Exception.require(
       typeof event === 'string', 
       'Argument 1 expected String'
     );
  
-    const matches: Record<string, Event> = {};
+    const matches: Record<string, Event<Args>> = {};
 
     //first do the obvious match
     if (typeof this.listeners[event] !== 'undefined') {
@@ -232,10 +228,10 @@ export default class EventEmitter {
    * Adds a callback to the given event listener
    */
   on(
-    event: Eventable, 
-    callback: Function, 
+    event: Listenable, 
+    callback: EventAction<Args>, 
     priority: number = 0
-  ): EventEmitter {
+  ): EventEmitter<Args> {
     Exception.require( 
       typeof event === 'string'
         || Array.isArray(event)
@@ -285,7 +281,7 @@ export default class EventEmitter {
   /**
    * Stops listening to an event
    */
-  unbind(event?: string, callback?: Function): EventEmitter {
+  unbind(event?: string, callback?: Function): EventEmitter<Args> {
     //if there is no event and not callable
     if (!event && !callback) {
         //it means that they want to remove everything
@@ -296,7 +292,7 @@ export default class EventEmitter {
         return this;
     }
 
-    const listener = (this.listeners[(event as string)] as Task[]);
+    const listener = (this.listeners[(event as string)]);
 
     //if there are callbacks listening to
     //this and no callback was specified
@@ -340,7 +336,7 @@ export default class EventEmitter {
   /**
    * Allows events from other emitters to apply here
    */
-  use(...emitters: EventEmitter[]): EventEmitter {
+  use(...emitters: EventEmitter<Args>[]): EventEmitter<Args> {
     for (let i = 0; i < emitters.length; i++) {
       Exception.require(
         emitters[i] instanceof EventEmitter, 
@@ -364,10 +360,14 @@ export default class EventEmitter {
   }
 }
 
+export interface EventAction<Args extends any[]> {
+  (...args: Args): boolean|void|Promise<boolean|void>
+};
+
 /**
  * Abstraction defining what an event is
  */
-export interface Event {
+export interface Event<Args extends any[]> {
   /**
    * The name of the event
    */
@@ -402,11 +402,11 @@ export interface Event {
 /**
  * Abstraction defining what an emitter is
  */
-export interface Emitter {
+export interface Emitter<Args extends any[]> {
   /**
    * A listener map to task queues
    */
-  listeners: Record<string, Queue>;
+  listeners: Record<string, Queue<Args>>;
 
   /**
    * Calls all the callbacks of the given event passing the given arguments
@@ -414,7 +414,7 @@ export interface Emitter {
    * @param event - The name of the arbitrary event to emit
    * @param args - Any arguments to pass on to each listener mapped
    */
-  emit(event: string, ...args: any[]): Promise<any>;
+  emit(event: string, ...args: Args): Promise<Status>;
 
   /**
    * Adds a callback to the given event listener
@@ -423,10 +423,14 @@ export interface Emitter {
    * @param callback - The task to run when event is emitted
    * @param priority - The priority order in which call the task
    */
-  on(event: string|string[]|RegExp, callback: Function, priority: number): Emitter
+  on(
+    event: string|string[]|RegExp, 
+    callback: EventAction<Args>, 
+    priority: number
+  ): Emitter<Args>
 }
 
 /**
  * All things an event emitter can listen to
  */
-export type Eventable = string|RegExp|(string|RegExp)[];
+export type Listenable = string|RegExp|(string|RegExp)[];

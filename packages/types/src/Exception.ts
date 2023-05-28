@@ -16,7 +16,7 @@ export default class Exception extends Error {
   /**
    * General use expressive reasons
    */
-   static for(message: string, ...values: string[]): Exception {
+  static for(message: string, ...values: string[]): Exception {
     values.forEach(function(value) {
       message = message.replace('%s', value);
     });
@@ -66,5 +66,17 @@ export default class Exception extends Error {
   withCode(code: number): Exception {
     this.code = code;
     return this;
+  }
+
+  /**
+   * Converts error to JSON
+   */
+  toJSON(): Record<string, any> {
+    return {
+      error: true,
+      code: this.code,
+      message: this.message,
+      errors: this.errors
+    };
   }
 }

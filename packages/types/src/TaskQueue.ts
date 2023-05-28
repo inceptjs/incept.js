@@ -1,10 +1,10 @@
-import Statuses, { Status } from './Status'
-import Exception from './Exception'
+import Statuses, { Status } from './Statuses';
+import Exception from './Exception';
 
 /**
  * A task queue linearly executes each task
  */
-export default class TaskQueue {
+export default class TaskQueue<Args extends any[]> {
   /**
    * The length of the queue
    */
@@ -15,7 +15,7 @@ export default class TaskQueue {
   /**
    * The in memory task queue
    */
-  public readonly tasks: Task[] = [];
+  public readonly tasks: Task<Args>[] = [];
 
   /**
    * Used when determining what is the lowest priority
@@ -32,7 +32,7 @@ export default class TaskQueue {
   /**
    * Adds a task to the queue
    */
-  add(callback: Function, priority: number = 0): TaskQueue {
+  add(callback: TaskRunner<Args>, priority: number = 0): TaskQueue<Args> {
     Exception.require(
       typeof callback === 'function', 
       'Argument 1 expected Function'
@@ -63,7 +63,7 @@ export default class TaskQueue {
   /**
    * Adds a task to the bottom of the queue
    */
-  push(callback: Function): TaskQueue {
+  push(callback: TaskRunner<Args>): TaskQueue<Args> {
     Exception.require(
       typeof callback === 'function', 
       'Argument 1 expected Function'
@@ -78,7 +78,7 @@ export default class TaskQueue {
    *
    * @returns {TaskQueue}
    */
-  shift(callback: Function): TaskQueue {
+  shift(callback: TaskRunner<Args>): TaskQueue<Args> {
     Exception.require(
       typeof callback === 'function', 
       'Argument 1 expected Function'
@@ -87,30 +87,17 @@ export default class TaskQueue {
   }
 
   /**
-   * When calling await, js looks for a then (to emulate a promise)
-   * used like `await queue.add(...)`
-   */
-  then(callback: Function): TaskQueue {
-    Exception.require(
-      typeof callback === 'function', 
-      'Argument 1 expected Function'
-    );
-    this.run().then(status => callback(status));
-    return this;
-  }
-
-  /**
    * Runs the tasks
    */
-  async run(...args: any[]): Promise<Status> {
+  async run(...args: Args): Promise<Status> {
     if (!this.tasks.length) {
       //report a 404
       return Statuses.NOT_FOUND;
     }
 
     while (this.tasks.length) {
-      const task = (this.tasks.shift() as Task);
-      if (await task.callback(...args) === false) {
+      const task = this.tasks.shift();
+      if (task && await task.callback(...args) === false) {
         return Statuses.ABORT;
       }
     }
@@ -121,14 +108,14 @@ export default class TaskQueue {
   /**
    * Runs the tasks syncronously
    */
-  runSync(...args: any[]): Status {
+  runSync(...args: Args): Status {
     if (!this.tasks.length) {
       //report a 404
       return Statuses.NOT_FOUND;
     }
 
     while (this.tasks.length) {
-      const task = (this.tasks.shift() as Task);
+      const task = (this.tasks.shift() as Task<Args>);
       if (task.callback(...args) === false) {
         return Statuses.ABORT;
       }
@@ -138,14 +125,18 @@ export default class TaskQueue {
   }
 }
 
+export interface TaskRunner<Args extends any[]> {
+  (...args: Args): boolean|void|Promise<boolean|void>
+};
+
 /**
  * Abstraction defining what a task is
  */
-export interface Task {
+export interface Task<Args extends any[]> {
   /**
    * The task to be performed
    */
-  callback: Function;
+  callback: TaskRunner<Args>;
 
   /**
    * The priority of the task, when placed in a queue
@@ -156,11 +147,11 @@ export interface Task {
 /**
  * Abstraction defining what a queue is
  */
-export interface Queue {
+export interface Queue<Args extends any[]> {
   /**
    * The list of tasks to be performed
    */
-  queue: Task[];
+  queue: Task<Args>[];
 
   /**
    * Adds a task to the queue
@@ -168,21 +159,21 @@ export interface Queue {
    * @param callback - the task callback
    * @param priority - a number to determine the execution importance
    */
-  add(callback: Function, priority: number): Queue;
+  add(callback: Function, priority: number): Queue<Args>;
 
   /**
    * Adds a task to the bottom of the queue
    *
    * @param callback - the task callback
    */
-  push(callback: Function): Queue;
+  push(callback: Function): Queue<Args>;
 
   /**
    * Adds a task to the top of the queue
    *
    * @param callback - the task callback
    */
-  shift(callback: Function): Queue;
+  shift(callback: Function): Queue<Args>;
 
   /**
    * Runs the tasks
@@ -190,5 +181,5 @@ export interface Queue {
    * @param args - any set of arguments to be passed to each task
    * @return The eventual status of the task run
    */
-  run(...args: any[]): Promise<number>;
+  run(...args: Args): Promise<number>;
 }
