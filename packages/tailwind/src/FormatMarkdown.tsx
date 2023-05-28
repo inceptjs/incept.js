@@ -1,5 +1,5 @@
 //types
-import type { FormatMarkdownProps } from '../types';
+import type { FormatMarkdownProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 

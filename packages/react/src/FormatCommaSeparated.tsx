@@ -1,8 +1,9 @@
+//types
+import type { FormatCommaSeparatedProps } from './types';
+//react
 import React from 'react';
 
-const FormatCommaSeparated: React.FC<{ 
-  value: (string|number)[] 
-}> = ({ value }) => {
+const FormatCommaSeparated: React.FC<FormatCommaSeparatedProps> = ({ value }) => {
   return (
     <>{value.join(', ')}</>
   );

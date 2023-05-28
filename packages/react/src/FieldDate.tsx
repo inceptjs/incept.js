@@ -1,13 +1,13 @@
 //types
-import type { FieldDateProps } from '../types';
+import type { FieldDateProps } from './types';
 //react
 import React from 'react';
 //components
 import Input from './FieldInput';
 //hooks
-import useDate from '../hooks/useFieldDate';
+import useDate from './useFieldDate';
 //helpers
-import { makeStyles } from '../utils';
+import { makeStyles } from './utils';
 
 const padding = {
   paddingBottom: '7px',

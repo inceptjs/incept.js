@@ -1,10 +1,10 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from '../../../types';
+import type { SchemaConfig } from '@inceptjs/client/dist/types';
 //helpers
 import { VariableDeclarationKind } from 'ts-morph';
-import { fields } from '../../../tokens';
-import { capitalize } from '../../../utils';
+import { fields } from '../tokens';
+import { capitalize } from '../utils';
 
 export default function generateFormFields(
   project: Project|Directory, 

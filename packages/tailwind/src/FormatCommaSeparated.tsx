@@ -1,12 +1,2 @@
-//types
-import type { FormatCommaSeparatedProps } from '../types';
-//react
-import React from 'react';
-
-const FormatCommaSeparated: React.FC<FormatCommaSeparatedProps> = ({ value }) => {
-  return (
-    <>{value.join(', ')}</>
-  );
-};
-
+import FormatCommaSeparated from '@inceptjs/react/dist/FormatCommaSeparated';
 export default FormatCommaSeparated;

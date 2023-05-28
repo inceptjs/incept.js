@@ -1,5 +1,5 @@
 //types
-import type { FormatJSONProps } from '../types';
+import type { FormatJSONProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 

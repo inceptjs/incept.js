@@ -1,9 +1,9 @@
+//types
+import type { FormatFormulaProps } from './types';
+//react
 import React from 'react';
 
-const FormatFormula: React.FC<{ 
-  value: string, 
-  data: Record<string, any> 
-}> = ({ value, data }) => {
+const FormatFormula: React.FC<FormatFormulaProps> = ({ value, data }) => {
   //TODO: fix
   return (
     <span>

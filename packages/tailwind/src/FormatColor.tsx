@@ -1,5 +1,5 @@
 //types
-import type { FormatColorProps } from '../types';
+import type { FormatColorProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 

@@ -1,8 +1,8 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from '../../../types';
+import type { SchemaConfig } from '@inceptjs/client/dist/types';
 //helpers
-import { getTypeName } from '../../../utils';
+import { getTypeName } from '../utils';
 
 export default function generateUseCreate(
   project: Project|Directory, 

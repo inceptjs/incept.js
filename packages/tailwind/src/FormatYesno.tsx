@@ -1,10 +1,2 @@
-//types
-import type { FormatYesnoProps } from '../types';
-//react
-import React from 'react';
-
-const FormatYesno: React.FC<FormatYesnoProps> = ({ value }) => {
-  return (<>{!!value ? 'Yes' : 'No'}</>);
-};
-
+import FormatYesno from '@inceptjs/react/dist/FormatYesno';
 export default FormatYesno;

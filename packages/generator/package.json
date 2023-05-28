@@ -11,16 +11,19 @@
   "types": "index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "tsc"
+    "build": "npm run build:ts && npm run build:files",
+    "build:ts": "tsc",
+    "build:files": "cp ./package.json ./dist && cp ./README.md ./dist"
   },
   "engines": {
     "node": ">=16.20.0"
   },
   "dependencies": {
     "ts-morph": "18.0.0",
-    "@inceptjs/types": "0.0.30",
+    "@inceptjs/client": "0.0.30",
     "@inceptjs/react": "0.0.30",
-    "@inceptjs/tailwind": "0.0.30"
+    "@inceptjs/tailwind": "0.0.30",
+    "@inceptjs/types": "0.0.30"
   },
   "devDependencies": {
     "@jest/globals": "29.5.0",

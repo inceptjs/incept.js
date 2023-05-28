@@ -1,6 +1,9 @@
+//types
+import type { FormatRelativeProps } from './types';
+//react
 import React from 'react';
 
-const FormatRelative: React.FC<{ value: string|number|Date }> = ({ value }) => {
+const FormatRelative: React.FC<FormatRelativeProps> = ({ value }) => {
   return (<>{value}</>);
 };
 

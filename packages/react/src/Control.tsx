@@ -1,9 +1,9 @@
 //types
-import type { ControlProps } from '../types';
+import type { ControlProps } from './types';
 //react
 import React from 'react';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '../utils';
+import { makeGroupStyles, makeGroupClasses } from './utils';
 
 /**
  * Form Control Component (Main)

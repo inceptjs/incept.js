@@ -1,13 +1,13 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from '../../types';
+import type { SchemaConfig } from '@inceptjs/client/dist/types';
 //helpers
 import { 
   capitalize, 
   isRequired, 
   getTypeName, 
   getTypeExtendedName 
-} from '../../utils';
+} from './utils';
 
 export default function generateModelTypes(
   project: Project|Directory, 

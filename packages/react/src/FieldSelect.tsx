@@ -1,13 +1,13 @@
 //types
-import type { FieldSelectDropdownProps, FieldSelectProps } from '../types';
+import type { FieldSelectDropdownProps, FieldSelectProps } from './types';
 //react
 import React from 'react';
 //components
 import Input from './FieldInput';
 //hooks
-import useSelect from '../hooks/useFieldSelect';
+import useSelect from './useFieldSelect';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '../utils';
+import { makeGroupStyles, makeGroupClasses } from './utils';
 
 /**
  * Select Dropdown

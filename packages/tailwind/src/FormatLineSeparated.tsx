@@ -1,5 +1,5 @@
 //types
-import type { FormatLineSeparatedProps } from '../types';
+import type { FormatLineSeparatedProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 

@@ -1,5 +1,5 @@
 //types
-import type { FormatRatingProps } from '../types';
+import type { FormatRatingProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 

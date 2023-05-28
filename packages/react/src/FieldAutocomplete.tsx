@@ -2,15 +2,15 @@
 import type { 
   FieldAutocompleteDropdownProps, 
   FieldAutocompleteProps 
-} from '../types';
+} from './types';
 //react
 import React from 'react';
 //components
 import Input from './FieldInput';
 //hooks
-import useAutocomplete from '../hooks/useFieldAutocomplete';
+import useAutocomplete from './useFieldAutocomplete';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '../utils';
+import { makeGroupStyles, makeGroupClasses } from './utils';
 
 /**
  * Autocomplete Dropdown

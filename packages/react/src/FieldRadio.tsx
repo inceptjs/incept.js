@@ -1,11 +1,11 @@
 //types
-import type { FieldRadioProps } from '../types';
+import type { FieldRadioProps } from './types';
 //react
 import React from 'react';
 //hooks
-import useFieldRadio from '../hooks/useFieldRadio';
+import useFieldRadio from './useFieldRadio';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '../utils';
+import { makeGroupStyles, makeGroupClasses } from './utils';
 
 /**
  * Styled Radio Field Component (Main)

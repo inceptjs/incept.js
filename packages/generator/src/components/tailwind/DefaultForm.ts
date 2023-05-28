@@ -1,12 +1,12 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from '../../../../types';
+import type { SchemaConfig } from '@inceptjs/client/dist/types';
 //helpers
 import { 
   capitalize, 
   getTypeName, 
   getTypeExtendedName 
-} from '../../../../utils';
+} from '../../utils';
 
 export default function generateTailwindDefaultForm(
   project: Project|Directory, 

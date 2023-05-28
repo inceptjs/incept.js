@@ -1,7 +1,7 @@
 //types
-import type { FieldCurrencyOption, FieldCurrencyConfig } from '../types';
+import type { FieldCurrencyOption, FieldCurrencyConfig } from './types';
 //data
-import countries from '../countries.json';
+import countries from '@inceptjs/data/countries.json';
 
 export default function useSelectCurrency(config: FieldCurrencyConfig) {
   const { value, map } = config;

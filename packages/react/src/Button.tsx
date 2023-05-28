@@ -1,9 +1,9 @@
 //types
-import type { ButtonProps } from '../types';
+import type { ButtonProps } from './types';
 //react
 import React from 'react';
 //helpers
-import { makeStyles } from '../utils';
+import { makeStyles } from './utils';
 
 /**
  * Generic Button Component (Main)

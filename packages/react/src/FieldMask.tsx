@@ -1,5 +1,5 @@
 //types
-import type { FieldMaskProps } from '../types';
+import type { FieldMaskProps } from './types';
 //react
 import React from 'react';
 //components

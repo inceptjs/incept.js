@@ -1,11 +1,11 @@
 //types
-import type { FieldCurrencyProps } from '../types';
+import type { FieldCurrencyProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //components
 import FieldSelect from './FieldSelect';
 //hooks
-import useFieldCurrency from '../hooks/useFieldCurrency';
+import useFieldCurrency from '@inceptjs/react/dist/useFieldCurrency';
 
 /**
  * Styled Currency Field Component (Main)

@@ -1,13 +1,13 @@
 //types
-import type { FieldTimeProps } from '../types';
+import type { FieldTimeProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //components
 import Input from './FieldInput';
 //hooks
-import useTime from '../hooks/useFieldTime';
+import useTime from '@inceptjs/react/dist/useFieldTime';
 //helpers
-import { makeClasses } from '../utils';
+import { makeClasses } from '@inceptjs/react/dist/utils';
 
 /**
  * Time Field Component

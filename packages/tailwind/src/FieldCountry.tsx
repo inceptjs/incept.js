@@ -1,11 +1,11 @@
 //types
-import type { FieldCountryProps } from '../types';
+import type { FieldCountryProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //components
 import FieldSelect from './FieldSelect';
 //hooks
-import useFieldCountry from '../hooks/useFieldCountry';
+import useFieldCountry from '@inceptjs/react/dist/useFieldCountry';
 
 /**
  * Styled Country Field Component (Main)

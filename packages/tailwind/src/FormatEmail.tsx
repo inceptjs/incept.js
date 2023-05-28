@@ -1,5 +1,5 @@
 //types
-import type { FormatEmailProps } from '../types';
+import type { FormatEmailProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 

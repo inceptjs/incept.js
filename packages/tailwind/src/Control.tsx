@@ -1,9 +1,9 @@
 //types
-import type { ControlProps } from '../types';
+import type { ControlProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '../utils';
+import { makeGroupStyles, makeGroupClasses } from '@inceptjs/react/dist/utils';
 
 /**
  * Form Control Component (Main)

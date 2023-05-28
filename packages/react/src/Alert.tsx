@@ -1,9 +1,9 @@
 //types
-import type { AlertProps } from '../types';
+import type { AlertProps } from './types';
 //react
 import React from 'react';
 //helpers
-import { makeClasses, makeStyles } from '../utils';
+import { makeClasses, makeStyles } from './utils';
 
 /**
  * Alert Component (Main)

@@ -1,11 +1,11 @@
 //types
-import type { FieldCurrencyProps } from '../types';
+import type { FieldCurrencyProps } from './types';
 //react
 import React from 'react';
 //components
 import Select from './FieldSelect';
 //hooks
-import useSelectCurrency from '../hooks/useFieldCurrency';
+import useSelectCurrency from './useFieldCurrency';
 
 /**
  * Styled Currency Field Component (Main)

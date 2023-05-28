@@ -6,7 +6,7 @@ import type {
   TableRowProps,
   TableRuleProps,
   TableProps
-} from '../types';
+} from './types';
 import { ReactNode } from 'react';
 //react
 import React from 'react';

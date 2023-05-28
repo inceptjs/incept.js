@@ -1,4 +1,4 @@
-import type { SchemaConfig, SchemaColumn } from './types';
+import type { SchemaConfig, SchemaColumn } from '@inceptjs/client/dist/types';
 
 //helpers
 import fs from 'fs';

@@ -1,9 +1,9 @@
 //types
-import type { BadgeProps } from '../types';
+import type { BadgeProps } from './types';
 //react
 import React from 'react';
 //helpers
-import { makeClasses, makeStyles } from '../utils';
+import { makeClasses, makeStyles } from './utils';
 
 /**
  * Badge Component (Main)

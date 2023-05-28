@@ -1,5 +1,5 @@
 //types
-import type { FieldTextlistConfig } from '../types';
+import type { FieldTextlistConfig } from './types';
 
 export default function useFieldTextlistFields(config: FieldTextlistConfig) {
   const { values, index, set } = config;

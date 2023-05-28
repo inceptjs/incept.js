@@ -1,10 +1,10 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig, SchemaColumn } from '../../../types';
+import type { SchemaConfig, SchemaColumn } from '@inceptjs/client/dist/types';
 //helpers
 import { VariableDeclarationKind } from 'ts-morph';
-import { fields } from '../../../tokens';
-import { capitalize } from '../../../utils';
+import { fields } from '../tokens';
+import { capitalize } from '../utils';
 
 const isRangeField = (column: SchemaColumn) => [
   'number', 

@@ -1,5 +1,5 @@
 //types
-import type { FormatTableProps } from '../types';
+import type { FormatTableProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 

@@ -1,13 +1,13 @@
 //types
-import type { FieldPasswordProps } from '../types';
+import type { FieldPasswordProps } from './types';
 //react
 import React from 'react';
 //components
 import Input from './FieldInput';
 //hooks
-import usePassword from '../hooks/useFieldPassword';
+import usePassword from './useFieldPassword';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '../utils';
+import { makeGroupStyles, makeGroupClasses } from './utils';
 
 /**
  * Password Field Component (Main)

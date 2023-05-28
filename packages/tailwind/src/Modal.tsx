@@ -1,11 +1,11 @@
 //types
-import { ModalProps } from '../types';
+import { ModalProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //hooks
 import { useState } from 'react'; 
 //helpers
-import { makeGroupClasses, makeGroupStyles } from '../utils';
+import { makeGroupClasses, makeGroupStyles } from '@inceptjs/react/dist/utils';
 
 export const modal: Record<string, any> = {};
 

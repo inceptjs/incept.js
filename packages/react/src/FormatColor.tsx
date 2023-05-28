@@ -1,6 +1,9 @@
+//types
+import type { FormatColorProps } from './types';
+//react
 import React from 'react';
 
-const FormatColor: React.FC<{ value: string }> = ({ value }) => {
+const FormatColor: React.FC<FormatColorProps> = ({ value }) => {
   //TODO: add color box
   return (
     <span style={{ color: value }}>

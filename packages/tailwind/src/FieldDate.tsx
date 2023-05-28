@@ -1,13 +1,13 @@
 //types
-import type { FieldDateProps } from '../types';
+import type { FieldDateProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //components
 import Input from './FieldInput';
 //hooks
-import useDate from '../hooks/useFieldDate';
+import useDate from '@inceptjs/react/dist/useFieldDate';
 //helpers
-import { makeClasses } from '../utils';
+import { makeClasses } from '@inceptjs/react/dist/utils';
 
 /**
  * Date Field Component

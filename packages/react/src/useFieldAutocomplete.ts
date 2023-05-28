@@ -1,6 +1,6 @@
 //types
 import type { ChangeEvent, FocusEvent, KeyboardEvent } from 'react';
-import type { FieldAutocompleteConfig } from '../types';
+import type { FieldAutocompleteConfig } from './types';
 //hooks
 import { useState } from 'react';
 

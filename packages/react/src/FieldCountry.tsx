@@ -1,11 +1,11 @@
 //types
-import type { FieldCountryProps } from '../types';
+import type { FieldCountryProps } from './types';
 //react
 import React from 'react';
 //components
 import FieldSelect from './FieldSelect';
 //hooks
-import useSelectCountry from '../hooks/useFieldCountry';
+import useSelectCountry from './useFieldCountry';
 
 /**
  * Styled Country Field Component (Main)

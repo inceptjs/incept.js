@@ -1,13 +1,13 @@
 //types
-import type { FieldDatetimeProps } from '../types';
+import type { FieldDatetimeProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //components
 import Input from './FieldInput';
 //hooks
-import useDatetime from '../hooks/useFieldDatetime';
+import useDatetime from '@inceptjs/react/dist/useFieldDatetime';
 //helpers
-import { makeClasses } from '../utils';
+import { makeClasses } from '@inceptjs/react/dist/utils';
 
 /**
  * Datetime Field Component

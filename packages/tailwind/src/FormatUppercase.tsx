@@ -1,10 +1,2 @@
-//types
-import type { FormatUppercaseProps } from '../types';
-//react
-import React from 'react';
-
-const FormatUppercase: React.FC<FormatUppercaseProps> = ({ value }) => {
-  return (<>{value.toUpperCase()}</>);
-};
-
+import FormatUppercase from '@inceptjs/react/dist/FormatUppercase';
 export default FormatUppercase;

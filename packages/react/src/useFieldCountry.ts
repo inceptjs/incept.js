@@ -1,7 +1,7 @@
 //types
-import type { FieldCountryOption, FieldCountryConfig } from '../types';
+import type { FieldCountryOption, FieldCountryConfig } from './types';
 //data
-import countries from '../countries.json';
+import countries from '@inceptjs/data/countries.json';
 
 export default function useFieldSelectCountry(config: FieldCountryConfig) {
   const { value, map } = config;

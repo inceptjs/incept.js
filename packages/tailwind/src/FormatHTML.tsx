@@ -1,5 +1,5 @@
 //types
-import type { FormatHTMLProps } from '../types';
+import type { FormatHTMLProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 

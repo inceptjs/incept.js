@@ -1,6 +1,9 @@
+//types
+import type { FormatOrderedListProps } from './types';
+//react
 import React from 'react';
 
-const FormatOrderedList: React.FC<{ value: string[] }> = ({ value }) => {
+const FormatOrderedList: React.FC<FormatOrderedListProps> = ({ value }) => {
   return (
     <ol>
       {value.map((item, index) => (

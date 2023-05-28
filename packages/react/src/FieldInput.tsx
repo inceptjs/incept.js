@@ -1,11 +1,11 @@
 //types
-import type { FieldInputProps } from '../types';
+import type { FieldInputProps } from './types';
 //react
 import React from 'react';
 //hooks
-import useInput from '../hooks/useFieldInput';
+import useInput from './useFieldInput';
 //helpers
-import { makeStyles } from '../utils';
+import { makeStyles } from './utils';
 
 /**
  * Generic Input Field Component (Main)

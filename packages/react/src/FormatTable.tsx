@@ -1,8 +1,9 @@
+//types
+import type { FormatTableProps } from './types';
+//react
 import React from 'react';
 
-const FormatTable: React.FC<{ 
-  value: Record<string, string|number>[] 
-}> = ({ value }) => {
+const FormatTable: React.FC<FormatTableProps> = ({ value }) => {
   return (
     <table>
       <thead>

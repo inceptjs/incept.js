@@ -1,5 +1,5 @@
 //types
-import type { FormatLinkProps } from '../types';
+import type { FormatLinkProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 

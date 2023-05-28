@@ -1,11 +1,11 @@
 //types
-import type { FieldInputProps } from '../types';
+import type { FieldInputProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //hooks
-import useInput from '../hooks/useFieldInput';
+import useInput from '@inceptjs/react/dist/useFieldInput';
 //helpers
-import { makeClasses } from '../utils';
+import { makeClasses } from '@inceptjs/react/dist/utils';
 
 /**
  * Generic Input Field Component (Main)

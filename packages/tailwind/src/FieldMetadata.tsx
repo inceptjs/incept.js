@@ -1,6 +1,6 @@
 //types
-import type { FieldsProps, FieldsetProps } from '../types';
-import type { FieldMetadataType } from '../types';
+import type { FieldsProps, FieldsetProps } from '@inceptjs/react/dist/types';
+import type { FieldMetadataType } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //components
@@ -12,9 +12,9 @@ import FieldDate from './FieldDate';
 import FieldDatetime from './FieldDatetime';
 import FieldTime from './FieldTime';
 //hooks
-import useMetadataFields from '../hooks/useFieldMetadata';
+import useMetadataFields from '@inceptjs/react/dist/useFieldMetadata';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '../utils';
+import { makeGroupStyles, makeGroupClasses } from '@inceptjs/react/dist/utils';
 
 /**
  * Key/Value Component 
@@ -140,7 +140,7 @@ const Fields: React.FC<FieldsProps<FieldMetadataType>> = (props) => {
           style={map.styles.value}
           className={map.classNames.value}
           defaultValue={values ? values[index]?.value: undefined}
-          onUpdate={(value) => handlers.update('value', value)}
+          onUpdate={(value: string) => handlers.update('value', value)}
           error={error}
           required 
         />

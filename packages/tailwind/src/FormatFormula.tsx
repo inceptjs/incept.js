@@ -1,5 +1,5 @@
 //types
-import type { FormatFormulaProps } from '../types';
+import type { FormatFormulaProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 

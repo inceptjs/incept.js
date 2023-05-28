@@ -1,4 +1,4 @@
-import type { FieldDateConfig } from '../types';
+import type { FieldDateConfig } from './types';
 
 export default function useFieldDate({ onUpdate }: FieldDateConfig) {
   return (value: string) => {

@@ -1,11 +1,11 @@
 //types
-import type { FieldCheckboxProps } from '../types';
+import type { FieldCheckboxProps } from './types';
 //react
 import React from 'react';
 //hooks
-import useFieldCheckbox from '../hooks/useFieldCheckbox';
+import useFieldCheckbox from './useFieldCheckbox';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '../utils';
+import { makeGroupStyles, makeGroupClasses } from './utils';
 
 /**
  * Styled Checkbox Field Component (Main)

@@ -11,7 +11,9 @@
   "types": "index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "tsc"
+    "build": "npm run build:ts && npm run build:files",
+    "build:ts": "tsc",
+    "build:files": "cp ./package.json ./dist && cp ./README.md ./dist"
   },
   "engines": {
     "node": ">=16.20.0"

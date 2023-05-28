@@ -1,11 +1,11 @@
 //types
-import type { FieldSwitchProps } from '../types';
+import type { FieldSwitchProps } from './types';
 //react
 import React from 'react';
 //hooks
-import useFieldSwitch from '../hooks/useFieldSwitch';
+import useFieldSwitch from './useFieldSwitch';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '../utils';
+import { makeGroupStyles, makeGroupClasses } from './utils';
 
 /**
  * Styled Switch Field Component (Main)

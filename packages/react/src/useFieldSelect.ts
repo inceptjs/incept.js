@@ -1,6 +1,6 @@
 //types
 import type { KeyboardEvent } from 'react';
-import type { FieldSelectOption, FieldSelectConfig } from '../types';
+import type { FieldSelectOption, FieldSelectConfig } from './types';
 //hooks
 import { useState } from 'react';
 

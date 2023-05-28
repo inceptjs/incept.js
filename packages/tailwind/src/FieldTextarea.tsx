@@ -1,11 +1,11 @@
 //types
-import type { FieldTextareaProps } from '../types';
+import type { FieldTextareaProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //hooks
-import useTextarea from '../hooks/useFieldTextarea';
+import useTextarea from '@inceptjs/react/dist/useFieldTextarea';
 //helpers
-import { makeClasses } from '../utils';
+import { makeClasses } from '@inceptjs/react/dist/utils';
 
 /**
  * Generic Textarea Field Component (Main)

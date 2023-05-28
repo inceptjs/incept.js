@@ -1,9 +1,9 @@
 //types
-import type { FormatCurrencyProps } from '../types';
+import type { FormatCurrencyProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //helpers
-import countries from '../countries.json';
+import countries from '@inceptjs/data/countries.json';
 
 const FormatCurrency: React.FC<FormatCurrencyProps> = ({ value }) => {
   const country = countries.find(country => country.currencyCode === value);

@@ -1,6 +1,9 @@
+//types
+import type { FormatPriceProps } from './types';
+//react
 import React from 'react';
 
-const FormatPrice: React.FC<{ value: string|number }> = ({ value }) => {
+const FormatPrice: React.FC<FormatPriceProps> = ({ value }) => {
   return (<>{value}</>);
 };
 

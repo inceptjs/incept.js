@@ -1,4 +1,4 @@
-import type { FieldsetConfig } from '../types';
+import type { FieldsetConfig } from './types';
 //hooks
 import { useState, useEffect } from 'react';
 

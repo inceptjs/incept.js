@@ -1,5 +1,5 @@
 import type { ChangeEvent } from 'react';
-import type { FieldInputConfig } from '../types';
+import type { FieldInputConfig } from './types';
 
 export default function useInput({ onChange, onUpdate }: FieldInputConfig) {
   return {

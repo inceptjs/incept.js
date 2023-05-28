@@ -1,5 +1,5 @@
 //types
-import type { FormatOrderedListProps } from '../types';
+import type { FormatOrderedListProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 

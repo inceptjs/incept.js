@@ -1,11 +1,11 @@
 //types
-import type { FieldsetProps, FieldsProps } from '../types';
+import type { FieldsetProps, FieldsProps } from './types';
 //react
 import React from 'react';
 //components
 import Button from './Button';
 //hooks
-import useFieldset from '../hooks/useFieldset';
+import useFieldset from './useFieldset';
 
 /**
  * Factory to make a dynamic form fieldset

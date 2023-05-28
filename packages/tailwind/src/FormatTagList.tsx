@@ -1,5 +1,5 @@
 //types
-import type { FormatTagListProps } from '../types';
+import type { FormatTagListProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 

@@ -1,6 +1,9 @@
 //types
-import type { FieldsProps, FieldsetProps } from '../types';
-import type { FieldMetadataType } from '../types';
+import type { 
+  FieldsProps, 
+  FieldsetProps, 
+  FieldMetadataType 
+} from './types';
 //react
 import React from 'react';
 //components
@@ -12,9 +15,9 @@ import FieldDate from './FieldDate';
 import FieldDatetime from './FieldDatetime';
 import FieldTime from './FieldTime';
 //hooks
-import useMetadataFields from '../hooks/useFieldMetadata';
+import useMetadataFields from './useFieldMetadata';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '../utils';
+import { makeGroupStyles, makeGroupClasses } from './utils';
 
 /**
  * Key/Value Component 

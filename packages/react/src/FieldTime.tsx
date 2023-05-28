@@ -1,13 +1,13 @@
 //types
-import type { FieldTimeProps } from '../types';
+import type { FieldTimeProps } from './types';
 //react
 import React from 'react';
 //components
 import Input from './FieldInput';
 //hooks
-import useTime from '../hooks/useFieldTime';
+import useTime from './useFieldTime';
 //helpers
-import { makeStyles } from '../utils';
+import { makeStyles } from './utils';
 
 const padding = {
   paddingBottom: '7px',

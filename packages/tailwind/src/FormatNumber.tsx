@@ -1,10 +1,2 @@
-//types
-import type { FormatNumberProps } from '../types';
-//react
-import React from 'react';
-
-const FormatNumber: React.FC<FormatNumberProps> = ({ value }) => {
-  return (<>{value}</>);
-};
-
+import FormatNumber from '@inceptjs/react/dist/FormatNumber';
 export default FormatNumber;

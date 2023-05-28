@@ -3,7 +3,7 @@ import type { FormEvent } from 'react';
 //hooks
 import { useState } from 'react';
 //helpers
-import Store from '@ev3/types/dist/Store';
+import Store from '@inceptjs/types/dist/Store';
 
 /**
  * Factory that returns form helpers

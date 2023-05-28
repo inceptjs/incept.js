@@ -1,5 +1,5 @@
 //types
-import type { FormatMetadataProps } from '../types';
+import type { FormatMetadataProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 

@@ -1,6 +1,9 @@
+//types
+import type { FormatYesnoProps } from './types';
+//react
 import React from 'react';
 
-const FormatYesno: React.FC<{ value: any }> = ({ value }) => {
+const FormatYesno: React.FC<FormatYesnoProps> = ({ value }) => {
   return (<>{!!value ? 'Yes' : 'No'}</>);
 };
 

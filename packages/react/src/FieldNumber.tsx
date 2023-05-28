@@ -1,11 +1,11 @@
 //types
-import type { FieldNumberProps } from '../types';
+import type { FieldNumberProps } from './types';
 //react
 import React from 'react';
 //components
 import FieldInput from './FieldInput';
 //hooks
-import useNumber from '../hooks/useFieldNumber';
+import useNumber from './useFieldNumber';
 
 /**
  * Number Field Component (Main)

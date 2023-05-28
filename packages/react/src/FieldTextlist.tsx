@@ -1,5 +1,5 @@
 //types
-import type { FieldsProps, FieldsetProps, FieldTextlistType } from '../types';
+import type { FieldsProps, FieldsetProps, FieldTextlistType } from './types';
 //react
 import React from 'react';
 //components
@@ -7,9 +7,9 @@ import Input from './FieldInput';
 import Button from './Button';
 import make from './Fieldset';
 //hooks
-import useTextlistFields from '../hooks/useFieldTextlist';
+import useTextlistFields from './useFieldTextlist';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '../utils';
+import { makeGroupStyles, makeGroupClasses } from './utils';
 
 /**
  * Text Item Component 

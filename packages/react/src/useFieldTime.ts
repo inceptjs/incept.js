@@ -1,4 +1,4 @@
-import type { FieldTimeConfig } from '../types';
+import type { FieldTimeConfig } from './types';
 
 export default function useFieldTime({ defaultValue }: FieldTimeConfig) {
   let value: string|undefined = undefined;

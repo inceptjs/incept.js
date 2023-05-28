@@ -1,11 +1,11 @@
 //types
-import type { FieldsetProps, FieldsProps } from '../types';
+import type { FieldsetProps, FieldsProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //components
 import Button from './Button';
 //hooks
-import useFieldset from '../hooks/useFieldset';
+import useFieldset from '@inceptjs/react/dist/useFieldset';
 
 /**
  * Factory to make a dynamic form fieldset

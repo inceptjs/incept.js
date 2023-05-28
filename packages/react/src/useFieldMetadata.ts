@@ -1,5 +1,5 @@
 //types
-import type { FieldMetadataConfig } from '../types';
+import type { FieldMetadataConfig } from './types';
 //hooks
 import { useState } from 'react';
 

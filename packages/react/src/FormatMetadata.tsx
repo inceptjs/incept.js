@@ -1,8 +1,9 @@
+//types
+import type { FormatMetadataProps } from './types';
+//react
 import React from 'react';
 
-const FormatMetadata: React.FC<{ 
-  value: Record<string, string|number> 
-}> = ({ value }) => {
+const FormatMetadata: React.FC<FormatMetadataProps> = ({ value }) => {
   return (
     <table>
       <tbody>

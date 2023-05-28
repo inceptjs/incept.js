@@ -1,11 +1,11 @@
 //types
-import type { FieldTextareaProps } from '../types';
+import type { FieldTextareaProps } from './types';
 //react
 import React from 'react';
 //hooks
-import useTextarea from '../hooks/useFieldTextarea';
+import useTextarea from './useFieldTextarea';
 //helpers
-import { makeStyles } from '../utils';
+import { makeStyles } from './utils';
 
 /**
  * Generic Textarea Field Component (Main)

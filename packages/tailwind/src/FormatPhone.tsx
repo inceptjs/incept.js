@@ -1,5 +1,5 @@
 //types
-import type { FormatPhoneProps } from '../types';
+import type { FormatPhoneProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 

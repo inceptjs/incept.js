@@ -1,11 +1,11 @@
 //types
-import type { FieldRadioProps } from '../types';
+import type { FieldRadioProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //hooks
-import useFieldRadio from '../hooks/useFieldRadio';
+import useFieldRadio from '@inceptjs/react/dist/useFieldRadio';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '../utils';
+import { makeGroupStyles, makeGroupClasses } from '@inceptjs/react/dist/utils';
 
 /**
  * Styled Radio Field Component (Main)

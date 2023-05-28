@@ -1,5 +1,5 @@
 import type { ChangeEvent } from 'react';
-import type { FieldTextareaConfig } from '../types';
+import type { FieldTextareaConfig } from './types';
 
 export default function useFieldTextarea({ onChange, onUpdate }: FieldTextareaConfig) {
   return {

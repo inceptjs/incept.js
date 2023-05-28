@@ -1,6 +1,6 @@
 //types
 import type { ChangeEvent, MouseEvent } from 'react';
-import type { FieldInputConfig } from '../types';
+import type { FieldInputConfig } from './types';
 //hooks
 import { useState, useEffect } from 'react';
 

@@ -1,11 +1,11 @@
 //types
-import type { FieldNumberProps } from '../types';
+import type { FieldNumberProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //components
 import FieldInput from './FieldInput';
 //hooks
-import useNumber from '../hooks/useFieldNumber';
+import useNumber from '@inceptjs/react/dist/useFieldNumber';
 
 /**
  * Number Field Component (Main)

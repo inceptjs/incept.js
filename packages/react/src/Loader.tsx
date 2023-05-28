@@ -1,9 +1,9 @@
 //types
-import type { LoaderProps } from '../types';
+import type { LoaderProps } from './types';
 //react
 import React from 'react';
 //helpers
-import { makeClasses, makeStyles } from '../utils';
+import { makeClasses, makeStyles } from './utils';
 
 /**
  * Loader Component (Main)

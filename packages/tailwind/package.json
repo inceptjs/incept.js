@@ -12,12 +12,13 @@
   "scripts": {
     "build": "npm run build:ts && npm run build:files",
     "build:ts": "tsc",
-    "build:files": "cp ./package.json ./dist && cp ./LICENSE ./dist && cp ./README.md ./dist"
+    "build:files": "cp ./package.json ./dist && cp ./README.md ./dist"
   },
   "engines": {
     "node": ">=16.20.0"
   },
   "dependencies": {
+    "@inceptjs/react": "0.0.30",
     "inputmask": "5.0.8",
     "react": "18.2.0",
     "react-dom": "18.2.0"

@@ -1,9 +1,9 @@
 //types
-import type { ButtonProps } from '../types';
+import type { ButtonProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //helpers
-import { makeClasses, makeStyles } from '../utils';
+import { makeClasses, makeStyles } from '@inceptjs/react/dist/utils';
 
 /**
  * Generic Button Component (Main)

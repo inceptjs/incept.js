@@ -1,6 +1,6 @@
 //types
 import type { ChangeEvent } from 'react';
-import type { FieldNumberOptions, FieldNumberProps } from '../types';
+import type { FieldNumberOptions, FieldNumberProps } from './types';
 //hooks
 import { useState, useEffect } from 'react';
 

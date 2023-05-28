@@ -1,11 +1,11 @@
 //types
-import type { FieldSwitchProps } from '../types';
+import type { FieldSwitchProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
 //hooks
-import useFieldSwitch from '../hooks/useFieldSwitch';
+import useFieldSwitch from '@inceptjs/react/dist/useFieldSwitch';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '../utils';
+import { makeGroupStyles, makeGroupClasses } from '@inceptjs/react/dist/utils';
 
 /**
  * Styled Switch Field Component (Main)
