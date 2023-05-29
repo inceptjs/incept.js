@@ -1,15 +1,2 @@
-//types
-import type { FormatMarkdownProps } from '@inceptjs/react/dist/types';
-//react
-import React from 'react';
-
-const FormatMarkdown: React.FC<FormatMarkdownProps> = ({ value }) => {
-  return (
-    <div
-      className="markdown"
-      dangerouslySetInnerHTML={{ __html: value }}
-    />
-  );
-};
-
+import FormatMarkdown from '@inceptjs/react/dist/FormatMarkdown';
 export default FormatMarkdown;

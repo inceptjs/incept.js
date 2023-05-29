@@ -3,8 +3,8 @@ import type { FormatLinkProps } from './types';
 //react
 import React from 'react';
 
-const FormatLink: React.FC<FormatLinkProps> = ({ value, label }) => {
-  return (<a href={value}>{label}</a>);
+const FormatLink: React.FC<FormatLinkProps> = ({ value, label, ...attributes }) => {
+  return (<a href={value} {...attributes}>{label || value}</a>);
 };
 
 export default FormatLink;

@@ -3,7 +3,7 @@ import type {
   ReactNode, 
   ReactElement, 
   ChangeEvent, 
-  KeyboardEvent 
+  KeyboardEvent
 } from 'react';
 
 // General types
@@ -13,6 +13,16 @@ export type AnyReactChildren = ReactNode|ReactElement|JSX.Element
   |ReactNode[]|ReactElement[]|JSX.Element[]|string;
 
 // HTML types
+export type HTMLPreProps = React.DetailedHTMLProps<
+  React.ImgHTMLAttributes<HTMLPreElement>, 
+  HTMLPreElement
+>;
+
+export type HTMLLinkProps = React.DetailedHTMLProps<
+  React.ImgHTMLAttributes<HTMLAnchorElement>, 
+  HTMLAnchorElement
+>;
+
 export type HTMLImageProps = React.DetailedHTMLProps<
   React.ImgHTMLAttributes<HTMLImageElement>, 
   HTMLImageElement
@@ -215,6 +225,13 @@ export type FieldInputProps = ExtendsType<HTMLInputProps, {
   passRef?: LegacyRef<HTMLInputElement>
 }>;
 
+// Field markdown component
+export type FieldMarkdownConfig = {
+  defaultValue?: string,
+  onUpdate?: Function
+};
+export type FieldMarkdownProps = FieldTextareaProps;
+
 // Field mask component
 export type FieldMaskProps = FieldInputProps & { 
   mask?: string,
@@ -384,6 +401,21 @@ export type FieldSwitchProps = HTMLInputProps & {
   onUpdate?: (value: string|number|undefined, checked: boolean) => void
 };
 
+// Field taglist component
+export type FieldTaglistConfig = {
+  onChange?: Function, 
+  onUpdate?: Function
+};
+export type FieldTaglistProps = ExtendsType<HTMLInputProps, {
+  error?: any,
+  errorColor?: string,
+  onUpdate?: (value: string) => void,
+  className?: string, 
+  classNames?: Record<string, string|false|undefined>|false,
+  style?: React.CSSProperties,
+  styles?: Record<string, React.CSSProperties|false|undefined>|false
+}>;
+
 // Field textarea component
 export type FieldTextareaConfig = {
   onChange?: Function, 
@@ -391,7 +423,6 @@ export type FieldTextareaConfig = {
 };
 export type FieldTextareaProps = ExtendsType<HTMLTextareaProps, {
   style?: React.CSSProperties|false,
-  label?: string,
   error?: any,
   errorColor?: string,
   onUpdate?: (value: string) => void,
@@ -417,66 +448,117 @@ export type FieldTimeProps = ExtendsType<FieldInputProps, {
   defaultValue?: FieldTimeInput
 }>;
 
-// Format capitalize component
-export type FormatCapitalizeProps = { value: string };
-// Format char count component
-export type FormatCharCountProps = { value: string, count: number };
 // Format color component
-export type FormatColorProps = { value: string };
-// Format comma separated component
-export type FormatCommaSeparatedProps = { value: (string|number)[] };
+export type FormatColorProps = { 
+  value: string, 
+  box?: boolean, 
+  text?: boolean,
+  sm?: boolean,
+  md?: boolean,
+  lg?: boolean,
+  className?: string, 
+  classNames?: Record<string, string|false|undefined>|false
+  style?: React.CSSProperties,
+  styles?: Record<string, React.CSSProperties|false|undefined>|false
+};
 // Format country component
-export type FormatCountryProps = { value: string };
+export type FormatCountryProps = { 
+  value: string, 
+  flag?: boolean, 
+  text?: boolean,
+  sm?: boolean,
+  md?: boolean,
+  lg?: boolean,
+  className?: string, 
+  classNames?: Record<string, string|false|undefined>|false
+  style?: React.CSSProperties,
+  styles?: Record<string, React.CSSProperties|false|undefined>|false  
+};
 // Format currency component
-export type FormatCurrencyProps = { value: string };
+export type FormatCurrencyProps = {
+  value: string, 
+  flag?: boolean, 
+  text?: boolean,
+  sm?: boolean,
+  md?: boolean,
+  lg?: boolean,
+  className?: string, 
+  classNames?: Record<string, string|false|undefined>|false
+  style?: React.CSSProperties,
+  styles?: Record<string, React.CSSProperties|false|undefined>|false
+};
 // Format date component
-export type FormatDateProps = { value: string|number|Date, format?: string };
+export type FormatDateProps = { 
+  value: string|number|Date, 
+  locale?: string,
+  format?: string 
+};
 // Format email component
-export type FormatEmailProps = { value: string };
+export type FormatEmailProps = FormatLinkProps;
 // Format formula component
-export type FormatFormulaProps = { value: string, data: Record<string, any> };
+export type FormatFormulaProps = { 
+  value: string, 
+  formula: string,
+  data?: Record<string, any> 
+};
 // Format html component
 export type FormatHTMLProps = { value: string };
 // Format image component
 export type FormatImageProps = HTMLImageProps & { value: string };
+// Format image component
+export type FormatImagelistProps = HTMLImageProps & { value: string[] };
 // Format json component
-export type FormatJSONProps = { value: any };
-// Format line separated component
-export type FormatLineSeparatedProps = { value: (string|number)[] };
+export type FormatJSONProps = HTMLPreProps & { value: any };
 // Format link component
-export type FormatLinkProps = { value: string, label: string  };
-// Format lower case component
-export type FormatLowercaseProps = { value: string };
+export type FormatLinkProps = HTMLLinkProps & { value: string, label?: string  };
+// Format list component
+export type FormatListProps = HTMLLinkProps & { value: (string|number)[], ordered?: boolean };
 // Format markdown component
 export type FormatMarkdownProps = { value: string };
 // Format metadata component
 export type FormatMetadataProps = { value: Record<string, string|number> };
 // Format number component
-export type FormatNumberProps = { value: string|number };
-// Format ordered list component
-export type FormatOrderedListProps = { value: (string|number)[] };
+export type FormatNumberProps = { 
+  value: string|number,
+  separator?: string,
+  decimal?: string,
+  decimals?: number,
+  absolute?: boolean 
+};
+// Format overflow component
+export type FormatOverflowProps = { 
+  value: string, 
+  length?: number, 
+  words?: boolean,
+  hellip?: boolean, 
+};
 // Format phone component
-export type FormatPhoneProps = { value: string };
-// Format price component
-export type FormatPriceProps = { value: string|number };
+export type FormatPhoneProps = FormatLinkProps;
 // Format rating component
-export type FormatRatingProps = { value: string|number };
-// Format relative component
-export type FormatRelativeProps = { value: string|number|Date };
-// Format space separated component
-export type FormatSpaceSeparatedProps = { value: (string|number)[] };
+export type FormatRatingProps = { 
+  value: string|number,
+  max?: number,
+  remainder?: boolean,
+  round?: 'round'|'ceil'|'floor'
+};
+// Format separator component
+export type FormatSeparatedProps = { 
+  value: (string|number)[], 
+  separator?: string,
+  className?: string,
+  style?: React.CSSProperties
+};
 // Format table component
-export type FormatTableProps = { value: Record<string, string|number>[] };
+export type FormatTableProps = { 
+  value: Record<string, string|number>[],
+  stripes?: [ [ string, string ], [ string, string ], [ string, string ] ]
+};
 // Format tag list component
-export type FormatTagListProps = { value: (string|number)[] };
-// Format unordered list component
-export type FormatUnorderedListProps = { value: (string|number)[] };
-// Format upper case component
-export type FormatUppercaseProps = { value: string };
-// Format word cound component
-export type FormatWordCountProps = { value: string, count: number };
+export type FormatTaglistProps = BadgeProps & { value: (string|number)[] };
+// Format text component
+export type FormatTextProps = { value: string, format?: 'uppercase'|'lowercase'|'capitalize'|'none' };
 // Format yes no component
-export type FormatYesnoProps = { value: any };
+export type FormatYesnoProps = { value: any, yes?: string, no?: string };
 
 // Loading component
 export type LoaderProps = {

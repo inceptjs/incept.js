@@ -1,10 +1,2 @@
-//types
-import type { FormatRatingProps } from '@inceptjs/react/dist/types';
-//react
-import React from 'react';
-
-const FormatRating: React.FC<FormatRatingProps> = ({ value }) => {
-  return (<>{value}</>);
-};
-
+import FormatRating from '@inceptjs/react/dist/FormatRating';
 export default FormatRating;

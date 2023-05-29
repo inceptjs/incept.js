@@ -1,12 +1,2 @@
-//types
-import type { FormatImageProps } from '@inceptjs/react/dist/types';
-//react
-import React from 'react';
-
-const FormatImage: React.FC<FormatImageProps> = ({ value, ...attributes }) => {
-  return (
-    <img {...attributes} src={value} />
-  );
-};
-
+import FormatImage from '@inceptjs/react/dist/FormatImage';
 export default FormatImage;

@@ -1,10 +1,19 @@
 //types
-import type { FormatTagListProps } from '@inceptjs/react/dist/types';
+import type { FormatTaglistProps } from '@inceptjs/react/dist/types';
 //react
 import React from 'react';
+//components
+import Badge from './Badge';
 
-const FormatTagList: React.FC<FormatTagListProps> = ({ value }) => {
-  return (<>{value.join(', ')}</>);
+const FormatTaglist: React.FC<FormatTaglistProps> = (props) => {
+  const { value, ...attributes } = props;
+  return (
+    <span className="inline-flex gap-[2px]">
+      {value.map((value, i) => (
+        <Badge key={i} {...attributes}>{value}</Badge>
+      ))}
+    </span>
+  );
 };
 
-export default FormatTagList;
+export default FormatTaglist;

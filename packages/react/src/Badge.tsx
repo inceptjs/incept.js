@@ -36,13 +36,7 @@ const Badge: React.FC<BadgeProps> = props => {
     : info ? '#1474FC'
     : success ? '#28A745'
     : muted ? '#999999'
-    : undefined;
-
-  const icon = error ? 'before:content-icon-error'
-    : warning ? 'before:content-icon-warning'
-    : info ? 'before:content-icon-info'
-    : success ? 'before:content-icon-success'
-    : undefined;
+    : '#FFC107';
 
   const round = curved ? '5px' 
     : rounded ? '12px' 
@@ -50,13 +44,7 @@ const Badge: React.FC<BadgeProps> = props => {
     : undefined;
 
   const map = {
-    classes: makeClasses(className, [
-      icon ? 'before:font-awesome' : undefined,
-      icon ? 'before:font-black' : undefined,
-      icon ? 'before:inline-block' : undefined,
-      icon ? 'before:pr-3' : undefined,
-      icon
-    ].filter(Boolean).join(' ')),
+    classes: makeClasses(className, ''),
     styles: makeStyles(style, {
       borderColor: colour,
       borderRadius: round,
@@ -64,10 +52,10 @@ const Badge: React.FC<BadgeProps> = props => {
       borderWidth: '1px',
       backgroundColor: layout === 'solid' ? colour : undefined,
       color: layout === 'outline' ? colour : 'white',
-      paddingBottom: '16px',
-      paddingLeft: '20px',
-      paddingRight: '20px',
-      paddingTop: '16px'
+      paddingBottom: '2px',
+      paddingLeft: '8px',
+      paddingRight: '8px',
+      paddingTop: '2px'
     })
   };
   

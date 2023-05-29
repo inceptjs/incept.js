@@ -9,8 +9,8 @@ const FormatMetadata: React.FC<FormatMetadataProps> = ({ value }) => {
       <tbody>
         {Object.entries(value).map(([key, value]) => (
           <tr key={key}>
-            <td>{key}</td>
-            <td>{value}</td>
+            <td className="pr-[10px]">{key}</td>
+            <td className="pl-[10px]">{value}</td>
           </tr>
         ))}
       </tbody>

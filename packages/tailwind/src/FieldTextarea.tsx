@@ -12,8 +12,7 @@ import { makeClasses } from '@inceptjs/react/dist/utils';
  */
 const FieldTextarea: React.FC<FieldTextareaProps> = (props) => {
   //separate component related props from field attributes
-  const {   
-    label, 
+  const {  
     error, 
     errorColor = '#DC3545',
     className,
