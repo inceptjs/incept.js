@@ -5,7 +5,7 @@
     "examples/*"
   ],
   "scripts": {
-    "dev": "cd examples/nextjs && npm run dev",
+    "dev": "cd examples/with-next && npm run dev",
     "build": "npm run build:client && npm run build:generator && npm run build:incept && npm run build:react && npm run build:tailwind && npm run build:terminal && npm run build:translate && npm run build:types",
     "build:client": "cd packages/client && npm run build",
     "build:generator": "cd packages/generator && npm run build",

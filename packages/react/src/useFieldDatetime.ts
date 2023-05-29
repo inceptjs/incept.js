@@ -1,10 +1,14 @@
 import type { FieldDatetimeConfig } from './types';
 
 import useDate from './useFieldDate';
-import useTime from './useFieldTime';
 
 export default function useFieldDatetime({ defaultValue, onUpdate }: FieldDatetimeConfig) {
   const update = useDate({ onUpdate });
-  const value = useTime({ defaultValue });
+  let value: string|undefined = undefined;
+  if (defaultValue) {
+    try {
+      value = new Date(defaultValue).toISOString().replace('Z', '');
+    } catch(e) {}
+  }
   return { value, update };
 };

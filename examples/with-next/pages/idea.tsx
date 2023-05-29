@@ -1,8 +1,8 @@
 //components
 import HTMLHead from 'shared/common/components/Head';
-import Crumbs from '@ev3/ui/dist/tailwind/Crumbs';
+import Crumbs from '@inceptjs/react/dist/Crumbs';
 //hooks
-import useLanguage from '@ev3/i18n/hooks/useLanguage';
+import useLanguage from '@inceptjs/translate/dist/hooks/useLanguage';
 
 export type User = {};
 

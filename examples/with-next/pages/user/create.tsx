@@ -5,7 +5,7 @@
 import { useLanguage } from '@ev3/i18n';
 
 export type User = {};
-import { UserDefaultForm, useUserCreate } from '@ev3/client';
+import { UserDefaultForm, useUserCreate } from '@inceptjs/client';
 
 /**
  * User create body component

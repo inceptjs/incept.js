@@ -1,34 +1,34 @@
-import Button from '@ev3/ui/dist/tailwind/Button';
-import Control from '@ev3/ui/dist/tailwind/Control';
+import Button from '@inceptjs/react/dist/Button';
+import Control from '@inceptjs/react/dist/Control';
 
-import Input from '@ev3/ui/dist/tailwind/FieldInput';
-import Textarea from '@ev3/ui/dist/tailwind/FieldTextarea';
-import FieldNumber from '@ev3/ui/dist/tailwind/FieldNumber';
-import Password from '@ev3/ui/dist/tailwind/FieldPassword';
-import InputMask from '@ev3/ui/dist/tailwind/FieldMask';
+import Input from '@inceptjs/react/dist/FieldInput';
+import Textarea from '@inceptjs/react/dist/FieldTextarea';
+import FieldNumber from '@inceptjs/react/dist/FieldNumber';
+import Password from '@inceptjs/react/dist/FieldPassword';
+import InputMask from '@inceptjs/react/dist/FieldMask';
 
-import Checkbox from '@ev3/ui/dist/tailwind/FieldCheckbox';
-import Radio from '@ev3/ui/dist/tailwind/FieldRadio';
-import Switch from '@ev3/ui/dist/tailwind/FieldSwitch';
+import Checkbox from '@inceptjs/react/dist/FieldCheckbox';
+import Radio from '@inceptjs/react/dist/FieldRadio';
+import Switch from '@inceptjs/react/dist/FieldSwitch';
 
-import Select from '@ev3/ui/dist/tailwind/FieldSelect';
-import SelectCountry from '@ev3/ui/dist/tailwind/FieldCountry';
-import SelectCurrency from '@ev3/ui/dist/tailwind/FieldCurrency';
+import Select from '@inceptjs/react/dist/FieldSelect';
+import SelectCountry from '@inceptjs/react/dist/FieldCountry';
+import SelectCurrency from '@inceptjs/react/dist/FieldCurrency';
 
-import Autocomplete from '@ev3/ui/dist/tailwind/FieldAutocomplete';
+import Autocomplete from '@inceptjs/react/dist/FieldAutocomplete';
 
-import FieldDate from '@ev3/ui/dist/tailwind/FieldDate';
-import FieldTime from '@ev3/ui/dist/tailwind/FieldTime';
-import FieldDatetime from '@ev3/ui/dist/tailwind/FieldDatetime';
+import FieldDate from '@inceptjs/react/dist/FieldDate';
+import FieldTime from '@inceptjs/react/dist/FieldTime';
+import FieldDatetime from '@inceptjs/react/src/FieldDatetime';
 
-import Textlist from '@ev3/ui/dist/tailwind/FieldTextlist';
-import Metadata from '@ev3/ui/dist/tailwind/FieldMetadata';
+import Textlist from '@inceptjs/react/dist/FieldTextlist';
+import Metadata from '@inceptjs/react/dist/FieldMetadata';
 
-import Alert from '@ev3/ui/dist/tailwind/Alert';
-import Badge from '@ev3/ui/dist/tailwind/Badge';
-import Table, { Thead, Tfoot, Trow, Tcol } from '@ev3/ui/dist/tailwind/Table';
+import Alert from '@inceptjs/react/dist/Alert';
+import Badge from '@inceptjs/react/dist/Badge';
+import Table, { Thead, Tfoot, Trow, Tcol } from '@inceptjs/react/dist/Table';
 
-import Loader from '@ev3/ui/dist/tailwind/Loader';
+import Loader from '@inceptjs/react/dist/Loader';
 
 import { useState } from 'react';
 
