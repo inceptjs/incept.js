@@ -209,6 +209,38 @@ export type FieldDatetimeProps = ExtendsType<FieldInputProps, {
   defaultValue?: FieldDatetimeInput
 }>;
 
+// Field file component
+export type FieldFileConfig = FieldInputConfig & {
+  defaultValue?: string,
+  onUpload?: (file: File, update: (url: string) => void) => void
+};
+export type FieldFileProps = FieldInputProps & {
+  defaultValue?: string,
+  locale?: Record<string, string>,
+  style?: React.CSSProperties,
+  className?: string,
+  styles?: Record<string, React.CSSProperties|false|undefined>|false,
+  classNames?: Record<string, string|false|undefined>|false,
+  onUpdate?: (value: string) => void,
+  onUpload?: (file: File, update: (url: string) => void) => void
+};
+
+// Field file list component
+export type FieldFilelistConfig = FieldInputConfig & {
+  defaultValue?: string[],
+  onUpload?: (files: File[], update: (urls: string[]) => void) => void
+};
+export type FieldFilelistProps = FieldInputProps & {
+  locale?: Record<string, string>,
+  defaultValue?: string[],
+  style?: React.CSSProperties,
+  className?: string,
+  styles?: Record<string, React.CSSProperties|false|undefined>|false,
+  classNames?: Record<string, string|false|undefined>|false,
+  onUpdate?: (value: string[]) => void,
+  onUpload?: (files: File[], update: (urls: string[]) => void) => void
+};
+
 // Field input component
 export type FieldInputConfig = {
   checked?: boolean,

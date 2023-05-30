@@ -20,10 +20,10 @@ import FieldCountry from './FieldCountry';
 import FieldCurrency from './FieldCurrency';
 import FieldDate from './FieldDate';
 import FieldDatetime from './FieldDatetime';
-//import FieldFile from './FieldFile';
-//import FieldFilelist from './FieldFilelist';
-//import FieldImage from './FieldImage';
-//import FieldImagelist from './FieldImagelist';
+import FieldFile from './FieldFile';
+import FieldFilelist from './FieldFilelist';
+import FieldImage from './FieldImage';
+import FieldImagelist from './FieldImagelist';
 import FieldInput from './FieldInput';
 import FieldMask from './FieldMask';
 import FieldMetadata from './FieldMetadata';
@@ -85,10 +85,10 @@ export {
   FieldCurrency,
   FieldDate,
   FieldDatetime,
-  //FieldFile,
-  //FieldFilelist,
-  //FieldImage,
-  //FieldImagelist,
+  FieldFile,
+  FieldFilelist,
+  FieldImage,
+  FieldImagelist,
   FieldInput,
   FieldMask,
   FieldMetadata,

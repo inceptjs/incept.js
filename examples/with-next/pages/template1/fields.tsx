@@ -4,6 +4,10 @@ import Input from '@inceptjs/react/dist/FieldInput';
 import FieldNumber from '@inceptjs/react/dist/FieldNumber';
 import Password from '@inceptjs/react/dist/FieldPassword';
 import InputMask from '@inceptjs/react/dist/FieldMask';
+import FieldFile from '@inceptjs/react/src/FieldFile';
+import FieldFilelist from '@inceptjs/react/src/FieldFilelist';
+import FieldImage from '@inceptjs/react/src/FieldImage';
+import FieldImagelist from '@inceptjs/react/src/FieldImagelist';
 
 import Textarea from '@inceptjs/react/dist/FieldTextarea';
 import Markdown from '@inceptjs/react/src/FieldMarkdown';
@@ -54,6 +58,59 @@ const Page = () => {
       </Control>
       <Control label="Input 3" className="text-xs my-4">
         <Input defaultValue="value 3" onUpdate={console.log} />
+      </Control>
+      <Control label="File 1" className="text-xs my-4">
+        <FieldFile
+          defaultValue="foobar"
+          onUpload={(files, then) => {
+            setTimeout(() => {
+              then('https://via.placeholder.com/150')
+            }, 5000)
+          }} 
+          onUpdate={console.log} 
+        />
+      </Control>
+      <Control label="File 2" className="text-xs my-4">
+        <FieldFilelist
+          defaultValue={['foo', 'bar']}
+          onUpload={(files, then) => {
+            setTimeout(() => {
+              then(['https://via.placeholder.com/150'])
+              setTimeout(() => {
+                then(files.map((file, i) => 'https://via.placeholder.com/150' + i))
+              }, 5000)
+            }, 5000)
+          }} 
+          onUpdate={console.log} 
+        />
+      </Control>
+      <Control label="Image 1" className="text-xs my-4">
+        <FieldImage
+          defaultValue="https://raw.githubusercontent.com/inceptjs/incept.js/main/docs/assets/incept-logo-square-1.png"
+          onUpload={(files, then) => {
+            setTimeout(() => {
+              then('https://raw.githubusercontent.com/inceptjs/incept.js/main/docs/assets/incept-logo-long.png')
+            }, 5000)
+          }} 
+          onUpdate={console.log} 
+        />
+      </Control>
+      <Control label="Image 2" className="text-xs my-4">
+        <FieldImagelist
+          defaultValue={[
+            'https://raw.githubusercontent.com/inceptjs/incept.js/main/docs/assets/incept-logo-square-1.png', 
+            'https://raw.githubusercontent.com/inceptjs/incept.js/main/docs/assets/incept-logo-long.png'
+          ]}
+          onUpload={(files, then) => {
+            setTimeout(() => {
+              then(['https://raw.githubusercontent.com/inceptjs/incept.js/main/docs/assets/incept-logo-square-1.png'])
+              setTimeout(() => {
+                then(files.map((file, i) => 'https://raw.githubusercontent.com/inceptjs/incept.js/main/docs/assets/incept-logo-square-2.png'))
+              }, 5000)
+            }, 5000)
+          }} 
+          onUpdate={console.log} 
+        />
       </Control>
       <Control label="Number 1" className="mt-2">
         <FieldNumber defaultValue={1900.01} onUpdate={console.log} />
