@@ -4,12 +4,13 @@ import type { SchemaConfig } from '@inceptjs/client/dist/types';
 //helpers
 import { getTypeExtendedName } from '../utils';
 
-export default function generateUseView(
+export default function generateUseDetail(
   project: Project|Directory, 
   schema: SchemaConfig
 ) {
-  const path = `${schema.name}/hooks/useView.ts`;
+  const path = `${schema.name}/hooks/useDetail.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
+  const rest = schema.rest.detail;
   //import type { AxiosRequestConfig } from 'axios';
   source.addImportDeclaration({
     isTypeOnly: true,
@@ -27,21 +28,25 @@ export default function generateUseView(
     moduleSpecifier: 'react',
     namedImports: [ 'useEffect' ]
   });
-  //import useFetch from '@ev3/client/dist/hooks/useFetch';
+  //import useFetch from '@inceptjs/client/dist/hooks/useFetch';
   source.addImportDeclaration({
     defaultImport: 'useFetch',
-    moduleSpecifier: '@ev3/client/dist/hooks/useFetch'
+    moduleSpecifier: '@inceptjs/client/dist/hooks/useFetch'
   });
-  //export default function useView(id: string, options: AxiosRequestConfig = {})
+  //export default function useDetail(id: string, options: AxiosRequestConfig = {})
   source.addFunction({
     isDefaultExport: true,
-    name: 'useView',
+    name: 'useDetail',
     parameters: [
       { name: 'id', type: 'string' },
       { name: 'options', type: 'AxiosRequestConfig', initializer: '{}' }
     ],
     statements: (`
-      const action = useFetch<${getTypeExtendedName(schema)}>('get', '/api/${schema.name}/%s', options);
+      const action = useFetch<${getTypeExtendedName(schema)}>(
+        '${rest.method}', 
+        '${rest.path}', 
+        options
+      );
       useEffect(() => {
         if (!id) return;
         action.call(id);

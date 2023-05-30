@@ -14,29 +14,35 @@ import Table from './Table';
 
 import FieldAutocomplete from './FieldAutocomplete';
 import FieldCheckbox from './FieldCheckbox';
+//import FieldChecklist from './FieldChecklist';
 //import FieldCode from './FieldCode';
 //import FieldColor from './FieldColor';
 import FieldCountry from './FieldCountry';
 import FieldCurrency from './FieldCurrency';
 import FieldDate from './FieldDate';
 import FieldDatetime from './FieldDatetime';
+//import FieldFieldset from './FieldFieldset';
 import FieldFile from './FieldFile';
 import FieldFilelist from './FieldFilelist';
 import FieldImage from './FieldImage';
 import FieldImagelist from './FieldImagelist';
 import FieldInput from './FieldInput';
+//import FieldJSON from './FieldJSON';
 import FieldMask from './FieldMask';
 import FieldMetadata from './FieldMetadata';
 import FieldNumber from './FieldNumber';
 import FieldPassword from './FieldPassword';
 import FieldRadio from './FieldRadio';
+//import FieldRadiolist from './FieldRadiolist';
 import FieldSelect from './FieldSelect';
 import Fieldset from './Fieldset';
 //import FieldSlider from './FieldSlider';
 import FieldSwitch from './FieldSwitch';
 import FieldTaglist from './FieldTaglist';
 import FieldTextarea from './FieldTextarea';
+import FieldTextlist from './FieldTextlist';
 import FieldTime from './FieldTime';
+//import FieldWYSIWYG from './FieldWYSIWYG';
 
 import FormatColor from './FormatColor';
 import FormatCountry from './FormatCountry';
@@ -81,6 +87,7 @@ export {
 
   FieldAutocomplete,
   FieldCheckbox,
+  //FieldChecklist,
   //FieldCode,
   //FieldColor,
   FieldCountry,
@@ -92,18 +99,22 @@ export {
   FieldImage,
   FieldImagelist,
   FieldInput,
+  //FieldJSON,
   FieldMask,
   FieldMetadata,
   FieldNumber,
   FieldPassword,
   FieldRadio,
+  //FieldRadiolist,
   FieldSelect,
   Fieldset,
   //FieldSlider,
   FieldSwitch,
   FieldTaglist,
   FieldTextarea,
+  FieldTextlist,
   FieldTime,
+  //FieldWYSIWYG,
   
   FormatColor,
   FormatCountry,

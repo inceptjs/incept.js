@@ -94,7 +94,7 @@ const FieldFilelist: React.FC<FieldFilelistProps> = (props) => {
         {...attributes} 
         multiple
         type="file" 
-        className="text-xl"
+        className={map.classes.control}
         style={map.styles.control}
         onChange={handlers.change} 
       />

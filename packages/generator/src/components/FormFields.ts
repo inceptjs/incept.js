@@ -3,7 +3,7 @@ import type { Project, Directory } from 'ts-morph';
 import type { SchemaConfig } from '@inceptjs/client/dist/types';
 //helpers
 import { VariableDeclarationKind } from 'ts-morph';
-import { fields } from '../tokens';
+import { fields } from '@inceptjs/react/dist/tokens';
 import { capitalize } from '../utils';
 
 export default function generateFormFields(
@@ -13,13 +13,13 @@ export default function generateFormFields(
 ) {
   const path = `${schema.name}/components/FormFields.tsx`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  //import type { FieldSelectProps, FieldInputProps } from '@ev3/ui/dist/types'
+  //import type { FieldSelectProps, FieldInputProps } from '@inceptjs/react/dist/types'
   source.addImportDeclaration({
     isTypeOnly: true,
-    moduleSpecifier: '@ev3/ui/dist/types',
+    moduleSpecifier: '@inceptjs/react/dist/types',
     namedImports: schema.columns
     .filter(column => !!fields[column.field.method])
-    .map(column => `${fields[column.field.method]}Props`)
+    .map(column => `${fields[column.field.method].component}Props`)
     .filter((value, index, array) => array.indexOf(value) === index)
   });
   //import React from 'react';
@@ -27,20 +27,20 @@ export default function generateFormFields(
     defaultImport: 'React',
     moduleSpecifier: 'react'
   });
-  //import Control from '@ev3/ui/dist/tailwind/Control';
+  //import Control from '@inceptjs/react/dist/Control';
   source.addImportDeclaration({
     defaultImport: 'Control',
-    moduleSpecifier: '@ev3/ui/dist/tailwind/Control'
+    moduleSpecifier: `@inceptjs/${ui}/dist/Control`
   });
   schema.columns
     .filter(column => !!fields[column.field.method])
-    .map(column => fields[column.field.method])
+    .map(column => fields[column.field.method].component)
     .filter((value, index, array) => array.indexOf(value) === index)
     .forEach((defaultImport) => {
-      //import Control from '@ev3/ui/dist/tailwind/Control';
+      //import FieldInput from '@inceptjs/tailwind/dist/FieldInput';
       source.addImportDeclaration({ 
         defaultImport, 
-        moduleSpecifier: `@ev3/ui/dist/${ui}/${defaultImport}` 
+        moduleSpecifier: `@inceptjs/${ui}/dist/${defaultImport}` 
       });
     });
   //export type FormComponentProps
@@ -66,7 +66,7 @@ export default function generateFormFields(
       returnType: 'React.ReactElement',
       statements: (`
         const { label, error, change, ...fieldProps } = props;
-        const attributes: ${fields[column.field.method]}Props = Object.assign(
+        const attributes: ${fields[column.field.method].component}Props = Object.assign(
           ${JSON.stringify(column.field.attributes || {}, null, 2)},
           fieldProps || {}
         );
@@ -76,7 +76,7 @@ export default function generateFormFields(
           Control,
           { label, error },
           React.createElement(
-            ${fields[column.field.method]},
+            ${fields[column.field.method].component},
             attributes
           )
         );

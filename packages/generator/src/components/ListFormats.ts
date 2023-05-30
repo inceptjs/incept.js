@@ -3,7 +3,7 @@ import type { Project, Directory } from 'ts-morph';
 import type { SchemaConfig } from '@inceptjs/client/dist/types';
 //helpers
 import { VariableDeclarationKind } from 'ts-morph';
-import { formats } from '../tokens';
+import { formats } from '@inceptjs/react/dist/tokens';
 import { capitalize } from '../utils';
 
 export default function generateListFormats(
@@ -13,13 +13,13 @@ export default function generateListFormats(
 ) {
   const path = `${schema.name}/components/ListFormats.tsx`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  //import type { FieldSelectProps, FieldInputProps } from '@ev3/ui/dist/types'
+  //import type { FieldSelectProps, FieldInputProps } from '@inceptjs/react/dist/types'
   source.addImportDeclaration({
     isTypeOnly: true,
-    moduleSpecifier: '@ev3/ui/dist/types',
+    moduleSpecifier: '@inceptjs/react/dist/types',
     namedImports: schema.columns
     .filter(column => !!formats[column.list.method])
-    .map(column => `${formats[column.list.method]}Props`)
+    .map(column => `${formats[column.list.method].component}Props`)
     .filter((value, index, array) => array.indexOf(value) === index)
   });
   //import React from 'react';
@@ -29,13 +29,13 @@ export default function generateListFormats(
   });
   schema.columns
     .filter(column => !!formats[column.list.method])
-    .map(column => formats[column.list.method])
+    .map(column => formats[column.list.method].component)
     .filter((value, index, array) => array.indexOf(value) === index)
     .forEach((defaultImport) => {
-      //import Control from '@ev3/ui/dist/tailwind/Control';
+      //import Control from '@inceptjs/tailwind/dist/Control';
       source.addImportDeclaration({ 
         defaultImport, 
-        moduleSpecifier: `@ev3/ui/dist/${ui}/${defaultImport}` 
+        moduleSpecifier: `@inceptjs/${ui}/dist/${defaultImport}` 
       });
     });
   //export type FormatComponentProps
@@ -59,13 +59,13 @@ export default function generateListFormats(
         return props.value;
       `) : (`
         const { value, ...others } = props;
-        const attributes: ${formats[column.list.method]}Props = Object.assign(
+        const attributes: ${formats[column.list.method].component}Props = Object.assign(
           ${JSON.stringify(column.list.attributes || {}, null, 2)},
           { value },
           others || {}
         );
         return React.createElement(
-          ${formats[column.list.method]},
+          ${formats[column.list.method].component},
           attributes
         );
       `)

@@ -7,7 +7,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 //hooks
 import useMarkdown from '@inceptjs/react/dist/useFieldMarkdown';
 //components
-import ReactMarkdown from 'react-markdown';
+import Markdown from 'markdown-to-jsx';
 import FieldTextarea from './FieldTextarea';
 import Button from './Button';
 
@@ -36,7 +36,7 @@ const FieldMarkdown: React.FC<FieldMarkdownProps> = (props) => {
     'w-full'
   ].join(' ');
 
-  const markdown = renderToStaticMarkup(<ReactMarkdown children={value} />);
+  const markdown = renderToStaticMarkup(<Markdown children={value} />);
 
   return (
     <div>

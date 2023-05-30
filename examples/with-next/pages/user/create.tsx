@@ -2,7 +2,7 @@
 //import HTMLHead from 'shared/common/components/Head';
 //import Crumbs from '@ev3/ui/dist/tailwind/Crumbs';
 //hooks
-import { useLanguage } from '@ev3/i18n';
+import { useLanguage } from '@inceptjs/translate';
 
 export type User = {};
 import { UserDefaultForm, useUserCreate } from '@inceptjs/client';

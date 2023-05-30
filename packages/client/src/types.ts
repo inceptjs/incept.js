@@ -2,67 +2,6 @@ import { FormEvent } from 'react';
 
 export type FetchStatuses = 'pending'|'fetching'|'complete';
 
-//not used
-export type FieldMethods = 'checkbox'
-  | 'checklist'
-  | 'color'
-  | 'country'
-  | 'currency'
-  | 'date'
-  | 'datetime'
-  | 'fieldset'
-  | 'file'
-  | 'filelist'
-  | 'image'
-  | 'imagelist'
-  | 'input'
-  | 'inputmask'
-  | 'json'
-  | 'metadata'
-  | 'none'
-  | 'number'
-  | 'password'
-  | 'radio'
-  | 'select'
-  | 'switch'
-  | 'taglist'
-  | 'textarea'
-  | 'textlist'
-  | 'time';
-//not used
-export type FormatMethods = 'capilaize'
-  | 'charcount'
-  | 'color'
-  | 'comma'
-  | 'country'
-  | 'currency'
-  | 'date'
-  | 'email'
-  | 'forumla'
-  | 'hide'
-  | 'html'
-  | 'image'
-  | 'json'
-  | 'line'
-  | 'link'
-  | 'lowercase'
-  | 'markdown'
-  | 'metadata'
-  | 'none'
-  | 'number'
-  | 'ol'
-  | 'phone'
-  | 'price'
-  | 'rating'
-  | 'relative'
-  | 'space'
-  | 'table'
-  | 'taglist'
-  | 'ul'
-  | 'uppercase'
-  | 'wordcount'
-  | 'yesno';
-
 export type APIResponse<T = any> = {
   error: boolean,
   code?: number,
@@ -108,19 +47,16 @@ export type SchemaColumn = {
     unsigned: boolean
   },
   field: {
-    type: string,
     method: string,
     attributes: Record<string, any>
   },
   validation: SchemaValidation[],
   list: {
-    type: string,
     sticky: boolean,
     method: string,
     attributes: Record<string, any>
   },
   view: {
-    type: string,
     method: string,
     attributes: Record<string, any>
   },
@@ -135,6 +71,14 @@ export type SchemaRelation = {
   label: string
 };
 
+export type SchemaRest = {
+  type: string,
+  method: string,
+  path: string,
+  event: string,
+  body: Record<string, any>
+};
+
 export type SchemaConfig = {
   name: string,
   singular: string,
@@ -143,5 +87,6 @@ export type SchemaConfig = {
   icon: string,
   group: string,
   columns: SchemaColumn[],
-  relations: SchemaRelation[]
+  relations: SchemaRelation[],
+  rest: Record<string, SchemaRest>
 };

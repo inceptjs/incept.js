@@ -10,6 +10,7 @@ export default function generateUseRemove(
 ) {
   const path = `${schema.name}/hooks/useRemove.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
+  const rest = schema.rest.remove;
   //import type { AxiosRequestConfig } from 'axios';
   source.addImportDeclaration({
     isTypeOnly: true,
@@ -22,10 +23,10 @@ export default function generateUseRemove(
     moduleSpecifier: '../types',
     namedImports: [ getTypeName(schema) ]
   });
-  //import useFetch from '@ev3/client/dist/hooks/useFetch';
+  //import useFetch from '@inceptjs/client/dist/hooks/useFetch';
   source.addImportDeclaration({
     defaultImport: 'useFetch',
-    moduleSpecifier: '@ev3/client/dist/hooks/useFetch'
+    moduleSpecifier: '@inceptjs/client/dist/hooks/useFetch'
   });
   //export default function useRemove(id: string, options: AxiosRequestConfig = {})
   source.addFunction({
@@ -36,7 +37,11 @@ export default function generateUseRemove(
       { name: 'options', type: 'AxiosRequestConfig', initializer: '{}' }
     ],
     statements: (`
-      const action = useFetch<${getTypeName(schema)}>('delete', '/api/${schema.name}/%s', options);
+      const action = useFetch<${getTypeName(schema)}>(
+        '${rest.method}', 
+        '${rest.path}', 
+        options
+      );
       const handlers = {
         send() {
           if (action.status === 'fetching') return false;

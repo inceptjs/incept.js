@@ -4,12 +4,13 @@ import type { SchemaConfig } from '@inceptjs/client/dist/types';
 //helpers
 import { getTypeExtendedName } from '../utils';
 
-export default function generateUseRows(
+export default function generateUseSearch(
   project: Project|Directory, 
   schema: SchemaConfig
 ) {
-  const path = `${schema.name}/hooks/useRows.ts`;
+  const path = `${schema.name}/hooks/useSearch.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
+  const rest = schema.rest.search;
   //import type { AxiosRequestConfig } from 'axios';
   source.addImportDeclaration({
     isTypeOnly: true,
@@ -27,26 +28,30 @@ export default function generateUseRows(
     moduleSpecifier: 'react',
     namedImports: [ 'useState', 'useEffect' ]
   });
-  //import useFetch from '@ev3/client/dist/hooks/useFetch';
+  //import useFetch from '@inceptjs/client/dist/hooks/useFetch';
   source.addImportDeclaration({
     defaultImport: 'useFetch',
-    moduleSpecifier: '@ev3/client/dist/hooks/useFetch'
+    moduleSpecifier: '@inceptjs/client/dist/hooks/useFetch'
   });
-  //import useFilters from '@ev3/client/dist/hooks/useFilters';
+  //import useFilters from '@inceptjs/client/dist/hooks/useFilters';
   source.addImportDeclaration({
     defaultImport: 'useFilters',
-    moduleSpecifier: '@ev3/client/dist/hooks/useFilters'
+    moduleSpecifier: '@inceptjs/client/dist/hooks/useFilters'
   });
-  //export default function useRows(query: Record<string, any>, options: AxiosRequestConfig = {})
+  //export default function useSearch(query: Record<string, any>, options: AxiosRequestConfig = {})
   source.addFunction({
     isDefaultExport: true,
-    name: 'useRows',
+    name: 'useSearch',
     parameters: [
       { name: 'query', type: 'Record<string, any>' },
       { name: 'options', type: 'AxiosRequestConfig', initializer: '{}' }
     ],
     statements: (`
-      const action = useFetch<${getTypeExtendedName(schema)}[]>('get', '/api/${schema.name}', options);
+      const action = useFetch<${getTypeExtendedName(schema)}[]>(
+        '${rest.method}', 
+        '${rest.path}', 
+        options
+      );
       const { filters, handlers } = useFilters(query);
       const [ last, setLast ] = useState<Record<string, any>>();
       const serialize = (value) => JSON.stringify(value);

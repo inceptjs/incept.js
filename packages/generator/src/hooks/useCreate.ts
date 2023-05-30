@@ -10,6 +10,7 @@ export default function generateUseCreate(
 ) {
   const path = `${schema.name}/hooks/useCreate.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
+  const rest = schema.rest.create;
   //import type { FormEvent } from 'react';
   source.addImportDeclaration({
     isTypeOnly: true,
@@ -28,20 +29,20 @@ export default function generateUseCreate(
     moduleSpecifier: '../types',
     namedImports: [ getTypeName(schema) ]
   });
-  //import useFetch from '@ev3/client/dist/hooks/useFetch';
+  //import useFetch from '@inceptjs/client/dist/hooks/useFetch';
   source.addImportDeclaration({
     defaultImport: 'useFetch',
-    moduleSpecifier: '@ev3/client/dist/hooks/useFetch'
+    moduleSpecifier: '@inceptjs/client/dist/hooks/useFetch'
   });
-  //import useForm from '@ev3/client/dist/hooks/useForm';
+  //import useForm from '@inceptjs/client/dist/hooks/useForm';
   source.addImportDeclaration({
     defaultImport: 'useForm',
-    moduleSpecifier: '@ev3/client/dist/hooks/useForm'
+    moduleSpecifier: '@inceptjs/client/dist/hooks/useForm'
   });
-  //import validate from '.ev3/client/[model]/validate';
+  //import validate from '../validate';
   source.addImportDeclaration({
     defaultImport: 'validate',
-    moduleSpecifier: `.ev3/client/${schema.name}/validate`
+    moduleSpecifier: `../validate`
   });
   //export default function useCreate(options: AxiosRequestConfig = {})
   source.addFunction({
@@ -51,7 +52,11 @@ export default function generateUseCreate(
       { name: 'options', type: 'AxiosRequestConfig', initializer: '{}' }
     ],
     statements: (`
-      const action = useFetch<${getTypeName(schema)}>('post', '/api/${schema.name}', options);
+      const action = useFetch<${getTypeName(schema)}>(
+        '${rest.method}', 
+        '${rest.path}', 
+        options
+      );
       const { input, handlers } = useForm((e: FormEvent) => {
         e.preventDefault();
         if (action.status === 'fetching') {

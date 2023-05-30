@@ -3,7 +3,7 @@ import type { Project, Directory } from 'ts-morph';
 import type { SchemaConfig, SchemaColumn } from '@inceptjs/client/dist/types';
 //helpers
 import { VariableDeclarationKind } from 'ts-morph';
-import { fields } from '../tokens';
+import { fields } from '@inceptjs/react/dist/tokens';
 import { capitalize } from '../utils';
 
 const isRangeField = (column: SchemaColumn) => [
@@ -24,13 +24,13 @@ export default function generateFilterFields(
 ) {
   const path = `${schema.name}/components/FilterFields.tsx`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  //import type { FieldSelectProps, FieldInputProps } from '@ev3/ui/dist/types'
+  //import type { FieldSelectProps, FieldInputProps } from '@inceptjs/react/dist/types'
   source.addImportDeclaration({
     isTypeOnly: true,
-    moduleSpecifier: '@ev3/ui/dist/types',
+    moduleSpecifier: '@inceptjs/react/dist/types',
     namedImports: schema.columns
     .filter(column => column.filterable && !!fields[column.field.method])
-    .map(column => `${fields[column.field.method]}Props`)
+    .map(column => `${fields[column.field.method].component}Props`)
     .filter((value, index, array) => array.indexOf(value) === index)
   });
   //import React from 'react';
@@ -38,20 +38,20 @@ export default function generateFilterFields(
     defaultImport: 'React',
     moduleSpecifier: 'react'
   });
-  //import Control from '@ev3/ui/dist/tailwind/Control';
+  //import Control from '@inceptjs/tailwind/dist/Control';
   source.addImportDeclaration({
     defaultImport: 'Control',
-    moduleSpecifier: '@ev3/ui/dist/tailwind/Control'
+    moduleSpecifier: `@inceptjs/${ui}/dist/Control`
   });
   schema.columns
     .filter(column => column.filterable && !!fields[column.field.method])
-    .map(column => fields[column.field.method])
+    .map(column => fields[column.field.method].component)
     .filter((value, index, array) => array.indexOf(value) === index)
     .forEach((defaultImport) => {
-      //import Control from '@ev3/ui/dist/tailwind/Control';
+      //import FieldInput from '@inceptjs/tailwind/dist/FieldInput';
       source.addImportDeclaration({ 
         defaultImport, 
-        moduleSpecifier: `@ev3/ui/dist/${ui}/${defaultImport}` 
+        moduleSpecifier: `@inceptjs/${ui}/dist/${defaultImport}` 
       });
     });
 
@@ -78,7 +78,7 @@ export default function generateFilterFields(
       returnType: 'React.ReactElement',
       statements: isRangeField(column) ? (`
         const { label, error, filter, ...fieldProps } = props;
-        const attributes: ${fields[column.field.method]}Props = Object.assign(
+        const attributes: ${fields[column.field.method].component}Props = Object.assign(
           ${JSON.stringify(column.field.attributes || {}, null, 2)},
           fieldProps
         );
@@ -93,17 +93,17 @@ export default function generateFilterFields(
           Control,
           { label, error },
           React.createElement(
-            ${fields[column.field.method]},
+            ${fields[column.field.method].component},
             minAttributes
           ),
           React.createElement(
-            ${fields[column.field.method]},
+            ${fields[column.field.method].component},
             maxAttributes
           )
         );
       `): (`
         const { label, error, filter, ...fieldProps } = props;
-        const attributes: ${fields[column.field.method]}Props = Object.assign(
+        const attributes: ${fields[column.field.method].component}Props = Object.assign(
           ${JSON.stringify(column.field.attributes || {}, null, 2)},
           fieldProps
         );
@@ -113,7 +113,7 @@ export default function generateFilterFields(
           Control,
           { label, error },
           React.createElement(
-            ${fields[column.field.method]},
+            ${fields[column.field.method].component},
             attributes
           )
         );

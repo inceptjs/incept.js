@@ -18,19 +18,16 @@
         "unsigned": false
       },
       "field": {
-        "type": "string",
         "method": "none",
         "attributes": {}
       },
       "validation": [],
       "list": {
-        "type": "string",
         "sticky": true,
         "method": "none",
         "attributes": {}
       },
       "view": {
-        "type": "string",
         "method": "none",
         "attributes": {}
       },
@@ -51,7 +48,6 @@
         "unsigned": false
       },
       "field": {
-        "type": "string",
         "method": "input",
         "attributes": {
           "type": "text"
@@ -65,13 +61,11 @@
         }
       ],
       "list": {
-        "type": "string",
         "sticky": false,
         "method": "none",
         "attributes": {}
       },
       "view": {
-        "type": "string",
         "method": "none",
         "attributes": {}
       },
@@ -91,7 +85,6 @@
         "unsigned": false
       },
       "field": {
-        "type": "string",
         "method": "input",
         "attributes": {
           "type": "text"
@@ -105,13 +98,11 @@
         }
       ],
       "list": {
-        "type": "string",
         "sticky": false,
         "method": "none",
         "attributes": {}
       },
       "view": {
-        "type": "string",
         "method": "none",
         "attributes": {}
       },
@@ -131,7 +122,6 @@
         "unsigned": false
       },
       "field": {
-        "type": "string",
         "method": "password",
         "attributes": {}
       },
@@ -148,13 +138,11 @@
         }
       ],
       "list": {
-        "type": "string",
         "sticky": false,
         "method": "hide",
         "attributes": {}
       },
       "view": {
-        "type": "string",
         "method": "hide",
         "attributes": {}
       },
@@ -174,7 +162,6 @@
         "unsigned": false
       },
       "field": {
-        "type": "string",
         "method": "select",
         "attributes": {
           "options": [
@@ -202,13 +189,11 @@
         }
       ],
       "list": {
-        "type": "string",
         "sticky": false,
         "method": "none",
         "attributes": {}
       },
       "view": {
-        "type": "string",
         "method": "none",
         "attributes": {}
       },
@@ -228,13 +213,11 @@
         "unsigned": false
       },
       "field": {
-        "type": "string",
         "method": "none",
         "attributes": {}
       },
       "validation": [],
       "list": {
-        "type": "string",
         "sticky": false,
         "method": "date",
         "attributes": {
@@ -242,7 +225,6 @@
         }
       },
       "view": {
-        "type": "string",
         "method": "date",
         "attributes": {
           "format": "pretty"
@@ -263,19 +245,16 @@
         "unsigned": false
       },
       "field": {
-        "type": "boolean",
         "method": "switch",
         "attributes": {}
       },
       "validation": [],
       "list": {
-        "type": "string",
         "sticky": false,
         "method": "yesno",
         "attributes": {}
       },
       "view": {
-        "type": "string",
         "method": "yesno",
         "attributes": {}
       },
@@ -294,13 +273,11 @@
         "unsigned": false
       },
       "field": {
-        "type": "string",
         "method": "none",
         "attributes": {}
       },
       "validation": [],
       "list": {
-        "type": "string",
         "sticky": false,
         "method": "date",
         "attributes": {
@@ -308,7 +285,6 @@
         }
       },
       "view": {
-        "type": "string",
         "method": "date",
         "attributes": {
           "format": "pretty"
@@ -330,13 +306,11 @@
         "unsigned": false
       },
       "field": {
-        "type": "string",
         "method": "none",
         "attributes": {}
       },
       "validation": [],
       "list": {
-        "type": "string",
         "sticky": false,
         "method": "date",
         "attributes": {
@@ -344,7 +318,6 @@
         }
       },
       "view": {
-        "type": "string",
         "method": "date",
         "attributes": {
           "format": "pretty"
@@ -365,10 +338,38 @@
   ],
   "rest": {
     "create": {
-      "type": "app|user|public",
+      "type": "app",
       "method": "post",
-      "path": "/user",
+      "path": "/api/user",
       "event": "user-create",
+      "body": {}
+    },
+    "detail": {
+      "type": "public",
+      "method": "get",
+      "path": "/api/user/%s",
+      "event": "user-detail",
+      "body": {}
+    },
+    "remove": {
+      "type": "app",
+      "method": "delete",
+      "path": "/api/user/%s",
+      "event": "user-remove",
+      "body": {}
+    },
+    "search": {
+      "type": "public",
+      "method": "get",
+      "path": "/api/user",
+      "event": "user-search",
+      "body": {}
+    },
+    "update": {
+      "type": "user",
+      "method": "put",
+      "path": "/api/user/%s",
+      "event": "user-update",
       "body": {}
     }
   }

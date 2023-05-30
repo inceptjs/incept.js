@@ -18,19 +18,16 @@
         "unsigned": false
       },
       "field": {
-        "type": "string",
         "method": "none",
         "attributes": {}
       },
       "validation": [],
       "list": {
-        "type": "string",
         "sticky": true,
         "method": "none",
         "attributes": {}
       },
       "view": {
-        "type": "string",
         "method": "none",
         "attributes": {}
       },
@@ -51,7 +48,6 @@
         "unsigned": false
       },
       "field": {
-        "type": "string",
         "method": "input",
         "attributes": {
           "type": "text"
@@ -65,13 +61,11 @@
         }
       ],
       "list": {
-        "type": "string",
         "sticky": false,
         "method": "none",
         "attributes": {}
       },
       "view": {
-        "type": "string",
         "method": "none",
         "attributes": {}
       },
@@ -90,21 +84,20 @@
         "unsigned": false
       },
       "field": {
-        "type": "Record<string, string>",
         "method": "metadata",
         "attributes": {}
       },
       "validation": [],
       "list": {
-        "type": "undefined",
         "sticky": false,
         "method": "hide",
         "attributes": {}
       },
       "view": {
-        "type": "Record<string, string>",
         "method": "metadata",
-        "attributes": {}
+        "attributes": {
+          "type": "string"
+        }
       },
       "default": {},
       "searchable": false,
@@ -122,21 +115,20 @@
         "unsigned": false
       },
       "field": {
-        "type": "Record<string, string>",
-        "method": "metafiles",
+        "method": "metadata",
         "attributes": {}
       },
       "validation": [],
       "list": {
-        "type": "undefined",
         "sticky": false,
         "method": "hide",
         "attributes": {}
       },
       "view": {
-        "type": "Record<string, string>",
-        "method": "metalinks",
-        "attributes": {}
+        "method": "metadata",
+        "attributes": {
+          "type": "link"
+        }
       },
       "default": {},
       "searchable": false,
@@ -154,19 +146,16 @@
         "unsigned": false
       },
       "field": {
-        "type": "boolean",
         "method": "switch",
         "attributes": {}
       },
       "validation": [],
       "list": {
-        "type": "string",
         "sticky": false,
         "method": "yesno",
         "attributes": {}
       },
       "view": {
-        "type": "string",
         "method": "yesno",
         "attributes": {}
       },
@@ -185,13 +174,11 @@
         "unsigned": false
       },
       "field": {
-        "type": "string",
         "method": "none",
         "attributes": {}
       },
       "validation": [],
       "list": {
-        "type": "string",
         "sticky": false,
         "method": "date",
         "attributes": {
@@ -199,7 +186,6 @@
         }
       },
       "view": {
-        "type": "string",
         "method": "date",
         "attributes": {
           "format": "pretty"
@@ -221,13 +207,11 @@
         "unsigned": false
       },
       "field": {
-        "type": "string",
         "method": "none",
         "attributes": {}
       },
       "validation": [],
       "list": {
-        "type": "string",
         "sticky": false,
         "method": "date",
         "attributes": {
@@ -235,7 +219,6 @@
         }
       },
       "view": {
-        "type": "string",
         "method": "date",
         "attributes": {
           "format": "pretty"
@@ -247,5 +230,42 @@
       "sortable": true
     }
   ],
-  "relations": []
+  "relations": [],
+  "rest": {
+    "create": {
+      "type": "app",
+      "method": "post",
+      "path": "/api/company",
+      "event": "company-create",
+      "body": {}
+    },
+    "detail": {
+      "type": "public",
+      "method": "get",
+      "path": "/api/company/%s",
+      "event": "company-detail",
+      "body": {}
+    },
+    "remove": {
+      "type": "app",
+      "method": "delete",
+      "path": "/api/company/%s",
+      "event": "company-remove",
+      "body": {}
+    },
+    "search": {
+      "type": "public",
+      "method": "get",
+      "path": "/api/company",
+      "event": "company-search",
+      "body": {}
+    },
+    "update": {
+      "type": "company",
+      "method": "put",
+      "path": "/api/company/%s",
+      "event": "company-update",
+      "body": {}
+    }
+  }
 }

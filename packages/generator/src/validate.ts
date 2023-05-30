@@ -16,10 +16,10 @@ export default function generateValidate(
     moduleSpecifier: './types',
     namedImports: [ getTypeName(schema) ]
   });
-  //import validators from '@ev3/client/dist/validators'
+  //import validators from '@inceptjs/client/dist/validators'
   source.addImportDeclaration({
     defaultImport: 'validators',
-    moduleSpecifier: '@ev3/client/dist/validators'
+    moduleSpecifier: '@inceptjs/client/dist/validators'
   });
   //export default function validate(data: Partial<ModelType>)
   source.addFunction({

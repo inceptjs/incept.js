@@ -14,10 +14,10 @@ export default function generateTailwindDefaultForm(
 ) {
   const path = `${schema.name}/components/DefaultForm.tsx`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  //import type { APIResponse, FetchStatuses, FormHandlers } from '@ev3/client/dist/types';
+  //import type { APIResponse, FetchStatuses, FormHandlers } from '@inceptjs/client/dist/types';
   source.addImportDeclaration({
     isTypeOnly: true,
-    moduleSpecifier: '@ev3/client/dist/types',
+    moduleSpecifier: '@inceptjs/client/dist/types',
     namedImports: [ 'APIResponse', 'FetchStatuses', 'FormHandlers' ]
   });
   //import type { ModelType } from '../types';
@@ -31,20 +31,20 @@ export default function generateTailwindDefaultForm(
     defaultImport: 'React',
     moduleSpecifier: 'react'
   });
-  //import { useLanguage } from '@ev3/i18n';
+  //import { useLanguage } from '@inceptjs/translate';
   source.addImportDeclaration({
-    moduleSpecifier: '@ev3/i18n',
+    moduleSpecifier: '@inceptjs/translate',
     namedImports: [ 'useLanguage' ]
   });
-  //import Loader from '@ev3/ui/dist/tailwind/Loader';
+  //import Loader from '@inceptjs/tailwind/dist/Loader';
   source.addImportDeclaration({
     defaultImport: 'Loader',
-    moduleSpecifier: '@ev3/ui/dist/tailwind/Loader'
+    moduleSpecifier: '@inceptjs/tailwind/dist/Loader'
   });
-  //import Button from '@ev3/ui/dist/tailwind/Button';
+  //import Button from '@inceptjs/tailwind/dist/Button';
   source.addImportDeclaration({
     defaultImport: 'Button',
-    moduleSpecifier: '@ev3/ui/dist/tailwind/Button'
+    moduleSpecifier: '@inceptjs/tailwind/dist/Button'
   });
   //import { RoleField, ActiveField, ... } from './FormFields';
   source.addImportDeclaration({
@@ -97,11 +97,12 @@ export default function generateTailwindDefaultForm(
         `)).join('\n')}
         React.createElement(Button, {
           type: 'submit',
-          className: 'mt-2',
+          info: true,
+          className: 'mt-4',
           disabled: status === 'fetching',
-          children: status === 'fetching' ?
-            React.createElement(Loader) :
-            _('Field'),
+          children: status === 'fetching' 
+            ? React.createElement(Loader) 
+            : _('Submit'),
         })
       );
     `)

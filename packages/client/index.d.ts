@@ -1,1 +1,1 @@
-export * from '.ev3/client'
+export * from '.incept/client/index'

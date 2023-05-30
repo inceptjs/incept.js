@@ -18,10 +18,10 @@ export default function generateModelTypes(
   const typeExtendedName = getTypeExtendedName(schema);
   const path = `${schema.name}/types.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  //import type { APIResponse } from '@ev3/client/dist/types';
+  //import type { APIResponse } from '@inceptjs/client/dist/types';
   source.addImportDeclaration({
     isTypeOnly: true,
-    moduleSpecifier: '@ev3/client/dist/types',
+    moduleSpecifier: '@inceptjs/client/dist/types',
     namedImports: [ 'APIResponse' ]
   });
   schema.relations.filter(
@@ -65,16 +65,16 @@ export default function generateModelTypes(
     name: `${capitalize(schema.name)}FormResponse`,
     type: `APIResponse<${getTypeName(schema)}>`
   });
-  //export type ModelViewResponse = APIResponse<ModelTypeExtended>
+  //export type ModelDetailResponse = APIResponse<ModelTypeExtended>
   source.addTypeAlias({
     isExported: true,
-    name: `${capitalize(schema.name)}ViewResponse`,
+    name: `${capitalize(schema.name)}DetailResponse`,
     type: `APIResponse<${getTypeExtendedName(schema)}>`
   });
-  //export type ModelRowsResponse = APIResponse<ModelTypeExtended[]>
+  //export type ModelSearchResponse = APIResponse<ModelTypeExtended[]>
   source.addTypeAlias({
     isExported: true,
-    name: `${capitalize(schema.name)}RowsResponse`,
+    name: `${capitalize(schema.name)}SearchResponse`,
     type: `APIResponse<${getTypeExtendedName(schema)}[]>`
   });
 };

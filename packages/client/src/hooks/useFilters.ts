@@ -1,15 +1,11 @@
-//types
-import type { FormEvent } from 'react';
 //react
 import { useState } from 'react';
 
 export default function useFilters(
-  send: (e: FormEvent) => boolean,
   data: Record<string, any> = {}
 ) {
   const [ filters, setFilters ] = useState(data);
   const handlers = {
-    send,
     filter: (terms: Record<string, any> | boolean) => {
       const filterable = Object.assign({}, filters || {});
       // this is to remove all the sort[*] on the filters.

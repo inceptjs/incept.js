@@ -21,19 +21,19 @@ export default function generateTailwindDefaultView(
     defaultImport: 'React',
     moduleSpecifier: 'react'
   });
-  //import { useLanguage } from '@ev3/i18n';
+  //import { useLanguage } from '@inceptjs/translate';
   source.addImportDeclaration({
-    moduleSpecifier: '@ev3/i18n',
+    moduleSpecifier: '@inceptjs/translate',
     namedImports: [ 'useLanguage' ]
   });
-  //import useStripe from '@ev3/client/dist/hooks/useStripe';
+  //import useStripe from '@inceptjs/client/dist/hooks/useStripe';
   source.addImportDeclaration({
     defaultImport: 'useStripe',
-    moduleSpecifier: '@ev3/client/dist/hooks/useStripe'
+    moduleSpecifier: '@inceptjs/client/dist/hooks/useStripe'
   });
-  //import { Table, Thead, Trow, Tcol } from '@ev3/ui/dist/tailwind/Table';
+  //import { Table, Thead, Trow, Tcol } from '@inceptjs/tailwind/dist/Table';
   source.addImportDeclaration({
-    moduleSpecifier: '@ev3/ui/dist/tailwind/Table',
+    moduleSpecifier: '@inceptjs/tailwind/dist/Table',
     namedImports: [ 'Table', 'Trow', 'Tcol' ]
   });
   //import { RoleFormat, ActiveFormat, ... } from './ListFormats';
