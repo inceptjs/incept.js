@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from '@inceptjs/client/dist/types';
+import type { SchemaConfig } from 'inceptjs/dist/types';
 //helpers
 import { capitalize, getTypeExtendedName } from '../../utils';
 
@@ -10,10 +10,10 @@ export default function generateTailwindDefaultTable(
 ) {
   const path = `${schema.name}/components/DefaultTable.tsx`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  //import type { FilterHandlers } from '@inceptjs/client/dist/types';
+  //import type { FilterHandlers } from 'inceptjs/dist/client/types';
   source.addImportDeclaration({
     isTypeOnly: true,
-    moduleSpecifier: '@inceptjs/client/dist/types',
+    moduleSpecifier: 'inceptjs/dist/client/types',
     namedImports: [ 'FilterHandlers' ]
   });
   //import type { ModelTypeExtended } from '../types';
@@ -32,10 +32,10 @@ export default function generateTailwindDefaultTable(
     moduleSpecifier: '@inceptjs/translate',
     namedImports: [ 'useLanguage' ]
   });
-  //import useStripe from '@inceptjs/client/dist/hooks/useStripe';
+  //import useStripe from 'inceptjs/dist/client/useStripe';
   source.addImportDeclaration({
     defaultImport: 'useStripe',
-    moduleSpecifier: '@inceptjs/client/dist/hooks/useStripe'
+    moduleSpecifier: 'inceptjs/dist/client/useStripe'
   });
   //import { Table, Thead, Trow, Tcol } from '@inceptjs/tailwind/dist/Table';
   source.addImportDeclaration({

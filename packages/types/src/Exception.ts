@@ -1,3 +1,5 @@
+type ErrorList = Record<string, string>|Record<string, string>[];
+
 /**
  * Exceptions are used to give more information
  * of an error that has occured
@@ -11,7 +13,7 @@ export default class Exception extends Error {
   /**
    * Itemized errors
    */
-  public errors: Record<string, string> = {};
+  public errors: ErrorList = {};
 
   /**
    * General use expressive reasons
@@ -27,7 +29,7 @@ export default class Exception extends Error {
   /**
    * Expressive error report
    */
-  static forErrorsFound(errors: Record<string, string>): Exception {
+  static forErrorsFound(errors: ErrorList): Exception {
     const exception = new this('Invalid Parameters');
     exception.errors = errors;
     return exception;

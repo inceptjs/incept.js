@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from '@inceptjs/client/dist/types';
+import type { SchemaConfig } from 'inceptjs/dist/types';
 //helpers
 import { 
   capitalize, 
@@ -14,11 +14,17 @@ export default function generateTailwindDefaultFilters(
 ) {
   const path = `${schema.name}/components/DefaultFilters.tsx`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  //import type { APIResponse, FetchStatuses, FilterHandlers } from '@inceptjs/client/dist/types';
+  //import type { APIResponse } from 'inceptjs/dist/types';
   source.addImportDeclaration({
     isTypeOnly: true,
-    moduleSpecifier: '@inceptjs/client/dist/types',
-    namedImports: [ 'APIResponse', 'FetchStatuses', 'FilterHandlers' ]
+    moduleSpecifier: 'inceptjs/dist/types',
+    namedImports: [ 'APIResponse' ]
+  });
+  //import type { FetchStatuses, FormHandlers } from 'inceptjs/dist/client/types';
+  source.addImportDeclaration({
+    isTypeOnly: true,
+    moduleSpecifier: 'inceptjs/dist/client/types',
+    namedImports: [ 'FetchStatuses', 'FormHandlers' ]
   });
   //import type { ModelType } from '../types';
   source.addImportDeclaration({

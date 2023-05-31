@@ -338,10 +338,6 @@ export default class EventEmitter<Args extends any[]> {
    */
   use(...emitters: EventEmitter<Args>[]): EventEmitter<Args> {
     for (let i = 0; i < emitters.length; i++) {
-      Exception.require(
-        emitters[i] instanceof EventEmitter, 
-        `Argument ${i + 1} expected EventEmitter`
-      );
       const emitter = emitters[i];
       //first concat their regexp with this one
       this.regexp = this.regexp.concat(emitter.regexp);

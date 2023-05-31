@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from '@inceptjs/client/dist/types';
+import type { SchemaConfig } from 'inceptjs/dist/types';
 //helpers
 import { VariableDeclarationKind } from 'ts-morph';
 import { formats } from '@inceptjs/react/dist/tokens';

@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from '@inceptjs/client/dist/types';
+import type { SchemaConfig } from 'inceptjs/dist/types';
 //helpers
 import { getTypeExtendedName } from '../utils';
 
@@ -28,15 +28,15 @@ export default function generateUseSearch(
     moduleSpecifier: 'react',
     namedImports: [ 'useState', 'useEffect' ]
   });
-  //import useFetch from '@inceptjs/client/dist/hooks/useFetch';
+  //import useFetch from 'inceptjs/dist/client/useFetch';
   source.addImportDeclaration({
     defaultImport: 'useFetch',
-    moduleSpecifier: '@inceptjs/client/dist/hooks/useFetch'
+    moduleSpecifier: 'inceptjs/dist/client/useFetch'
   });
-  //import useFilters from '@inceptjs/client/dist/hooks/useFilters';
+  //import useFilters from 'inceptjs/dist/client/useFilters';
   source.addImportDeclaration({
     defaultImport: 'useFilters',
-    moduleSpecifier: '@inceptjs/client/dist/hooks/useFilters'
+    moduleSpecifier: 'inceptjs/dist/client/useFilters'
   });
   //export default function useSearch(query: Record<string, any>, options: AxiosRequestConfig = {})
   source.addFunction({
@@ -58,7 +58,7 @@ export default function generateUseSearch(
       useEffect(() => {
         if (serialize(filters) === serialize(last)) return;
         setLast(filters);
-        action.call(filters);
+        action.call({ query: filters });
       }, [ filters ]);
       return {
         filters,

@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from '@inceptjs/client/dist/types';
+import type { SchemaConfig } from 'inceptjs/dist/types';
 //helpers
 import { getTypeExtendedName } from '../utils';
 
@@ -28,10 +28,10 @@ export default function generateUseDetail(
     moduleSpecifier: 'react',
     namedImports: [ 'useEffect' ]
   });
-  //import useFetch from '@inceptjs/client/dist/hooks/useFetch';
+  //import useFetch from 'inceptjs/dist/client/useFetch';
   source.addImportDeclaration({
     defaultImport: 'useFetch',
-    moduleSpecifier: '@inceptjs/client/dist/hooks/useFetch'
+    moduleSpecifier: 'inceptjs/dist/client/useFetch'
   });
   //export default function useDetail(id: string, options: AxiosRequestConfig = {})
   source.addFunction({
@@ -49,7 +49,7 @@ export default function generateUseDetail(
       );
       useEffect(() => {
         if (!id) return;
-        action.call(id);
+        action.call({ params: { id } });
       }, [ id ]);
       return {
         reset: action.reset,

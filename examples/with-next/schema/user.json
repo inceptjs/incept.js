@@ -15,7 +15,39 @@
         "length": 255,
         "required": true,
         "unique": true,
-        "unsigned": false
+        "unsigned": false,
+        "primary": true
+      },
+      "field": {
+        "method": "none",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "sticky": true,
+        "method": "none",
+        "attributes": {}
+      },
+      "view": {
+        "method": "none",
+        "attributes": {}
+      },
+      "default": "cuid()",
+      "searchable": false,
+      "filterable": false,
+      "sortable": false
+    },
+    {
+      "label": "Company ID",
+      "name": "companyId",
+      "type": "string",
+      "data": {
+        "type": "VARCHAR",
+        "length": 255,
+        "required": false,
+        "unique": false,
+        "unsigned": false,
+        "primary": false
       },
       "field": {
         "method": "none",
@@ -45,7 +77,8 @@
         "length": 255,
         "required": true,
         "unique": false,
-        "unsigned": false
+        "unsigned": false,
+        "primary": false
       },
       "field": {
         "method": "input",
@@ -82,7 +115,8 @@
         "length": 255,
         "required": true,
         "unique": true,
-        "unsigned": false
+        "unsigned": false,
+        "primary": false
       },
       "field": {
         "method": "input",
@@ -119,7 +153,8 @@
         "length": 255,
         "required": true,
         "unique": false,
-        "unsigned": false
+        "unsigned": false,
+        "primary": false
       },
       "field": {
         "method": "password",
@@ -159,7 +194,8 @@
         "length": 255,
         "required": true,
         "unique": false,
-        "unsigned": false
+        "unsigned": false,
+        "primary": false
       },
       "field": {
         "method": "select",
@@ -210,7 +246,8 @@
         "type": "DATETIME",
         "required": false,
         "unique": false,
-        "unsigned": false
+        "unsigned": false,
+        "primary": false
       },
       "field": {
         "method": "none",
@@ -242,7 +279,8 @@
         "type": "BOOLEAN",
         "required": false,
         "unique": false,
-        "unsigned": false
+        "unsigned": false,
+        "primary": false
       },
       "field": {
         "method": "switch",
@@ -270,7 +308,8 @@
         "type": "DATETIME",
         "required": true,
         "unique": false,
-        "unsigned": false
+        "unsigned": false,
+        "primary": false
       },
       "field": {
         "method": "none",
@@ -303,7 +342,8 @@
         "type": "DATETIME",
         "required": true,
         "unique": false,
-        "unsigned": false
+        "unsigned": false,
+        "primary": false
       },
       "field": {
         "method": "none",
@@ -332,8 +372,10 @@
   "relations": [
     {
       "name": "company",
-      "type": 0,
-      "label": "Company"
+      "schema": "company",
+      "from": "companyId",
+      "to": "id",
+      "label": "User Company"
     }
   ],
   "rest": {
@@ -341,36 +383,46 @@
       "type": "app",
       "method": "post",
       "path": "/api/user",
-      "event": "user-create",
-      "body": {}
+      "event": "system-object-create",
+      "body": {
+        "schema": "user"
+      }
     },
     "detail": {
       "type": "public",
       "method": "get",
-      "path": "/api/user/%s",
-      "event": "user-detail",
-      "body": {}
+      "path": "/api/user/:id",
+      "event": "system-object-detail",
+      "body": {
+        "schema": "user"
+      }
     },
     "remove": {
       "type": "app",
       "method": "delete",
-      "path": "/api/user/%s",
-      "event": "user-remove",
-      "body": {}
+      "path": "/api/user/:id",
+      "event": "system-object-remove",
+      "body": {
+        "schema": "user"
+      }
     },
     "search": {
       "type": "public",
       "method": "get",
       "path": "/api/user",
-      "event": "user-search",
-      "body": {}
+      "event": "system-collection-search",
+      "body": {
+        "schema": "user"
+      }
     },
     "update": {
       "type": "user",
       "method": "put",
-      "path": "/api/user/%s",
-      "event": "user-update",
-      "body": {}
+      "path": "/api/user/:id",
+      "event": "system-object-update",
+      "body": {
+        "schema": "user"
+      }
     }
   }
 }

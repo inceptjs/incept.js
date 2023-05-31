@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from '@inceptjs/client/dist/types';
+import type { SchemaConfig } from 'inceptjs/dist/types';
 //helpers
 import { 
   capitalize, 
@@ -18,10 +18,10 @@ export default function generateModelTypes(
   const typeExtendedName = getTypeExtendedName(schema);
   const path = `${schema.name}/types.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  //import type { APIResponse } from '@inceptjs/client/dist/types';
+  //import type { APIResponse } from 'inceptjs/dist/types';
   source.addImportDeclaration({
     isTypeOnly: true,
-    moduleSpecifier: '@inceptjs/client/dist/types',
+    moduleSpecifier: 'inceptjs/dist/types',
     namedImports: [ 'APIResponse' ]
   });
   schema.relations.filter(
@@ -52,9 +52,11 @@ export default function generateModelTypes(
       type: `${typeName} & {
         ${schema.relations.filter(
           relation => !!join[relation.name]
-        ).map(relation => (
-          `${relation.name}${relation.type !== 1 ? '?' : ''}: ${getTypeExtendedName(join[relation.name])}`
-        )).join(',\n')}
+        ).map(relation => {
+          const column = schema.columns.filter(column => column.name === relation.from)[0];
+          const optional = !column || !column.data.required;
+          return `${relation.name}${optional ? '?' : ''}: ${getTypeExtendedName(join[relation.name])}`
+        }).join(',\n')}
       }`
     });
   }

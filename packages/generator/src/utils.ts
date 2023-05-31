@@ -1,4 +1,4 @@
-import type { SchemaConfig, SchemaColumn } from '@inceptjs/client/dist/types';
+import type { SchemaConfig, SchemaColumn } from 'inceptjs/dist/types';
 
 export function getTypeName(schema: SchemaConfig) {
   return `${capitalize(schema.name)}Type`;

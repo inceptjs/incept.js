@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "ts-morph": "18.0.0",
-    "@inceptjs/client": "0.0.30",
+    "inceptjs": "0.0.30",
     "@inceptjs/react": "0.0.30",
     "@inceptjs/tailwind": "0.0.30",
     "@inceptjs/types": "0.0.30"

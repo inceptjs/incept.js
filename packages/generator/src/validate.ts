@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from '@inceptjs/client/dist/types';
+import type { SchemaConfig } from 'inceptjs/dist/types';
 //helpers
 import { getTypeName } from './utils';
 
@@ -16,10 +16,10 @@ export default function generateValidate(
     moduleSpecifier: './types',
     namedImports: [ getTypeName(schema) ]
   });
-  //import validators from '@inceptjs/client/dist/validators'
+  //import validators from 'inceptjs/dist/validators'
   source.addImportDeclaration({
     defaultImport: 'validators',
-    moduleSpecifier: '@inceptjs/client/dist/validators'
+    moduleSpecifier: 'inceptjs/dist/validators'
   });
   //export default function validate(data: Partial<ModelType>)
   source.addFunction({

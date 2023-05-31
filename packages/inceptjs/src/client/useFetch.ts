@@ -1,9 +1,28 @@
 //types
-import type { APIResponse, FetchStatuses } from '../types';
+import type { APIResponse } from '../types';
+import type { 
+  FetchStatuses, 
+  FetchRouteParams, 
+  FetchCallConfig 
+} from './types';
 //hooks
 import { useState } from 'react';
 //others
 import axios from 'axios';
+
+function route(path: string, route: FetchRouteParams) {
+  for (const arg of route.args) {
+    path = path.replace('*', String(arg));
+  }
+
+  for (const param in route.params) {
+    path = path
+      .replace(`:${param}`, String(route.params[param]))
+      .replace(`[${param}]`, String(route.params[param]));
+  }
+
+  return path;
+}
 
 export default function useFetch<Model = any>(
   method: string, 
@@ -20,24 +39,18 @@ export default function useFetch<Model = any>(
     set(undefined);
     setStatus('pending');
   };
-  const call = async (...args: any[]) => {
+  const call = async (options: FetchCallConfig) => {
     const config: Record<string, any> = { ...options, method };
-    let path = url;
-    for (const arg of args ) {
-      if (typeof arg === 'string' || typeof arg === 'number') {
-        path = path.replace('%s', String(arg));
-      } else if (typeof arg === 'object') {
-        if (method.toUpperCase() === 'GET') {
-          config.params = arg;
-        } else {
-          if (config.data) {
-            config.params = arg;
-          } else {
-            config.data = arg;
-          }
-        }
-      }
+    if (options.query) {
+      config.params = options.query;
     }
+    if (options.data) {
+      config.data = options.data;
+    }
+
+    const args = options.args || [];
+    const params = options.params || {};
+    const path = route(url, { args, params });
 
     setStatus('fetching');
     const response = await axios(path, config).catch(e => ({

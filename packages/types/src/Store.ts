@@ -110,7 +110,7 @@ export default class Store {
 
     path.forEach(step => pointer = pointer[step]);
 
-    return pointer[last]
+    return pointer[last] as T;
   }
 
   /**

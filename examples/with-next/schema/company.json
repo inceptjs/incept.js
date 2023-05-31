@@ -15,7 +15,8 @@
         "length": 255,
         "required": true,
         "unique": true,
-        "unsigned": false
+        "unsigned": false,
+        "primary": true
       },
       "field": {
         "method": "none",
@@ -45,7 +46,8 @@
         "length": 255,
         "required": true,
         "unique": true,
-        "unsigned": false
+        "unsigned": false,
+        "primary": false
       },
       "field": {
         "method": "input",
@@ -81,7 +83,8 @@
         "type": "JSON",
         "required": true,
         "unique": false,
-        "unsigned": false
+        "unsigned": false,
+        "primary": false
       },
       "field": {
         "method": "metadata",
@@ -112,7 +115,8 @@
         "type": "JSON",
         "required": true,
         "unique": false,
-        "unsigned": false
+        "unsigned": false,
+        "primary": false
       },
       "field": {
         "method": "metadata",
@@ -143,7 +147,8 @@
         "type": "BOOLEAN",
         "required": false,
         "unique": false,
-        "unsigned": false
+        "unsigned": false,
+        "primary": false
       },
       "field": {
         "method": "switch",
@@ -171,7 +176,8 @@
         "type": "DATETIME",
         "required": true,
         "unique": false,
-        "unsigned": false
+        "unsigned": false,
+        "primary": false
       },
       "field": {
         "method": "none",
@@ -204,7 +210,8 @@
         "type": "DATETIME",
         "required": true,
         "unique": false,
-        "unsigned": false
+        "unsigned": false,
+        "primary": false
       },
       "field": {
         "method": "none",

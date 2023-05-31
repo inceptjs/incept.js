@@ -1,5 +1,5 @@
 //types
-import type { SchemaConfig } from '@inceptjs/client/dist/types';
+import type { SchemaConfig } from 'inceptjs/dist/types';
 //generators
 import generateIndex from '@inceptjs/generator/dist/index';
 import generateTypes from '@inceptjs/generator/dist/types';
@@ -11,10 +11,10 @@ import generateUseUpdate from '@inceptjs/generator/dist/hooks/useUpdate';
 import generateUseSearch from '@inceptjs/generator/dist/hooks/useSearch';
 import generateUseDetail from '@inceptjs/generator/dist/hooks/useDetail';
 
-//import generateReactDefaultFilters from '@inceptjs/generator/dist/components/react/DefaultFilters';
-//import generateReactDefaultForm from '@inceptjs/generator/dist/components/react/DefaultForm';
-//import generatereactDefaultTable from '@inceptjs/generator/dist/components/react/DefaultTable';
-//import generateReactDefaultView from '@inceptjs/generator/dist/components/react/DefaultView';
+import generateReactDefaultFilters from '@inceptjs/generator/dist/components/react/DefaultFilters';
+import generateReactDefaultForm from '@inceptjs/generator/dist/components/react/DefaultForm';
+import generatereactDefaultTable from '@inceptjs/generator/dist/components/react/DefaultTable';
+import generateReactDefaultView from '@inceptjs/generator/dist/components/react/DefaultView';
 
 import generateTailwindDefaultFilters from '@inceptjs/generator/dist/components/tailwind/DefaultFilters';
 import generateTailwindDefaultForm from '@inceptjs/generator/dist/components/tailwind/DefaultForm';
@@ -30,7 +30,7 @@ import generateViewFormats from '@inceptjs/generator/dist/components/ViewFormats
 import fs from 'fs';
 import path from 'path';
 import { Project, IndentationText } from 'ts-morph';
-import { getConfig, getSchemaFolder, findNodeModules } from '../utils';
+import { getConfig, getSchemaFolder, findNodeModules } from 'inceptjs/dist/server/utils';
 
 const cwd = process.cwd();
 
@@ -110,10 +110,10 @@ export default function generate(ui = 'react') {
       generateTailwindDefaultTable(directory, schemas[name]);
       generateTailwindDefaultView(directory, schemas[name]);
     } else {
-      //generateReactDefaultFilters(directory, schemas[name]);
-      //generateReactDefaultForm(directory, schemas[name]);
-      //generatereactDefaultTable(directory, schemas[name]);
-      //generateReactDefaultView(directory, schemas[name]);
+      generateReactDefaultFilters(directory, schemas[name]);
+      generateReactDefaultForm(directory, schemas[name]);
+      generatereactDefaultTable(directory, schemas[name]);
+      generateReactDefaultView(directory, schemas[name]);
     }
   }
   
