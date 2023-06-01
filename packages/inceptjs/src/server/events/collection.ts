@@ -2,9 +2,11 @@ import type { NestedObject, ScalarType } from '../../types';
 
 import Exception from '../types/Exception';
 import Schema from '../types/Schema';
-
 import app from '../app';
 
+/**
+ * Creates many new objects
+ */
 app.on('system-collection-create', async (req, res) => {
   //do nothing if there is already a response
   if (res.get()) return;
@@ -32,6 +34,9 @@ app.on('system-collection-create', async (req, res) => {
   await app.emit('system-store-insert', request, res);
 });
 
+/**
+ * Removes many objects
+ */
 app.on('system-collection-remove', async (req, res) => {
   //do nothing if there is already a response
   if (res.get()) return;
@@ -49,6 +54,9 @@ app.on('system-collection-remove', async (req, res) => {
   await app.emit('system-store-delete', request, res);
 });
 
+/**
+ * Searches for specific objects
+ */
 app.on('system-collection-search', async (req, res) => {
   //do nothing if there is already a response
   if (res.get()) return;
@@ -82,6 +90,9 @@ app.on('system-collection-search', async (req, res) => {
   await app.emit('system-store-search', request, res);
 });
 
+/**
+ * Updates many objects
+ */
 app.on('system-collection-update', async (req, res) => {
   //do nothing if there is already a response
   if (res.get()) return;
