@@ -111,4 +111,14 @@ export default class Framework extends Router {
   response(resource: ServerResponse): Response<APIResponse> {
     return new Response<APIResponse>(resource);
   }
+
+  /**
+   * Handles a payload using events and sends it off
+   */
+  async send(im: IncomingMessage, sr: ServerResponse) {
+    //handle the payload
+    const response = await this.handle(im, sr);
+    //send the response
+    response.send();
+  }
 }
