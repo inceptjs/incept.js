@@ -17,6 +17,17 @@ export type APIResponse<T = any> = {
   total?: number
 };
 
+export type Method = 'all'
+  | 'connect'
+  | 'delete'
+  | 'head'
+  | 'get'
+  | 'options'
+  | 'post'
+  | 'put'
+  | 'patch'
+  | 'trace';
+
 export type FieldMethod = 'autocomplete'
   | 'checkbox'
   | 'checklist'

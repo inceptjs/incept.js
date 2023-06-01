@@ -1,19 +1,14 @@
-import type Request from '../types/Request';
-import type Response from '../types/Response';
-import type { APIResponse, NestedObject, ScalarType } from '../../types';
+import type { NestedObject, ScalarType } from '../../types';
 
 import Exception from '../types/Exception';
-import EventEmitter from '@inceptjs/types/dist/EventEmitter';
 import Schema from '../types/Schema';
 
-const emitter = new EventEmitter<
-  [ Request, Response<APIResponse>, Exception? ]
->();
+import app from '../app';
 
 /**
  * Creates a new object
  */
-emitter.on('system-object-create', async (req, res) => {
+app.on('system-object-create', async (req, res) => {
   //do nothing if there is already a response
   if (res.get()) return;
   //schema is required
@@ -35,13 +30,13 @@ emitter.on('system-object-create', async (req, res) => {
   request.stage('table', schema.name);
   request.stage('data', schema.prepare(data));
   //let the system store handle the request
-  await emitter.emit('system-store-insert', request, res);
+  await app.emit('system-store-insert', request, res);
 });
 
 /**
  * Returns an object
  */
-emitter.on('system-object-detail', async (req, res) => {
+app.on('system-object-detail', async (req, res) => {
   //do nothing if there is already a response
   if (res.get()) return;
   //schema is required
@@ -87,13 +82,13 @@ emitter.on('system-object-detail', async (req, res) => {
   request.stage('start', 0);
   request.stage('range', 1);
   //let the system store handle the request
-  await emitter.emit('system-store-insert', request, res);
+  await app.emit('system-store-insert', request, res);
 });
 
 /**
  * Deletes an object
  */
-emitter.on('system-object-remove', async (req, res) => {
+app.on('system-object-remove', async (req, res) => {
   //do nothing if there is already a response
   if (res.get()) return;
   //schema is required
@@ -123,13 +118,13 @@ emitter.on('system-object-remove', async (req, res) => {
   request.stage('table', schema.name);
   request.stage('filters', filters);
   //let the system store handle the request
-  await emitter.emit('system-store-delete', request, res);
+  await app.emit('system-store-delete', request, res);
 });
 
 /**
  * Updates an object
  */
-emitter.on('system-object-update', async (req, res) => {
+app.on('system-object-update', async (req, res) => {
   //do nothing if there is already a response
   if (res.get()) return;
   //schema is required
@@ -168,7 +163,5 @@ emitter.on('system-object-update', async (req, res) => {
   request.stage('data', schema.prepare(req.params));
   request.stage('filters', filters);
   //let the system store handle the request
-  await emitter.emit('system-store-update', request, res);
+  await app.emit('system-store-update', request, res);
 });
-
-export default emitter

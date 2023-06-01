@@ -66,6 +66,16 @@ export default class Schema<Model = any> {
   }
 
   /**
+   * Gets all routes from all schemas
+   */
+  public static get routes() {
+    return Object
+      .values(this._schemas)
+      .map(schema => Object.values(schema.rest))
+      .flat(1);
+  }
+
+  /**
    * The schema config
    */
   protected _schema: SchemaConfig;
@@ -154,6 +164,13 @@ export default class Schema<Model = any> {
     });
 
     return relations;
+  }
+
+  /**
+   * Returns the schema rest routes
+   */
+  get routes() {
+    return Object.values(this._schema.rest);
   }
 
   /**

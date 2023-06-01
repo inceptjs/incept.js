@@ -61,6 +61,13 @@ export default class Request {
   }
 
   /**
+   * Returns the request method
+   */
+  public get method() {
+    return this._resource.method || 'GET';
+  }
+
+  /**
    * Returns the post data from the request
    * The body could be a string and the post
    * is guaranteed to be an object.

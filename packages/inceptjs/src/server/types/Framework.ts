@@ -1,15 +1,13 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 import type { APIResponse } from '../../types';
 
-import EventEmitter from '@inceptjs/types/dist/EventEmitter';
 import Exception from './Exception';
 
+import Router from './Router';
 import Request from './Request';
 import Response from './Response';
 
-export default class Framework extends EventEmitter<
-  [ Request, Response<APIResponse>, Exception? ]
-> {
+export default class Framework extends Router {
   /**
    * Plugin registry
    */
@@ -40,8 +38,12 @@ export default class Framework extends EventEmitter<
     try {
       //let middleware contribute before routing
       await this.emit('open', request, response);
-      //if it was already sent off 
+      //if it was not already sent off 
       if (!sr.headersSent) {
+        //handle the route
+        const event = request.method + ' ' + request.url.pathname;
+        const route = this.route(event);
+        await route.handle(request, response);
         //let middleware contribute to populating resources
         // NOTE: dispatchers should use this instead of close
         await this.emit('dispatch', request, response);

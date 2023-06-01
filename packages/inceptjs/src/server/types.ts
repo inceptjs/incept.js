@@ -1,5 +1,10 @@
 import type { IncomingMessage } from 'http';
-import type { NestedScalarObject } from '../types';
+import type { EventAction } from '@inceptjs/types/dist/EventEmitter';
+import type Exception from '@inceptjs/types/dist/Exception';
+
+import type Request from './types/Request';
+import type Response from './types/Response';
+import type { NestedScalarObject, APIResponse } from '../types';
 
 export type ExpressLikeMessage = IncomingMessage & {
   //params?: NestedScalarObject;
@@ -8,6 +13,10 @@ export type ExpressLikeMessage = IncomingMessage & {
   //cookies?: NestedScalarObject;
   //headers?: NestedScalarObject;
 };
+
+export type RouteAction = EventAction<
+  [ Request, Response<APIResponse>, Exception? ]
+>;
 
 export type RouteParams = {
   args: string[];
