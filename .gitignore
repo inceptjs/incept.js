@@ -158,8 +158,6 @@ archives
 cockroach-data
 
 # TMP
-docs
 packages/admin
 packages/auth
-packages/storm
 packages/studio
