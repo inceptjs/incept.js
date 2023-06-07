@@ -1,5 +1,5 @@
 //types
-import type { FieldTimeProps } from '@inceptjs/react/dist/types';
+import type { FieldTimeProps } from '@inceptjs/react';
 //react
 import React from 'react';
 //components

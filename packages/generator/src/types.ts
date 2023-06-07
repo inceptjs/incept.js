@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from 'inceptjs/dist/types';
+import type { SchemaConfig } from 'inceptjs/server';
 //helpers
 import { 
   capitalize, 
@@ -18,10 +18,10 @@ export default function generateModelTypes(
   const typeExtendedName = getTypeExtendedName(schema);
   const path = `${schema.name}/types.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  //import type { APIResponse } from 'inceptjs/dist/types';
+  //import type { APIResponse } from 'inceptjs/types';
   source.addImportDeclaration({
     isTypeOnly: true,
-    moduleSpecifier: 'inceptjs/dist/types',
+    moduleSpecifier: 'inceptjs/types',
     namedImports: [ 'APIResponse' ]
   });
   schema.relations.filter(

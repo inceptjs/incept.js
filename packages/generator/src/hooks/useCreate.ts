@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from 'inceptjs/dist/types';
+import type { SchemaConfig } from 'inceptjs/server';
 //helpers
 import { getTypeName } from '../utils';
 
@@ -29,15 +29,15 @@ export default function generateUseCreate(
     moduleSpecifier: '../types',
     namedImports: [ getTypeName(schema) ]
   });
-  //import useFetch from 'inceptjs/dist/client/useFetch';
+  //import useFetch from 'inceptjs/client/useFetch';
   source.addImportDeclaration({
     defaultImport: 'useFetch',
-    moduleSpecifier: 'inceptjs/dist/client/useFetch'
+    moduleSpecifier: 'inceptjs/client/useFetch'
   });
-  //import useForm from 'inceptjs/dist/client/useForm';
+  //import useForm from 'inceptjs/client/useForm';
   source.addImportDeclaration({
     defaultImport: 'useForm',
-    moduleSpecifier: 'inceptjs/dist/client/useForm'
+    moduleSpecifier: 'inceptjs/client/useForm'
   });
   //import validate from '../validate';
   source.addImportDeclaration({

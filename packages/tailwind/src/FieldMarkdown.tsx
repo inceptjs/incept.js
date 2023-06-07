@@ -1,5 +1,5 @@
 //types
-import type { FieldMarkdownProps } from '@inceptjs/react/dist/types';
+import type { FieldMarkdownProps } from '@inceptjs/react';
 //react
 import React from 'react';
 //using react-dom/server to render markdown... on the client side

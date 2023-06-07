@@ -1,5 +1,5 @@
 //types
-import type { FieldInputProps } from '@inceptjs/react/dist/types';
+import type { FieldInputProps } from '@inceptjs/react';
 //react
 import React from 'react';
 //hooks

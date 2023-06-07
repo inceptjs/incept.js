@@ -1,0 +1,7 @@
+{
+  "schemas": "./schema",
+  "plugins": [
+    "@inceptjs/system",
+    "@inceptjs/storm/mysql"
+  ]
+}

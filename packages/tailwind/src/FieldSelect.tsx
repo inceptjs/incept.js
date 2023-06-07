@@ -1,5 +1,8 @@
 //types
-import type { FieldSelectDropdownProps, FieldSelectProps } from '@inceptjs/react/dist/types';
+import type { 
+  FieldSelectDropdownProps, 
+  FieldSelectProps 
+} from '@inceptjs/react';
 //react
 import React from 'react';
 //components
@@ -7,7 +10,10 @@ import Input from './FieldInput';
 //hooks
 import useSelect from '@inceptjs/react/dist/useFieldSelect';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '@inceptjs/react/dist/utils';
+import { 
+  makeGroupStyles, 
+  makeGroupClasses 
+} from '@inceptjs/react/dist/utils';
 
 /**
  * Select Dropdown

@@ -1,5 +1,5 @@
 //types
-import type { FieldCheckboxProps } from '@inceptjs/react/dist/types';
+import type { FieldCheckboxProps } from '@inceptjs/react';
 //react
 import React from 'react';
 //hooks

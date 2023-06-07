@@ -1,0 +1,60 @@
+{
+  "name": "@inceptjs/storm",
+  "version": "0.0.30",
+  "license": "MIT",
+  "description": "Simple typescript object relation mapping.",
+  "author": "Chris <chris@incept.asia>",
+  "homepage": "https://github.com/inceptjs/incept.js/tree/main/packages/types",
+  "bugs": "https://github.com/inceptjs/incept.js/issues",
+  "repository": "inceptjs/incept.js",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc"
+  },
+  "engines": {
+    "node": ">=16.20.0"
+  },
+  "dependencies": {
+    "@inceptjs/types": "0.0.30",
+    "date-fns": "2.30.0",
+    "nanoid": "4.0.2"
+  },
+  "peerDependencies": {
+    "better-sqlite3": "^8.4.0",
+    "ioredis": "^5.3.2",
+    "mongodb": "^5.5.0",
+    "mysql2": "^3.3.3",
+    "pg": "^8.11.0"
+  },
+  "peerDependenciesMeta": {
+    "better-sqlite3": {
+      "optional": true
+    },
+    "ioredis": {
+      "optional": true
+    },
+    "mongodb": {
+      "optional": true
+    },
+    "mysql2": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@jest/globals": "29.5.0",
+    "@types/better-sqlite3": "7.6.4",
+    "@types/node": "16.11.7",
+    "@types/pg": "8.10.1",
+    "better-sqlite3": "8.4.0",
+    "ioredis": "5.3.2",
+    "jest": "29.5.0",
+    "mongodb": "5.5.0",
+    "mysql2": "3.3.3",
+    "pg": "8.11.0",
+    "ts-jest": "29.0.5",
+    "ts-node": "10.9.1",
+    "typescript": "5.0.4"
+  }
+}

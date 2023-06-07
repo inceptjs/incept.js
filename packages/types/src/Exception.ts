@@ -1,4 +1,4 @@
-type ErrorList = Record<string, string>|Record<string, string>[];
+import { ErrorList } from './types';
 
 /**
  * Exceptions are used to give more information

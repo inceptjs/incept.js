@@ -1,5 +1,5 @@
 //types
-import type { FieldCountryProps } from '@inceptjs/react/dist/types';
+import type { FieldCountryProps } from '@inceptjs/react';
 //react
 import React from 'react';
 //components

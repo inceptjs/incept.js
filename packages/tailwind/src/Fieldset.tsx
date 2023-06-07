@@ -1,5 +1,5 @@
 //types
-import type { FieldsetProps, FieldsProps } from '@inceptjs/react/dist/types';
+import type { FieldsetProps, FieldsProps } from '@inceptjs/react';
 //react
 import React from 'react';
 //components

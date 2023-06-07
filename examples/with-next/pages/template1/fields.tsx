@@ -1,34 +1,34 @@
-import Control from '@inceptjs/tailwind/dist/Control';
+import Control from '@inceptjs/tailwind/Control';
 
-import Input from '@inceptjs/tailwind/dist/FieldInput';
-import FieldNumber from '@inceptjs/tailwind/dist/FieldNumber';
-import Password from '@inceptjs/tailwind/dist/FieldPassword';
-import InputMask from '@inceptjs/tailwind/dist/FieldMask';
-import FieldFile from '@inceptjs/tailwind/dist/FieldFile';
-import FieldFilelist from '@inceptjs/tailwind/dist/FieldFilelist';
-import FieldImage from '@inceptjs/tailwind/dist/FieldImage';
-import FieldImagelist from '@inceptjs/tailwind/dist/FieldImagelist';
+import Input from '@inceptjs/tailwind/FieldInput';
+import FieldNumber from '@inceptjs/tailwind/FieldNumber';
+import Password from '@inceptjs/tailwind/FieldPassword';
+import InputMask from '@inceptjs/tailwind/FieldMask';
+import FieldFile from '@inceptjs/tailwind/FieldFile';
+import FieldFilelist from '@inceptjs/tailwind/FieldFilelist';
+import FieldImage from '@inceptjs/tailwind/FieldImage';
+import FieldImagelist from '@inceptjs/tailwind/FieldImagelist';
 
-import Textarea from '@inceptjs/tailwind/dist/FieldTextarea';
-import Markdown from '@inceptjs/tailwind/dist/FieldMarkdown';
+import Textarea from '@inceptjs/tailwind/FieldTextarea';
+import Markdown from '@inceptjs/tailwind/FieldMarkdown';
 
-import Checkbox from '@inceptjs/tailwind/dist/FieldCheckbox';
-import Radio from '@inceptjs/tailwind/dist/FieldRadio';
-import Switch from '@inceptjs/tailwind/dist/FieldSwitch';
+import Checkbox from '@inceptjs/tailwind/FieldCheckbox';
+import Radio from '@inceptjs/tailwind/FieldRadio';
+import Switch from '@inceptjs/tailwind/FieldSwitch';
 
-import Select from '@inceptjs/tailwind/dist/FieldSelect';
-import SelectCountry from '@inceptjs/tailwind/dist/FieldCountry';
-import SelectCurrency from '@inceptjs/tailwind/dist/FieldCurrency';
+import Select from '@inceptjs/tailwind/FieldSelect';
+import SelectCountry from '@inceptjs/tailwind/FieldCountry';
+import SelectCurrency from '@inceptjs/tailwind/FieldCurrency';
 
-import Autocomplete from '@inceptjs/tailwind/dist/FieldAutocomplete';
+import Autocomplete from '@inceptjs/tailwind/FieldAutocomplete';
 
-import FieldDate from '@inceptjs/tailwind/dist/FieldDate';
-import FieldTime from '@inceptjs/tailwind/dist/FieldTime';
-import FieldDatetime from '@inceptjs/tailwind/dist/FieldDatetime';
+import FieldDate from '@inceptjs/tailwind/FieldDate';
+import FieldTime from '@inceptjs/tailwind/FieldTime';
+import FieldDatetime from '@inceptjs/tailwind/FieldDatetime';
 
-import Taglist from '@inceptjs/tailwind/dist/FieldTaglist';
-import Textlist from '@inceptjs/tailwind/dist/FieldTextlist';
-import Metadata from '@inceptjs/tailwind/dist/FieldMetadata';
+import Taglist from '@inceptjs/tailwind/FieldTaglist';
+import Textlist from '@inceptjs/tailwind/FieldTextlist';
+import Metadata from '@inceptjs/tailwind/FieldMetadata';
 
 import { useState } from 'react';
 

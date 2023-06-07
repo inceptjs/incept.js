@@ -1,6 +1,11 @@
 import { program } from 'commander';
-import generateClient from './generate/client';
-import generateServer from './generate/server';
+import generate from './generate';
+
+//this is the project's directory
+//const cwd = process.cwd();
+//this is the arguments
+//const argv = process.argv;
+//load the bootstrap file
 
 program
   .name('string-util')
@@ -9,17 +14,20 @@ program
 
 program.command('generate')
   .description('Generates code based on your schema files')
-  .option('-p, --platform <client|server|all>', 'Platform to generate', 'all')
-  .option('-u, --ui <react|tailwind>', 'UI generator for client platform', 'react')
+  .option('-u, --ui <react|tailwind>', 'UI generator', 'react')
   .action(options => {
-    options.platform = options.platform || 'all';
-    if (options.platform === 'all' || options.platform === 'server') {
-      generateServer();
-    }
-    if (options.platform === 'all' || options.platform === 'client') {
-      generateClient(options.ui || 'react');
-    }
+    generate(options.ui || 'react');
     console.log('Done!');
   });
+
+program.command('push')
+  .description('Pushes database changes')
+  .option('-m, --message <message>', 'Commit message. This will create a migration file')
+  .option('-m, --message <message>', 'Commit message. This will create a migration file')
+  .action(options => {
+    console.log('Pushing...');
+
+  });
+
 
 program.parse();

@@ -1,5 +1,5 @@
 //types
-import type { LoaderProps } from '@inceptjs/react/dist/types';
+import type { LoaderProps } from '@inceptjs/react';
 //react
 import React from 'react';
 //helpers

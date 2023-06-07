@@ -1,5 +1,5 @@
 //types
-import type { FieldNumberProps } from '@inceptjs/react/dist/types';
+import type { FieldNumberProps } from '@inceptjs/react';
 //react
 import React from 'react';
 //components

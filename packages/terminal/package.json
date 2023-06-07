@@ -12,15 +12,12 @@
   },
   "scripts": {
     "test": "jest",
-    "build": "npm run build:ts && npm run build:files",
-    "build:ts": "tsc",
-    "build:files": "cp ./package.json ./dist && cp ./README.md ./dist"
+    "build": "tsc"
   },
   "engines": {
     "node": ">=16.20.0"
   },
   "dependencies": {
-    "commander": "10.0.1",
     "ts-morph": "18.0.0",
     "inceptjs": "0.0.30"
   },

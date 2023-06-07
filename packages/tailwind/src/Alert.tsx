@@ -1,5 +1,5 @@
 //types
-import type { AlertProps } from '@inceptjs/react/dist/types';
+import type { AlertProps } from '@inceptjs/react';
 //react
 import React from 'react';
 //helpers

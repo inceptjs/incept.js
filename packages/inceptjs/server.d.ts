@@ -1,4 +1,2 @@
-import app from './dist/server/index';
+export type * from './dist/server/types';
 export * from './dist/server/index';
-//export * from './server/index';
-export default app;

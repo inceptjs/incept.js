@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from 'inceptjs/dist/types';
+import type { SchemaConfig } from 'inceptjs/server';
 //helpers
 import { capitalize, getTypeName, getTypeExtendedName } from './utils';
 

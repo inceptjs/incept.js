@@ -1,6 +1,9 @@
 //types
-import type { FieldsProps, FieldsetProps } from '@inceptjs/react/dist/types';
-import type { FieldMetadataType } from '@inceptjs/react/dist/types';
+import type { 
+  FieldsProps, 
+  FieldsetProps, 
+  FieldMetadataType 
+} from '@inceptjs/react';
 //react
 import React from 'react';
 //components
@@ -14,7 +17,10 @@ import FieldTime from './FieldTime';
 //hooks
 import useMetadataFields from '@inceptjs/react/dist/useFieldMetadata';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '@inceptjs/react/dist/utils';
+import { 
+  makeGroupStyles, 
+  makeGroupClasses 
+} from '@inceptjs/react/dist/utils';
 
 /**
  * Key/Value Component 

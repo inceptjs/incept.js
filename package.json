@@ -6,16 +6,18 @@
   ],
   "scripts": {
     "dev": "cd examples/with-next && npm run dev",
-    "build": "npm run build:generator && npm run build:incept && npm run build:react && npm run build:tailwind && npm run build:terminal && npm run build:translate && npm run build:types",
+    "build": "npm run build:types && npm run build:react && npm run build:tailwind && npm run build:translate && npm run build:incept && npm run build:generator && npm run build:storm && npm run build:system && npm run build:terminal",
     "build:generator": "cd packages/generator && npm run build",
     "build:incept": "cd packages/inceptjs && npm run build",
     "build:react": "cd packages/react && npm run build",
+    "build:storm": "cd packages/storm && npm run build",
+    "build:system": "cd packages/system && npm run build",
     "build:tailwind": "cd packages/tailwind && npm run build",
     "build:terminal": "cd packages/terminal && npm run build",
     "build:translate": "cd packages/translate && npm run build",
     "build:types": "cd packages/types && npm run build"
   },
   "devDependencies": {
-    "npm-run-all": "4.1.5"
+    "concurrently": "7.6.0"
   }
 }

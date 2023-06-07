@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from 'inceptjs/dist/types';
+import type { SchemaConfig } from 'inceptjs/server';
 //helpers
 import { 
   capitalize, 
@@ -14,16 +14,16 @@ export default function generateTailwindDefaultFilters(
 ) {
   const path = `${schema.name}/components/DefaultFilters.tsx`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  //import type { APIResponse } from 'inceptjs/dist/types';
+  //import type { APIResponse } from 'inceptjs/types';
   source.addImportDeclaration({
     isTypeOnly: true,
-    moduleSpecifier: 'inceptjs/dist/types',
+    moduleSpecifier: 'inceptjs/types',
     namedImports: [ 'APIResponse' ]
   });
-  //import type { FetchStatuses, FormHandlers } from 'inceptjs/dist/client/types';
+  //import type { FetchStatuses, FormHandlers } from 'inceptjs/client/types';
   source.addImportDeclaration({
     isTypeOnly: true,
-    moduleSpecifier: 'inceptjs/dist/client/types',
+    moduleSpecifier: 'inceptjs/client/types',
     namedImports: [ 'FetchStatuses', 'FormHandlers' ]
   });
   //import type { ModelType } from '../types';
@@ -42,15 +42,15 @@ export default function generateTailwindDefaultFilters(
     moduleSpecifier: '@inceptjs/translate',
     namedImports: [ 'useLanguage' ]
   });
-  //import Loader from '@inceptjs/tailwind/dist/Loader';
+  //import Loader from '@inceptjs/tailwind/Loader';
   source.addImportDeclaration({
     defaultImport: 'Loader',
-    moduleSpecifier: '@inceptjs/tailwind/dist/Loader'
+    moduleSpecifier: '@inceptjs/tailwind/Loader'
   });
-  //import Button from '@inceptjs/tailwind/dist/Button';
+  //import Button from '@inceptjs/tailwind/Button';
   source.addImportDeclaration({
     defaultImport: 'Button',
-    moduleSpecifier: '@inceptjs/tailwind/dist/Button'
+    moduleSpecifier: '@inceptjs/tailwind/Button'
   });
   //import { RoleFilter, ActiveFilter, ... } from './FilterFields';
   source.addImportDeclaration({

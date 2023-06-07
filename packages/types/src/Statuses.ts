@@ -1,3 +1,5 @@
+import type { Status } from './types';
+
 /**
  * Status Codes
  */
@@ -17,9 +19,4 @@ export default {
   get OK(): Status {
     return { code: 200, message: 'OK' };
   }
-}
-
-export interface Status {
-  code: number, 
-  message: string
 }

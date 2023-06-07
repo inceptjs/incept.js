@@ -1,5 +1,5 @@
 //types
-import type { FieldPasswordProps } from '@inceptjs/react/dist/types';
+import type { FieldPasswordProps } from '@inceptjs/react';
 //react
 import React from 'react';
 //components
@@ -7,7 +7,10 @@ import Input from './FieldInput';
 //hooks
 import usePassword from '@inceptjs/react/dist/useFieldPassword';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '@inceptjs/react/dist/utils';
+import { 
+  makeGroupStyles, 
+  makeGroupClasses 
+} from '@inceptjs/react/dist/utils';
 
 /**
  * Password Field Component (Main)

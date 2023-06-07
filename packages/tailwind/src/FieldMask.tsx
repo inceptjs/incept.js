@@ -1,5 +1,5 @@
 //types
-import type { FieldMaskProps } from '@inceptjs/react/dist/types';
+import type { FieldMaskProps } from '@inceptjs/react';
 //react
 import React from 'react';
 //components

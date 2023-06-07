@@ -4,6 +4,8 @@ import Statuses from './Statuses';
 import Store from './Store';
 import TaskQueue from './TaskQueue';
 
+export type * from './types';
+
 export {
   EventEmitter,
   Exception,

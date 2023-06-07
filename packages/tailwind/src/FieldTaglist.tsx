@@ -1,5 +1,5 @@
 //types
-import type { FieldTaglistProps } from '@inceptjs/react/dist/types';
+import type { FieldTaglistProps } from '@inceptjs/react';
 //react
 import React from 'react';
 //hooks

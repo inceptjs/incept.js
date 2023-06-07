@@ -1,3 +1,5 @@
+import type { FileType } from './types';
+
 import Exception from './Exception';
 
 type Index = string|number;
@@ -233,12 +235,6 @@ export class File {
     this.name = file.name;
     this.type = file.type;
   }
-}
-
-export type FileType  = {
-  data: Buffer|string;
-  name: string;
-  type: string;
 }
 
 class Args {

@@ -1,2 +1,3 @@
-import Framework from './types/Framework';
-export default new Framework();
+import Framework from './Framework';
+const app = new Framework();
+export default app;

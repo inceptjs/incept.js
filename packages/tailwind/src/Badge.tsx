@@ -1,5 +1,5 @@
 //types
-import type { BadgeProps } from '@inceptjs/react/dist/types';
+import type { BadgeProps } from '@inceptjs/react';
 //react
 import React from 'react';
 //helpers

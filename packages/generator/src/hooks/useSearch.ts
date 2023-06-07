@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from 'inceptjs/dist/types';
+import type { SchemaConfig } from 'inceptjs/server';
 //helpers
 import { getTypeExtendedName } from '../utils';
 
@@ -28,15 +28,15 @@ export default function generateUseSearch(
     moduleSpecifier: 'react',
     namedImports: [ 'useState', 'useEffect' ]
   });
-  //import useFetch from 'inceptjs/dist/client/useFetch';
+  //import useFetch from 'inceptjs/client/useFetch';
   source.addImportDeclaration({
     defaultImport: 'useFetch',
-    moduleSpecifier: 'inceptjs/dist/client/useFetch'
+    moduleSpecifier: 'inceptjs/client/useFetch'
   });
-  //import useFilters from 'inceptjs/dist/client/useFilters';
+  //import useFilters from 'inceptjs/client/useFilters';
   source.addImportDeclaration({
     defaultImport: 'useFilters',
-    moduleSpecifier: 'inceptjs/dist/client/useFilters'
+    moduleSpecifier: 'inceptjs/client/useFilters'
   });
   //export default function useSearch(query: Record<string, any>, options: AxiosRequestConfig = {})
   source.addFunction({

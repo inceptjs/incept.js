@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from 'inceptjs/dist/types';
+import type { SchemaConfig } from 'inceptjs/server';
 //helpers
 import { 
   capitalize, 
@@ -14,16 +14,16 @@ export default function generateTailwindDefaultForm(
 ) {
   const path = `${schema.name}/components/DefaultForm.tsx`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  //import type { APIResponse } from 'inceptjs/dist/types';
+  //import type { APIResponse } from 'inceptjs/types';
   source.addImportDeclaration({
     isTypeOnly: true,
-    moduleSpecifier: 'inceptjs/dist/types',
+    moduleSpecifier: 'inceptjs/types',
     namedImports: [ 'APIResponse' ]
   });
-  //import type { FetchStatuses, FormHandlers } from 'inceptjs/dist/client/types';
+  //import type { FetchStatuses, FormHandlers } from 'inceptjs/client/types';
   source.addImportDeclaration({
     isTypeOnly: true,
-    moduleSpecifier: 'inceptjs/dist/client/types',
+    moduleSpecifier: 'inceptjs/client/types',
     namedImports: [ 'FetchStatuses', 'FormHandlers' ]
   });
   //import type { ModelType } from '../types';

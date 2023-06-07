@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from 'inceptjs/dist/types';
+import type { SchemaConfig } from 'inceptjs/server';
 //helpers
 import { capitalize, getTypeExtendedName } from '../../utils';
 
@@ -26,14 +26,14 @@ export default function generateTailwindDefaultView(
     moduleSpecifier: '@inceptjs/translate',
     namedImports: [ 'useLanguage' ]
   });
-  //import useStripe from 'inceptjs/dist/client/useStripe';
+  //import useStripe from 'inceptjs/client/useStripe';
   source.addImportDeclaration({
     defaultImport: 'useStripe',
-    moduleSpecifier: 'inceptjs/dist/client/useStripe'
+    moduleSpecifier: 'inceptjs/client/useStripe'
   });
-  //import { Table, Thead, Trow, Tcol } from '@inceptjs/tailwind/dist/Table';
+  //import { Table, Thead, Trow, Tcol } from '@inceptjs/tailwind/Table';
   source.addImportDeclaration({
-    moduleSpecifier: '@inceptjs/tailwind/dist/Table',
+    moduleSpecifier: '@inceptjs/tailwind/Table',
     namedImports: [ 'Table', 'Trow', 'Tcol' ]
   });
   //import { RoleFormat, ActiveFormat, ... } from './ListFormats';

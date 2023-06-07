@@ -1,15 +1,13 @@
-import Router from './types/Router';
-import Route from './types/Route';
-import Framework from './types/Framework';
-import Request from './types/Request';
-import Response from './types/Response';
-import Exception from './types/Exception';
-import Schema from './types/Schema';
+import Router from './Router';
+import Route from './Route';
+import Framework from './Framework';
+import Request from './Request';
+import Response from './Response';
+import Schema from './Schema';
+import Loader from './Loader';
 import app from './app';
-//bootstrap
-import './boot/schema';
-import './boot/events';
-import './boot/routes';
+
+export type * from './types';
 
 export { 
   Schema, 
@@ -17,7 +15,7 @@ export {
   Route, 
   Framework, 
   Request, 
-  Response, 
-  Exception 
+  Response,
+  Loader,
+  app
 };
-export default app;

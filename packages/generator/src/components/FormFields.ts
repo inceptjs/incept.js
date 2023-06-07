@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from 'inceptjs/dist/types';
+import type { SchemaConfig } from 'inceptjs/server';
 //helpers
 import { VariableDeclarationKind } from 'ts-morph';
 import { fields } from '@inceptjs/react/dist/tokens';
@@ -13,10 +13,10 @@ export default function generateFormFields(
 ) {
   const path = `${schema.name}/components/FormFields.tsx`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  //import type { FieldSelectProps, FieldInputProps } from '@inceptjs/react/dist/types'
+  //import type { FieldSelectProps, FieldInputProps } from '@inceptjs/react'
   source.addImportDeclaration({
     isTypeOnly: true,
-    moduleSpecifier: '@inceptjs/react/dist/types',
+    moduleSpecifier: '@inceptjs/react',
     namedImports: schema.columns
     .filter(column => !!fields[column.field.method])
     .map(column => `${fields[column.field.method].component}Props`)
@@ -30,17 +30,17 @@ export default function generateFormFields(
   //import Control from '@inceptjs/react/dist/Control';
   source.addImportDeclaration({
     defaultImport: 'Control',
-    moduleSpecifier: `@inceptjs/${ui}/dist/Control`
+    moduleSpecifier: `@inceptjs/${ui}/Control`
   });
   schema.columns
     .filter(column => !!fields[column.field.method])
     .map(column => fields[column.field.method].component)
     .filter((value, index, array) => array.indexOf(value) === index)
     .forEach((defaultImport) => {
-      //import FieldInput from '@inceptjs/tailwind/dist/FieldInput';
+      //import FieldInput from '@inceptjs/tailwind/FieldInput';
       source.addImportDeclaration({ 
         defaultImport, 
-        moduleSpecifier: `@inceptjs/${ui}/dist/${defaultImport}` 
+        moduleSpecifier: `@inceptjs/${ui}/${defaultImport}` 
       });
     });
   //export type FormComponentProps

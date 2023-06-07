@@ -1,5 +1,5 @@
 //types
-import type { FieldCurrencyProps } from '@inceptjs/react/dist/types';
+import type { FieldCurrencyProps } from '@inceptjs/react';
 //react
 import React from 'react';
 //components

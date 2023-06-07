@@ -1,4 +1,6 @@
-import Statuses, { Status } from './Statuses';
+import type { Status, Task, TaskRunner } from './types';
+
+import Statuses from './Statuses';
 import Exception from './Exception';
 
 /**
@@ -123,63 +125,4 @@ export default class TaskQueue<Args extends any[]> {
 
     return Statuses.OK;
   }
-}
-
-export interface TaskRunner<Args extends any[]> {
-  (...args: Args): boolean|void|Promise<boolean|void>
-};
-
-/**
- * Abstraction defining what a task is
- */
-export interface Task<Args extends any[]> {
-  /**
-   * The task to be performed
-   */
-  callback: TaskRunner<Args>;
-
-  /**
-   * The priority of the task, when placed in a queue
-   */
-  priority: number;
-}
-
-/**
- * Abstraction defining what a queue is
- */
-export interface Queue<Args extends any[]> {
-  /**
-   * The list of tasks to be performed
-   */
-  queue: Task<Args>[];
-
-  /**
-   * Adds a task to the queue
-   *
-   * @param callback - the task callback
-   * @param priority - a number to determine the execution importance
-   */
-  add(callback: Function, priority: number): Queue<Args>;
-
-  /**
-   * Adds a task to the bottom of the queue
-   *
-   * @param callback - the task callback
-   */
-  push(callback: Function): Queue<Args>;
-
-  /**
-   * Adds a task to the top of the queue
-   *
-   * @param callback - the task callback
-   */
-  shift(callback: Function): Queue<Args>;
-
-  /**
-   * Runs the tasks
-   *
-   * @param args - any set of arguments to be passed to each task
-   * @return The eventual status of the task run
-   */
-  run(...args: Args): Promise<number>;
 }

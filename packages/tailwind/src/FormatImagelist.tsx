@@ -1,5 +1,5 @@
 //types
-import type { FormatImagelistProps } from '@inceptjs/react/dist/types';
+import type { FormatImagelistProps } from '@inceptjs/react';
 //react
 import React from 'react';
 

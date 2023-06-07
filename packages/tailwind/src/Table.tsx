@@ -6,7 +6,7 @@ import type {
   TableRowProps,
   TableRuleProps,
   TableProps
-} from '@inceptjs/react/dist/types';
+} from '@inceptjs/react';
 import { ReactNode } from 'react';
 //react
 import React from 'react';

@@ -2,7 +2,7 @@
 import type { 
   FieldAutocompleteDropdownProps, 
   FieldAutocompleteProps 
-} from '@inceptjs/react/dist/types';
+} from '@inceptjs/react';
 //react
 import React from 'react';
 //components

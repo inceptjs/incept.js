@@ -1,5 +1,9 @@
 //types
-import type { FieldsProps, FieldsetProps, FieldTextlistType } from '@inceptjs/react/dist/types';
+import type { 
+  FieldsProps, 
+  FieldsetProps, 
+  FieldTextlistType 
+} from '@inceptjs/react';
 //react
 import React from 'react';
 //components
@@ -9,7 +13,10 @@ import make from './Fieldset';
 //hooks
 import useTextlistFields from '@inceptjs/react/dist/useFieldTextlist';
 //helpers
-import { makeGroupStyles, makeGroupClasses } from '@inceptjs/react/dist/utils';
+import { 
+  makeGroupStyles, 
+  makeGroupClasses 
+} from '@inceptjs/react/dist/utils';
 
 /**
  * Text Item Component 

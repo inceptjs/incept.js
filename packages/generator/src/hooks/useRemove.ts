@@ -1,6 +1,6 @@
 //types
 import type { Project, Directory } from 'ts-morph';
-import type { SchemaConfig } from 'inceptjs/dist/types';
+import type { SchemaConfig } from 'inceptjs/server';
 //helpers
 import { getTypeName } from '../utils';
 
@@ -23,10 +23,10 @@ export default function generateUseRemove(
     moduleSpecifier: '../types',
     namedImports: [ getTypeName(schema) ]
   });
-  //import useFetch from 'inceptjs/dist/client/useFetch';
+  //import useFetch from 'inceptjs/client/useFetch';
   source.addImportDeclaration({
     defaultImport: 'useFetch',
-    moduleSpecifier: 'inceptjs/dist/client/useFetch'
+    moduleSpecifier: 'inceptjs/client/useFetch'
   });
   //export default function useRemove(id: string, options: AxiosRequestConfig = {})
   source.addFunction({

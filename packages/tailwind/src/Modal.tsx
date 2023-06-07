@@ -1,5 +1,5 @@
 //types
-import { ModalProps } from '@inceptjs/react/dist/types';
+import { ModalProps } from '@inceptjs/react';
 //react
 import React from 'react';
 //hooks

@@ -10,9 +10,7 @@
   "main": "index.js",
   "types": "types.d.ts",
   "scripts": {
-    "build": "npm run build:ts && npm run build:files",
-    "build:ts": "tsc",
-    "build:files": "cp ./package.json ./dist && cp ./README.md ./dist"
+    "build": "tsc"
   },
   "engines": {
     "node": ">=16.20.0"
