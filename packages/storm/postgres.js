@@ -1,1 +1,1 @@
-module.exports = require('./dist/postgres').default
+module.exports = require('./dist/boot/postgres').default

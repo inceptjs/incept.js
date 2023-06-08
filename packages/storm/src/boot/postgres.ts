@@ -1,5 +1,5 @@
 import type { Client as Connection } from 'pg';
-import type { Framework } from 'inceptjs/server';
+import type { Framework } from 'inceptjs';
 import type { Field, Relation } from '../types';
 
 import Exception from '../types/Exception';

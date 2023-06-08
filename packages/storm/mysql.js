@@ -1,1 +1,1 @@
-module.exports = require('./dist/mysql').default
+module.exports = require('./dist/boot/mysql').default

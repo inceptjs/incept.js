@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@inceptjs/storm": "0.0.30",
+    "@inceptjs/terminal": "0.0.30",
     "@next/font": "13.1.1",
     "next": "13.1.1",
     "react": "18.2.0",

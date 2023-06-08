@@ -1,2 +1,1 @@
-export * from '.incept/client/index';
-export * from './client/index';
+export * from '.incept/client/index'
