@@ -7,7 +7,6 @@ import type {
 import cookie from 'cookie';
 import { Store } from '@inceptjs/types';
 
-
 /**
  * A type of request that provides a  
  * common interface for HTTP inputs.
@@ -17,6 +16,11 @@ export default class Request {
    * Incoming message from the server.
    */
   protected _resource: ExpressLikeMessage;
+
+  /**
+   * args data
+   */
+  protected _args: string[];
 
   /**
    * Cached cookie data
@@ -36,6 +40,13 @@ export default class Request {
    * Cached params data
    */
   protected _params?: NestedScalarObject;
+
+  /**
+   * Returns the args
+   */
+  public get args() {
+    return this._args;
+  }
 
   /**
    * Returns the parsed body of the request
@@ -130,6 +141,7 @@ export default class Request {
    */
   constructor(resource: ExpressLikeMessage) {
     this._resource = resource;
+    this._args = typeof process !== 'undefined' ? process.argv || []: [];
   }
 
   /**
@@ -284,6 +296,7 @@ export default class Request {
 
     if (save) {
       this._params = Object.assign({}, this.params, route.params);
+      this._args = [ ...route.args ];
     }
     return route;
   }

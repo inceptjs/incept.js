@@ -18,9 +18,8 @@
     "node": ">=16.20.0"
   },
   "dependencies": {
-    "ts-morph": "18.0.0",
     "inceptjs": "0.0.30",
-    "commander": "10.0.1"
+    "ts-morph": "18.0.0"
   },
   "devDependencies": {
     "@jest/globals": "29.5.0",

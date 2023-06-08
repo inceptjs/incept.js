@@ -157,6 +157,9 @@ archives
 
 cockroach-data
 
+#prisma
+schema.prisma
+
 # TMP
 packages/admin
 packages/auth

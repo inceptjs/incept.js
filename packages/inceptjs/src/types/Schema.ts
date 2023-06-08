@@ -10,6 +10,13 @@ export default class Schema<Model = any> {
   protected static _schemas: Record<string, SchemaConfig> = {};
 
   /**
+   * Returns all the schemas
+   */
+  public static get schemas() {
+    return this._schemas;
+  }
+
+  /**
    * Adds a schema to the cache
    */
   public static add(schema: SchemaConfig|SchemaConfig[]) {
