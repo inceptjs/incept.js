@@ -1,5 +1,5 @@
 import type { Connection, PoolConnection } from 'mysql2';
-import type { Framework } from 'inceptjs/server';
+import type { Framework } from 'inceptjs';
 import type { Field, Relation } from '../types';
 
 import Exception from '../types/Exception';
@@ -281,7 +281,9 @@ export default function boot(ctx: Framework) {
       connections[name] = connection;
     },
     get: (name: string) => {
-      if (!connections[name]) {
+      if (!name) {
+        throw Exception.for('Connection name not provided');
+      } else if (!connections[name]) {
         throw Exception.for(`Connection ${name} not found`);
       }
       return connections[name];

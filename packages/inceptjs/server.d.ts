@@ -1,2 +1,1 @@
-export type * from './dist/server/types';
-export * from './dist/server/index';
+export * from '.incept/server/index'

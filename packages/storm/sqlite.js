@@ -1,1 +1,1 @@
-module.exports = require('./dist/sqlite').default
+module.exports = require('./dist/boot/sqlite').default

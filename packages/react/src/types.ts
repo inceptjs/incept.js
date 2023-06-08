@@ -285,6 +285,7 @@ export type FieldMetadataConfig = {
   index: number,
   set: (values: (FieldMetadataType|undefined)[]) => void
 };
+export type FieldMetadataProps = FieldsetProps<FieldMetadataType>;
 
 // Field number component
 export type FieldNumberOptions = {
@@ -469,6 +470,7 @@ export type FieldTextlistConfig = {
   index: number,
   set: (values: (FieldTextlistType|undefined)[]) => void
 };
+export type FieldTextlistProps = FieldsetProps<FieldTextlistType>;
 
 // Field time component
 export type FieldTimeInput = string|number|Date;

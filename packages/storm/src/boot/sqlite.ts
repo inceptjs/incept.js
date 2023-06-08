@@ -1,5 +1,5 @@
 import type { Database as Connection } from 'better-sqlite3';
-import type { Framework } from 'inceptjs/server';
+import type { Framework } from 'inceptjs';
 import type { Field, Relation } from '../types';
 
 import Exception from '../types/Exception';
