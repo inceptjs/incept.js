@@ -19,7 +19,7 @@ export default function generateModelTypes(
   const typeExtendedName = getTypeExtendedName(schema);
   const path = `${schema.name}/types.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  //import type { APIResponse } from 'inceptjs/types';
+  //import type { APIResponse } from 'inceptjs';
   source.addImportDeclaration({
     isTypeOnly: true,
     moduleSpecifier: 'inceptjs',

@@ -35,20 +35,20 @@ export default function generateTailwindDefaultForm(
     defaultImport: 'React',
     moduleSpecifier: 'react'
   });
-  //import { useLanguage } from '@inceptjs/translate';
+  //import { useLanguage } from 'r22n';
   source.addImportDeclaration({
-    moduleSpecifier: '@inceptjs/translate',
+    moduleSpecifier: 'r22n',
     namedImports: [ 'useLanguage' ]
   });
-  //import Loader from '@inceptjs/react/dist/Loader';
+  //import Loader from 'frui/react/Loader';
   source.addImportDeclaration({
     defaultImport: 'Loader',
-    moduleSpecifier: '@inceptjs/react/dist/Loader'
+    moduleSpecifier: 'frui/react/Loader'
   });
-  //import Button from '@inceptjs/react/dist/Button';
+  //import Button from 'frui/react/Button';
   source.addImportDeclaration({
     defaultImport: 'Button',
-    moduleSpecifier: '@inceptjs/react/dist/Button'
+    moduleSpecifier: 'frui/react/Button'
   });
   //import { RoleField, ActiveField, ... } from './FormFields';
   source.addImportDeclaration({

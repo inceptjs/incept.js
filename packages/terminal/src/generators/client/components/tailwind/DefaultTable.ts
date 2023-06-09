@@ -31,9 +31,9 @@ export default function generateTailwindDefaultTable(
     defaultImport: 'React',
     moduleSpecifier: 'react'
   });
-  //import { useLanguage } from '@inceptjs/translate';
+  //import { useLanguage } from 'r22n';
   source.addImportDeclaration({
-    moduleSpecifier: '@inceptjs/translate',
+    moduleSpecifier: 'r22n',
     namedImports: [ 'useLanguage' ]
   });
   //import { useStripe } from 'inceptjs';

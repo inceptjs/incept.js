@@ -40,15 +40,22 @@ import generateViewFormats from '../generators/client/components/ViewFormats';
 
 export default function boot(ctx: Framework) {
   ctx.on('generate', (req, res) => {
+    const modules = Loader.modules();
     const ts = !!req.params.ts || !!req.params.t || false;
-    const location = (req.params.location || req.params.l || Loader.modules()) as string;
-    const platform = (req.params.platform || req.params.p || 'all') as string;
+    const location = Loader.absolute(
+      (req.params.location || req.params.l || modules) as string
+    );
+    const platform = req.params.platform || req.params.p || 'all';
     const ui = (req.params.ui || req.params.u || 'react') as string;
 
     if (platform === 'server' || platform === 'all') {
       console.log('Generating server...');
       if (ts) {
-        server(`${location}/.incept/tsserver`, ts);
+        if (location === modules) {
+          server(`${location}/.incept/tsserver`, ts);
+        } else {
+          server(location, ts);
+        }
       } else {
         server(`${location}/.incept/server`, ts);
       }
@@ -58,7 +65,11 @@ export default function boot(ctx: Framework) {
     if (platform === 'client' || platform === 'all') {
       console.log('Generating client...');
       if (ts) {
-        client(`${location}/.incept/tsclient`, ts, ui);
+        if (location === modules) {
+          server(`${location}/.incept/tsclient`, ts);
+        } else {
+          server(location, ts);
+        }
       } else {
         client(`${location}/.incept/client`, ts, ui);
       }
@@ -69,13 +80,12 @@ export default function boot(ctx: Framework) {
     req.stage('ui', ui);
     req.stage('location', location);
     req.stage('platform', platform);
-
     
     res.json({ error: false });
   }, 10);
 };
 
-export function server(root: string, ts = false) {
+function server(root: string, ts = false) {
   //get all json files in the schema directory (defined in config.schema)
   const folder = Loader.schemas();
   //read all files in the schema folder
@@ -160,7 +170,7 @@ export function server(root: string, ts = false) {
   }
 }
 
-export function client(root: string, ts = false, ui = 'react') {
+function client(root: string, ts = false, ui = 'react') {
   //get all json files in the schema directory (defined in config.schema)
   const folder = Loader.schemas();
   //read all files in the schema folder

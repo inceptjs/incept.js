@@ -9,10 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@inceptjs/tailwind": "0.0.30",
     "@next/font": "13.1.1",
     "@prisma/client": "4.15.0",
+    "frui": "0.0.4",
     "inceptjs": "0.0.30",
+    "r22n": "1.0.2",
     "next": "13.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"

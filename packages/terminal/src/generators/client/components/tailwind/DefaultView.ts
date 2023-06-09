@@ -25,9 +25,9 @@ export default function generateTailwindDefaultView(
     defaultImport: 'React',
     moduleSpecifier: 'react'
   });
-  //import { useLanguage } from '@inceptjs/translate';
+  //import { useLanguage } from 'r22n';
   source.addImportDeclaration({
-    moduleSpecifier: '@inceptjs/translate',
+    moduleSpecifier: 'r22n',
     namedImports: [ 'useLanguage' ]
   });
   //import { useStripe } from 'inceptjs';
@@ -35,9 +35,9 @@ export default function generateTailwindDefaultView(
     moduleSpecifier: 'inceptjs',
     namedImports: [ 'useStripe' ]
   });
-  //import { Table, Thead, Trow, Tcol } from '@inceptjs/tailwind/dist/Table';
+  //import { Table, Thead, Trow, Tcol } from 'frui/tailwind/Table';
   source.addImportDeclaration({
-    moduleSpecifier: '@inceptjs/tailwind/dist/Table',
+    moduleSpecifier: 'frui/tailwind/Table',
     namedImports: [ 'Table', 'Trow', 'Tcol' ]
   });
   //import { RoleFormat, ActiveFormat, ... } from './ListFormats';

@@ -31,20 +31,20 @@ export default function generateTailwindDefaultFilters(
     defaultImport: 'React',
     moduleSpecifier: 'react'
   });
-  //import { useLanguage } from '@inceptjs/translate';
+  //import { useLanguage } from 'r22n';
   source.addImportDeclaration({
-    moduleSpecifier: '@inceptjs/translate',
+    moduleSpecifier: 'r22n',
     namedImports: [ 'useLanguage' ]
   });
-  //import Loader from '@inceptjs/tailwind/dist/Loader';
+  //import Loader from 'frui/tailwind/Loader';
   source.addImportDeclaration({
     defaultImport: 'Loader',
-    moduleSpecifier: '@inceptjs/tailwind/dist/Loader'
+    moduleSpecifier: 'frui/tailwind/Loader'
   });
-  //import Button from '@inceptjs/tailwind/dist/Button';
+  //import Button from 'frui/tailwind/Button';
   source.addImportDeclaration({
     defaultImport: 'Button',
-    moduleSpecifier: '@inceptjs/tailwind/dist/Button'
+    moduleSpecifier: 'frui/tailwind/Button'
   });
   //import { RoleFilter, ActiveFilter, ... } from './FilterFields';
   source.addImportDeclaration({

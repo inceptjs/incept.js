@@ -3,7 +3,7 @@ import type { Project, Directory } from 'ts-morph';
 import type { SchemaConfig } from 'inceptjs';
 //helpers
 import { VariableDeclarationKind } from 'ts-morph';
-import { formats } from '@inceptjs/react/dist/tokens';
+import { formats } from 'frui/data/tokens';
 import { capitalize, formatCode } from '../../utils';
 
 export default function generateListFormats(
@@ -13,10 +13,10 @@ export default function generateListFormats(
 ) {
   const path = `${schema.name}/components/ListFormats.tsx`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  //import type { FieldSelectProps, FieldInputProps } from '@inceptjs/react'
+  //import type { FieldSelectProps, FieldInputProps } from 'frui'
   source.addImportDeclaration({
     isTypeOnly: true,
-    moduleSpecifier: '@inceptjs/react',
+    moduleSpecifier: 'frui',
     namedImports: schema.columns
     .filter(column => !!formats[column.list.method])
     .map(column => `${formats[column.list.method].component}Props`)
@@ -32,10 +32,10 @@ export default function generateListFormats(
     .map(column => formats[column.list.method].component)
     .filter((value, index, array) => array.indexOf(value) === index)
     .forEach((defaultImport) => {
-      //import Control from '@inceptjs/tailwind/dist/Control';
+      //import Control from 'frui/tailwind/Control';
       source.addImportDeclaration({ 
         defaultImport, 
-        moduleSpecifier: `@inceptjs/${ui}/dist/${defaultImport}` 
+        moduleSpecifier: `frui/${ui}/${defaultImport}` 
       });
     });
   //export type FormatComponentProps

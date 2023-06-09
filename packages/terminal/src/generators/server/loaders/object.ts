@@ -18,12 +18,12 @@ export default function generateBootObject(project: Project|Directory) {
     namedImports: [ 'Schema', 'Exception' ],
     moduleSpecifier: 'inceptjs'
   });
-  //const store = process.env.DATABASE_NAME;
+  //const store = process.env.DATABASE_STORE;
   source.addVariableStatement({
     declarationKind: VariableDeclarationKind.Const,
     declarations: [{
       name: 'store',
-      initializer: ' process.env.DATABASE_NAME'
+      initializer: ' process.env.DATABASE_STORE'
     }]
   });
   

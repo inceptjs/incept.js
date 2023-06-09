@@ -860,11 +860,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/inputmask@5.0.3":
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/@types/inputmask/-/inputmask-5.0.3.tgz#f23492d5b5862c5737ae24bfe9fb8b2acf77b453"
-  integrity sha512-9aTXacRhf9D3+porVydLR28ll8/y3TQIrXEXv7ZWY0c3Lzl/1r4nHoaesZeh2Fd+UIefpWZrg2tkSnDn/dKUsw==
-
 "@types/istanbul-lib-coverage@*", "@types/istanbul-lib-coverage@^2.0.0", "@types/istanbul-lib-coverage@^2.0.1":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@types/istanbul-lib-coverage/-/istanbul-lib-coverage-2.0.4.tgz#8467d4b3c087805d63580480890791277ce35c44"
@@ -1600,11 +1595,6 @@ convert-source-map@^2.0.0:
   resolved "https://registry.yarnpkg.com/convert-source-map/-/convert-source-map-2.0.0.tgz#4b560f649fc4e918dd0ab75cf4961e8bc882d82a"
   integrity sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==
 
-cookie@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.5.0.tgz#d1f5d71adec6558c58f389987c366aa47e994f8b"
-  integrity sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==
-
 create-require@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/create-require/-/create-require-1.1.1.tgz#c1d7e8f1e5f6cfc9ff65f9cd352d37348756c333"
@@ -2326,6 +2316,15 @@ fraction.js@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.2.0.tgz#448e5109a313a3527f5a3ab2119ec4cf0e0e2950"
   integrity sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==
+
+frui@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/frui/-/frui-0.0.4.tgz#32d4abb85f2b8c8e8740d4c051ee92ed5e5e7585"
+  integrity sha512-61o4TmSyE9J9FwDUBcN6prYCi29JrwXjrSBlX7ORIHkBpoyP7FPUAxQnTxOv3DeSrMcDvw2vo66s5BuSpdQvNg==
+  dependencies:
+    inputmask "5.0.8"
+    markdown-to-jsx "7.2.0"
+    moment "2.29.4"
 
 fs-constants@^1.0.0:
   version "1.0.0"
@@ -4252,6 +4251,14 @@ queue-microtask@^1.2.2:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
+
+r22n@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/r22n/-/r22n-1.0.2.tgz#edac979c55b1a5880bd1319c19f2658386b5e755"
+  integrity sha512-7wdZ3wlYSrCTL1G6+2ugv+EWscUv9IyfQiXzAqHA8v6GwwoO/rEuBgiQmeVMw154pJE/0DX+WDoT0Rfpamzsfg==
+  dependencies:
+    react "18.2.0"
+    react-dom "18.2.0"
 
 rc@^1.2.7:
   version "1.2.8"

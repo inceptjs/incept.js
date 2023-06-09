@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "inceptjs": "0.0.30",
-    "ts-morph": "18.0.0"
+    "ts-morph": "18.0.0",
+    "frui": "0.0.4"
   },
   "devDependencies": {
     "@jest/globals": "29.5.0",

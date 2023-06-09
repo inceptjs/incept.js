@@ -103,6 +103,22 @@ export default class Loader {
   }
 
   /**
+   * Returns the absolute path to the file
+   */
+  static absolute(pathname: string, cwd?: string) {
+    cwd = cwd || this.cwd();
+    if (pathname.startsWith('.')) {
+      pathname = path.resolve(cwd, pathname);
+    }
+    //if the pathname does not start with /, 
+    //the path should start with modules
+    if (!pathname.startsWith('/')) {
+      pathname = path.resolve(this.modules(), pathname);
+    }
+    return pathname;
+  }
+
+  /**
    * Resolves the path name to a path that can be required
    */
   static resolve(pathname?: string, cwd?: string): string {
@@ -110,12 +126,10 @@ export default class Loader {
     //if no pathname
     if (!pathname) {
       pathname = cwd;
+    //ex. plugin/foo -> node_modules/plugin
     //ex. ./plugin or ../plugin -> [cwd] / plugin 
-    } else if (pathname.match(/^.{1,2}\//g)) {
-      pathname = path.resolve(cwd, pathname);
-    //ex. plugin/foo
     } else {
-      pathname = path.resolve(this.modules(), pathname);
+      pathname = this.absolute(cwd, pathname);
     }
     //ex. /plugin/foo
     //it's already absolute...
