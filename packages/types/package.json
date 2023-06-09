@@ -9,6 +9,11 @@
   "repository": "inceptjs/incept.js",
   "main": "index.js",
   "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "dist"
+  ],
   "scripts": {
     "test": "jest",
     "build": "tsc"

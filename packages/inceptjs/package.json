@@ -9,6 +9,15 @@
   "repository": "inceptjs/incept.js",
   "main": "index.js",
   "types": "index.d.ts",
+  "files": [
+    "client.js",
+    "client.d.ts",
+    "index.js",
+    "index.d.ts",
+    "server.js",
+    "server.d.ts",
+    "dist"
+  ],
   "scripts": {
     "test": "jest",
     "build": "tsc"

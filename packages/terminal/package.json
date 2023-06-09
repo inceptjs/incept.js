@@ -7,6 +7,12 @@
   "homepage": "https://github.com/inceptjs/incept.js/tree/main/packages/terminal",
   "bugs": "https://github.com/inceptjs/incept.js/issues",
   "repository": "inceptjs/incept.js",
+  "files": [
+    "bin.js",
+    "index.js",
+    "index.d.ts",
+    "dist"
+  ],
   "bin": {
     "incept": "./bin.js"
   },
