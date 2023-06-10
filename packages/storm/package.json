@@ -1,6 +1,6 @@
 {
   "name": "@inceptjs/storm",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "license": "MIT",
   "description": "Simple typescript object relation mapping.",
   "author": "Chris <chris@incept.asia>",
@@ -24,7 +24,7 @@
     "node": ">=16.20.0"
   },
   "dependencies": {
-    "@inceptjs/types": "0.0.30",
+    "@inceptjs/types": "0.0.31",
     "date-fns": "2.30.0",
     "nanoid": "4.0.2"
   },

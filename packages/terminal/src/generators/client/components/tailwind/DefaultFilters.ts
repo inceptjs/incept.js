@@ -12,7 +12,7 @@ export default function generateTailwindDefaultFilters(
   project: Project|Directory, 
   schema: SchemaConfig
 ) {
-  const path = `${schema.name}/components/DefaultFilters.tsx`;
+  const path = `${schema.name}/components/DefaultFilters.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
   //import type { APIResponse, FetchStatuses, FilterHandlers } from 'inceptjs';
   source.addImportDeclaration({
@@ -98,11 +98,8 @@ export default function generateTailwindDefaultFilters(
         React.createElement(Button, {
           type: 'submit',
           className: 'mt-2',
-          disabled: status === 'fetching',
-          children: status === 'fetching' ?
-            React.createElement(Loader) :
-            _('Filter'),
-        })
+          disabled: status === 'fetching'
+        }, status === 'fetching' ? React.createElement(Loader) : _('Filter'))
       );
     `)
   });

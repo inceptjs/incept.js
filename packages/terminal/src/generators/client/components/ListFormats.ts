@@ -11,7 +11,7 @@ export default function generateListFormats(
   schema: SchemaConfig,
   ui = 'react'
 ) {
-  const path = `${schema.name}/components/ListFormats.tsx`;
+  const path = `${schema.name}/components/ListFormats.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
   //import type { FieldSelectProps, FieldInputProps } from 'frui'
   source.addImportDeclaration({

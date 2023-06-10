@@ -13,7 +13,7 @@ export default function generateTailwindDefaultForm(
   project: Project|Directory, 
   schema: SchemaConfig
 ) {
-  const path = `${schema.name}/components/DefaultForm.tsx`;
+  const path = `${schema.name}/components/DefaultForm.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
   //import type { APIResponse, FetchStatuses, FormHandlers } from 'inceptjs';
   source.addImportDeclaration({
@@ -102,12 +102,9 @@ export default function generateTailwindDefaultForm(
         React.createElement(Button, {
           type: 'submit',
           info: true,
-          { style: { marginTop: '16px' } },
-          disabled: status === 'fetching',
-          children: status === 'fetching' 
-            ? React.createElement(Loader) 
-            : _('Submit'),
-        })
+          style: { marginTop: '16px' },
+          disabled: status === 'fetching'
+        }, status === 'fetching' ? React.createElement(Loader) : _('Submit'))
       );
     `)
   });

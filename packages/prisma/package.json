@@ -1,6 +1,6 @@
 {
   "name": "@inceptjs/prisma",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "license": "MIT",
   "description": "InceptJS Prisma Plugin",
   "author": "Chris <chris@incept.asia>",
@@ -22,7 +22,7 @@
     "node": ">=16.20.0"
   },
   "dependencies": {
-    "@inceptjs/types": "0.0.30",
+    "@inceptjs/types": "0.0.31",
     "date-fns": "2.30.0"
   },
   "devDependencies": {

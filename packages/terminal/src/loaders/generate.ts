@@ -15,7 +15,7 @@ import generateBootSchema from '../generators/server/loaders/schema';
 import generateBootError from '../generators/server/loaders/error';
 import generateBootObject from '../generators/server/loaders/object';
 import generateBootCollection from '../generators/server/loaders/collection';
-import generateBootRoutes from '../generators/server/loaders/routes';
+import generateModelRoutes from '../generators/server/schemas/routes';
 //client generators
 import generateClientIndex from '../generators/client/index';
 import generateClientValidate from '../generators/client/validate';
@@ -40,7 +40,7 @@ import generateViewFormats from '../generators/client/components/ViewFormats';
 
 export default function boot(ctx: Framework) {
   ctx.on('generate', (req, res) => {
-    const modules = Loader.modules();
+    const modules = `${Loader.modules()}/.incept`;
     const ts = !!req.params.ts || !!req.params.t || false;
     const location = Loader.absolute(
       (req.params.location || req.params.l || modules) as string
@@ -52,12 +52,12 @@ export default function boot(ctx: Framework) {
       console.log('Generating server...');
       if (ts) {
         if (location === modules) {
-          server(`${location}/.incept/tsserver`, ts);
+          server(`${location}/ts-server`, ts);
         } else {
-          server(location, ts);
+          server(`${location}/server`, ts);
         }
       } else {
-        server(`${location}/.incept/server`, ts);
+        server(`${location}/server`, ts);
       }
       
       console.log('Done!');
@@ -66,12 +66,12 @@ export default function boot(ctx: Framework) {
       console.log('Generating client...');
       if (ts) {
         if (location === modules) {
-          server(`${location}/.incept/tsclient`, ts);
+          client(`${location}/ts-client`, ts, ui);
         } else {
-          server(location, ts);
+          client(`${location}/client`, ts, ui);
         }
       } else {
-        client(`${location}/.incept/client`, ts, ui);
+        client(`${location}/client`, ts, ui);
       }
       console.log('Done!');
     }
@@ -137,13 +137,13 @@ function server(root: string, ts = false) {
   const directory = project.createDirectory(root);
   const plugins = Loader.plugins(root, config.plugins || []);
   generateServerIndex(directory, schemas);
-  generateApp(directory, plugins);
+  generateApp(directory, plugins, schemas);
   generateBootSchema(directory, schemas);
   generateBootError(directory);
   generateBootObject(directory);
   generateBootCollection(directory);
-  generateBootRoutes(directory, schemas);
   for (const name in schemas) {
+    generateModelRoutes(directory, schemas[name]);
     generateServerTypes(directory, schemas[name], schemas);
     generateServerValidate(directory, schemas[name]);
   }

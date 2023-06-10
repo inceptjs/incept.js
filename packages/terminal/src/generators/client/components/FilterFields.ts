@@ -22,7 +22,7 @@ export default function generateFilterFields(
   schema: SchemaConfig,
   ui = 'react'
 ) {
-  const path = `${schema.name}/components/FilterFields.tsx`;
+  const path = `${schema.name}/components/FilterFields.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
   //import type { FieldSelectProps, FieldInputProps } from 'frui'
   source.addImportDeclaration({

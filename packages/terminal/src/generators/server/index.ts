@@ -2,7 +2,7 @@
 import type { Project, Directory } from 'ts-morph';
 import type { SchemaConfig } from 'inceptjs';
 //helpers
-import { capitalize, getTypeName, getTypeExtendedName } from '../utils';
+import { capitalize } from '../utils';
 
 export default function generateIndex(
   project: Project|Directory, 
@@ -24,19 +24,8 @@ export default function generateIndex(
     moduleSpecifier: './app'
   });
   Object.keys(schemas).forEach((name) => {
-    const capital = capitalize(name);
-    const typeName = getTypeName(schemas[name]);
-    const typeExtendedName = getTypeExtendedName(schemas[name]);
-    //export type { ModelType, ModelTypeExtended, ModelFormResponse, 
-    //ModelSearchResponse, ModelDetailResponse } from './[model]/types'
+    //export type * from './[model]/types'
     source.addExportDeclaration({
-      namedExports: [
-        typeName,
-        typeName !== typeExtendedName ? typeExtendedName : '',
-        `${capital}FormResponse`,
-        `${capital}SearchResponse`,
-        `${capital}DetailResponse`
-      ].filter(name => name.length > 0),
       moduleSpecifier: `./schemas/${name}/types`,
       isTypeOnly: true
     });

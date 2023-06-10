@@ -129,7 +129,7 @@ export default class Loader {
     //ex. plugin/foo -> node_modules/plugin
     //ex. ./plugin or ../plugin -> [cwd] / plugin 
     } else {
-      pathname = this.absolute(cwd, pathname);
+      pathname = this.absolute(pathname, cwd);
     }
     //ex. /plugin/foo
     //it's already absolute...

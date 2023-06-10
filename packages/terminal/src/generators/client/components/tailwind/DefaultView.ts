@@ -12,7 +12,7 @@ export default function generateTailwindDefaultView(
   project: Project|Directory, 
   schema: SchemaConfig
 ) {
-  const path = `${schema.name}/components/DefaultView.tsx`;
+  const path = `${schema.name}/components/DefaultView.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
   //import type { ModelTypeExtended } from '../types';
   source.addImportDeclaration({

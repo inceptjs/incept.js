@@ -1,10 +1,12 @@
 //types
 import type { Project, Directory } from 'ts-morph';
 import { VariableDeclarationKind } from 'ts-morph';
+import type { SchemaConfig } from 'inceptjs';
 
 export default function generateBootstrap(
   project: Project|Directory, 
-  plugins: string[] = []
+  plugins: string[] = [],
+  schemas: Record<string, SchemaConfig> = {},
 ) {
   const path = 'app.ts';
   const source = project.createSourceFile(path, '', { overwrite: true });
@@ -34,11 +36,6 @@ export default function generateBootstrap(
     defaultImport: 'collection',
     moduleSpecifier: './loaders/collection'
   });
-  //import routes from './loaders/routes'
-  source.addImportDeclaration({
-    defaultImport: 'routes',
-    moduleSpecifier: './loaders/routes'
-  });
 
   //import config from './config.json';
   source.addImportDeclaration({
@@ -50,6 +47,13 @@ export default function generateBootstrap(
     source.addImportDeclaration({
       defaultImport: `loader${i + 1}`,
       moduleSpecifier: file
+    });
+  });
+  Object.keys(schemas).forEach(name => {
+    //import userRoutes from './schemas/user/routes'
+    source.addImportDeclaration({
+      defaultImport: `${name}Routes`,
+      moduleSpecifier: `./schemas/${name}/routes`
     });
   });
   //const app = new Framework(config);
@@ -64,10 +68,13 @@ export default function generateBootstrap(
   source.addStatements('app.load(error);');
   source.addStatements('app.load(object);');
   source.addStatements('app.load(collection);');
-  source.addStatements('app.load(routes);');
   plugins.forEach((file, i) => {
     //app.load(boot1)
     source.addStatements(`app.load(loader${i + 1});`);
+  });
+  Object.keys(schemas).forEach(name => {
+    //app.load(userRoutes)
+    source.addStatements(`app.load(${name}Routes);`);
   });
   //export default app;
   source.addExportAssignment({

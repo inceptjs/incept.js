@@ -7,13 +7,13 @@ export default class Schema<Model = any> {
   /**
    * A cached list of all schemas
    */
-  protected static _schemas: Record<string, SchemaConfig> = {};
+  protected static _configs: Record<string, SchemaConfig> = {};
 
   /**
    * Returns all the schemas
    */
   public static get schemas() {
-    return this._schemas;
+    return this._configs;
   }
 
   /**
@@ -24,14 +24,14 @@ export default class Schema<Model = any> {
       schema.forEach(schema => this.add(schema));
       return;
     }
-    this._schemas[schema.name] = schema;
+    this._configs[schema.name] = schema;
   }
 
   /**
    * Gets a schema from the cache
    */
   public static get(name: string) {
-    return this._schemas[name];
+    return this._configs[name];
   }
 
   /**
@@ -39,7 +39,7 @@ export default class Schema<Model = any> {
    */
   public static get routes() {
     return Object
-      .values(this._schemas)
+      .values(this._configs)
       .map(schema => Object.values(schema.rest))
       .flat(1);
   }
@@ -47,55 +47,55 @@ export default class Schema<Model = any> {
   /**
    * The schema config
    */
-  protected _schema: SchemaConfig;
+  protected _config: SchemaConfig;
 
   /**
    * Returns all the columns
    */
   get columns() {
-    return this._schema.columns;
+    return this._config.columns;
   }
 
   /**
    * Returns the schema config
    */
   get config() {
-    return this._schema;
+    return this._config;
   }
 
   /**
    * Returns the schema description
    */
   get description() {
-    return this._schema.description;
+    return this._config.description;
   }
 
   /**
    * Returns the filterable columns
    */
   get filterable() {
-    return this._schema.columns.filter(column => column.filterable);
+    return this._config.columns.filter(column => column.filterable);
   }
 
   /**
    * Returns the schema group
    */
   get group() {
-    return this._schema.group;
+    return this._config.group;
   }
 
   /**
    * Returns the schema icon
    */
   get icon() {
-    return this._schema.icon;
+    return this._config.icon;
   }
 
   /**
    * Returns the indexed columns
    */
   get index() {
-    return this._schema.columns.filter(
+    return this._config.columns.filter(
       column => column.searchable 
         || column.filterable 
         || column.sortable
@@ -106,21 +106,38 @@ export default class Schema<Model = any> {
    * Returns the schema name
    */
   get name() {
-    return this._schema.name;
+    return this._config.name;
   }
 
   /**
    * Returns the schema plural label
    */
   get plural() {
-    return this._schema.plural;
+    return this._config.plural;
   }
 
   /**
    * Returns the primary columns
    */
   get primary() {
-    return this._schema.columns.filter(column => column.data.primary);
+    return this._config.columns.filter(column => column.data.primary);
+  }
+
+  /**
+   * Returns the all the schema relations related to this schema
+   */
+  get related() {
+    const related: Record<string, SchemaRelation> = {};
+    Object.keys(Schema.schemas).forEach(name => {
+      const schema = Schema.schemas[name];
+      schema.relations.forEach(relation => {
+        if (relation.schema === this.name) {
+          related[name] = relation;
+        }
+      });
+    });
+
+    return related;
   }
 
   /**
@@ -128,7 +145,7 @@ export default class Schema<Model = any> {
    */
   get relations() {
     const relations: Record<string, SchemaRelation> = {};
-    this._schema.relations.forEach(relation => {
+    this._config.relations.forEach(relation => {
       relations[relation.schema] = relation;
     });
 
@@ -139,35 +156,35 @@ export default class Schema<Model = any> {
    * Returns the schema rest routes
    */
   get routes() {
-    return Object.values(this._schema.rest);
+    return Object.values(this._config.rest);
   }
 
   /**
    * Returns the searchable columns
    */
   get searchable() {
-    return this._schema.columns.filter(column => column.searchable);
+    return this._config.columns.filter(column => column.searchable);
   }
 
   /**
    * Returns the schema singular label
    */
   get singular() {
-    return this._schema.singular;
+    return this._config.singular;
   }
 
   /**
    * Returns the sortable columns
    */
   get sortable() {
-    return this._schema.columns.filter(column => column.sortable);
+    return this._config.columns.filter(column => column.sortable);
   }
 
   /**
    * Returns the unique columns
    */
   get unique() {
-    return this._schema.columns.filter(column => column.data.unique);
+    return this._config.columns.filter(column => column.data.unique);
   }
 
   /**
@@ -181,22 +198,22 @@ export default class Schema<Model = any> {
       }
       schema = config;
     }
-    this._schema = schema;
+    this._config = schema;
   }
 
   /**
    * Returns a column given the name
    */
   column(name: string) {
-    return this._schema.columns.find(column => column.name === name);
+    return this._config.columns.find(column => column.name === name);
   }
 
   /**
    * Validates data and returns errors
    */
-  errors(data: Record<string, any>, strict = false): Record<string, any> {
+  errors(data: Record<string, any>, strict = true): Record<string, any> {
     const errors: Record<string, any> = {};
-    this._schema.columns.forEach(column => {
+    this._config.columns.forEach(column => {
       column.validation.forEach(validator => {
         if (!strict && validator.method === 'required') {
           return;
@@ -217,7 +234,7 @@ export default class Schema<Model = any> {
    */
   prepare(data: Record<string, any>): Model {
     const prepared: Record<string, any> = {};
-    this._schema.columns.forEach(column => {
+    this._config.columns.forEach(column => {
       if (data[column.name] !== undefined) {
         prepared[column.name] = data[column.name];
       }
@@ -229,7 +246,7 @@ export default class Schema<Model = any> {
    * Returns a relation schema given the name
    */
   relation(name: string): SchemaRelation|undefined {
-    return this._schema.relations.filter(
+    return this._config.relations.filter(
       relation => relation.name === name
     )[0];
   }

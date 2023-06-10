@@ -1,21 +1,17 @@
 {
-  "name": "@inceptjs/terminal",
+  "name": "@inceptjs/studio",
   "license": "MIT",
   "version": "0.0.31",
-  "description": "Transforms terminal commands to event calls",
+  "description": "Developer GUI for creating and managing schemas and fielsets",
   "author": "Chris <chris@incept.asia>",
-  "homepage": "https://github.com/inceptjs/incept.js/tree/main/packages/terminal",
+  "homepage": "https://github.com/inceptjs/incept.js/tree/main/packages/studio",
   "bugs": "https://github.com/inceptjs/incept.js/issues",
   "repository": "inceptjs/incept.js",
   "files": [
-    "bin.js",
     "index.js",
     "index.d.ts",
     "dist"
   ],
-  "bin": {
-    "incept": "./bin.js"
-  },
   "scripts": {
     "test": "jest",
     "build": "tsc"
@@ -26,7 +22,10 @@
   "dependencies": {
     "inceptjs": "0.0.31",
     "ts-morph": "18.0.0",
-    "frui": "0.0.5"
+    "frui": "0.0.5",
+    "r22n": "1.0.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@jest/globals": "29.5.0",

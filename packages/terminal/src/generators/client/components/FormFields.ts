@@ -11,7 +11,7 @@ export default function generateFormFields(
   schema: SchemaConfig,
   ui = 'react'
 ) {
-  const path = `${schema.name}/components/FormFields.tsx`;
+  const path = `${schema.name}/components/FormFields.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
   //import type { FieldSelectProps, FieldInputProps } from 'frui'
   source.addImportDeclaration({

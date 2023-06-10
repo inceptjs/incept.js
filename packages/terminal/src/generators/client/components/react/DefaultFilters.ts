@@ -12,13 +12,13 @@ export default function generateTailwindDefaultFilters(
   project: Project|Directory, 
   schema: SchemaConfig
 ) {
-  const path = `${schema.name}/components/DefaultFilters.tsx`;
+  const path = `${schema.name}/components/DefaultFilters.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
   //import type { APIResponse, FetchStatuses, FilterHandlers } from 'inceptjs';
   source.addImportDeclaration({
     isTypeOnly: true,
     moduleSpecifier: 'inceptjs',
-    namedImports: [ 'FetchStatuses', 'FilterHandlers' ]
+    namedImports: [ 'APIResponse', 'FetchStatuses', 'FilterHandlers' ]
   });
   //import type { ModelType } from '../types';
   source.addImportDeclaration({
@@ -97,12 +97,9 @@ export default function generateTailwindDefaultFilters(
         `)).join('\n')}
         React.createElement(Button, {
           type: 'submit',
-          { style: { marginTop: '8px' } },
-          disabled: status === 'fetching',
-          children: status === 'fetching' ?
-            React.createElement(Loader) :
-            _('Filter'),
-        })
+          style: { marginTop: '8px' },
+          disabled: status === 'fetching'
+        }, status === 'fetching' ? React.createElement(Loader) : _('Filter'))
       );
     `)
   });

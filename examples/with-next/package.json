@@ -1,6 +1,6 @@
 {
   "name": "with-next",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3000",
@@ -11,16 +11,17 @@
   "dependencies": {
     "@next/font": "13.1.1",
     "@prisma/client": "4.15.0",
-    "frui": "0.0.4",
-    "inceptjs": "0.0.30",
+    "axios": "1.4.0",
+    "frui": "0.0.5",
+    "inceptjs": "0.0.31",
     "r22n": "1.0.2",
     "next": "13.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "@inceptjs/prisma": "0.0.30",
-    "@inceptjs/terminal": "0.0.30",
+    "@inceptjs/prisma": "0.0.31",
+    "@inceptjs/terminal": "0.0.31",
     "@types/node": "18.11.18",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.10",

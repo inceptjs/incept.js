@@ -12,7 +12,7 @@ export default function generateTailwindDefaultTable(
   project: Project|Directory, 
   schema: SchemaConfig
 ) {
-  const path = `${schema.name}/components/DefaultTable.tsx`;
+  const path = `${schema.name}/components/DefaultTable.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
   //import type { FilterHandlers } from 'inceptjs';
   source.addImportDeclaration({
@@ -41,9 +41,9 @@ export default function generateTailwindDefaultTable(
     moduleSpecifier: 'inceptjs',
     namedImports: [ 'useStripe' ]
   });
-  //import { Table, Thead, Trow, Tcol } from '@inceptjs/tailwind/dist/Table';
+  //import { Table, Thead, Trow, Tcol } from 'frui/tailwind/Table';
   source.addImportDeclaration({
-    moduleSpecifier: '@inceptjs/tailwind/dist/Table',
+    moduleSpecifier: 'frui/tailwind/Table',
     namedImports: [ 'Table', 'Thead', 'Trow', 'Tcol' ]
   });
   //import { RoleFormat, ActiveFormat, ... } from './ListFormats';

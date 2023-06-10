@@ -12,7 +12,7 @@ export default function generateTailwindDefaultTable(
   project: Project|Directory, 
   schema: SchemaConfig
 ) {
-  const path = `${schema.name}/components/DefaultTable.tsx`;
+  const path = `${schema.name}/components/DefaultTable.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
   //import type { FilterHandlers } from 'inceptjs';
   source.addImportDeclaration({
