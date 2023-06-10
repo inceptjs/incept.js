@@ -104,13 +104,6 @@ dist
 # TernJS port file
 .tern-port
 
-# testing
-cashcows-server/coverage
-
-# next.js
-cashcows-server/.next/
-cashcows-server/out/
-
 # production
 build
 
@@ -163,4 +156,3 @@ schema.prisma
 # TMP
 packages/admin
 packages/auth
-packages/studio
