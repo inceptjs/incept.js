@@ -49,7 +49,7 @@ export default function generateUseSearch(
       );
       const { filters, handlers } = useFilters(query);
       const [ last, setLast ] = useState<Record<string, any>>();
-      const serialize = (value) => JSON.stringify(value);
+      const serialize = (value: any) => JSON.stringify(value);
       useEffect(() => {
         if (serialize(filters) === serialize(last)) return;
         setLast(filters);
