@@ -10,19 +10,14 @@ import { NestedScalarObject, ServerResponse, Cookie } from '../types';
  */
 export default class Response<T = string|Buffer|NestedScalarObject> {
   /**
-   * Native response from the server.
-   */
-  protected _resource: ServerResponse;
-
-  /**
-   * Default status code and message
-   */
-  protected _status = { code: 200, message: 'OK' };
-
-  /**
    * Editable body object
    */
   protected _body?: T;
+
+  /**
+   * Editable cookies object
+   */
+  protected _cookies: Record<string, Cookie> = {};
 
   /**
    * Editable headers object
@@ -30,27 +25,54 @@ export default class Response<T = string|Buffer|NestedScalarObject> {
   protected _headers: Record<string, string|string[]|undefined> = {};
 
   /**
-   * Editable cookies object
+   * Native response from the server.
    */
-  protected _cookies: Record<string, Cookie> = {};
+  protected _resource: ServerResponse;
+
+  /**
+   * Whether the response has been prematurely sent
+   */
+  protected _sent = false;
+
+  /**
+   * Default status code and message
+   */
+  protected _status = { code: 200, message: 'OK' };
   
   /**
    * Returns the body of the response
    */
-  get body() {
+  public get body() {
     return this._body;
   }
 
   /**
    * Returns the flat body
    */
-  get content() {
+  public get content() {
     return typeof this._body === 'string' || Buffer.isBuffer(this._body)
       ? this._body
       : JSON.stringify(this._body);
   }
 
-  get status() {
+  /**
+   * Returns the resource
+   */
+  public get resource() {
+    return this._resource;
+  }
+
+  /**
+   * Returns whether the response has been prematurely sent
+   */
+  public get sent() {
+    return this._resource.headersSent || this._sent;
+  }
+
+  /**
+   * Returns the status
+   */
+  public get status() {
     return this._status;
   }
 
@@ -145,11 +167,30 @@ export default class Response<T = string|Buffer|NestedScalarObject> {
    * Parses all the given inputs and sends 
    * the response using the native resource
    */
-  public send() {
+  public send(content?: any) {
+    //if already sent, do nothing
+    if (this._sent) return;
+    this._sent = true;
     this.prepare();
     const { code, message } = this._status;
     this._resource.writeHead(code, message);
-    this._resource.end(this.content);
+    //if content is a stream, pipe it
+    if (content && typeof content.pipe === 'function') {
+      content.pipe(this._resource);
+    //if content is a valid response
+    } else if (typeof content === 'string' 
+      || Buffer.isBuffer(content) 
+      || content instanceof Uint8Array
+    ) {
+      this._resource.end(content);
+    //if content is a valid response
+    } else if (typeof this.content === 'string' 
+      || Buffer.isBuffer(this.content) 
+    ) {
+      this._resource.end(this.content);
+    } else {
+      this._resource.end();
+    }
   }
 
   /**

@@ -47,7 +47,7 @@ export default class Framework extends Router {
       //let middleware contribute before routing
       await this.emit('open', request, response);
       //if it was not already sent off 
-      if (!sr.headersSent) {
+      if (!response.sent) {
         //handle the route
         const event = request.method + ' ' + request.url.pathname;
         const route = this.route(event);
@@ -146,7 +146,9 @@ export default class Framework extends Router {
   async send(im: IncomingMessage, sr: ServerResponse) {
     //handle the payload
     const response = await this.handle(im, sr);
-    //send the response
-    response.send();
+    if (!response.sent) {
+      //send the response
+      response.send();
+    }
   }
 }

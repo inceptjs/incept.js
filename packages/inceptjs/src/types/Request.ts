@@ -95,6 +95,13 @@ export default class Request {
   }
 
   /**
+   * Returns the resource
+   */
+  public get resource() {
+    return this._resource;
+  }
+
+  /**
    * Returns a combination of the query, post and route params
    */
   public get params() {
