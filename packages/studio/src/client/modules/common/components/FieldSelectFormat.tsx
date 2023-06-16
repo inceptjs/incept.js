@@ -36,14 +36,16 @@ const FieldSelectFormat: React.FC<{
   return (
     <div>
       <select {...attributes} onChange={handlers.method} defaultValue={value?.method}>
-        {groupless.map(option => (
+        {groupless.filter(option => option.enabled).map(option => (
           <option key={option.method} value={option.method}>
             {option.label}
           </option>
         ))}
         {Object.keys(options).filter(group => group.length > 0).map(group => (
           <optgroup key={group} label={group}>
-            {Object.keys(options[group]).map(name => (
+            {Object.keys(options[group]).filter(
+              name => options[group][name].enabled
+            ).map(name => (
               <option key={name} value={name}>
                 {options[group][name].label}
               </option>

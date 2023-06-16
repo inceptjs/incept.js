@@ -56,7 +56,9 @@ const Fields: React.FC<FieldsProps<FieldValidationlistType>> = (props) => {
         >
           {Object.keys(options).filter(group => group.length > 0).map(group => (
             <optgroup key={group} label={group}>
-              {Object.keys(options[group]).map(name => (
+              {Object.keys(options[group]).filter(
+                name => options[group][name].enabled
+              ).map(name => (
                 <option key={name} value={name}>
                   {options[group][name].label}
                 </option>
@@ -113,8 +115,7 @@ const Fields: React.FC<FieldsProps<FieldValidationlistType>> = (props) => {
         </div>
       )}
       <FieldInput 
-        style={map.styles.input}
-        className={map.classNames.input}
+        className="outline-none dark:bg-b5 dark:text-t1 dark:border-b1 dark:placeholder-gray-500"
         placeholder="Error Message"
         defaultValue={values ? values[index]?.message: undefined}
         error={error}

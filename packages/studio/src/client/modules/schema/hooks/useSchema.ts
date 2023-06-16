@@ -34,6 +34,9 @@ export function useSchemaCreate() {
     });
     return false;
   });
+
+  console.log('useSchema', input.values);
+
   useEffect(() => {
     if (action.response?.error) {
       notify('error', action.response.message);
@@ -97,6 +100,49 @@ export function useSchemaUpdate(name: string) {
     action.call({ data: input.values, params: { name } }).then(response => {
       if (!response.error) {
         flash('success', t`Schema ${name} updated` as string);
+        redirect('/schema');
+      }
+    });
+    return false;
+  });
+  useEffect(() => {
+    if (action.response?.error) {
+      notify('error', action.response.message);
+    }
+  }, [ action.response ]);
+  return {
+    handlers,
+    data: input.values,
+    response: action.response
+  };
+};
+
+export function useSchemaUpsert(name?: string) {
+  const { t } = useLanguage();
+  const method = name ? 'put' : 'post';
+  const endpoint = name ? '/api/schema/:name' : '/api/schema';
+  const action = useFetch<SchemaConfig>(method, endpoint);
+  const { input, handlers } = useForm((e: FormEvent<Element>) => {
+    e.preventDefault();
+    const errors = validate(input.values, !name);
+    if (Object.keys(errors).length) {
+      action.set({
+        error: true,
+        code: 400,
+        message: 'Invalid data'
+      });
+      return false;
+    }
+
+    action.call({ 
+      data: input.values, 
+      params: name ? { name } : undefined
+    }).then(response => {
+      if (!response.error) {
+        const message = name 
+          ? t`Schema ${name} updated` 
+          : t`Schema ${response.results?.name} created`;
+        flash('success', message as string);
         redirect('/schema');
       }
     });

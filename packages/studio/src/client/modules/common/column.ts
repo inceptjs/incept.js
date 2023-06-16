@@ -3,6 +3,10 @@ import type { SchemaColumn, FieldMethod, FormatMethod } from 'inceptjs';
 export type FieldOption = { 
   method: string,
   label: string,
+  content?: {
+    name: string,
+    label: string
+  }
   component: string|false, 
   attributes: {
     show: boolean,
@@ -1475,7 +1479,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         default: undefined
       },
       default: { show: true, default: undefined },
-      enabled: true
+      enabled: false
     }
   },
   'Numbers': {
@@ -2828,6 +2832,10 @@ export const fields: Record<string, Record<string, FieldOption>> = {
     active: {
       method: 'active',
       label: 'Active',
+      content: {
+        name: 'active',
+        label: 'Active'
+      },
       component: false,
       attributes: {
         show: false,
@@ -2858,12 +2866,16 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         ],
         default: 'hide'
       },
-      default: { show: true, default: undefined },
+      default: { show: false, default: 1 },
       enabled: true
     },
     created: {
       method: 'created',
       label: 'Created',
+      content: {
+        name: 'created',
+        label: 'Created'
+      },
       component: false,
       attributes: {
         show: false,
@@ -2902,6 +2914,10 @@ export const fields: Record<string, Record<string, FieldOption>> = {
     updated: {
       method: 'updated',
       label: 'Updated',
+      content: {
+        name: 'updated',
+        label: 'Updated'
+      },
       component: false,
       attributes: {
         show: false,
@@ -3024,6 +3040,8 @@ export function getColumnDefaults(
   const view = getFormat(selected.view.default || 'none');
   return {
     ...column,
+    name: selected?.content?.name || column.name,
+    label: selected?.content?.label || column.label,
     field: {
       method: selected.method as FieldMethod,
       attributes: Object.assign({},

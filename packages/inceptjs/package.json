@@ -28,7 +28,7 @@
   "dependencies": {
     "@inceptjs/types": "0.0.31",
     "cookie": "0.5.0",
-    "frui": "0.0.10",
+    "frui": "0.0.12",
     "r22n": "1.0.2"
   },
   "peerDependencies": {

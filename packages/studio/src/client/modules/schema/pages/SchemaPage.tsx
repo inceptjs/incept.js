@@ -5,7 +5,7 @@ import type { Crumb } from '../../common/components/types';
 import { useLanguage } from 'r22n';
 import { useStripe } from 'inceptjs';
 import useMobile from '../../app/layouts/panel/hooks/useMobile';
-import { useSchemaCreate, useSchemaSearch } from '../hooks/useSchema';
+import { useSchemaSearch } from '../hooks/useSchema';
 //components
 import { Link } from 'react-router-dom';
 import Button from 'frui/tailwind/Button';
@@ -19,14 +19,11 @@ const SchemaSearchPage = () => {
   const { t } = useLanguage();
   const { handlers } = useMobile();
   const stripe = useStripe('bg-b4', 'bg-b5');
-  const create = useSchemaCreate();
   const search = useSchemaSearch();
   const viewCreate = () => handlers.push(
     <SchemaForm 
       key={'SchemaForm'}
       label={t`Create Schema` as string} 
-      handlers={create.handlers} 
-      data={create.data} 
     />
   );
   //variables

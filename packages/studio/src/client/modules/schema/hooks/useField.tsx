@@ -19,7 +19,6 @@ export default function useField(
   const { input, handlers } = useForm<SchemaColumn>((e: FormEvent<Element>) => {
     e.preventDefault();
     const errors = validateColumn(input.values);
-    console.log(input.values, errors)
     if (Object.keys(errors).length) {
       setResponse({
         error: true,

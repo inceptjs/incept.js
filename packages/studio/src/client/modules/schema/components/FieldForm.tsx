@@ -1,6 +1,7 @@
 //types
 import type { SchemaColumn, FormChangeHandler } from 'inceptjs';
 //hooks
+import { useState, useEffect } from 'react';
 import { useLanguage } from 'r22n';
 import useMobile from '../../app/layouts/panel/hooks/useMobile';
 import useField from '../hooks/useField';
@@ -13,31 +14,43 @@ import FieldSelectField from '../../common/components/FieldSelectField';
 import FieldSelectFormat from '../../common/components/FieldSelectFormat';
 import FieldValidationlist from '../../common/components/FieldValidationlist';
 //helpers
+import { slugify } from 'frui/utils';
 import { getField } from '../../common/column';
 
 const FieldFormInputs: React.FC<{
   data?: Partial<SchemaColumn>,
   change: FormChangeHandler
 }> = ({ data, change }) => {
+  //hooks
   const { t } = useLanguage();
+  //controlling unconrolled inputs :)
+  const [ slug, setSlug ] = useState('');
+  useEffect(() => change('name', slug), [ slug ]);
   //load the settings based on the chosen field
   const settings = getField(data?.field?.method || '');
   return (
     <section className="m-0 p-2 flex-grow overflow-y-auto">
-      <Control label={`${t`Label`}*`}>
-        <FieldInput 
-          className="bg-b5 text-t1 border-b1 outline-none"
-          defaultValue={data?.label} 
-          onUpdate={value => change('label', value)} 
-        />
-      </Control>
-      <Control label={`${t`Keyword`}*`} className="mt-2">
-        <FieldInput 
-          className="bg-b5 text-t1 border-b1 outline-none"
-          defaultValue={data?.name} 
-          onUpdate={value => change('name', value)} 
-        />
-      </Control>
+      {!settings?.content?.label && (
+        <Control label={`${t`Label`}*`}>
+          <FieldInput 
+            className="bg-b5 text-t1 border-b1 outline-none"
+            defaultValue={data?.label} 
+            onUpdate={value => {
+              change('label', value);
+              setSlug(slugify(value, true, false));
+            }} 
+          />
+        </Control>
+      )}
+      {!settings?.content?.name && (
+        <Control label={`${t`Keyword`}*`} className="mt-2">
+          <FieldInput 
+            className="bg-b5 text-t1 border-b1 outline-none"
+            value={slug} 
+            onUpdate={value => setSlug(slugify(value, true, false))} 
+          />
+        </Control>
+      )}
       <Control label={`${t`Field`}*`} className="mt-2">
         <FieldSelectField 
           className="py-2 border border-b0 box-border w-full bg-b5 text-t1 outline-none"
@@ -124,10 +137,11 @@ const FieldForm: React.FC<{
   defaultValue?: Partial<SchemaColumn>,
   onSubmit: (column: Partial<SchemaColumn>) => void
 }> = ({ label, defaultValue, onSubmit }) => {
+  //hooks
   const { t } = useLanguage();
   const { handlers: mobile } = useMobile();
   const { data, handlers } = useField(onSubmit, defaultValue);
-
+  //render
   return (
     <form className="flex flex-col text-sm bg-b4 h-full" onSubmit={handlers.send}>
       <header className="flex items-center bg-b2 border-b0 border-b h-12">
