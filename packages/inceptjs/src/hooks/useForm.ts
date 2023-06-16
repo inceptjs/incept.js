@@ -24,7 +24,7 @@ export default function useForm<Model = any>(
         //if value is an object hash
         if (value && typeof value === 'object' && !Array.isArray(value)) {
           //set all the inputs (hard override)
-          setInputs({...value});
+          setInputs(JSON.parse(JSON.stringify(value)));
         }
         return;  
       }
@@ -33,7 +33,7 @@ export default function useForm<Model = any>(
         //if value is an object hash
         if (value && typeof value === 'object' && !Array.isArray(value)) {
           //set all the inputs (soft override)
-          setInputs({ ...inputs, ...value });
+          setInputs(JSON.parse(JSON.stringify({ ...inputs, ...value })));
         }
         return;  
       }
@@ -51,7 +51,9 @@ export default function useForm<Model = any>(
         store.set(...paths, value);
       }
 
-      setInputs({...(store.get() as Partial<Model>)});
+      setInputs(JSON.parse(JSON.stringify(
+        store.get() as Partial<Model>
+      )));
     }
   };
 

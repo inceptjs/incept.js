@@ -25,6 +25,12 @@ const FieldSelectField: React.FC<{
     { value, column, onUpdate }
   );
 
+  //determine default attributes
+  const defaultAttributes = value?.attributes || {};
+  Object.keys(selected?.attributes.fixed || {}).forEach(key => {
+    delete defaultAttributes[key];
+  });
+  //determine fields without a group
   const groupless = Object.values(
     Object
       .keys(options)
@@ -123,7 +129,7 @@ const FieldSelectField: React.FC<{
               value: 'outline-none border dark:border-b0 dark:bg-b5 dark:text-t1 dark:placeholder-gray-500',
               button: 'border-0 dark:bg-b2'
             }}
-            value={Object.entries(value?.attributes || {})}
+            value={Object.entries(defaultAttributes)}
             onUpdate={handlers.attributes}
           />
         </Control>

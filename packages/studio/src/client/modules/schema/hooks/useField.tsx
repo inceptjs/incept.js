@@ -10,7 +10,9 @@ import notify from '../../common/components/notify';
 import { validateColumn } from '../validate';
 
 export default function useField(
+  mode: 'create'|'update',
   onSubmit: (column: Partial<SchemaColumn>) => void,
+  columns: SchemaColumn[],
   defaultValue?: Partial<SchemaColumn>
 ) {
   const { t } = useLanguage();
@@ -28,11 +30,31 @@ export default function useField(
       return false;
     }
 
+    //check if the column already exists
+    const exists = columns.find(column => column.name === input.values.name);
+    if (mode === 'create' && exists) {
+      setResponse({
+        error: true,
+        code: 400,
+        message: 'Column already exists'
+      });
+      return false;
+    } else if (mode === 'update' && exists && exists.name !== originalName) {
+      setResponse({
+        error: true,
+        code: 400,
+        message: 'Column already exists'
+      });
+      return false;
+    }
+
     onSubmit(input.values);
     notify('success', t`Field ${input.values.name} created` as string);
     mobile.pop();
     return false;
   }, defaultValue);
+
+  const originalName = defaultValue?.name;
 
   useEffect(() => {
     if (response?.error) {

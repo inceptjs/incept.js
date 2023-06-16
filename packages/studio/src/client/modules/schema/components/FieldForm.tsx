@@ -24,7 +24,7 @@ const FieldFormInputs: React.FC<{
   //hooks
   const { t } = useLanguage();
   //controlling unconrolled inputs :)
-  const [ slug, setSlug ] = useState('');
+  const [ slug, setSlug ] = useState(data?.name || '');
   useEffect(() => change('name', slug), [ slug ]);
   //load the settings based on the chosen field
   const settings = getField(data?.field?.method || '');
@@ -55,6 +55,7 @@ const FieldFormInputs: React.FC<{
         <FieldSelectField 
           className="py-2 border border-b0 box-border w-full bg-b5 text-t1 outline-none"
           column={data}
+          value={data?.field}
           onUpdate={change}
         />
       </Control>
@@ -73,6 +74,7 @@ const FieldFormInputs: React.FC<{
         <Control label={t`List` as string} className="mt-2">
           <FieldSelectFormat
             format="list"
+            value={data?.list}
             field={data?.field?.method}
             className="py-2 border border-b0 box-border w-full bg-b5 text-t1 outline-none"
             onUpdate={change} 
@@ -83,6 +85,7 @@ const FieldFormInputs: React.FC<{
         <Control label={t`View` as string} className="mt-2">
           <FieldSelectFormat
             format="view"
+            value={data?.view}
             field={data?.field?.method}
             className="py-2 border border-b0 box-border w-full bg-b5 text-t1 outline-none"
             onUpdate={change} 
@@ -133,14 +136,16 @@ const FieldFormInputs: React.FC<{
 };
 
 const FieldForm: React.FC<{
+  mode: 'create'|'update',
   label: string,
   defaultValue?: Partial<SchemaColumn>,
+  columns: SchemaColumn[],
   onSubmit: (column: Partial<SchemaColumn>) => void
-}> = ({ label, defaultValue, onSubmit }) => {
+}> = ({ mode, label, defaultValue, columns, onSubmit }) => {
   //hooks
   const { t } = useLanguage();
   const { handlers: mobile } = useMobile();
-  const { data, handlers } = useField(onSubmit, defaultValue);
+  const { data, handlers } = useField(mode, onSubmit, columns, defaultValue);
   //render
   return (
     <form className="flex flex-col text-sm bg-b4 h-full" onSubmit={handlers.send}>

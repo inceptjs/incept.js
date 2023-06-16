@@ -23,7 +23,7 @@ const Fields: React.FC<FieldsProps<FieldValidationlistType>> = (props) => {
     type,
     values, 
     index, 
-    error,
+    //error,
     styles,
     classNames,
     set
@@ -45,7 +45,6 @@ const Fields: React.FC<FieldsProps<FieldValidationlistType>> = (props) => {
   };
   //handlers
   const { selected, options, handlers } = useValidationlist({ type, values, index, set });
-  
   return (
     <div className={map.classNames.row} style={map.styles.row}>
       <div className="flex items-center">
@@ -118,7 +117,7 @@ const Fields: React.FC<FieldsProps<FieldValidationlistType>> = (props) => {
         className="outline-none dark:bg-b5 dark:text-t1 dark:border-b1 dark:placeholder-gray-500"
         placeholder="Error Message"
         defaultValue={values ? values[index]?.message: undefined}
-        error={error}
+        onUpdate={value => handlers.message(value)} 
         required 
       />
     </div>

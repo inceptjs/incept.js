@@ -24,7 +24,6 @@ export default function useValidationlist(config: FieldValidationlistConfig) {
     if (field) {
       options = filterValidators(field.validation.filter)
     }
-   
   }
 
   let selected: ValidationOption|undefined;

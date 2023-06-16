@@ -60,7 +60,7 @@ const SchemaFormInputs: React.FC<{
 }> = ({ data, change }) => {
   const { t } = useLanguage();
   //controlling unconrolled inputs :)
-  const [ slug, setSlug ] = useState('');
+  const [ slug, setSlug ] = useState(data.name || '');
   useEffect(() => change('name', slug), [ slug ]);
   return (
     <section className="m-0 p-2 flex-grow overflow-y-auto">
@@ -133,8 +133,23 @@ const SchemaFormFields: React.FC<{
     add: () => mobile.push(
       <FieldForm 
         key={Math.random()}
+        mode="create"
         label={t`Add Field` as string} 
+        columns={data.columns || []}
         defaultValue={getColumnDefaults('none')}
+        onSubmit={(column: Partial<SchemaColumn>) => change(
+          'columns', 
+          [...(data.columns || []), column]
+        )} 
+      />
+    ),
+    copy: (column: Partial<SchemaColumn>) => mobile.push(
+      <FieldForm 
+        key={Math.random()}
+        mode="create"
+        label={t`Copy Field` as string} 
+        columns={data.columns || []}
+        defaultValue={column}
         onSubmit={(column: Partial<SchemaColumn>) => change(
           'columns', 
           [...(data.columns || []), column]
@@ -199,6 +214,22 @@ const SchemaFormFields: React.FC<{
       update.splice(to, 0, item);
       change('columns', update);
     },
+    update: (index: number, column: Partial<SchemaColumn>) => {
+      mobile.push(
+        <FieldForm 
+          key={Math.random()}
+          mode="update"
+          label={t`Update Field` as string} 
+          columns={data.columns || []}
+          defaultValue={column}
+          onSubmit={(column: Partial<SchemaColumn>) => {
+            const update = [ ...(data.columns || []) ];
+            update.splice(index, 1, column as SchemaColumn);
+            change('columns', update);
+          }} 
+        />
+      )
+    },
     remove: (i: number) => {
       const update = [ ...(data.columns || []) ];
       update.splice(i, 1);
@@ -262,15 +293,17 @@ const SchemaFormFields: React.FC<{
                   <i className="fas fa-arrows-alt-v mt-2 inline-block" />
                 </td>
                 <td className={`p-4 border-t text-sm border-black ${stripe(i)}`}>
-                  <a className="block text-t2 cursor-pointer">{column.label}</a>
+                  <a className="block text-t2 cursor-pointer" onClick={() => handlers.update(i, column)}>
+                    {column.label}
+                  </a>
                   <p className="text-t1 py-1">{column.name}</p>
                   <div className="cursor-pointer">
-                    <span className="text-t2">
+                    <a className="text-t2" onClick={() => handlers.copy(column)}>
                       <i className="fas fa-fw fa-copy"></i>
-                    </span>
-                    <span className="ml-1 text-t-error" onClick={() => handlers.remove(i)}>
+                    </a>
+                    <a className="ml-1 text-t-error" onClick={() => handlers.remove(i)}>
                       <i className="fas fa-fw fa-times"></i>
-                    </span>
+                    </a>
                   </div>
                 </td>
                 <td className={`p-4 border-t text-sm border-black ${stripe(i)}`}>
