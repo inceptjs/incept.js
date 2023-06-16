@@ -26,6 +26,10 @@ export type APIResponse<T = any> = {
   total?: number
 };
 
+export type APIFetchCall<T = any> = (
+  options: FetchCallConfig
+) => Promise<APIResponse<T>>;
+
 //client
 export type FetchStatuses = 'pending'|'fetching'|'complete';
 export type FetchRouteParams = {
@@ -48,9 +52,14 @@ export type FilterHandlers = {
   reset: (query?: Record<string, any>) => void
 };
 
+export type FormChangeHandler = (
+  paths: null|true|string|number|(string|number)[], 
+  value: any
+) => void;
+
 export type FormHandlers = {
   send: (e: FormEvent) => boolean,
-  change: (paths: string|string[], value: any) => void
+  change: FormChangeHandler
 };
 
 //server
@@ -60,7 +69,9 @@ export type ExpressLikeMessage = IncomingMessage & {
 };
 
 export type RouterConfig = Record<string, any> & { 
-  schemas?: string 
+  cwd?: string,
+  schemas?: string,
+  fieldsets?: string 
 };
 
 export type RouteArgs = [ Request, Response<APIResponse>, Exception? ];
@@ -198,6 +209,18 @@ export type SchemaValidation = {
   message: string
 };
 
+export type SchemaColumnField = {
+  method: FieldMethod,
+  attributes: Record<string, any>
+};
+
+export type SchemaColumnValidation = SchemaValidation[]
+
+export type SchemaColumnFormat = {
+  method: FormatMethod,
+  attributes: Record<string, any>
+};
+
 export type SchemaColumn = {
   label: string,
   name: string,
@@ -210,20 +233,10 @@ export type SchemaColumn = {
     unsigned: boolean,
     primary: boolean
   },
-  field: {
-    method: FieldMethod,
-    attributes: Record<string, any>
-  },
-  validation: SchemaValidation[],
-  list: {
-    sticky: boolean,
-    method: FormatMethod,
-    attributes: Record<string, any>
-  },
-  view: {
-    method: FormatMethod,
-    attributes: Record<string, any>
-  },
+  field: SchemaColumnField,
+  validation: SchemaColumnValidation,
+  list: SchemaColumnFormat,
+  view: SchemaColumnFormat,
   default?: any,
   searchable: boolean,
   filterable: boolean,

@@ -18,9 +18,27 @@ export default function useForm<Model = any>(
   const input = { values: inputs, set: setInputs };
   const handlers = {
     send,
-    change(paths: string|string[], value: any) {
+    change(paths: null|true|string|number|(string|number)[], value: any) {
+      //if null
+      if (paths === null) {
+        //if value is an object hash
+        if (value && typeof value === 'object' && !Array.isArray(value)) {
+          //set all the inputs (hard override)
+          setInputs(JSON.parse(JSON.stringify(value)));
+        }
+        return;  
+      }
+      //if true
+      if (paths === true) {
+        //if value is an object hash
+        if (value && typeof value === 'object' && !Array.isArray(value)) {
+          //set all the inputs (soft override)
+          setInputs(JSON.parse(JSON.stringify({ ...inputs, ...value })));
+        }
+        return;  
+      }
       //make sure paths is a string
-      if (typeof paths === 'string') {
+      if (!Array.isArray(paths)) {
         paths = [ paths ];
       }
   
@@ -33,7 +51,9 @@ export default function useForm<Model = any>(
         store.set(...paths, value);
       }
 
-      setInputs({ ...(store.get() as Partial<Model>) });
+      setInputs(JSON.parse(JSON.stringify(
+        store.get() as Partial<Model>
+      )));
     }
   };
 

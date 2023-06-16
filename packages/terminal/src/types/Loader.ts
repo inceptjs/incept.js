@@ -59,8 +59,10 @@ export default class Loader {
       }
     }
 
-    const config = this.require(file);
-    return (config.incept || config) as Record<string, any>;
+    const json = this.require(file);
+    const config = (json.incept || json) as Record<string, any>;
+    config.cwd = cwd;
+    return config;
   }
 
   /**
@@ -113,7 +115,7 @@ export default class Loader {
     //if the pathname does not start with /, 
     //the path should start with modules
     if (!pathname.startsWith('/')) {
-      pathname = path.resolve(this.modules(), pathname);
+      pathname = path.resolve(this.modules(cwd), pathname);
     }
     return pathname;
   }

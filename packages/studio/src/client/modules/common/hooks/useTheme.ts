@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { getCookie, setCookie } from 'cookies-next';
 
-export default function useTheme(init = 'theme-dark') {
+export default function useTheme(init = 'dark') {
   const [ theme, setTheme ] = useState<string>(
-    getCookie('theme') as string || init
+    () => getCookie('theme') as string || init
   );
 
   const set = (theme: string) => {

@@ -160,6 +160,11 @@ function server(root: string, ts = false) {
       JSON.stringify(schema, null, 2)
     );
   });
+
+  fs.writeFileSync(
+    `${root}/schemas.json`, 
+    JSON.stringify(schemas, null, 2)
+  );
   
   //if you want ts, tsx files
   if (ts) {

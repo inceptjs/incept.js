@@ -3,7 +3,8 @@ module.exports = {
   content: [
     './build/**/*.{html,js,ts,jsx,tsx}',
     './src/client/**/*.{js,ts,jsx,tsx}',
-    'frui/tailwind/*.{js,ts,jsx,tsx}'
+    '../node_modules/frui/tailwind/*.{js,ts,jsx,tsx}',
+    '../../node_modules/frui/tailwind/*.{js,ts,jsx,tsx}'
   ],
   darkMode: 'class',
   theme: {
@@ -14,6 +15,7 @@ module.exports = {
         'b2': 'var(--bg-second)',
         'b3': 'var(--bg-third)',
         'b4': 'var(--bg-fourth)',
+        'b5': 'var(--bg-fifth)',
         'b-inverse': 'var(--bg-inverse)',
         'b-info': 'var(--bg-info)',
         'b-error': 'var(--bg-error)',

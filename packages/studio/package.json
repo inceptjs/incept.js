@@ -21,13 +21,15 @@
     "node": ">=16.20.0"
   },
   "dependencies": {
+    "@inceptjs/types": "0.0.31",
     "cookies-next": "2.1.1",
     "inceptjs": "0.0.31",
-    "frui": "0.0.5",
+    "frui": "0.0.10",
     "mime": "3.0.0",
     "r22n": "1.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-router-dom": "6.12.1",
     "react-toastify": "9.1.1"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 //components
 import { ToastContainer } from 'react-toastify';
-import { ModalProvider } from '../../../common/components/global/modal';
+import { ModalProvider } from '../../../common/components/modal';
 //hooks
 import { useEffect } from 'react';
 //others

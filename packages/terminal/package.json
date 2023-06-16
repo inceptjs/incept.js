@@ -24,9 +24,10 @@
     "node": ">=16.20.0"
   },
   "dependencies": {
+    "@inceptjs/studio": "0.0.31",
+    "frui": "0.0.10",
     "inceptjs": "0.0.31",
-    "ts-morph": "18.0.0",
-    "frui": "0.0.5"
+    "ts-morph": "18.0.0"
   },
   "devDependencies": {
     "@jest/globals": "29.5.0",

@@ -1,6 +1,7 @@
 //types
-import type { APIResponse } from '../types';
 import type { 
+  APIFetchCall,
+  APIResponse,
   FetchStatuses, 
   FetchRouteParams, 
   FetchCallConfig 
@@ -39,7 +40,7 @@ export default function useFetch<Model = any>(
     set(undefined);
     setStatus('pending');
   };
-  const call = async (options: FetchCallConfig) => {
+  const call: APIFetchCall<Model> = async (options: FetchCallConfig) => {
     const config: Record<string, any> = { ...options, method };
     if (options.query) {
       config.params = options.query;
@@ -61,6 +62,7 @@ export default function useFetch<Model = any>(
     }));
     setStatus('complete');
     set(response.data);
+    return response.data as APIResponse<Model>;
   };
 
   return { call, set, reset, status, response };

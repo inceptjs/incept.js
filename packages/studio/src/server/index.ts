@@ -3,8 +3,8 @@ import { IncomingMessage, ServerResponse } from 'http';
 
 import { Framework } from 'inceptjs';
 import loader from './loader';
-
-const app = new Framework();
+import config from '.incept/server/config.json';
+const app = new Framework(config);
 app.load(loader);
 
 //mock rr
