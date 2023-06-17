@@ -8,8 +8,8 @@ import { useFetch, useForm } from 'inceptjs';
 import useMobile from '../../app/layouts/panel/hooks/useMobile';
 //helpers
 import { Schema } from 'inceptjs';
+import { api } from 'inceptjs/api';
 import notify from '../../common/components/notify';
-import validate from '../validate';
 
 export function useSchemaRemove(name: string, redirect?: () => void) {
   const { t } = useLanguage();
@@ -65,7 +65,7 @@ export function useSchemaUpsert(name?: string, redirect?: () => void) {
   const action = useFetch<SchemaConfig>(method, endpoint);
   const { input, handlers } = useForm((e: FormEvent<Element>) => {
     e.preventDefault();
-    const errors = validate(input.values, !name);
+    const errors = api.validate.schema(input.values, !name);
     if (Object.keys(errors).length) {
       action.set({
         error: true,

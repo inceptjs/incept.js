@@ -1,13 +1,8 @@
-import type { SchemaValidation, ValidatorMethod } from 'inceptjs';
-import type { ValidationOption } from '../column';
+import type { Validation, ValidatorMethod } from 'inceptjs/api';
 
-import { 
-  validators, 
-  filterValidators,
-  getField
-} from '../column';
+import { api } from 'inceptjs/api';
 
-export type FieldValidationlistType = SchemaValidation;
+export type FieldValidationlistType = Validation;
 export type FieldValidationlistConfig = {
   type?: string,
   values?: (FieldValidationlistType|undefined)[],
@@ -17,24 +12,11 @@ export type FieldValidationlistConfig = {
 
 export default function useValidationlist(config: FieldValidationlistConfig) {
   const { values, index, set, type } = config;
-
-  let options = validators;
-  if (type) {
-    const field = getField(type);
-    if (field) {
-      options = filterValidators(field.validation.filter)
-    }
-  }
-
-  let selected: ValidationOption|undefined;
-  Object.keys(options).forEach(group => {
-    Object.keys(options[group]).forEach(option => {
-      if (values && option === values[index]?.method) {
-        selected = options[group][option];
-      }
-    });
-  });
-
+  //variables
+  const options = api.validator.groups(
+    api.field.get(type || '')?.validation.filter || []
+  );
+  const selected = api.validator.get(values?.[index]?.method || '');
   //handlers
   const handlers = {
     method: (method: ValidatorMethod) => {

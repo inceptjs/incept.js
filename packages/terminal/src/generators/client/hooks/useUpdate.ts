@@ -8,9 +8,10 @@ export default function generateUseUpdate(
   project: Project|Directory, 
   schema: SchemaConfig
 ) {
+  const rest = schema.rest.update;
+  if (!rest) return;
   const path = `${schema.name}/hooks/useUpdate.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  const rest = schema.rest.update;
   //import type { FormEvent } from 'react';
   source.addImportDeclaration({
     isTypeOnly: true,

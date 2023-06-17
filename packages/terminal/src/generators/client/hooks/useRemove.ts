@@ -8,9 +8,10 @@ export default function generateUseRemove(
   project: Project|Directory, 
   schema: SchemaConfig
 ) {
+  const rest = schema.rest.remove;
+  if (!rest) return;
   const path = `${schema.name}/hooks/useRemove.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  const rest = schema.rest.remove;
   //import type { AxiosRequestConfig } from 'axios';
   source.addImportDeclaration({
     isTypeOnly: true,

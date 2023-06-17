@@ -15,7 +15,7 @@ import FieldSelectFormat from '../../common/components/FieldSelectFormat';
 import FieldValidationlist from '../../common/components/FieldValidationlist';
 //helpers
 import { slugify } from 'frui/utils';
-import { getField } from '../../common/column';
+import { api } from 'inceptjs/api';
 
 const FieldFormInputs: React.FC<{
   data?: Partial<SchemaColumn>,
@@ -27,7 +27,7 @@ const FieldFormInputs: React.FC<{
   const [ slug, setSlug ] = useState(data?.name || '');
   useEffect(() => change('name', slug), [ slug ]);
   //load the settings based on the chosen field
-  const settings = getField(data?.field?.method || '');
+  const settings = api.field.get(data?.field?.method || '');
   return (
     <section className="m-0 p-2 flex-grow overflow-y-auto">
       {!settings?.content?.label && (

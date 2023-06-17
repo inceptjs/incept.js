@@ -8,9 +8,10 @@ export default function generateUseDetail(
   project: Project|Directory, 
   schema: SchemaConfig
 ) {
+  const rest = schema.rest.detail;
+  if (!rest) return;
   const path = `${schema.name}/hooks/useDetail.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  const rest = schema.rest.detail;
   //import type { AxiosRequestConfig } from 'axios';
   source.addImportDeclaration({
     isTypeOnly: true,

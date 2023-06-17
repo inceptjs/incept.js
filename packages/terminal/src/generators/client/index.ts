@@ -52,31 +52,41 @@ export default function generateIndex(
       defaultImport: `${capital}ViewFormats`,
       moduleSpecifier: `./${name}/components/ViewFormats`
     });
-    //import useModelCreate from './[model]/hooks/useCreate'
-    source.addImportDeclaration({
-      defaultImport: `use${capital}Create`,
-      moduleSpecifier: `./${name}/hooks/useCreate`
-    });
-    //import useModelRemove from './[model]/hooks/useRemove'
-    source.addImportDeclaration({
-      defaultImport: `use${capital}Remove`,
-      moduleSpecifier: `./${name}/hooks/useRemove`
-    });
-    //import useModelUpdate from './[model]/hooks/useUpdate'
-    source.addImportDeclaration({
-      defaultImport: `use${capital}Update`,
-      moduleSpecifier: `./${name}/hooks/useUpdate`
-    });
-    //import useModelSearch from './[model]/hooks/useSearch'
-    source.addImportDeclaration({
-      defaultImport: `use${capital}Search`,
-      moduleSpecifier: `./${name}/hooks/useSearch`
-    });
-    //import useModelDetail from './[model]/hooks/useDetail'
-    source.addImportDeclaration({
-      defaultImport: `use${capital}Detail`,
-      moduleSpecifier: `./${name}/hooks/useDetail`
-    });
+    if (schemas[name].rest.create) {
+      //import useModelCreate from './[model]/hooks/useCreate'
+      source.addImportDeclaration({
+        defaultImport: `use${capital}Create`,
+        moduleSpecifier: `./${name}/hooks/useCreate`
+      });
+    }
+    if (schemas[name].rest.remove) {
+      //import useModelRemove from './[model]/hooks/useRemove'
+      source.addImportDeclaration({
+        defaultImport: `use${capital}Remove`,
+        moduleSpecifier: `./${name}/hooks/useRemove`
+      });
+    }
+    if (schemas[name].rest.update) {
+      //import useModelUpdate from './[model]/hooks/useUpdate'
+      source.addImportDeclaration({
+        defaultImport: `use${capital}Update`,
+        moduleSpecifier: `./${name}/hooks/useUpdate`
+      });
+    }
+    if (schemas[name].rest.search) {
+      //import useModelSearch from './[model]/hooks/useSearch'
+      source.addImportDeclaration({
+        defaultImport: `use${capital}Search`,
+        moduleSpecifier: `./${name}/hooks/useSearch`
+      });
+    }
+    if (schemas[name].rest.detail) {
+      //import useModelDetail from './[model]/hooks/useDetail'
+      source.addImportDeclaration({
+        defaultImport: `use${capital}Detail`,
+        moduleSpecifier: `./${name}/hooks/useDetail`
+      });
+    }
     //import validateUser from './[model]/validate'
     source.addImportDeclaration({
       defaultImport: `validate${capital}`,

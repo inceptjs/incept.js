@@ -6,60 +6,27 @@ import type Response from './types/Response';
 
 import { FormEvent } from 'react';
 
-//general
+//generic types
 export type ExtendsType<T, U> = Pick<T, Exclude<keyof T, keyof U>> & U;
-
 export interface NestedObject<T = any> {
   [key: string]: T|NestedObject<T>;
 };
-
 export type ScalarType = string|number|boolean|null;
 export type NestedScalarObject = NestedObject<ScalarType>;
 export type ScalarInputs = ScalarType|ScalarType[]|NestedScalarObject;
 
-export type APIResponse<T = any> = {
-  error: boolean,
-  code?: number,
-  message?: string, 
-  errors?: Record<string, any>,
-  results?: T,
-  total?: number
-};
-
-export type APIFetchCall<T = any> = (
-  options: FetchCallConfig
-) => Promise<APIResponse<T>>;
-
-//client
-export type FetchStatuses = 'pending'|'fetching'|'complete';
-export type FetchRouteParams = {
-  args: (string|number)[],
-  params: Record<string, string|number>
-};
-
-export type FetchCallConfig = {
-  args?: (string|number)[],
-  params?: Record<string, string|number>
-  query?: Record<string, string|number>,
-  data?: Record<string, any>
-}
-
-export type FilterHandlers = {
-  send: (e: FormEvent) => boolean,
-  filter: (terms: Record<string, any> | boolean) => void,
-  sort: (name: string) => void,
-  remove: (remove: string[]) => void,
-  reset: (query?: Record<string, any>) => void
-};
-
-export type FormChangeHandler = (
-  paths: null|true|string|number|(string|number)[], 
-  value: any
-) => void;
-
-export type FormHandlers = {
-  send: (e: FormEvent) => boolean,
-  change: FormChangeHandler
+//project
+export type ProjectConfig = Record<string, any> & { 
+  cwd: string,
+  schema: {
+    build: string,
+    casing: string, //'snake'|'camel',
+    prefix: string //'[table]'|'custom' //(wo snake)
+  },
+  fieldset: {
+    build: string
+  },
+  plugins: string[]
 };
 
 //server
@@ -67,22 +34,13 @@ export type { IncomingMessage, ServerResponse };
 export type ExpressLikeMessage = IncomingMessage & {
   body?: NestedScalarObject|string
 };
-
-export type RouterConfig = Record<string, any> & { 
-  cwd?: string,
-  schemas?: string,
-  fieldsets?: string 
-};
-
 export type RouteArgs = [ Request, Response<APIResponse>, Exception? ];
 export type RouteEmitter = EventEmitter<RouteArgs>;
 export type RouteAction = EventAction<RouteArgs>;
-
 export type RouteParams = {
   args: string[];
   params: NestedScalarObject;
 };
-
 export type Cookie = { 
   value: string,  
   options: {
@@ -95,117 +53,179 @@ export type Cookie = {
     secure?: boolean
   }
 }
+export type HTTPMethod = 'all'
+  | 'connect' | 'delete'  | 'head'
+  | 'get'     | 'options' | 'post'
+  | 'put'     | 'patch'   | 'trace';
 
-export type Method = 'all'
-  | 'connect'
-  | 'delete'
-  | 'head'
-  | 'get'
-  | 'options'
-  | 'post'
-  | 'put'
-  | 'patch'
-  | 'trace';
+//api and fetch types
+export type APIResponse<T = any> = {
+  error: boolean,
+  code?: number,
+  message?: string, 
+  errors?: Record<string, any>,
+  results?: T,
+  total?: number
+};
+export type APIFetchCall<T = any> = (
+  options: FetchCallConfig
+) => Promise<APIResponse<T>>;
+export type FetchStatuses = 'pending'|'fetching'|'complete';
+export type FetchRouteParams = {
+  args: (string|number)[],
+  params: Record<string, string|number>
+};
+export type FetchCallConfig = {
+  args?: (string|number)[],
+  params?: Record<string, string|number>
+  query?: Record<string, string|number>,
+  data?: Record<string, any>
+}
 
-export type FieldMethod = 'autocomplete'
-  | 'checkbox'
-  | 'checklist'
-  | 'code'
-  | 'color'
-  | 'country'
-  | 'currency'
-  | 'date'
-  | 'datetime'
-  | 'fieldset'
-  | 'file'
-  | 'filelist'
-  | 'image'
-  | 'imagelist'
-  | 'input'
-  | 'json'
-  | 'mask'
-  | 'metadata'
-  | 'none'
-  | 'number'
-  | 'password'
-  | 'radio'
-  | 'radiolist'
-  | 'range'
-  | 'select'
-  | 'slider'
-  | 'switch'
-  | 'taglist'
-  | 'textarea'
-  | 'textlist'
-  | 'time';
-
-export type ValidatorMethod = 'eq'
-  | 'ne'
-  | 'notempty'
-  | 'option'
-  | 'unique'
-  | 'required'
-  | 'regex'
-  | 'date'
-  | 'datetime'
-  | 'time'
-  | 'future'
-  | 'past'
-  | 'present'
-  | 'gt'
-  | 'ge'
-  | 'lt'
-  | 'le'
-  | 'float'
-  | 'integer'
-  | 'number'
-  | 'price'
-  | 'ceq'
-  | 'cgt'
-  | 'cge'
-  | 'clt'
-  | 'cle'
-  | 'wgt'
-  | 'wge'
-  | 'wlt'
-  | 'wle'
-  | 'cc'
-  | 'email'
-  | 'hex'
-  | 'color'
-  | 'url';
-
-export type FormatMethod = 'color'
-  | 'country'
-  | 'currency'
-  | 'date'
-  | 'email'
-  | 'formula'
-  | 'hide'
-  | 'html'
-  | 'image'
-  | 'imagelist'
-  | 'json'
-  | 'link'
-  | 'list'
-  | 'markdown'
-  | 'metadata'
-  | 'none'
-  | 'number'
-  | 'overflow'
-  | 'phone'
-  | 'rating'
-  | 'separated'
-  | 'table'
-  | 'taglist'
-  | 'text'
-  | 'yesno'
-
-export type SchemaOption = {
-  label: string,
-  value: string
+//handlers
+export type FilterHandlers = {
+  send: (e: FormEvent) => boolean,
+  filter: (terms: Record<string, any> | boolean) => void,
+  sort: (name: string) => void,
+  remove: (remove: string[]) => void,
+  reset: (query?: Record<string, any>) => void
+};
+export type FormChangeHandler = (
+  paths: null|true|string|number|(string|number)[], 
+  value: any
+) => void;
+export type FormHandlers = {
+  send: (e: FormEvent) => boolean,
+  change: FormChangeHandler
 };
 
+//schema methods
+export type FieldMethod = 'autocomplete'
+  | 'checkbox'  | 'checklist' | 'code'
+  | 'color'     | 'country'   | 'currency'
+  | 'date'      | 'datetime'  | 'fieldset'
+  | 'file'      | 'filelist'  | 'image'
+  | 'imagelist' | 'input'     | 'json'
+  | 'mask'      | 'metadata'  | 'none'
+  | 'number'    | 'password'  | 'radio'
+  | 'radiolist' | 'range'     | 'select'
+  | 'slider'    | 'switch'    | 'taglist'
+  | 'textarea'  | 'textlist'  | 'time';
+export type ValidatorMethod = 'eq'
+  | 'ne'     | 'notempty' | 'option'
+  | 'unique' | 'required' | 'regex'
+  | 'date'   | 'datetime' | 'time'
+  | 'future' | 'past'     | 'present'
+  | 'gt'     | 'ge'       | 'lt'
+  | 'le'     | 'float'    | 'integer'
+  | 'number' | 'price'    | 'ceq'
+  | 'cgt'    | 'cge'      | 'clt'
+  | 'cle'    | 'wgt'      | 'wge'
+  | 'wlt'    | 'wle'      | 'cc'
+  | 'email'  | 'hex'      | 'color'
+  | 'url';
+export type FormatMethod = 'color'
+  | 'country'  | 'currency'  | 'date'
+  | 'email'    | 'formula'   | 'hide'
+  | 'html'     | 'image'     | 'imagelist'
+  | 'json'     | 'link'      | 'list'
+  | 'markdown' | 'metadata'  | 'none'
+  | 'number'   | 'overflow'  | 'phone'
+  | 'rating'   | 'separated' | 'table'
+  | 'taglist'  | 'text'      | 'yesno';
+
+//column options
+export type ColumnFieldOption = { 
+  type: string,
+  method: string,
+  label: string,
+  content?: {
+    name: string,
+    label: string
+  }
+  component: string|false, 
+  attributes: {
+    show: boolean,
+    fixed: Record<string, any>,
+    default: Record<string, any>
+  }, 
+  params: {
+    field: string,
+    attribute: string,
+    attributes: Record<string, any>
+  }[],
+  searchable: { show: boolean, default: boolean },
+  filterable: { show: boolean, default: boolean },
+  sortable: { show: boolean, default: boolean },
+  validation: { show: boolean, filter: string[]|false },
+  list: { show: boolean, filter: string[]|false, default: string|undefined },
+  view: { show: boolean, filter: string[]|false, default: string|undefined },
+  default: { show: boolean, default: string|number|undefined },
+  enabled: boolean
+};
+export type ColumnValidationOption = { 
+  method: string,
+  label: string,
+  params: {
+    field: string,
+    attributes?: Record<string, any>
+  }[],
+  enabled: boolean
+};
+export type ColumnFormatOption = { 
+  method: string,
+  label: string,
+  component: string|false, 
+  attributes: {
+    show: boolean,
+    fixed: Record<string, any>,
+    default: Record<string, any>
+  },  
+  params: {
+    field: string,
+    attribute: string,
+    attributes: Record<string, any>
+  }[],
+  enabled: boolean
+};
+
+//schema helpers
+export type Validation = {
+  method: ValidatorMethod,
+  parameters: any[],
+  message: string
+};
+
+//fieldset
+export type FieldsetColumnField = {
+  method: FieldMethod,
+  attributes: Record<string, any>
+};
+export type FieldsetColumnValidation = Validation[];
+export type FieldsetColumnFormat = {
+  sticky?: boolean,
+  method: FormatMethod,
+  attributes: Record<string, any>
+};
+export type FieldsetColumn = {
+  label: string,
+  name: string,
+  type: string,
+  field: FieldsetColumnField,
+  validation: FieldsetColumnValidation,
+  list: FieldsetColumnFormat,
+  view: FieldsetColumnFormat,
+  default?: any
+};
+export type FieldsetConfig = {
+  name: string,
+  singular: string,
+  plural: string,
+  icon: string,
+  columns: FieldsetColumn[]
+};
+
+//schema
 export type SchemaColumnData = {
   type: string,
   length?: number|number[],
@@ -214,39 +234,16 @@ export type SchemaColumnData = {
   unsigned: boolean,
   primary: boolean
 };
-
-export type SchemaColumnField = {
-  method: FieldMethod,
-  attributes: Record<string, any>
-};
-
-export type SchemaValidation = {
-  method: ValidatorMethod,
-  parameters: any[],
-  message: string
-};
-export type SchemaColumnValidation = SchemaValidation[];
-
-export type SchemaColumnFormat = {
-  method: FormatMethod,
-  attributes: Record<string, any>
-};
-
-export type SchemaColumn = {
-  label: string,
-  name: string,
-  type: string,
+export type SchemaColumnField = FieldsetColumnField;
+export type SchemaColumnValidation = Validation[];
+export type SchemaColumnFormat = FieldsetColumnFormat;
+export type SchemaColumn = FieldsetColumn & {
   data: SchemaColumnData,
-  field: SchemaColumnField,
-  validation: SchemaColumnValidation,
-  list: SchemaColumnFormat,
-  view: SchemaColumnFormat,
   default?: any,
   searchable: boolean,
   filterable: boolean,
   sortable: boolean
 };
-
 export type SchemaRelation = {
   name: string,
   schema: string,
@@ -254,7 +251,6 @@ export type SchemaRelation = {
   to: string,
   label: string
 };
-
 export type SchemaRest = {
   type: string,
   method: string,
@@ -262,15 +258,10 @@ export type SchemaRest = {
   event: string,
   body: Record<string, any>
 };
-
-export type SchemaConfig = {
-  name: string,
-  singular: string,
-  plural: string,
+export type SchemaConfig = ExtendsType <FieldsetConfig, {
   description: string,
-  icon: string,
   group: string,
   columns: SchemaColumn[],
   relations: SchemaRelation[],
   rest: Record<string, SchemaRest>
-};
+}>;

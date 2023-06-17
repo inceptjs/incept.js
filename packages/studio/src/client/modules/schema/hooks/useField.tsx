@@ -4,10 +4,10 @@ import type { SchemaColumn, APIResponse } from 'inceptjs';
 import { useState, useEffect } from 'react';
 import { useLanguage } from 'r22n';
 import { useForm } from 'inceptjs';
+import { api } from 'inceptjs/api';
 import useMobile from '../../app/layouts/panel/hooks/useMobile';
 
 import notify from '../../common/components/notify';
-import { validateColumn } from '../validate';
 
 export default function useField(
   mode: 'create'|'update',
@@ -20,7 +20,7 @@ export default function useField(
   const { handlers: mobile } = useMobile();
   const { input, handlers } = useForm<SchemaColumn>((e: FormEvent<Element>) => {
     e.preventDefault();
-    const errors = validateColumn(input.values);
+    const errors = api.validate.column(input.values);
     if (Object.keys(errors).length) {
       setResponse({
         error: true,

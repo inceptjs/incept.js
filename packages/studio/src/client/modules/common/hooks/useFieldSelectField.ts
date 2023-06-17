@@ -5,7 +5,7 @@ import type { FormChangeHandler, SchemaColumn, SchemaColumnField } from 'inceptj
 //hooks
 import { useState } from 'react';
 //helpers
-import { getField, getColumnDefaults, fields as options } from '../column';
+import { api } from 'inceptjs/api';
 
 export type FieldSelectFieldConfig = {
   column?: Partial<SchemaColumn>
@@ -14,15 +14,19 @@ export type FieldSelectFieldConfig = {
 };
 
 export default function useFieldSelectField(config: FieldSelectFieldConfig) {
+  //hooks
   const { column, value, onUpdate } = config;
-  const [ selected, setSelected ] = useState(getField(value?.method || ''));
+  const [ selected, setSelected ] = useState(api.field.get(value?.method || ''));
   const [ params, setParams ] = useState<Record<string, any>>({});
+  //variables
+  const options = api.field.groups();
+  //handlers
   const handlers = {
     method: (e: ChangeEvent<HTMLSelectElement>) => {
-      const selected = getField(e.target.value);
+      const selected = api.field.get(e.target.value);
       if (!selected) return;
       setSelected(selected);
-      onUpdate && onUpdate(null, getColumnDefaults(selected.method, column));
+      onUpdate && onUpdate(null, api.schema.defaults(selected.method, column));
     },
     parameters: (attribute: string, value: any) => {
       setParams({ ...params, [attribute]: value });

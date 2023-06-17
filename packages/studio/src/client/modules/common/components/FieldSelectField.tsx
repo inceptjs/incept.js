@@ -1,5 +1,9 @@
 //types
-import type { FormChangeHandler, SchemaColumn, SchemaColumnField } from 'inceptjs';
+import type { 
+  FormChangeHandler, 
+  SchemaColumn, 
+  SchemaColumnField
+} from 'inceptjs/api';
 //react
 import React from 'react';
 //hooks

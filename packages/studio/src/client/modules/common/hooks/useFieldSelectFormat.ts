@@ -5,7 +5,7 @@ import type { FormChangeHandler, SchemaColumnFormat } from 'inceptjs';
 //hooks
 import { useState } from 'react';
 //helpers
-import { getField, getFormat, filterFormats, formats } from '../column';
+import { api } from 'inceptjs/api';
 
 export type FieldSelectFormatConfig = {
   format: 'list'|'view',
@@ -15,19 +15,16 @@ export type FieldSelectFormatConfig = {
 };
 
 export default function useFieldSelectFormat(config: FieldSelectFormatConfig) {
+  //hooks
   const { format, field, value, onUpdate } = config;
-  const [ selected, setSelected ] = useState(getFormat(value?.method || ''));
+  const [ selected, setSelected ] = useState(api.format.get(value?.method || ''));
   const [ params, setParams ] = useState<Record<string, any>>({});
-  let options = formats;
-  if (field) {
-    const config = getField(field);
-    if (config) {
-      options = filterFormats(config[format].filter)
-    }
-  }
+  //variables
+  const options = api.format.groups(api.field.get(field || '')?.[format].filter || []);
+  //handlers
   const handlers = {
     method: (e: ChangeEvent<HTMLSelectElement>) => {
-      const selected = getFormat(e.target.value);
+      const selected = api.format.get(e.target.value);
       if (!selected) return;
       setSelected(selected);
       onUpdate && onUpdate([format, 'method'], selected.method);

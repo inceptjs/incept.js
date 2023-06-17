@@ -24,7 +24,7 @@ import FieldSelectIcon from '../../common/components/FieldSelectIcon';
 import FieldForm from './FieldForm';
 //helpers
 import { slugify } from 'frui/utils';
-import { getColumnDefaults, inferColumnData } from '../../common/column';
+import { api } from 'inceptjs/api';
 
 const SchemaFormTabs: React.FC<{
   tab: number,
@@ -139,11 +139,11 @@ const SchemaFormFields: React.FC<{
         mode="create"
         label={t`Add Field` as string} 
         columns={data.columns || []}
-        defaultValue={getColumnDefaults('none')}
+        defaultValue={api.schema.defaults('none')}
         onSubmit={(column: Partial<SchemaColumn>) => {
           column.data = {
             ...(column.data || {}), 
-            ...(inferColumnData(column) || {})
+            ...(api.schema.data(column) || {})
           } as SchemaColumnData;
           change('columns', [...(data.columns || []), column]);
         }} 
@@ -159,7 +159,7 @@ const SchemaFormFields: React.FC<{
         onSubmit={(column: Partial<SchemaColumn>) => {
           column.data = {
             ...(column.data || {}), 
-            ...(inferColumnData(column) || {})
+            ...(api.schema.data(column) || {})
           } as SchemaColumnData;
           change('columns', [...(data.columns || []), column]);
         }} 
@@ -234,7 +234,7 @@ const SchemaFormFields: React.FC<{
           onSubmit={(column: Partial<SchemaColumn>) => {
             column.data = {
               ...(column.data || {}), 
-              ...(inferColumnData(column) || {})
+              ...(api.schema.data(column) || {})
             } as SchemaColumnData;
             const update = [ ...(data.columns || []) ];
             update.splice(index, 1, column as SchemaColumn);

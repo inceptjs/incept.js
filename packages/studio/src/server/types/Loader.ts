@@ -1,4 +1,4 @@
-import type { RouterConfig } from 'inceptjs';
+import type { ProjectConfig } from 'inceptjs';
 
 import fs from 'fs';
 import path from 'path';
@@ -10,9 +10,9 @@ export default class Loader {
   /**
    * Returns the schema directory
    */
-  static schemas(config: RouterConfig) {
+  static schemas(config: Partial<ProjectConfig>) {
     return this.absolute(
-      config.schemas || './schemas', 
+      config.schema?.build || './schemas', 
       config.cwd || process.cwd()
     );
   }
@@ -20,9 +20,9 @@ export default class Loader {
   /**
    * Returns the fieldset directory
    */
-  static fieldsets(config: RouterConfig) {
+  static fieldsets(config: Partial<ProjectConfig>) {
     return this.absolute(
-      config.fieldsets || './fieldsets', 
+      config.fieldset?.build || './fieldsets', 
       config.cwd || process.cwd()
     );
   }

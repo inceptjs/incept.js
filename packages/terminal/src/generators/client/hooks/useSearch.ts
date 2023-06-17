@@ -8,9 +8,10 @@ export default function generateUseSearch(
   project: Project|Directory, 
   schema: SchemaConfig
 ) {
+  const rest = schema.rest.search;
+  if (!rest) return;
   const path = `${schema.name}/hooks/useSearch.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  const rest = schema.rest.search;
   //import type { AxiosRequestConfig } from 'axios';
   source.addImportDeclaration({
     isTypeOnly: true,

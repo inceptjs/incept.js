@@ -1,6 +1,6 @@
 //types
 import type { FormChangeHandler, SchemaColumnFormat } from 'inceptjs';
-import type { FormatOption } from '../column';
+import type { ColumnFormatOption } from 'inceptjs/api';
 //react
 import React from 'react';
 //hooks
@@ -20,7 +20,7 @@ const FieldSelectFormat: React.FC<{
   style?: React.CSSProperties,
   className?: string,
   onUpdate?: FormChangeHandler,
-  onFormatChange?: (value: FormatOption) => void
+  onFormatChange?: (value: ColumnFormatOption) => void
 }> = (props) => {
   const { t } = useLanguage();
   const { field, format, value, onUpdate, onFormatChange, ...attributes } = props;

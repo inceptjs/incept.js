@@ -5,7 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { Framework } from 'inceptjs';
 import Loader from '../types/Loader';
-import validate from '../validate';
+import { api } from 'inceptjs/api';
 
 const parseJSONBody: <T = any>(im: IncomingMessage) => Promise<T> = im => {
   return new Promise(resolve => {
@@ -45,7 +45,7 @@ export default function boot(ctx: Framework) {
   //create
   ctx.post('/api/schema', async (req, res) => {
     const schema = await parseJSONBody<SchemaConfig>(req.resource);
-    const errors = validate(schema, true);
+    const errors = api.validate.schema(schema, true);
     if (Object.keys(errors).length) {
       res.json({ error: true, errors });
       return;
@@ -69,7 +69,7 @@ export default function boot(ctx: Framework) {
   //update
   ctx.put('/api/schema/:name', async (req, res) => {
     const schema = await parseJSONBody<SchemaConfig>(req.resource);
-    const errors = validate(schema, true);
+    const errors = api.validate.schema(schema, true);
     if (Object.keys(errors).length) {
       res.json({ error: true, errors });
       return;

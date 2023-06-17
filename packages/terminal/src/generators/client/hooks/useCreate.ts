@@ -8,9 +8,10 @@ export default function generateUseCreate(
   project: Project|Directory, 
   schema: SchemaConfig
 ) {
+  const rest = schema.rest.create;
+  if (!rest) return;
   const path = `${schema.name}/hooks/useCreate.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
-  const rest = schema.rest.create;
   //import type { FormEvent } from 'react';
   source.addImportDeclaration({
     isTypeOnly: true,

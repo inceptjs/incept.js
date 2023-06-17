@@ -1,3 +1,5 @@
+import type { ProjectConfig } from 'inceptjs';
+
 import fs from 'fs';
 import path from 'path';
 
@@ -17,7 +19,17 @@ export default class Loader {
   static schemas(cwd?: string) {
     cwd = cwd || this.cwd();
     const config = this.config(cwd);
-    let schemas = config.schemas || './schemas';
+    let schemas = config.schema.build || './schemas';
+    if (schemas.startsWith('.')) {
+      schemas = path.resolve(cwd, schemas);
+    }
+    return schemas;
+  }
+  
+  static fieldsets(cwd?: string) {
+    cwd = cwd || this.cwd();
+    const config = this.config(cwd);
+    let schemas = config.fieldset.build || './fieldsets';
     if (schemas.startsWith('.')) {
       schemas = path.resolve(cwd, schemas);
     }
@@ -60,7 +72,7 @@ export default class Loader {
     }
 
     const json = this.require(file);
-    const config = (json.incept || json) as Record<string, any>;
+    const config = (json.incept || json) as ProjectConfig;
     config.cwd = cwd;
     return config;
   }

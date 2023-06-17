@@ -1,6 +1,6 @@
 import type { 
   APIResponse, 
-  RouterConfig, 
+  ProjectConfig, 
   IncomingMessage, 
   ServerResponse 
 } from '../types';
@@ -15,7 +15,7 @@ export default class Framework extends Router {
   /**
    * The config for the framework
    */
-  protected _config: RouterConfig;
+  protected _config: Partial<ProjectConfig>;
 
   /**
    * Plugin registry
@@ -32,7 +32,7 @@ export default class Framework extends Router {
   /**
    * Load the config
    */
-  constructor(config: RouterConfig = {}) {
+  constructor(config: Partial<ProjectConfig> = {}) {
     super();
     this._config = config;
   }
