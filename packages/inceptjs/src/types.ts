@@ -139,9 +139,11 @@ export type FieldMethod = 'autocomplete'
   | 'textlist'
   | 'time';
 
-export type ValidatorMethod = 'ne'
+export type ValidatorMethod = 'eq'
+  | 'ne'
   | 'notempty'
   | 'option'
+  | 'unique'
   | 'required'
   | 'regex'
   | 'date'
@@ -151,21 +153,22 @@ export type ValidatorMethod = 'ne'
   | 'past'
   | 'present'
   | 'gt'
-  | 'gte'
+  | 'ge'
   | 'lt'
-  | 'lte'
+  | 'le'
   | 'float'
   | 'integer'
   | 'number'
   | 'price'
+  | 'ceq'
   | 'cgt'
-  | 'cgte'
+  | 'cge'
   | 'clt'
-  | 'clte'
+  | 'cle'
   | 'wgt'
-  | 'wgte'
+  | 'wge'
   | 'wlt'
-  | 'wlte'
+  | 'wle'
   | 'cc'
   | 'email'
   | 'hex'
@@ -203,10 +206,13 @@ export type SchemaOption = {
   value: string
 };
 
-export type SchemaValidation = {
-  method: ValidatorMethod,
-  parameters: any[],
-  message: string
+export type SchemaColumnData = {
+  type: string,
+  length?: number|number[],
+  required: boolean,
+  unique: boolean,
+  unsigned: boolean,
+  primary: boolean
 };
 
 export type SchemaColumnField = {
@@ -214,7 +220,12 @@ export type SchemaColumnField = {
   attributes: Record<string, any>
 };
 
-export type SchemaColumnValidation = SchemaValidation[]
+export type SchemaValidation = {
+  method: ValidatorMethod,
+  parameters: any[],
+  message: string
+};
+export type SchemaColumnValidation = SchemaValidation[];
 
 export type SchemaColumnFormat = {
   method: FormatMethod,
@@ -225,14 +236,7 @@ export type SchemaColumn = {
   label: string,
   name: string,
   type: string,
-  data: {
-    type: string,
-    length?: number,
-    required: boolean,
-    unique: boolean,
-    unsigned: boolean,
-    primary: boolean
-  },
+  data: SchemaColumnData,
   field: SchemaColumnField,
   validation: SchemaColumnValidation,
   list: SchemaColumnFormat,

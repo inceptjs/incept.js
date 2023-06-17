@@ -218,6 +218,10 @@ export default class Schema<Model = any> {
         if (!strict && validator.method === 'required') {
           return;
         }
+        //if unique, (this needs to be handled by the database)
+        if (validator.method === 'unique') {
+          return;
+        }
         if (!errors[column.name]) {
           const method = validators[validator.method] as Function;
           if (!method(data[column.name], ...validator.parameters)) {

@@ -1,6 +1,12 @@
-import type { SchemaColumn, FieldMethod, FormatMethod } from 'inceptjs';
+import type { 
+  SchemaColumn, 
+  FieldMethod, 
+  FormatMethod, 
+  SchemaColumnData 
+} from 'inceptjs';
 
 export type FieldOption = { 
+  type: string,
   method: string,
   label: string,
   content?: {
@@ -104,6 +110,20 @@ export const validators: Record<string, Record<string, ValidationOption>> = {
     }
   },
   'Strings': {
+    ceq: {
+      method: 'ceq',
+      label: 'Characters Equal To',
+      params: [
+        {
+          field: 'number',
+          attributes: {
+            min: 0,
+            placeholder: 'Enter Number'
+          }
+        }
+      ],
+      enabled: true
+    },
     cgt: {
       method: 'cgt',
       label: 'Characters Greater Than',
@@ -162,7 +182,7 @@ export const validators: Record<string, Record<string, ValidationOption>> = {
     },
     wgt: {
       method: 'wgt',
-      label: 'Characters Greater Than',
+      label: 'Words Greater Than',
       params: [
         {
           field: 'number',
@@ -856,6 +876,7 @@ export const formats: Record<string, Record<string, FormatOption>> = {
 export const fields: Record<string, Record<string, FieldOption>> = {
   '': {
     none: {
+      type: 'string|number',
       method: 'none',
       label: 'No Field',
       component: false,
@@ -877,6 +898,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
   },
   'Strings': {
     color: {
+      type: 'string',
       method: 'color',
       label: 'Color Field',
       component: 'FieldColor',
@@ -893,7 +915,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique', 'notempty', 
-          'option',   'ne',     'cgt', 
+          'option',   'ne',     'ceq', 'cgt', 
           'cge',      'clt',    'cle',
           'color',    'hex',    'regexp'
         ] 
@@ -918,6 +940,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: false
     },
     email: {
+      type: 'string',
       method: 'email',
       label: 'Email Field',
       component: 'FieldInput',
@@ -934,7 +957,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique', 'notempty', 
-          'option',   'ne',     'cgt', 
+          'option',   'ne',     'ceq', 'cgt', 
           'cge',      'clt',    'cle',
           'email',    'regexp'
         ] 
@@ -961,6 +984,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     input: {
+      type: 'string|number',
       method: 'input',
       label: 'Input Field',
       component: 'FieldInput',
@@ -977,7 +1001,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',   
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'wgt',     'wge',      'wlt',
           'wle',      'email',   'float',    'integer',  
           'number',   'price',   'gt',       'ge',
@@ -1019,6 +1043,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     mask: {
+      type: 'string',
       method: 'mask',
       label: 'Input Mask',
       component: 'FieldMask',
@@ -1043,7 +1068,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',   
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'wgt',     'wge',      'wlt',
           'wle',      'email',   'float',    'integer',  
           'number',   'price',   'gt',       'ge',
@@ -1085,6 +1110,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     phone: {
+      type: 'string',
       method: 'phone',
       label: 'Phone Field',
       component: 'FieldInput',
@@ -1101,7 +1127,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique', 'notempty', 
-          'option',   'ne',     'cgt', 
+          'option',   'ne',     'ceq', 'cgt', 
           'cge',      'clt',    'cle',
           'integer',  'number', 'gt',
           'ge',       'lt',     'le',
@@ -1128,6 +1154,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     password: {
+      type: 'string',
       method: 'password',
       label: 'Password Field',
       component: 'FieldPassword',
@@ -1144,7 +1171,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 
-          'option',   'ne',      'cgt',     
+          'option',   'ne',      'ceq', 'cgt',     
           'cge',      'clt',     'cle',
           'wgt',     'wge',      'wlt',
           'wle',      'cc',      'regexp'
@@ -1164,6 +1191,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     slug: {
+      type: 'string',
       method: 'slug',
       label: 'Slug Field',
       component: 'FieldSlug',
@@ -1205,9 +1233,10 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         default: undefined
       },
       default: { show: true, default: undefined },
-      enabled: false
+      enabled: true
     },
     text: {
+      type: 'string',
       method: 'text',
       label: 'Text Field',
       component: 'FieldInput',
@@ -1224,7 +1253,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',   
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'wgt',     'wge',      'wlt',
           'wle',      'email',   'float',    'integer',  
           'number',   'price',   'gt',       'ge',
@@ -1266,6 +1295,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     url: {
+      type: 'string',
       method: 'url',
       label: 'URL Field',
       component: 'FieldInput',
@@ -1282,7 +1312,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique', 'notempty', 'option',   
-          'ne',       'cgt',    'cge',      'clt',
+          'ne',       'ceq', 'cgt',    'cge',      'clt',
           'cle',      'url',    'regexp'
         ] 
       },
@@ -1310,6 +1340,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
   },
   'Editors': {
     code: {
+      type: 'text',
       method: 'code',
       label: 'Code Editor',
       component: 'FieldCodeEditor',
@@ -1326,7 +1357,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',   
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'wgt',     'wge',      'wlt',
           'wle',      'regexp'
         ] 
@@ -1353,6 +1384,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: false
     },
     markdown: {
+      type: 'text',
       method: 'markdown',
       label: 'Markdown Editor',
       component: 'FieldMarkdown',
@@ -1369,7 +1401,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',   
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'wgt',     'wge',      'wlt',
           'wle',      'regexp'
         ] 
@@ -1396,6 +1428,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     textarea: {
+      type: 'text',
       method: 'textarea',
       label: 'Textarea',
       component: 'FieldTextarea',
@@ -1412,7 +1445,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',   
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'wgt',     'wge',      'wlt',
           'wle',      'regexp'
         ] 
@@ -1439,6 +1472,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     wysiwyg: {
+      type: 'text',
       method: 'wysiwyg',
       label: 'WYSIWYG Editor',
       component: 'FieldWysiwyg',
@@ -1455,7 +1489,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',   
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'wgt',     'wge',      'wlt',
           'wle',      'regexp'
         ] 
@@ -1484,6 +1518,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
   },
   'Numbers': {
     integer: {
+      type: 'integer',
       method: 'integer',
       label: 'Integer Field',
       component: 'FieldNumber',
@@ -1500,7 +1535,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',   
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'float',   'integer',  'number',
           'price',    'gt',      'ge',       'lt',
           'le',       'date',    'datetime', 'time',
@@ -1531,6 +1566,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     number: {
+      type: 'number',
       method: 'number',
       label: 'Number Field',
       component: 'FieldNumber',
@@ -1547,7 +1583,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',   
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'float',   'integer',  'number',
           'price',    'gt',      'ge',       'lt',
           'le',       'date',    'datetime', 'time',
@@ -1578,6 +1614,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     price: {
+      type: 'float',
       method: 'price',
       label: 'Price Field',
       component: 'FieldNumber',
@@ -1594,7 +1631,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',   
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'float',   'integer',  'number',
           'price',    'gt',      'ge',       'lt',
           'le',       'date',    'datetime', 'time',
@@ -1625,6 +1662,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     range: {
+      type: 'number',
       method: 'range',
       label: 'Range Field',
       component: 'FieldRange',
@@ -1641,7 +1679,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',   
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'float',   'integer',  'number',
           'price',    'gt',      'ge',       'lt',
           'le',       'date',    'datetime', 'time',
@@ -1672,6 +1710,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: false
     },
     rating: {
+      type: 'number',
       method: 'rating',
       label: 'Rating Field',
       component: 'FieldRating',
@@ -1688,7 +1727,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',   
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'float',   'integer',  'number',
           'price',    'gt',      'ge',       'lt',
           'le',       'regexp'
@@ -1714,6 +1753,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     small: {
+      type: 'integer',
       method: 'small',
       label: 'Small Field',
       component: 'FieldNumber',
@@ -1757,6 +1797,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
   },
   'Dates': {
     date: {
+      type: 'date',
       method: 'date',
       label: 'Date Field',
       component: 'FieldDate',
@@ -1773,7 +1814,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'integer', 'number',   'gt',
           'ge',       'lt',      'le',       'date',
           'datetime', 'time',    'past',     'present',  
@@ -1804,6 +1845,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     datetime: {
+      type: 'datetime',
       method: 'datetime',
       label: 'Datetime Field',
       component: 'FieldDatetime',
@@ -1820,7 +1862,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'integer', 'number',   'gt',
           'ge',       'lt',      'le',       'date',
           'datetime', 'time',    'past',     'present',  
@@ -1851,6 +1893,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     time: {
+      type: 'time',
       method: 'time',
       label: 'Time Field',
       component: 'FieldTime',
@@ -1867,7 +1910,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'integer', 'number',   'gt',
           'ge',       'lt',      'le',       'date',
           'datetime', 'time',    'past',     'present',  
@@ -1900,6 +1943,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
   },
   'Options': {
     autocomplete: {
+      type: 'string',
       method: 'autocomplete',
       label: 'Autocomplete Field',
       component: 'FieldAutocomplete',
@@ -1916,7 +1960,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',   
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'wgt',     'wge',      'wlt',
           'wle',      'email',   'float',    'integer',  
           'number',   'price',   'gt',       'ge',
@@ -1958,6 +2002,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     checkbox: {
+      type: 'boolean',
       method: 'checkbox',
       label: 'Checkbox Field',
       component: 'FieldCheckbox',
@@ -1999,6 +2044,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     checklist: {
+      type: 'string[]',
       method: 'checklist',
       label: 'Checklist',
       component: 'FieldChecklist',
@@ -2050,6 +2096,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     country: {
+      type: 'string',
       method: 'country',
       label: 'Country Field',
       component: 'FieldCountry',
@@ -2094,6 +2141,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     currency: {
+      type: 'string',
       method: 'currency',
       label: 'Currency Field',
       component: 'FieldCurrency',
@@ -2138,6 +2186,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     radio: {
+      type: 'string|number',
       method: 'radio',
       label: 'Radiolist Field',
       component: 'FieldRadio',
@@ -2160,7 +2209,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',   
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'wgt',     'wge',      'wlt',
           'wle',      'email',   'float',    'integer',  
           'number',   'price',   'gt',       'ge',
@@ -2202,6 +2251,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     select: {
+      type: 'string|number',
       method: 'select',
       label: 'Select Field',
       component: 'FieldSelect',
@@ -2226,7 +2276,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique',  'notempty', 'option',   
-          'ne',       'cgt',     'cge',      'clt',
+          'ne',       'ceq', 'cgt',     'cge',      'clt',
           'cle',      'wgt',     'wge',      'wlt',
           'wle',      'email',   'float',    'integer',  
           'number',   'price',   'gt',       'ge',
@@ -2268,6 +2318,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     selectlist: {
+      type: 'string[]',
       method: 'selectlist',
       label: 'Multi Select Field',
       component: 'FieldSelectlist',
@@ -2319,6 +2370,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: false
     },
     switch: {
+      type: 'boolean',
       method: 'switch',
       label: 'Switch Field',
       component: 'FieldSwitch',
@@ -2362,6 +2414,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
   },
   'Files': {
     file: {
+      type: 'string',
       method: 'file',
       label: 'File Field',
       component: 'FieldFile',
@@ -2378,7 +2431,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique', 'notempty', 'option',   
-          'ne',       'cgt',    'cge',      'clt',
+          'ne',       'ceq', 'cgt',    'cge',      'clt',
           'cle',      'url',    'regexp'
         ] 
       },
@@ -2404,6 +2457,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     filelist: {
+      type: 'string[]',
       method: 'filelist',
       label: 'Filelist Field',
       component: 'FieldFilelist',
@@ -2449,6 +2503,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     image: {
+      type: 'string',
       method: 'image',
       label: 'Image Field',
       component: 'FieldImage',
@@ -2465,7 +2520,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
         show: true, 
         filter: [
           'required', 'unique', 'notempty', 'option',   
-          'ne',       'cgt',    'cge',      'clt',
+          'ne',       'ceq', 'cgt',    'cge',      'clt',
           'cle',      'url',    'regexp'
         ] 
       },
@@ -2491,6 +2546,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     imagelist: {
+      type: 'string[]',
       method: 'imagelist',
       label: 'Imagelist Field',
       component: 'FieldImagelist',
@@ -2538,6 +2594,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
   },
   'JSON': {
     json: {
+      type: 'object',
       method: 'json',
       label: 'JSON Field',
       component: 'FieldJSON',
@@ -2583,6 +2640,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: false
     },
     metadata: {
+      type: 'hash',
       method: 'metadata',
       label: 'Metadata Fieldset',
       component: 'FieldMetadata',
@@ -2628,6 +2686,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     table: {
+      type: 'hash[]',
       method: 'table',
       label: 'Table Fieldset',
       component: 'FieldTable',
@@ -2677,6 +2736,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: false
     },
     taglist: {
+      type: 'string[]',
       method: 'taglist',
       label: 'Taglist Field',
       component: 'FieldTaglist',
@@ -2722,6 +2782,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     textlist: {
+      type: 'string[]',
       method: 'textlist',
       label: 'Textlist Fieldset',
       component: 'FieldTextlist',
@@ -2767,6 +2828,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     fieldset: {
+      type: 'object',
       method: 'fieldset',
       label: 'Cutsom Fieldset',
       component: 'FieldFieldset',
@@ -2830,6 +2892,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
   },
   '---------------': {
     active: {
+      type: 'boolean',
       method: 'active',
       label: 'Active',
       content: {
@@ -2870,6 +2933,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     created: {
+      type: 'datetime',
       method: 'created',
       label: 'Created',
       content: {
@@ -2912,6 +2976,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     updated: {
+      type: 'datetime',
       method: 'updated',
       label: 'Updated',
       content: {
@@ -2954,6 +3019,7 @@ export const fields: Record<string, Record<string, FieldOption>> = {
       enabled: true
     },
     nanoid: {
+      type: 'string',
       method: 'nanoid',
       label: 'UUID',
       component: false,
@@ -3121,4 +3187,170 @@ export function getValidators() {
   });
 
   return flat;
+}
+
+//types: string, text, string|number, string[], number, integer, 
+//       float, boolean, date, datetime, time, object, hash, hash[]
+// number = integer|float
+// hash = {string:string}
+// hash[] = {string:string}[]
+export function inferColumnData(column: Partial<SchemaColumn>) {
+  if (!column.field || !column.validation) return;
+  const field = getField(column.field?.method || '');
+  if (!field) return;
+
+  const conditions = {
+    req: !!column.validation.filter(validator => validator.method === 'required').length,
+    uni: !!column.validation.filter(validator => validator.method === 'unique').length,
+    lt: column.validation.filter(validator => validator.method === 'lt')[0]?.parameters[0],
+    le: column.validation.filter(validator => validator.method === 'le')[0]?.parameters[0],
+    gt: column.validation.filter(validator => validator.method === 'gt')[0]?.parameters[0],
+    ge: column.validation.filter(validator => validator.method === 'ge')[0]?.parameters[0],
+    ceq: column.validation.filter(validator => validator.method === 'ceq')[0]?.parameters[0],
+    clt: column.validation.filter(validator => validator.method === 'clt')[0]?.parameters[0],
+    cle: column.validation.filter(validator => validator.method === 'cle')[0]?.parameters[0],
+    cgt: column.validation.filter(validator => validator.method === 'cgt')[0]?.parameters[0],
+    cge: column.validation.filter(validator => validator.method === 'cge')[0]?.parameters[0],
+    min: column.field.attributes.min,
+    max: column.field.attributes.max,
+    step: column.field.attributes.step
+  };
+  
+  const unsigned = typeof conditions.min === 'number'
+    ? conditions.min >= 0
+    : typeof conditions.max === 'number'
+    ? conditions.max >= 0
+    : typeof conditions.lt === 'number'
+    ? conditions.lt >= 0
+    : typeof conditions.le === 'number'
+    ? conditions.le >= 0
+    : typeof conditions.gt === 'number'
+    ? conditions.gt >= 0
+    : typeof conditions.ge === 'number'
+    ? conditions.ge >= 0
+    : false;
+
+  const lengths: Record<string, [string, string]|undefined> = {
+    min: typeof conditions.min === 'number' 
+      ? String(conditions.min).split('.', 2) as [string, string]
+      : undefined,
+    max: typeof conditions.max === 'number' 
+      ? String(conditions.max).split('.', 2) as [string, string]
+      : undefined,
+    step: typeof conditions.step === 'number' 
+      ? String(conditions.step).split('.', 2) as [string, string]
+      : undefined,
+    lt: typeof conditions.lt === 'number' 
+      ? String(conditions.lt).split('.', 2) as [string, string]
+      : undefined,
+    le: typeof conditions.le === 'number' 
+      ? String(conditions.le).split('.', 2) as [string, string]
+      : undefined,
+    gt: typeof conditions.gt === 'number' 
+      ? String(conditions.gt).split('.', 2) as [string, string]
+      : undefined,
+    ge: typeof conditions.ge === 'number' 
+      ? String(conditions.ge).split('.', 2) as [string, string]
+      : undefined,
+    ceq: typeof conditions.ceq === 'number' 
+      ? String(conditions.ceq).split('.', 2) as [string, string]
+      : undefined,
+    clt: typeof conditions.clt === 'number' 
+      ? String(conditions.clt).split('.', 2) as [string, string]
+      : undefined,
+    cle: typeof conditions.cle === 'number' 
+      ? String(conditions.cle).split('.', 2) as [string, string]
+      : undefined,
+    cgt: typeof conditions.cgt === 'number' 
+      ? String(conditions.cgt).split('.', 2) as [string, string]
+      : undefined,
+    cge: typeof conditions.cge === 'number' 
+      ? String(conditions.cge).split('.', 2) as [string, string]
+      : undefined
+  }
+
+  let variable = !conditions.ceq;
+  let intLen = 0;
+  let decLen = 0;
+  for (const key in lengths) {
+    if (Array.isArray(lengths[key])) {
+      const [ int, dec ] = lengths[key] as [string, string];
+      intLen = Math.max(int.length, intLen);
+      decLen = Math.max(dec.length, decLen);
+    }
+  }
+
+  const length = decLen > 0 
+    ? [ intLen + decLen, decLen ] 
+    : intLen;
+
+  let inferred = 'varchar';
+  if (column.field.attributes.type === 'number') {
+    inferred = (lengths.step && lengths.step[1])
+      || (lengths.min && lengths.min[1])
+      || (lengths.max && lengths.max[1])
+      ? 'float'
+      : 'int';
+  } else if (Array.isArray(column.field.attributes.options)) {
+    if (column.field.attributes.options.filter(
+      option => typeof option.value === 'number' 
+        && String(option.value).indexOf('.') >= 0
+    )) {
+      inferred = 'float';
+    } else if (column.field.attributes.options.filter(
+      option => typeof option.value === 'number' 
+    )) {
+      inferred = 'int';
+    }
+  }
+
+  const data: Partial<SchemaColumnData> = {
+    required: conditions.req,
+    unique: conditions.uni,
+    unsigned
+  };
+
+  switch (field.type) {
+    case 'string':
+      data.type = variable ? 'varchar': 'char';
+      data.length = intLen > 0 ? intLen : 255;
+      break;
+    case 'string|number':
+      data.type = inferred;
+      if (data.type === 'varchar') {
+        data.length = intLen > 0 ? intLen : 255;
+      } else {
+        data.length = intLen > 0 ? intLen : 10;
+      }
+      break;
+    case 'number':
+      data.type = inferred !== 'string' ? inferred : 'float';
+      data.length = length ? length : 10;
+      break;
+    case 'integer':
+      data.type = 'int';
+      if (intLen > 0) {
+        data.length = intLen;
+      }
+      break;
+    case 'float':
+      data.type = 'float';
+      data.length = length ? length : [ 10, 2 ];
+      break;
+    case 'text':
+    case 'boolean':
+    case 'date':
+    case 'datetime':
+    case 'time':
+      data.type = field.type;
+      break;
+    case 'string[]':
+    case 'hash':
+    case 'hash[]':
+    case 'object':
+      data.type = 'json';
+      break;
+  }
+
+  return data;
 }

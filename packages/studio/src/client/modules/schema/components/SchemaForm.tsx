@@ -2,7 +2,8 @@
 import type { DragEvent } from 'react';
 import type { 
   SchemaConfig, 
-  SchemaColumn, 
+  SchemaColumn,
+  SchemaColumnData, 
   FormChangeHandler 
 } from 'inceptjs';
 //hooks
@@ -23,7 +24,7 @@ import FieldSelectIcon from '../../common/components/FieldSelectIcon';
 import FieldForm from './FieldForm';
 //helpers
 import { slugify } from 'frui/utils';
-import { getColumnDefaults } from '../../common/column';
+import { getColumnDefaults, inferColumnData } from '../../common/column';
 
 const SchemaFormTabs: React.FC<{
   tab: number,
@@ -128,6 +129,7 @@ const SchemaFormFields: React.FC<{
   const stripe = useStripe('bg-b5', 'bg-b3');
   const [ placeholder, setPlaceholder ] = useState<[ string, string ]>([ '', '' ]);
   const dragging = useRef<string>('');
+  console.log(data)
   //handlers
   const handlers = {
     add: () => mobile.push(
@@ -137,10 +139,13 @@ const SchemaFormFields: React.FC<{
         label={t`Add Field` as string} 
         columns={data.columns || []}
         defaultValue={getColumnDefaults('none')}
-        onSubmit={(column: Partial<SchemaColumn>) => change(
-          'columns', 
-          [...(data.columns || []), column]
-        )} 
+        onSubmit={(column: Partial<SchemaColumn>) => {
+          column.data = {
+            ...(column.data || {}), 
+            ...(inferColumnData(column) || {})
+          } as SchemaColumnData;
+          change('columns', [...(data.columns || []), column]);
+        }} 
       />
     ),
     copy: (column: Partial<SchemaColumn>) => mobile.push(
@@ -150,10 +155,13 @@ const SchemaFormFields: React.FC<{
         label={t`Copy Field` as string} 
         columns={data.columns || []}
         defaultValue={column}
-        onSubmit={(column: Partial<SchemaColumn>) => change(
-          'columns', 
-          [...(data.columns || []), column]
-        )} 
+        onSubmit={(column: Partial<SchemaColumn>) => {
+          column.data = {
+            ...(column.data || {}), 
+            ...(inferColumnData(column) || {})
+          } as SchemaColumnData;
+          change('columns', [...(data.columns || []), column]);
+        }} 
       />
     ),
     drag: (e: DragEvent<HTMLTableRowElement>, i: number) => {
@@ -223,6 +231,10 @@ const SchemaFormFields: React.FC<{
           columns={data.columns || []}
           defaultValue={column}
           onSubmit={(column: Partial<SchemaColumn>) => {
+            column.data = {
+              ...(column.data || {}), 
+              ...(inferColumnData(column) || {})
+            } as SchemaColumnData;
             const update = [ ...(data.columns || []) ];
             update.splice(index, 1, column as SchemaColumn);
             change('columns', update);
