@@ -7,6 +7,38 @@
   "group": "Blog",
   "columns": [
     {
+      "type": "string",
+      "field": {
+        "method": "none",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "method": "char",
+        "attributes": {
+          "length": "10"
+        }
+      },
+      "view": {
+        "method": "lower",
+        "attributes": {}
+      },
+      "searchable": false,
+      "filterable": false,
+      "sortable": false,
+      "data": {
+        "required": false,
+        "primary": true,
+        "unique": false,
+        "unsigned": false,
+        "type": "char",
+        "length": 21
+      },
+      "label": "ID",
+      "name": "id",
+      "default": "nanoid()"
+    },
+    {
       "field": {
         "method": "text",
         "attributes": {}

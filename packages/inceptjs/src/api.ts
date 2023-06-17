@@ -33,6 +33,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: true, default: false },
         searchable: { show: false, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -55,6 +56,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: false, default: false },
@@ -97,6 +99,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: false, default: false },
@@ -141,6 +144,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: true, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -208,6 +212,7 @@ export const data: {
             }
           }
         ],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -267,6 +272,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -311,6 +317,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -348,6 +355,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: true, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: false, default: false },
@@ -393,6 +401,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: true, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -452,6 +461,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -497,6 +507,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -541,6 +552,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -585,6 +597,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -629,6 +642,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -675,6 +689,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: true, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -723,6 +738,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: true, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -771,6 +787,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -819,6 +836,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -867,6 +885,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -910,6 +929,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -954,6 +974,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -1002,6 +1023,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: true, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -1050,6 +1072,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -1100,6 +1123,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -1159,6 +1183,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -1207,6 +1232,7 @@ export const data: {
             attributes: {}
           }
         ],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -1253,6 +1279,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -1298,6 +1325,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -1349,6 +1377,7 @@ export const data: {
             attributes: {}
           }
         ],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -1416,6 +1445,7 @@ export const data: {
             }
           }
         ],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -1481,6 +1511,7 @@ export const data: {
             attributes: {}
           }
         ],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -1527,6 +1558,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -1571,6 +1603,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -1614,6 +1647,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -1660,6 +1694,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: true, default: false },
         filterable: { show: true, default: false },
         sortable: { show: true, default: false },
@@ -1703,6 +1738,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -1751,6 +1787,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -1797,6 +1834,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -1851,6 +1889,7 @@ export const data: {
             }
           }
         ],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -1893,6 +1932,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -1939,6 +1979,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -2005,6 +2046,7 @@ export const data: {
             }
           }
         ],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: false, default: false },
         sortable: { show: false, default: false },
@@ -2053,6 +2095,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: false, default: true },
         sortable: { show: false, default: true },
@@ -2094,6 +2137,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: false, default: true },
         sortable: { show: false, default: true },
@@ -2137,6 +2181,7 @@ export const data: {
           default: {}
         },
         params: [],
+        primary: { show: false, default: false },
         searchable: { show: false, default: false },
         filterable: { show: false, default: true },
         sortable: { show: false, default: true },
@@ -2163,43 +2208,6 @@ export const data: {
           default: undefined
         },
         default: { show: false, default: 'now()' },
-        enabled: true
-      },
-      nanoid: {
-        type: 'string',
-        method: 'nanoid',
-        label: 'UUID',
-        component: false,
-        attributes: {
-          show: false,
-          fixed: {},
-          default: {}
-        },
-        params: [],
-        searchable: { show: true, default: false },
-        filterable: { show: true, default: false },
-        sortable: { show: true, default: false },
-        validation: { 
-          show: false, 
-          filter: false
-        },
-        list: { 
-          show: true, 
-          filter: [
-            'none', 'lower', 'upper',  'capital',  
-            'char', 'hide',  'custom', 'formula'
-          ],
-          default: undefined
-        },
-        view: { 
-          show: true, 
-          filter: [
-            'none', 'lower', 'upper',  'capital',  
-            'char', 'hide',  'custom', 'formula'
-          ],
-          default: undefined
-        },
-        default: { show: false, default: undefined },
         enabled: true
       }
     }
@@ -3180,10 +3188,6 @@ export const api = {
         }
       }
     
-      const length = decLen > 0 
-        ? [ intLen + decLen, decLen ] 
-        : intLen;
-    
       let inferred = 'varchar';
       if (column.field.attributes.type === 'number') {
         inferred = (lengths.step && lengths.step[1])
@@ -3203,9 +3207,40 @@ export const api = {
           inferred = 'int';
         }
       }
+
+      switch (column.default) {
+        case 'now()':
+        case 'updated()':
+          inferred = 'datetime';
+          break;
+        case 'nanoid()':
+          inferred = 'char';
+          intLen = 21;
+          decLen = 0;
+          break;
+        case 'cuid()':
+          inferred = 'char';
+          intLen = 25;
+          decLen = 0;
+          break;
+        case 'cuid2()':
+          inferred = 'char';
+          intLen = 24;
+          decLen = 0;
+          break;
+        case 'increment()':
+          inferred = 'integer';
+          intLen = 10;
+          decLen = 0;
+      }
+
+      const length = decLen > 0 
+        ? [ intLen + decLen, decLen ] 
+        : intLen;
     
       const data: Partial<SchemaColumnData> = {
         required: conditions.req,
+        primary: !!column.data?.primary,
         unique: conditions.uni,
         unsigned
       };
@@ -3259,7 +3294,7 @@ export const api = {
       if (!selected) return;
       const list = api.format.get(selected.list.default || 'none');
       const view = api.format.get(selected.view.default || 'none');
-      return {
+      const defaults = {
         ...column,
         type: selected.type,
         name: selected?.content?.name || column.name,
@@ -3290,6 +3325,18 @@ export const api = {
         filterable: selected.filterable.default,
         sortable: selected.sortable.default
       } as SchemaColumn;
+
+      if (!defaults.data) {
+        const data = {
+          ...(api.schema.data(defaults) || {}),
+          primary: selected.primary.default
+        };
+        if (data) {
+          defaults.data = data as SchemaColumnData;
+        }
+      }
+
+      return defaults;
     }
   },
   fieldset: {

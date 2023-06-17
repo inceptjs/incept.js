@@ -1,5 +1,5 @@
 import type { FormEvent } from 'react';
-import type { SchemaColumn, APIResponse } from 'inceptjs';
+import type { SchemaColumn, SchemaColumnData, APIResponse } from 'inceptjs';
 
 import { useState, useEffect } from 'react';
 import { useLanguage } from 'r22n';
@@ -48,8 +48,33 @@ export default function useField(
       return false;
     }
 
-    onSubmit(input.values);
-    notify('success', t`Field ${input.values.name} created` as string);
+    const values = { ...input.values } as SchemaColumn;
+    values.data = api.schema.data(values) as SchemaColumnData;
+    if (values.type === 'string|number') {
+      switch (values.data.type) {
+        case 'int':
+        case 'float':
+          values.type = 'number';
+          break;
+        case 'datetime':
+          values.type = 'date';
+          break;
+        case 'char':
+        case 'varchar':
+        case 'text':
+        default:
+          values.type = 'string';
+          break;
+      }
+      
+    }
+    onSubmit(values);
+
+    const message = mode === 'create' 
+      ? t`Field ${values.name} created` 
+      : t`Field ${values.name} updated`;
+
+    notify('success', message as string);
     mobile.pop();
     return false;
   }, defaultValue);

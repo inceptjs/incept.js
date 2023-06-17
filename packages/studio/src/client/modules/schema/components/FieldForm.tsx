@@ -92,6 +92,16 @@ const FieldFormInputs: React.FC<{
           />
         </Control>
       )}
+      {!!settings?.primary.show && (
+        <Control className="mt-2">
+          <FieldCheckbox 
+            label={t`Primary` as string}
+            className="bg-b5 text-t1 border-b1 outline-none"
+            checked={data?.data?.primary} 
+            onUpdate={value => change(['data', 'primary'], value)}
+          />
+        </Control>
+      )}
       {!!settings?.searchable.show && (
         <Control className="mt-2">
           <FieldCheckbox 
@@ -129,6 +139,32 @@ const FieldFormInputs: React.FC<{
             defaultValue={data?.default} 
             onUpdate={value => change('default', value)} 
           />
+          <div>
+            <a 
+              className="text-t2 cursor-pointer" 
+              onClick={() => change('default', 'nanoid()')}
+            >nanoid()</a>
+            <a 
+              className="text-t2 cursor-pointer ml-2" 
+              onClick={() => change('default', 'cuid()')}
+            >cuid()</a>
+            <a 
+              className="text-t2 cursor-pointer ml-2" 
+              onClick={() => change('default', 'cuid2()')}
+            >cuid2()</a>
+            <a 
+              className="text-t2 cursor-pointer ml-2" 
+              onClick={() => change('default', 'now()')}
+            >now()</a>
+            <a 
+              className="text-t2 cursor-pointer ml-2" 
+              onClick={() => change('default', 'updated()')}
+            >updated()</a>
+            <a 
+              className="text-t2 cursor-pointer ml-2" 
+              onClick={() => change('default', 'increment()')}
+            >increment()</a>
+          </div>
         </Control>
       )}
     </section>

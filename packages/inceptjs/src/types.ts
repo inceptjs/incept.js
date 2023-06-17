@@ -100,17 +100,22 @@ export type FormHandlers = {
 };
 
 //schema methods
-export type FieldMethod = 'autocomplete'
-  | 'checkbox'  | 'checklist' | 'code'
-  | 'color'     | 'country'   | 'currency'
-  | 'date'      | 'datetime'  | 'fieldset'
-  | 'file'      | 'filelist'  | 'image'
-  | 'imagelist' | 'input'     | 'json'
-  | 'mask'      | 'metadata'  | 'none'
-  | 'number'    | 'password'  | 'radio'
-  | 'radiolist' | 'range'     | 'select'
-  | 'slider'    | 'switch'    | 'taglist'
-  | 'textarea'  | 'textlist'  | 'time';
+export type FieldMethod = 'active' 
+  | 'autocomplete' | 'checkbox'  | 'checklist' 
+  | 'code'         | 'color'     | 'country' 
+  | 'created'      | 'currency'  | 'date'
+  | 'datetime'     | 'email'     | 'fieldset'
+  | 'file'         | 'filelist'  | 'image'
+  | 'imagelist'    | 'input'     | 'integer'
+  | 'json'         | 'mask'      | 'metadata'
+  | 'none'         | 'number'    | 'password'
+  | 'phone'        | 'price'     | 'radio'        
+  | 'radiolist'    | 'range'     | 'rating'
+  | 'select'       | 'slider'    | 'slug'
+  | 'small'        | 'switch'    | 'table'
+  | 'taglist'      | 'text'      | 'textarea'
+  | 'textlist'     | 'time'      | 'updated'
+  | 'url'          | 'wysiwyg';
 export type ValidatorMethod = 'eq'
   | 'ne'     | 'notempty' | 'option'
   | 'unique' | 'required' | 'regex'
@@ -124,15 +129,20 @@ export type ValidatorMethod = 'eq'
   | 'wlt'    | 'wle'      | 'cc'
   | 'email'  | 'hex'      | 'color'
   | 'url';
-export type FormatMethod = 'color'
-  | 'country'  | 'currency'  | 'date'
-  | 'email'    | 'formula'   | 'hide'
-  | 'html'     | 'image'     | 'imagelist'
-  | 'json'     | 'link'      | 'list'
-  | 'markdown' | 'metadata'  | 'none'
-  | 'number'   | 'overflow'  | 'phone'
-  | 'rating'   | 'separated' | 'table'
-  | 'taglist'  | 'text'      | 'yesno';
+export type FormatMethod = 'captal' 
+  | 'char'     | 'color'    | 'comma'
+  | 'country'  | 'currency' | 'date' 
+  | 'carousel' | 'email'    | 'escaped'  
+  | 'formula'  | 'hide'     | 'html'     
+  | 'image'    | 'json'     | 'line'  
+  | 'link'     | 'list'     | 'lower'
+  | 'markdown' | 'metadata' | 'none'
+  | 'number'   | 'ol'       | 'pretty' 
+  | 'price'    | 'phone'    | 'rating'  
+  | 'rel'      | 'relative' | 'space' 
+  | 'table'    | 'taglist'  | 'text'  
+  | 'ul'       | 'upper'    | 'word' 
+  | 'yesno';
 
 //column options
 export type ColumnFieldOption = { 
@@ -154,6 +164,7 @@ export type ColumnFieldOption = {
     attribute: string,
     attributes: Record<string, any>
   }[],
+  primary: { show: boolean, default: boolean },
   searchable: { show: boolean, default: boolean },
   filterable: { show: boolean, default: boolean },
   sortable: { show: boolean, default: boolean },
@@ -240,6 +251,7 @@ export type SchemaColumnFormat = FieldsetColumnFormat;
 export type SchemaColumn = FieldsetColumn & {
   data: SchemaColumnData,
   default?: any,
+  parimary: boolean,
   searchable: boolean,
   filterable: boolean,
   sortable: boolean
