@@ -4,10 +4,8 @@ import type { Crumb } from '../../common/components/types';
 //hooks
 import { useLanguage } from 'r22n';
 import { useStripe } from 'inceptjs';
-import useMobile from '../../app/layouts/panel/hooks/useMobile';
 import { useSchemaSearch } from '../hooks/useSchema';
 //components
-import { Link } from 'react-router-dom';
 import Button from 'frui/tailwind/Button';
 import Loader from 'frui/tailwind/Loader';
 import { Table, Thead, Trow, Tcol, Tgroup } from 'frui//tailwind/Table';
@@ -17,13 +15,22 @@ import SchemaForm from '../components/SchemaForm';
 const SchemaSearchPage = () => {
   //hooks
   const { t } = useLanguage();
-  const { handlers } = useMobile();
   const stripe = useStripe('bg-b4', 'bg-b5');
   const search = useSchemaSearch();
-  const viewCreate = () => handlers.push(
+  
+  const viewCreate = () => search.mobile.push(
     <SchemaForm 
-      key={'SchemaForm'}
+      key={'CreateSchemaForm'}
       label={t`Create Schema` as string} 
+      redirect={search.redirect}
+    />
+  );
+  const viewUpdate = (name: string) => search.mobile.push(
+    <SchemaForm 
+      key={'UpdateSchemaForm'}
+      name={name}
+      label={t`Update Schema` as string} 
+      redirect={search.redirect}
     />
   );
   //variables
@@ -35,11 +42,26 @@ const SchemaSearchPage = () => {
   //reorganize schemas by groups
   const groups: Record<string, SchemaConfig[]> = {};
   Object.values(search.response.results).map(schema => {
-    if (!groups[schema.group]) {
-      groups[schema.group] = []
+    const group = schema.group || 'Unsorted';
+    if (!groups[group]) {
+      groups[group] = []
     }
-    groups[schema.group].push(schema);
+    groups[group].push(schema);
   });
+  //sort groups
+  const sorted = Object.keys(groups).sort().reduce(
+    (groups: Record<string, SchemaConfig[]>, key) => { 
+      groups[key] = groups[key]; 
+      return groups;
+    }, {}
+  );
+  //move unsorted to the end
+  if (sorted['Unsorted']) {
+    const unsorted = sorted['Unsorted'];
+    delete sorted['Unsorted'];
+    sorted['Unsorted'] = unsorted;
+  }
+  //render
   return (
     <main className="flex flex-col">
       <div className="bg-b2 px-1 py-1 text-sm">
@@ -73,66 +95,26 @@ const SchemaSearchPage = () => {
           <Thead className="py-4 text-sm font-semibold text-left bg-b3 text-t1">
             {t`Relations`}
           </Thead>
-          {Object.keys(groups).map((name, i) => {
-            if (!name.length) {
-              return groups[name].map((config, j) => {
+          {Object.keys(sorted).map((name, i) => (
+            <Tgroup key={i}>
+              <Trow>
+                <Tcol className="bg-b2 text-t1">
+                  <i className="fas fa-fw fa-caret-down mr-1 mt-[-1px]"></i>
+                </Tcol>
+                <Tcol wrap-4 colSpan={2} className="text-xs text-left text-t1 font-semibold bg-b2 uppercase">
+                  {name}
+                </Tcol>
+              </Trow>
+              {groups[name].map((config, j) => {
                 const schema = new search.Schema(config.name);
                 return (
                   <Trow key={`${i}-${j}`}>
                     <Tcol className={`py-4 ${stripe(j)}`}>&nbsp;</Tcol>
                     <Tcol className={`py-4 text-left text-sm text-t1 ${stripe(j)}`}>
-                      <Link to={`/schema/${schema.name}`} className="text-t2">
+                      <a onClick={() => viewUpdate(config.name)} className="text-t2 cursor-pointer">
                         <i className={`fas fa-fw fa-${schema.icon}`} />
                         <span className="ml-2">{schema.singular}</span>
-                      </Link>
-                      <p className="mt-1">{schema.description}</p>
-                    </Tcol>
-                    <Tcol className={`py-4 pr-4 text-left text-sm text-t1 whitespace-nowrap ${stripe(j)}`}>
-                      {Object.values(schema.relations).map((relation, j) => {
-                        const required = !!schema.column(relation.from)?.data.required;
-                        return (
-                          <div key={`${i}-${j}`} className="mb-3">
-                            <div className="ml-1 font-semibold">
-                              {relation.label}
-                            </div>
-                            <div className="mt-1">
-                              <span className="ml-1">
-                                {relation.from}{!required ? '?' : ''}
-                              </span>
-                              <i className="fas fa-fw fa-arrow-right ml-1"></i>
-                              <span className="ml-1">
-                                {relation.schema}
-                                ({relation.to})
-                              </span>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </Tcol>
-                  </Trow>
-                );
-              })
-            }
-            return (
-              <Tgroup key={i}>
-                <Trow>
-                  <Tcol className="bg-b2 text-t1">
-                    <i className="fas fa-fw fa-caret-down mr-1 mt-[1px]"></i>
-                  </Tcol>
-                  <Tcol wrap-4 colSpan={2} className="text-left font-bold bg-b2 text-t1 uppercase">
-                    {name}
-                  </Tcol>
-                </Trow>
-                {groups[name].map((config, j) => {
-                const schema = new search.Schema(config.name);
-                return (
-                  <Trow key={`${i}-${j}`}>
-                    <Tcol className={`py-4 ${stripe(j)}`}>&nbsp;</Tcol>
-                    <Tcol className={`py-4 text-left text-sm text-t1 ${stripe(j)}`}>
-                      <Link to={`/schema/${schema.name}`} className="text-t2">
-                        <i className={`fas fa-fw fa-${schema.icon}`} />
-                        <span className="ml-2">{schema.singular}</span>
-                      </Link>
+                      </a>
                       <p className="mt-1">{schema.description}</p>
                     </Tcol>
                     <Tcol className={`py-4 pr-4 text-left text-sm text-t1 whitespace-nowrap ${stripe(j)}`}>
@@ -160,9 +142,8 @@ const SchemaSearchPage = () => {
                   </Trow>
                 );
               })}
-              </Tgroup>
-            );
-          })}
+            </Tgroup>
+          ))}
         </Table>
       </div>
     </main>

@@ -95,7 +95,9 @@ const SchemaFormInputs: React.FC<{
             control: 'dark:bg-b5 dark:text-t1 dark:border-b1',
             placeholder: 'dark:text-gray-500',
             dropdown: 'dark:bg-b3',
-            option: 'dark:border-b1'
+            option: 'dark:border-b1',
+            searchIcon: 'mt-1 dark:bg-b5 dark:text-t1 dark:border-b1',
+            searchControl: 'outline-none dark:bg-b5 dark:text-t1 dark:border-b1',
           }}
           defaultValue={data.icon} 
           onUpdate={value => change('icon', value)} 
@@ -129,7 +131,6 @@ const SchemaFormFields: React.FC<{
   const stripe = useStripe('bg-b5', 'bg-b3');
   const [ placeholder, setPlaceholder ] = useState<[ string, string ]>([ '', '' ]);
   const dragging = useRef<string>('');
-  console.log(data)
   //handlers
   const handlers = {
     add: () => mobile.push(
@@ -363,12 +364,15 @@ const SchemaFormRelations: React.FC<{
   );
 };
 
-const SchemaForm: React.FC<{label: string, name?: string}> = (props) => {
-  const { name, label } = props;
+const SchemaForm: React.FC<{
+  label: string, 
+  name?: string,
+  redirect?: () => void
+}> = (props) => {
+  const { name, label, redirect } = props;
   //hooks
   const { t } = useLanguage();
-  const { handlers: mobile } = useMobile();
-  const { data, handlers } = useSchemaUpsert(name);
+  const { data, handlers, mobile } = useSchemaUpsert(name, redirect);
   const [ tab, setTab ] = useState(0);
   return (
     <form className="flex flex-col text-sm bg-b4 h-full" onSubmit={handlers.send}>

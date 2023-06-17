@@ -1,0 +1,83 @@
+{
+  "name": "article",
+  "singular": "Article",
+  "plural": "Articles",
+  "description": "Manage Articles Test",
+  "icon": "fas fa-newspaper",
+  "group": "Blog",
+  "columns": [
+    {
+      "field": {
+        "method": "text",
+        "attributes": {}
+      },
+      "validation": [
+        {
+          "method": "required",
+          "parameters": [],
+          "message": "Title is required"
+        }
+      ],
+      "list": {
+        "method": "none",
+        "attributes": {}
+      },
+      "view": {
+        "method": "none",
+        "attributes": {}
+      },
+      "searchable": "on",
+      "filterable": false,
+      "sortable": false,
+      "label": "Title",
+      "name": "title",
+      "data": {
+        "required": true,
+        "unique": false,
+        "unsigned": false,
+        "type": "varchar",
+        "length": 255
+      }
+    },
+    {
+      "field": {
+        "method": "slug",
+        "attributes": {}
+      },
+      "validation": [
+        {
+          "method": "required",
+          "parameters": [],
+          "message": "Slug is required"
+        },
+        {
+          "method": "unique",
+          "parameters": [],
+          "message": "Should be unique"
+        }
+      ],
+      "list": {
+        "method": "hide",
+        "attributes": {}
+      },
+      "view": {
+        "method": "none",
+        "attributes": {}
+      },
+      "searchable": false,
+      "filterable": false,
+      "sortable": false,
+      "label": "Slug",
+      "name": "slug",
+      "data": {
+        "required": true,
+        "unique": true,
+        "unsigned": false,
+        "type": "varchar",
+        "length": 255
+      }
+    }
+  ],
+  "relations": [],
+  "rest": {}
+}
