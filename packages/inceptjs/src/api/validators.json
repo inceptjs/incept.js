@@ -1,0 +1,345 @@
+{
+  "General": {
+    "required": {
+      "method": "required",
+      "label": "Required",
+      "params": [],
+      "enabled": true
+    },
+    "unique": {
+      "method": "unique",
+      "label": "Unique",
+      "params": [],
+      "enabled": true
+    },
+    "notempty": {
+      "method": "notempty",
+      "label": "Not Empty",
+      "params": [],
+      "enabled": true
+    },
+    "ne": {
+      "method": "ne",
+      "label": "Not Equal",
+      "params": [
+        {
+          "field": "text",
+          "attributes": {
+            "type": "text",
+            "placeholder": "Enter Value"
+          }
+        }
+      ],
+      "enabled": true
+    },
+    "option": {
+      "method": "option",
+      "label": "Valid Option",
+      "params": [
+        {
+          "field": "textlist",
+          "attributes": {
+            "label": "Add Option"
+          }
+        }
+      ],
+      "enabled": true
+    }
+  },
+  "Strings": {
+    "ceq": {
+      "method": "ceq",
+      "label": "Characters Equal To",
+      "params": [
+        {
+          "field": "number",
+          "attributes": {
+            "min": 0,
+            "placeholder": "Enter Number"
+          }
+        }
+      ],
+      "enabled": true
+    },
+    "cgt": {
+      "method": "cgt",
+      "label": "Characters Greater Than",
+      "params": [
+        {
+          "field": "number",
+          "attributes": {
+            "min": 0,
+            "placeholder": "Enter Number"
+          }
+        }
+      ],
+      "enabled": true
+    },
+    "cge": {
+      "method": "cge",
+      "label": "Characters Greater Than Equal",
+      "params": [
+        {
+          "field": "number",
+          "attributes": {
+            "min": 0,
+            "placeholder": "Enter Number"
+          }
+        }
+      ],
+      "enabled": true
+    },
+    "clt": {
+      "method": "clt",
+      "label": "Characters Less Than",
+      "params": [
+        {
+          "field": "number",
+          "attributes": {
+            "min": 0,
+            "placeholder": "Enter Number"
+          }
+        }
+      ],
+      "enabled": true
+    },
+    "cle": {
+      "method": "cle",
+      "label": "Characters Less Than Equal",
+      "params": [
+        {
+          "field": "number",
+          "attributes": {
+            "min": 0,
+            "placeholder": "Enter Number"
+          }
+        }
+      ],
+      "enabled": true
+    },
+    "wgt": {
+      "method": "wgt",
+      "label": "Words Greater Than",
+      "params": [
+        {
+          "field": "number",
+          "attributes": {
+            "min": 0,
+            "placeholder": "Enter Number"
+          }
+        }
+      ],
+      "enabled": true
+    },
+    "wge": {
+      "method": "wge",
+      "label": "Words Greater Than Equal",
+      "params": [
+        {
+          "field": "number",
+          "attributes": {
+            "min": 0,
+            "placeholder": "Enter Number"
+          }
+        }
+      ],
+      "enabled": true
+    },
+    "wlt": {
+      "method": "wlt",
+      "label": "Words Less Than",
+      "params": [
+        {
+          "field": "number",
+          "attributes": {
+            "min": 0,
+            "placeholder": "Enter Number"
+          }
+        }
+      ],
+      "enabled": true
+    },
+    "wle": {
+      "method": "wle",
+      "label": "Words Less Than Equal",
+      "params": [
+        {
+          "field": "number",
+          "attributes": {
+            "min": 0,
+            "placeholder": "Enter Number"
+          }
+        }
+      ],
+      "enabled": true
+    }
+  },
+  "Numbers": {
+    "float": {
+      "method": "float",
+      "label": "Valid Float",
+      "params": [],
+      "enabled": true
+    },
+    "integer": {
+      "method": "integer",
+      "label": "Valid Integer",
+      "params": [],
+      "enabled": true
+    },
+    "number": {
+      "method": "number",
+      "label": "Valid Number",
+      "params": [],
+      "enabled": true
+    },
+    "price": {
+      "method": "price",
+      "label": "Valid Price",
+      "params": [],
+      "enabled": true
+    },
+    "gt": {
+      "method": "gt",
+      "label": "Greater Than",
+      "params": [
+        {
+          "field": "number",
+          "attributes": {
+            "min": 0,
+            "placeholder": "Enter Number"
+          }
+        }
+      ],
+      "enabled": true
+    },
+    "ge": {
+      "method": "ge",
+      "label": "Greater Than Equal",
+      "params": [
+        {
+          "field": "number",
+          "attributes": {
+            "min": 0,
+            "placeholder": "Enter Number"
+          }
+        }
+      ],
+      "enabled": true
+    },
+    "lt": {
+      "method": "lt",
+      "label": "Less Than",
+      "params": [
+        {
+          "field": "number",
+          "attributes": {
+            "min": 0,
+            "placeholder": "Enter Number"
+          }
+        }
+      ],
+      "enabled": true
+    },
+    "le": {
+      "method": "le",
+      "label": "Less Than Equal",
+      "params": [
+        {
+          "field": "number",
+          "attributes": {
+            "min": 0,
+            "placeholder": "Enter Number"
+          }
+        }
+      ],
+      "enabled": true
+    }
+  },
+  "Date": {
+    "date": {
+      "method": "date",
+      "label": "Valid Date",
+      "params": [],
+      "enabled": true
+    },
+    "time": {
+      "method": "time",
+      "label": "Valid Time",
+      "params": [],
+      "enabled": true
+    },
+    "datetime": {
+      "method": "datetime",
+      "label": "Valid Datetime",
+      "params": [],
+      "enabled": true
+    },
+    "past": {
+      "method": "past",
+      "label": "Valid Past Date",
+      "params": [],
+      "enabled": true
+    },
+    "present": {
+      "method": "present",
+      "label": "Valid Present Date",
+      "params": [],
+      "enabled": true
+    },
+    "future": {
+      "method": "future",
+      "label": "Valid Future Date",
+      "params": [],
+      "enabled": true
+    }
+  },
+  "Type": {
+    "color": {
+      "method": "color",
+      "label": "Valid Color",
+      "params": [],
+      "enabled": true
+    },
+    "email": {
+      "method": "email",
+      "label": "Valid Email",
+      "params": [],
+      "enabled": true
+    },
+    "url": {
+      "method": "url",
+      "label": "Valid URL",
+      "params": [],
+      "enabled": true
+    },
+    "hex": {
+      "method": "hex",
+      "label": "Valid Hex",
+      "params": [],
+      "enabled": true
+    },
+    "cc": {
+      "method": "cc",
+      "label": "Valid Credit Card",
+      "params": [],
+      "enabled": true
+    }
+  },
+  "---------------": {
+    "regexp": {
+      "method": "regexp",
+      "label": "Valid Expression",
+      "params": [
+        {
+          "field": "text",
+          "attributes": {
+            "type": "text",
+            "placeholder": "Enter Expression e.g. ^[a-zA-Z0-9]+$"
+          }
+        }
+      ],
+      "enabled": true
+    }
+  }
+}

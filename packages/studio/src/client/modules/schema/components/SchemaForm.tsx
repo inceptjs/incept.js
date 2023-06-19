@@ -21,7 +21,8 @@ import FieldTextarea from 'frui/tailwind/FieldTextarea';
 import FormatSeparated from 'frui/tailwind/FormatSeparated';
 //import { Table, Thead, Trow, Tcol } from 'frui//tailwind/Table';
 import FieldSelectIcon from '../../common/components/FieldSelectIcon';
-import FieldForm from './FieldForm';
+import FieldRelationlist from '../../common/components/FieldRelationlist';
+import ColumnForm from './ColumnForm';
 //helpers
 import { slugify } from 'frui/utils';
 import { api } from 'inceptjs/api';
@@ -134,10 +135,10 @@ const SchemaFormFields: React.FC<{
   //handlers
   const handlers = {
     add: () => mobile.push(
-      <FieldForm 
+      <ColumnForm 
         key={Math.random()}
         mode="create"
-        label={t`Add Field` as string} 
+        label={t`Add Column` as string} 
         columns={data.columns || []}
         defaultValue={api.schema.defaults('none')}
         onSubmit={(column: Partial<SchemaColumn>) => {
@@ -150,10 +151,10 @@ const SchemaFormFields: React.FC<{
       />
     ),
     copy: (column: Partial<SchemaColumn>) => mobile.push(
-      <FieldForm 
+      <ColumnForm 
         key={Math.random()}
         mode="create"
-        label={t`Copy Field` as string} 
+        label={t`Copy Column` as string} 
         columns={data.columns || []}
         defaultValue={column}
         onSubmit={(column: Partial<SchemaColumn>) => {
@@ -225,10 +226,10 @@ const SchemaFormFields: React.FC<{
     },
     update: (index: number, column: Partial<SchemaColumn>) => {
       mobile.push(
-        <FieldForm 
+        <ColumnForm 
           key={Math.random()}
           mode="update"
-          label={t`Update Field` as string} 
+          label={t`Update Column` as string} 
           columns={data.columns || []}
           defaultValue={column}
           onSubmit={(column: Partial<SchemaColumn>) => {
@@ -260,7 +261,7 @@ const SchemaFormFields: React.FC<{
         onClick={handlers.add}
       >
         <i className="fas fa-fw fa-plus mr-2"></i>
-        {t`Add Field`}
+        {t`Add Column`}
       </Button>
       <div className="flex-grow overflow-auto mt-2">
         <table className="border-spacing-0 w-full">
@@ -284,7 +285,7 @@ const SchemaFormFields: React.FC<{
                 <td colSpan={4} className="p-0 px-0 py-0">
                   <Alert className="border-0 bg-b-inverse text-[#272C36] text-xs">
                     <i className="fas fa-fw fa-info-circle"></i>
-                    {t`No Fields Defined`}
+                    {t`No Columns Defined`}
                   </Alert>
                 </td>
               </tr>
@@ -357,9 +358,17 @@ const SchemaFormRelations: React.FC<{
   data: Partial<SchemaConfig>,
   change: FormChangeHandler
 }> = ({ data, change }) => {
+  //hooks
+  const { t } = useLanguage();
   return (
     <section className="m-0 p-2 flex-grow overflow-y-auto">
-      Relations
+      <FieldRelationlist 
+        data={{ columns: data.columns || [] }}
+        label={t`Add Relation` as string}
+        value={Object.values(data.relations || {}) || []}
+        className="mt-0.5 py-2 border border-b0 box-border w-full bg-b5 text-t1 outline-none"
+        onUpdate={relations => change('relations', relations)}
+      />
     </section>
   );
 };

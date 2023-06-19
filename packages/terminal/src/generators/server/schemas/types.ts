@@ -25,14 +25,14 @@ export default function generateModelTypes(
     moduleSpecifier: 'inceptjs',
     namedImports: [ 'APIResponse' ]
   });
-  schema.relations.filter(
-    relation => !!join[relation.name]
+  Object.values(schema.relations).filter(
+    relation => !!join[relation.schema]
   ).forEach(relation => {
     //import type { Model2TypeExtended } from '../model2/types';
     source.addImportDeclaration({
       isTypeOnly: true,
-      moduleSpecifier: `../${relation.name}/types`,
-      namedImports: [ getTypeExtendedName(join[relation.name]) ]
+      moduleSpecifier: `../${relation.schema}/types`,
+      namedImports: [ getTypeExtendedName(join[relation.schema]) ]
     });
   });
   //export type ModelType
@@ -51,12 +51,12 @@ export default function generateModelTypes(
       isExported: true,
       name: typeExtendedName,
       type: formatCode(`${typeName} & {
-        ${schema.relations.filter(
-          relation => !!join[relation.name]
+        ${Object.values(schema.relations).filter(
+          relation => !!join[relation.schema]
         ).map(relation => {
           const column = schema.columns.filter(column => column.name === relation.from)[0];
           const optional = !column || !column.data.required;
-          return `${relation.name}${optional ? '?' : ''}: ${getTypeExtendedName(join[relation.name])}`
+          return `${relation.schema}${optional ? '?' : ''}: ${getTypeExtendedName(join[relation.schema])}`
         }).join(',\n')}
       }`)
     });

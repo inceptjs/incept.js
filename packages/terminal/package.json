@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@inceptjs/studio": "0.0.31",
-    "frui": "0.0.12",
+    "frui": "0.0.13",
     "inceptjs": "0.0.31",
     "ts-morph": "18.0.0"
   },

@@ -12,7 +12,7 @@ export default class Schema<Model = any> {
   /**
    * Returns all the schemas
    */
-  public static get schemas() {
+  public static get configs() {
     return this._configs;
   }
 
@@ -128,13 +128,10 @@ export default class Schema<Model = any> {
    */
   get related() {
     const related: Record<string, SchemaRelation> = {};
-    Object.keys(Schema.schemas).forEach(name => {
-      const schema = Schema.schemas[name];
-      schema.relations.forEach(relation => {
-        if (relation.schema === this.name) {
-          related[name] = relation;
-        }
-      });
+    Object.keys(Schema.configs).forEach(name => {
+      if (Schema.configs[name].relations[this.name]) {
+        related[name] = Schema.configs[name].relations[this.name];
+      }
     });
 
     return related;
@@ -144,12 +141,7 @@ export default class Schema<Model = any> {
    * Returns the all the schema relations
    */
   get relations() {
-    const relations: Record<string, SchemaRelation> = {};
-    this._config.relations.forEach(relation => {
-      relations[relation.schema] = relation;
-    });
-
-    return relations;
+    return this._config.relations;
   }
 
   /**
@@ -249,9 +241,7 @@ export default class Schema<Model = any> {
   /**
    * Returns a relation schema given the name
    */
-  relation(name: string): SchemaRelation|undefined {
-    return this._config.relations.filter(
-      relation => relation.name === name
-    )[0];
+  relation(schema: string): SchemaRelation|undefined {
+    return this._config.relations[schema];
   }
 }

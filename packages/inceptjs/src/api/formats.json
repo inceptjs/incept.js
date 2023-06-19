@@ -1,0 +1,492 @@
+{
+  "": {
+    "none": {
+      "method": "none",
+      "label": "No Filter",
+      "component": false,
+      "attributes": {
+        "show": false,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    }
+  },
+  "Strings": {
+    "lower": {
+      "method": "lower",
+      "label": "Lowercase",
+      "component": "FormatText",
+      "attributes": {
+        "show": false,
+        "fixed": {
+          "format": "lowercase"
+        },
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "upper": {
+      "method": "upper",
+      "label": "Uppercase",
+      "component": "FormatText",
+      "attributes": {
+        "show": false,
+        "fixed": {
+          "format": "uppercase"
+        },
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "capital": {
+      "method": "capital",
+      "label": "Capitalized",
+      "component": "FormatText",
+      "attributes": {
+        "show": false,
+        "fixed": {
+          "format": "capitalize"
+        },
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "char": {
+      "method": "char",
+      "label": "Character Length",
+      "component": "FormatOverflow",
+      "attributes": {
+        "show": false,
+        "fixed": {
+          "hellip": true
+        },
+        "default": {}
+      },
+      "params": [
+        {
+          "field": "number",
+          "attribute": "length",
+          "attributes": {
+            "min": 1,
+            "step": 1,
+            "placeholder": "Enter Number Length"
+          }
+        }
+      ],
+      "enabled": true
+    },
+    "word": {
+      "method": "word",
+      "label": "Word Length",
+      "component": "FormatOverflow",
+      "attributes": {
+        "show": false,
+        "fixed": {
+          "word": true,
+          "hellip": true
+        },
+        "default": {}
+      },
+      "params": [
+        {
+          "field": "number",
+          "attribute": "length",
+          "attributes": {
+            "min": 1,
+            "step": 1,
+            "placeholder": "Enter Number Length"
+          }
+        }
+      ],
+      "enabled": true
+    }
+  },
+  "Numbers": {
+    "number": {
+      "method": "number",
+      "label": "Number",
+      "component": "FormatNumber",
+      "attributes": {
+        "show": false,
+        "fixed": {},
+        "default": {
+          "separator": ",",
+          "decimal": "."
+        }
+      },
+      "params": [],
+      "enabled": true
+    },
+    "price": {
+      "method": "price",
+      "label": "Price",
+      "component": "FormatNumber",
+      "attributes": {
+        "show": false,
+        "fixed": {
+          "decimals": 2
+        },
+        "default": {
+          "separator": ",",
+          "decimal": "."
+        }
+      },
+      "params": [],
+      "enabled": true
+    },
+    "yesno": {
+      "method": "yesno",
+      "label": "Yes/No",
+      "component": "FormatYesno",
+      "attributes": {
+        "show": false,
+        "fixed": {},
+        "default": {
+          "yes": "Yes",
+          "no": "No"
+        }
+      },
+      "params": [],
+      "enabled": true
+    },
+    "rating": {
+      "method": "rating",
+      "label": "Star Rating",
+      "component": "FormatRating",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    }
+  },
+  "Dates": {
+    "date": {
+      "method": "date",
+      "label": "Date",
+      "component": "FormatDate",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "relative": {
+      "method": "relative",
+      "label": "Relative Date",
+      "component": "FormatDate",
+      "attributes": {
+        "show": true,
+        "fixed": {
+          "format": "ago"
+        },
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "rel": {
+      "method": "rel",
+      "label": "Short Relative Date",
+      "component": "FormatDate",
+      "attributes": {
+        "show": true,
+        "fixed": {
+          "format": "a"
+        },
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    }
+  },
+  "HTML": {
+    "html": {
+      "method": "html",
+      "label": "Raw HTML",
+      "component": "FormatHTML",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "escaped": {
+      "method": "escaped",
+      "label": "Escaped HTML",
+      "component": false,
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "markdown": {
+      "method": "markdown",
+      "label": "Markdown",
+      "component": "FormatMarkdown",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "color": {
+      "method": "color",
+      "label": "Color",
+      "component": "FormatColor",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "link": {
+      "method": "link",
+      "label": "Link",
+      "component": "FormatLink",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "image": {
+      "method": "image",
+      "label": "Image",
+      "component": "FormatImage",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "email": {
+      "method": "email",
+      "label": "Email Address",
+      "component": "FormatEmail",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "phone": {
+      "method": "phone",
+      "label": "Phone Number",
+      "component": "FormatPhone",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    }
+  },
+  "JSON": {
+    "space": {
+      "method": "space",
+      "label": "Space Separated",
+      "component": "FormatSeparated",
+      "attributes": {
+        "show": true,
+        "fixed": {
+          "separator": " "
+        },
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "comma": {
+      "method": "comma",
+      "label": "Comma Separated",
+      "component": false,
+      "attributes": {
+        "show": true,
+        "fixed": {
+          "separator": ", "
+        },
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "line": {
+      "method": "line",
+      "label": "Line Separated",
+      "component": false,
+      "attributes": {
+        "show": true,
+        "fixed": {
+          "separator": "line"
+        },
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "ol": {
+      "method": "ol",
+      "label": "Ordered List",
+      "component": "FormatList",
+      "attributes": {
+        "show": true,
+        "fixed": {
+          "ordered": true
+        },
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "ul": {
+      "method": "ul",
+      "label": "Unordered List",
+      "component": "FormatList",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "taglist": {
+      "method": "taglist",
+      "label": "Taglist",
+      "component": "FormatTaglist",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "metadata": {
+      "method": "metadata",
+      "label": "Metadata (key: val)",
+      "component": "FormatMetadata",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "table": {
+      "method": "table",
+      "label": "Table",
+      "component": "FormatTable",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "carousel": {
+      "method": "carousel",
+      "label": "Image Carousel",
+      "component": "FormatImagelist",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "pretty": {
+      "method": "pretty",
+      "label": "JSON Pretty",
+      "component": "FormatJSON",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    }
+  },
+  "---------------": {
+    "hide": {
+      "method": "hide",
+      "label": "Do Not Show",
+      "component": false,
+      "attributes": {
+        "show": false,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "enabled": true
+    },
+    "custom": {
+      "method": "custom",
+      "label": "Custom Format",
+      "component": false,
+      "attributes": {
+        "show": false,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [
+        {
+          "field": "text",
+          "attribute": "custom",
+          "attributes": {}
+        }
+      ],
+      "enabled": false
+    },
+    "formula": {
+      "method": "formula",
+      "label": "Formula",
+      "component": "FormatFormula",
+      "attributes": {
+        "show": false,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [
+        {
+          "field": "text",
+          "attribute": "formula",
+          "attributes": {
+            "placeholder": "Enter a formula"
+          }
+        }
+      ],
+      "enabled": true
+    }
+  }
+}

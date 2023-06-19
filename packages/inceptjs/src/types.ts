@@ -146,32 +146,40 @@ export type FormatMethod = 'captal'
 
 //column options
 export type ColumnFieldOption = { 
-  type: string,
   method: string,
   label: string,
-  content?: {
-    name: string,
-    label: string
-  }
   component: string|false, 
-  attributes: {
-    show: boolean,
-    fixed: Record<string, any>,
-    default: Record<string, any>
+  attributes: OptionShowDefault<Record<string, any>> & {
+    fixed: Record<string, any>
   }, 
   params: {
     field: string,
     attribute: string,
     attributes: Record<string, any>
   }[],
-  primary: { show: boolean, default: boolean },
-  searchable: { show: boolean, default: boolean },
-  filterable: { show: boolean, default: boolean },
-  sortable: { show: boolean, default: boolean },
-  validation: { show: boolean, filter: string[]|false },
-  list: { show: boolean, filter: string[]|false, default: string|undefined },
-  view: { show: boolean, filter: string[]|false, default: string|undefined },
-  default: { show: boolean, default: string|number|undefined },
+  default: OptionShowDefaultOptional<string|number>,
+  validation: { show: boolean, filter: string[] },
+  column: {
+    type: string,
+    name: OptionShowDefaultOptional<string>,
+    label: OptionShowDefaultOptional<string>
+  },
+  data: {
+    type: OptionShowDefaultOptional<string>,
+    length: OptionShowDefaultOptional<number|[number, number]>,
+    primary: OptionShowDefault<boolean>,
+    required: OptionShowDefault<boolean>,
+    unique: OptionShowDefault<boolean>,
+    unsigned: OptionShowDefault<boolean>,
+    relation: { show: boolean }
+  },
+  display: {
+    list: OptionShowDefaultOptional<string> & { filter: string[] },
+    view: OptionShowDefaultOptional<string> & { filter: string[] },
+    searchable: OptionShowDefault<boolean>,
+    filterable: OptionShowDefault<boolean>,
+    sortable: OptionShowDefault<boolean>
+  },
   enabled: boolean
 };
 export type ColumnValidationOption = { 
@@ -201,6 +209,8 @@ export type ColumnFormatOption = {
 };
 
 //schema helpers
+export type OptionShowDefault<T> = { show: boolean, default: T };
+export type OptionShowDefaultOptional<T> = { show: boolean, default?: T };
 export type Validation = {
   method: ValidatorMethod,
   parameters: any[],
@@ -248,20 +258,25 @@ export type SchemaColumnData = {
 export type SchemaColumnField = FieldsetColumnField;
 export type SchemaColumnValidation = Validation[];
 export type SchemaColumnFormat = FieldsetColumnFormat;
+export type SchemaColumnRelation = {
+  label: string,
+  schema: string,
+  column: string
+};
 export type SchemaColumn = FieldsetColumn & {
   data: SchemaColumnData,
   default?: any,
-  parimary: boolean,
   searchable: boolean,
   filterable: boolean,
-  sortable: boolean
+  sortable: boolean,
+  relation?: SchemaColumnRelation
 };
 export type SchemaRelation = {
-  name: string,
+  label: string,
   schema: string,
   from: string,
   to: string,
-  label: string
+  type: '0:1'|'1:1'|'1:N'|'N:N'
 };
 export type SchemaRest = {
   type: string,
@@ -274,6 +289,6 @@ export type SchemaConfig = ExtendsType <FieldsetConfig, {
   description: string,
   group: string,
   columns: SchemaColumn[],
-  relations: SchemaRelation[],
+  relations: Record<string, SchemaRelation>,
   rest: Record<string, SchemaRest>
 }>;

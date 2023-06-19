@@ -1,7 +1,7 @@
 //types
 import type { FieldsProps, FieldsetProps } from 'frui';
 import type { ValidatorMethod } from 'inceptjs';
-import type { FieldValidationlistType } from '../hooks/useValidationlist';
+import type { FieldValidationlistType } from '../hooks/useFieldValidationlist';
 //react
 import React from 'react';
 //components
@@ -11,7 +11,7 @@ import FieldTextlist from 'frui/tailwind/FieldTextlist';
 import Button from 'frui/tailwind/Button';
 import make from 'frui/tailwind/Fieldset';
 //hooks
-import useValidationlist from '../hooks/useValidationlist';
+import useFieldValidationlist from '../hooks/useFieldValidationlist';
 //helpers
 import { makeGroupStyles, makeGroupClasses } from 'frui/utils';
 
@@ -44,7 +44,11 @@ const Fields: React.FC<FieldsProps<FieldValidationlistType>> = (props) => {
     })
   };
   //handlers
-  const { selected, options, handlers } = useValidationlist({ type, values, index, set });
+  const { 
+    selected, 
+    options, 
+    handlers
+  } = useFieldValidationlist({ type, values, index, set });
   return (
     <div className={map.classNames.row} style={map.styles.row}>
       <div className="flex items-center">

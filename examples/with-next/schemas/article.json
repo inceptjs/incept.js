@@ -8,48 +8,86 @@
   "columns": [
     {
       "type": "string",
+      "name": "id",
+      "label": "ID",
+      "data": {
+        "type": "varchar",
+        "length": 1,
+        "required": false,
+        "primary": true,
+        "unique": false,
+        "unsigned": true
+      },
       "field": {
         "method": "none",
         "attributes": {}
       },
       "validation": [],
       "list": {
+        "method": "none",
+        "attributes": {}
+      },
+      "view": {
+        "method": "none",
+        "attributes": {}
+      },
+      "searchable": false,
+      "filterable": false,
+      "sortable": false
+    },
+    {
+      "type": "string",
+      "name": "companyid",
+      "label": "Company",
+      "data": {
+        "type": "varchar",
+        "length": 255,
+        "required": false,
+        "primary": false,
+        "unique": false,
+        "unsigned": true
+      },
+      "field": {
+        "method": "text",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "method": "hide",
+        "attributes": {}
+      },
+      "view": {
         "method": "char",
         "attributes": {
           "length": "10"
         }
       },
-      "view": {
-        "method": "lower",
-        "attributes": {}
+      "relation": {
+        "label": "Sponsor",
+        "schema": "company",
+        "column": "id"
       },
       "searchable": false,
-      "filterable": false,
-      "sortable": false,
-      "data": {
-        "required": false,
-        "primary": true,
-        "unique": false,
-        "unsigned": false,
-        "type": "char",
-        "length": 21
-      },
-      "label": "ID",
-      "name": "id",
-      "default": "nanoid()"
+      "filterable": true,
+      "sortable": false
     },
     {
+      "type": "string",
+      "name": "title",
+      "label": "Title",
+      "data": {
+        "type": "varchar",
+        "length": 255,
+        "required": false,
+        "primary": false,
+        "unique": false,
+        "unsigned": true
+      },
       "field": {
         "method": "text",
         "attributes": {}
       },
-      "validation": [
-        {
-          "method": "required",
-          "parameters": [],
-          "message": "Title is required"
-        }
-      ],
+      "validation": [],
       "list": {
         "method": "none",
         "attributes": {}
@@ -58,36 +96,27 @@
         "method": "none",
         "attributes": {}
       },
-      "searchable": "on",
+      "searchable": false,
       "filterable": false,
-      "sortable": false,
-      "label": "Title",
-      "name": "title",
-      "data": {
-        "required": true,
-        "unique": false,
-        "unsigned": false,
-        "type": "varchar",
-        "length": 255
-      }
+      "sortable": false
     },
     {
+      "type": "string",
+      "name": "slug",
+      "label": "Slug",
+      "data": {
+        "type": "varchar",
+        "length": 255,
+        "required": false,
+        "primary": false,
+        "unique": false,
+        "unsigned": true
+      },
       "field": {
         "method": "slug",
         "attributes": {}
       },
-      "validation": [
-        {
-          "method": "required",
-          "parameters": [],
-          "message": "Slug is required"
-        },
-        {
-          "method": "unique",
-          "parameters": [],
-          "message": "Should be unique"
-        }
-      ],
+      "validation": [],
       "list": {
         "method": "hide",
         "attributes": {}
@@ -97,19 +126,208 @@
         "attributes": {}
       },
       "searchable": false,
-      "filterable": false,
-      "sortable": false,
-      "label": "Slug",
-      "name": "slug",
+      "filterable": true,
+      "sortable": false
+    },
+    {
+      "type": "date",
+      "name": "published",
+      "label": "Published",
       "data": {
-        "required": true,
-        "unique": true,
-        "unsigned": false,
+        "type": "datetime",
+        "length": 0,
+        "required": false,
+        "primary": false,
+        "unique": false,
+        "unsigned": true
+      },
+      "field": {
+        "method": "datetime",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "method": "date",
+        "attributes": {}
+      },
+      "view": {
+        "method": "date",
+        "attributes": {}
+      },
+      "searchable": false,
+      "filterable": true,
+      "sortable": true
+    },
+    {
+      "type": "date",
+      "name": "expires",
+      "label": "Expires",
+      "data": {
+        "type": "datetime",
+        "length": 0,
+        "required": false,
+        "primary": false,
+        "unique": false,
+        "unsigned": true
+      },
+      "field": {
+        "method": "datetime",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "method": "relative",
+        "attributes": {}
+      },
+      "view": {
+        "method": "relative",
+        "attributes": {}
+      },
+      "searchable": false,
+      "filterable": true,
+      "sortable": true
+    },
+    {
+      "type": "string",
+      "name": "status",
+      "label": "Status",
+      "data": {
         "type": "varchar",
-        "length": 255
-      }
+        "length": 1,
+        "required": false,
+        "primary": false,
+        "unique": false,
+        "unsigned": true
+      },
+      "field": {
+        "method": "select",
+        "attributes": {
+          "options": {
+            "pending": "Pending",
+            "published": "Published"
+          }
+        }
+      },
+      "validation": [
+        {
+          "method": "option",
+          "parameters": [
+            [
+              "pending",
+              "published"
+            ]
+          ],
+          "message": "Should be pending or published"
+        }
+      ],
+      "list": {
+        "method": "lower",
+        "attributes": {}
+      },
+      "view": {
+        "method": "lower",
+        "attributes": {}
+      },
+      "searchable": false,
+      "filterable": true,
+      "sortable": false
+    },
+    {
+      "type": "boolean",
+      "name": "active",
+      "label": "Active",
+      "data": {
+        "type": "boolean",
+        "length": 0,
+        "required": false,
+        "primary": false,
+        "unique": false,
+        "unsigned": true
+      },
+      "field": {
+        "method": "active",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "method": "hide",
+        "attributes": {}
+      },
+      "view": {
+        "method": "hide",
+        "attributes": {}
+      },
+      "searchable": false,
+      "filterable": false,
+      "sortable": false
+    },
+    {
+      "type": "date",
+      "name": "created",
+      "label": "Created",
+      "data": {
+        "type": "datetime",
+        "length": 0,
+        "required": false,
+        "primary": false,
+        "unique": false,
+        "unsigned": true
+      },
+      "field": {
+        "method": "created",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "method": "none",
+        "attributes": {}
+      },
+      "view": {
+        "method": "none",
+        "attributes": {}
+      },
+      "searchable": false,
+      "filterable": false,
+      "sortable": false
+    },
+    {
+      "type": "date",
+      "name": "updated",
+      "label": "Updated",
+      "data": {
+        "type": "datetime",
+        "length": 0,
+        "required": false,
+        "primary": false,
+        "unique": false,
+        "unsigned": true
+      },
+      "field": {
+        "method": "updated",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "method": "none",
+        "attributes": {}
+      },
+      "view": {
+        "method": "none",
+        "attributes": {}
+      },
+      "searchable": false,
+      "filterable": false,
+      "sortable": false
     }
   ],
-  "relations": [],
+  "relations": [
+    {
+      "label": "Authors",
+      "schema": "user",
+      "from": "id",
+      "to": "id",
+      "type": "1:1"
+    }
+  ],
   "rest": {}
 }

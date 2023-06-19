@@ -20,7 +20,7 @@ export default function useFieldSelectFormat(config: FieldSelectFormatConfig) {
   const [ selected, setSelected ] = useState(api.format.get(value?.method || ''));
   const [ params, setParams ] = useState<Record<string, any>>({});
   //variables
-  const options = api.format.groups(api.field.get(field || '')?.[format].filter || []);
+  const options = api.format.groups(api.field.get(field || '')?.display[format].filter || []);
   //handlers
   const handlers = {
     method: (e: ChangeEvent<HTMLSelectElement>) => {

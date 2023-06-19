@@ -1,0 +1,5375 @@
+{
+  "": {
+    "none": {
+      "method": "none",
+      "label": "No Field",
+      "component": false,
+      "attributes": {
+        "show": false,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": false,
+        "filter": []
+      },
+      "column": {
+        "type": "string|number",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true
+        },
+        "length": {
+          "show": true
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": true,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": []
+        },
+        "view": {
+          "show": true,
+          "filter": []
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    }
+  },
+  "Strings": {
+    "color": {
+      "method": "color",
+      "label": "Color Field",
+      "component": "FieldColor",
+      "attributes": {
+        "show": false,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "color",
+          "hex",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "char"
+        },
+        "length": {
+          "show": true,
+          "default": 6
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "color",
+            "hide",
+            "custom"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "color",
+            "hide",
+            "custom"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "email": {
+      "method": "email",
+      "label": "Email Field",
+      "component": "FieldInput",
+      "attributes": {
+        "show": true,
+        "fixed": {
+          "type": "email"
+        },
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "email",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "varchar"
+        },
+        "length": {
+          "show": true,
+          "default": 255
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "email",
+            "link",
+            "hide",
+            "custom"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "email",
+            "link",
+            "hide",
+            "custom"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "input": {
+      "method": "input",
+      "label": "Input Field",
+      "component": "FieldInput",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "wgt",
+          "wge",
+          "wlt",
+          "wle",
+          "email",
+          "float",
+          "integer",
+          "number",
+          "price",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "date",
+          "datetime",
+          "time",
+          "past",
+          "present",
+          "future",
+          "color",
+          "email",
+          "url",
+          "hex",
+          "cc",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string|number",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true
+        },
+        "length": {
+          "show": true
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": true,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "html",
+            "escaped",
+            "markdown",
+            "color",
+            "link",
+            "image",
+            "email",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "html",
+            "escaped",
+            "markdown",
+            "color",
+            "link",
+            "image",
+            "email",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "mask": {
+      "method": "mask",
+      "label": "Input Mask",
+      "component": "FieldMask",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "wgt",
+          "wge",
+          "wlt",
+          "wle",
+          "email",
+          "float",
+          "integer",
+          "number",
+          "price",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "date",
+          "datetime",
+          "time",
+          "past",
+          "present",
+          "future",
+          "color",
+          "email",
+          "url",
+          "hex",
+          "cc",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "varchar"
+        },
+        "length": {
+          "show": true,
+          "default": 255
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "html",
+            "escaped",
+            "markdown",
+            "color",
+            "link",
+            "image",
+            "email",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "html",
+            "escaped",
+            "markdown",
+            "color",
+            "link",
+            "image",
+            "email",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "phone": {
+      "method": "phone",
+      "label": "Phone Field",
+      "component": "FieldInput",
+      "attributes": {
+        "show": true,
+        "fixed": {
+          "type": "phone"
+        },
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "integer",
+          "number",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "cc",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "varchar"
+        },
+        "length": {
+          "show": true,
+          "default": 255
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "char",
+            "number",
+            "phone",
+            "link",
+            "hide",
+            "custom"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "char",
+            "number",
+            "phone",
+            "link",
+            "hide",
+            "custom"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "password": {
+      "method": "password",
+      "label": "Password Field",
+      "component": "FieldPassword",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "wgt",
+          "wge",
+          "wlt",
+          "wle",
+          "cc",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string|number",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "varchar"
+        },
+        "length": {
+          "show": true,
+          "default": 255
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": false,
+          "filter": [],
+          "default": "hide"
+        },
+        "view": {
+          "show": false,
+          "filter": [],
+          "default": "hide"
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": false,
+          "default": false
+        },
+        "sortable": {
+          "show": false,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "slug": {
+      "method": "slug",
+      "label": "Slug Field",
+      "component": "FieldSlug",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "varchar"
+        },
+        "length": {
+          "show": true,
+          "default": 255
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "link",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "link",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "text": {
+      "method": "text",
+      "label": "Text Field",
+      "component": "FieldInput",
+      "attributes": {
+        "show": true,
+        "fixed": {
+          "type": "text"
+        },
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "wgt",
+          "wge",
+          "wlt",
+          "wle",
+          "email",
+          "float",
+          "integer",
+          "number",
+          "price",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "date",
+          "datetime",
+          "time",
+          "past",
+          "present",
+          "future",
+          "color",
+          "email",
+          "url",
+          "hex",
+          "cc",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "varchar"
+        },
+        "length": {
+          "show": true,
+          "default": 255
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "html",
+            "escaped",
+            "markdown",
+            "color",
+            "link",
+            "image",
+            "email",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "html",
+            "escaped",
+            "markdown",
+            "color",
+            "link",
+            "image",
+            "email",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "url": {
+      "method": "url",
+      "label": "URL Field",
+      "component": "FieldInput",
+      "attributes": {
+        "show": true,
+        "fixed": {
+          "type": "url"
+        },
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "url",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "varchar"
+        },
+        "length": {
+          "show": true,
+          "default": 255
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "char",
+            "link",
+            "image",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "char",
+            "link",
+            "image",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    }
+  },
+  "Editors": {
+    "code": {
+      "method": "code",
+      "label": "Code Editor",
+      "component": "FieldCodeEditor",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "wgt",
+          "wge",
+          "wlt",
+          "wle",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "text"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "char",
+            "word",
+            "html",
+            "escaped",
+            "markdown",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "char",
+            "word",
+            "html",
+            "escaped",
+            "markdown",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": false,
+          "default": false
+        },
+        "sortable": {
+          "show": false,
+          "default": false
+        }
+      },
+      "enabled": false
+    },
+    "markdown": {
+      "method": "markdown",
+      "label": "Markdown Editor",
+      "component": "FieldMarkdown",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "wgt",
+          "wge",
+          "wlt",
+          "wle",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "text"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "char",
+            "word",
+            "html",
+            "escaped",
+            "markdown",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "char",
+            "word",
+            "html",
+            "escaped",
+            "markdown",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": false,
+          "default": false
+        },
+        "sortable": {
+          "show": false,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "textarea": {
+      "method": "textarea",
+      "label": "Textarea",
+      "component": "FieldTextarea",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "wgt",
+          "wge",
+          "wlt",
+          "wle",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "text"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "char",
+            "word",
+            "html",
+            "escaped",
+            "markdown",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "char",
+            "word",
+            "html",
+            "escaped",
+            "markdown",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": false,
+          "default": false
+        },
+        "sortable": {
+          "show": false,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "wysiwyg": {
+      "method": "wysiwyg",
+      "label": "WYSIWYG Editor",
+      "component": "FieldWysiwyg",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "wgt",
+          "wge",
+          "wlt",
+          "wle",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "text"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "char",
+            "word",
+            "html",
+            "escaped",
+            "markdown",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "char",
+            "word",
+            "html",
+            "escaped",
+            "markdown",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": false,
+          "default": false
+        },
+        "sortable": {
+          "show": false,
+          "default": false
+        }
+      },
+      "enabled": false
+    }
+  },
+  "Numbers": {
+    "integer": {
+      "method": "integer",
+      "label": "Integer Field",
+      "component": "FieldNumber",
+      "attributes": {
+        "show": true,
+        "fixed": {
+          "step": 1
+        },
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "float",
+          "integer",
+          "number",
+          "price",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "date",
+          "datetime",
+          "time",
+          "past",
+          "present",
+          "future",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "number",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "int"
+        },
+        "length": {
+          "show": true
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": true,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "number": {
+      "method": "number",
+      "label": "Number Field",
+      "component": "FieldNumber",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "float",
+          "integer",
+          "number",
+          "price",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "date",
+          "datetime",
+          "time",
+          "past",
+          "present",
+          "future",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "number",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true
+        },
+        "length": {
+          "show": true
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": true,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "price": {
+      "method": "price",
+      "label": "Price Field",
+      "component": "FieldNumber",
+      "attributes": {
+        "show": true,
+        "fixed": {
+          "step": 0.01
+        },
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "float",
+          "number",
+          "price",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "date",
+          "datetime",
+          "time",
+          "past",
+          "present",
+          "future",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "number",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "float"
+        },
+        "length": {
+          "show": true
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": true,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "number",
+            "price",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "number",
+            "price",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "range": {
+      "method": "range",
+      "label": "Range Field",
+      "component": "FieldRange",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "float",
+          "integer",
+          "number",
+          "price",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "date",
+          "datetime",
+          "time",
+          "past",
+          "present",
+          "future",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "number",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true
+        },
+        "length": {
+          "show": true
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": true,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": false
+    },
+    "rating": {
+      "method": "rating",
+      "label": "Rating Field",
+      "component": "FieldRating",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "float",
+          "integer",
+          "number",
+          "price",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "number",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true
+        },
+        "length": {
+          "show": true
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": true,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": false
+    },
+    "small": {
+      "method": "small",
+      "label": "Small Field",
+      "component": "FieldNumber",
+      "attributes": {
+        "show": true,
+        "fixed": {
+          "max": 9,
+          "min": 0,
+          "step": 1
+        },
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "integer",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "number",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "int"
+        },
+        "length": {
+          "show": true,
+          "default": 1
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": true,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "number",
+            "rating",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "number",
+            "rating",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    }
+  },
+  "Dates": {
+    "date": {
+      "method": "date",
+      "label": "Date Field",
+      "component": "FieldDate",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "integer",
+          "number",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "date",
+          "datetime",
+          "time",
+          "past",
+          "present",
+          "future",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "date",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "date"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "number",
+            "date",
+            "relative",
+            "rel",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "number",
+            "date",
+            "relative",
+            "rel",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "datetime": {
+      "method": "datetime",
+      "label": "Datetime Field",
+      "component": "FieldDatetime",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "integer",
+          "number",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "date",
+          "datetime",
+          "time",
+          "past",
+          "present",
+          "future",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "date",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "datetime"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "number",
+            "date",
+            "relative",
+            "rel",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "number",
+            "date",
+            "relative",
+            "rel",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "time": {
+      "method": "time",
+      "label": "Time Field",
+      "component": "FieldTime",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "integer",
+          "number",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "date",
+          "datetime",
+          "time",
+          "past",
+          "present",
+          "future",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "date",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "time"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "number",
+            "date",
+            "relative",
+            "rel",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "number",
+            "date",
+            "relative",
+            "rel",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    }
+  },
+  "Options": {
+    "autocomplete": {
+      "method": "autocomplete",
+      "label": "Autocomplete Field",
+      "component": "FieldAutocomplete",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "wgt",
+          "wge",
+          "wlt",
+          "wle",
+          "email",
+          "float",
+          "integer",
+          "number",
+          "price",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "date",
+          "datetime",
+          "time",
+          "past",
+          "present",
+          "future",
+          "color",
+          "email",
+          "url",
+          "hex",
+          "cc",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "varchar"
+        },
+        "length": {
+          "show": true
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": true,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "html",
+            "escaped",
+            "markdown",
+            "color",
+            "link",
+            "image",
+            "email",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "html",
+            "escaped",
+            "markdown",
+            "color",
+            "link",
+            "image",
+            "email",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "checkbox": {
+      "method": "checkbox",
+      "label": "Checkbox Field",
+      "component": "FieldCheckbox",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "notempty",
+          "option",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "boolean"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "yesno",
+            "number",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "yesno",
+            "number",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "checklist": {
+      "method": "checklist",
+      "label": "Checklist",
+      "component": "FieldChecklist",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [
+        {
+          "field": "metadata",
+          "attribute": "options",
+          "attributes": {}
+        }
+      ],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "notempty",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string[]",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "json"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": false,
+          "default": false
+        },
+        "sortable": {
+          "show": false,
+          "default": false
+        }
+      },
+      "enabled": false
+    },
+    "country": {
+      "method": "country",
+      "label": "Country Field",
+      "component": "FieldCountry",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "char"
+        },
+        "length": {
+          "show": true,
+          "default": 2
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "hide",
+            "custom"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "hide",
+            "custom"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "currency": {
+      "method": "currency",
+      "label": "Currency Field",
+      "component": "FieldCurrency",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "char"
+        },
+        "length": {
+          "show": true,
+          "default": 3
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "hide",
+            "custom"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "hide",
+            "custom"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "radio": {
+      "method": "radio",
+      "label": "Radiolist Field",
+      "component": "FieldRadio",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [
+        {
+          "field": "metadata",
+          "attribute": "options",
+          "attributes": {}
+        }
+      ],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "wgt",
+          "wge",
+          "wlt",
+          "wle",
+          "email",
+          "float",
+          "integer",
+          "number",
+          "price",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "date",
+          "datetime",
+          "time",
+          "past",
+          "present",
+          "future",
+          "color",
+          "email",
+          "url",
+          "hex",
+          "cc",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true
+        },
+        "length": {
+          "show": true
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": true,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "html",
+            "escaped",
+            "markdown",
+            "color",
+            "link",
+            "image",
+            "email",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "html",
+            "escaped",
+            "markdown",
+            "color",
+            "link",
+            "image",
+            "email",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "select": {
+      "method": "select",
+      "label": "Select Field",
+      "component": "FieldSelect",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [
+        {
+          "field": "metadata",
+          "attribute": "options",
+          "attributes": {}
+        }
+      ],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "wgt",
+          "wge",
+          "wlt",
+          "wle",
+          "email",
+          "float",
+          "integer",
+          "number",
+          "price",
+          "gt",
+          "ge",
+          "lt",
+          "le",
+          "date",
+          "datetime",
+          "time",
+          "past",
+          "present",
+          "future",
+          "color",
+          "email",
+          "url",
+          "hex",
+          "cc",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true
+        },
+        "length": {
+          "show": true
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": true,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "html",
+            "escaped",
+            "markdown",
+            "color",
+            "link",
+            "image",
+            "email",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "capital",
+            "char",
+            "word",
+            "number",
+            "price",
+            "yesno",
+            "rating",
+            "date",
+            "relative",
+            "rel",
+            "html",
+            "escaped",
+            "markdown",
+            "color",
+            "link",
+            "image",
+            "email",
+            "phone",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "selectlist": {
+      "method": "selectlist",
+      "label": "Multi Select Field",
+      "component": "FieldSelectlist",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [
+        {
+          "field": "metadata",
+          "attribute": "options",
+          "attributes": {}
+        }
+      ],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "notempty",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string[]",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "json"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": false,
+          "default": false
+        },
+        "sortable": {
+          "show": false,
+          "default": false
+        }
+      },
+      "enabled": false
+    },
+    "switch": {
+      "method": "switch",
+      "label": "Switch Field",
+      "component": "FieldSwitch",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "notempty",
+          "option",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "boolean"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "yesno",
+            "number",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "yesno",
+            "number",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    }
+  },
+  "Files": {
+    "file": {
+      "method": "file",
+      "label": "File Field",
+      "component": "FieldFile",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "url",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "varchar"
+        },
+        "length": {
+          "show": true,
+          "default": 255
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "char",
+            "link",
+            "image",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "char",
+            "link",
+            "image",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "filelist": {
+      "method": "filelist",
+      "label": "Filelist Field",
+      "component": "FieldFilelist",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "notempty",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string[]",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "json"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": false,
+          "default": false
+        },
+        "sortable": {
+          "show": false,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "image": {
+      "method": "image",
+      "label": "Image Field",
+      "component": "FieldImage",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "unique",
+          "notempty",
+          "option",
+          "ne",
+          "ceq",
+          "cgt",
+          "cge",
+          "clt",
+          "cle",
+          "url",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "varchar"
+        },
+        "length": {
+          "show": true,
+          "default": 255
+        },
+        "primary": {
+          "show": true,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": true,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": true
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "char",
+            "link",
+            "image",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "lower",
+            "upper",
+            "char",
+            "link",
+            "image",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": true,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "imagelist": {
+      "method": "imagelist",
+      "label": "Imagelist Field",
+      "component": "FieldImagelist",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "notempty",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string[]",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "json"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": false,
+          "default": false
+        },
+        "sortable": {
+          "show": false,
+          "default": false
+        }
+      },
+      "enabled": true
+    }
+  },
+  "JSON": {
+    "json": {
+      "method": "json",
+      "label": "JSON Field",
+      "component": "FieldJSON",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "notempty",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "object",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "json"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "table",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "table",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": false,
+          "default": false
+        },
+        "sortable": {
+          "show": false,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "metadata": {
+      "method": "metadata",
+      "label": "Metadata Fieldset",
+      "component": "FieldMetadata",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "notempty",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "hash",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "json"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": false,
+          "default": false
+        },
+        "sortable": {
+          "show": false,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "table": {
+      "method": "table",
+      "label": "Table Fieldset",
+      "component": "FieldTable",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [
+        {
+          "field": "textlist",
+          "attribute": "columns",
+          "attributes": {
+            "label": "Add Column"
+          }
+        }
+      ],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "notempty",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "hash[]",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "json"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "table",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "table",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": false,
+          "default": false
+        },
+        "sortable": {
+          "show": false,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "taglist": {
+      "method": "taglist",
+      "label": "Taglist Field",
+      "component": "FieldTaglist",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "notempty",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string[]",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "json"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": false,
+          "default": false
+        },
+        "sortable": {
+          "show": false,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "textlist": {
+      "method": "textlist",
+      "label": "Textlist Fieldset",
+      "component": "FieldTextlist",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "notempty",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "string[]",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "json"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "space",
+            "comma",
+            "line",
+            "ol",
+            "ul",
+            "taglist",
+            "metadata",
+            "carousel",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": false,
+          "default": false
+        },
+        "sortable": {
+          "show": false,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "fieldset": {
+      "method": "fieldset",
+      "label": "Cutsom Fieldset",
+      "component": "FieldFieldset",
+      "attributes": {
+        "show": true,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [
+        {
+          "field": "text",
+          "attribute": "fieldset",
+          "attributes": {
+            "type": "text",
+            "placeholder": "Name of fieldset eg. address"
+          }
+        },
+        {
+          "field": "select",
+          "attribute": "multiple",
+          "attributes": {
+            "placeholder": "Multiple fieldsets?",
+            "options": [
+              {
+                "label": "Yes",
+                "value": 1
+              },
+              {
+                "label": "No",
+                "value": 0
+              }
+            ]
+          }
+        }
+      ],
+      "default": {
+        "show": true
+      },
+      "validation": {
+        "show": true,
+        "filter": [
+          "required",
+          "notempty",
+          "regexp"
+        ]
+      },
+      "column": {
+        "type": "object",
+        "name": {
+          "show": true
+        },
+        "label": {
+          "show": true
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "json"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "table",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "table",
+            "pretty",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": false,
+          "default": false
+        },
+        "sortable": {
+          "show": false,
+          "default": false
+        }
+      },
+      "enabled": true
+    }
+  },
+  "---------------": {
+    "active": {
+      "method": "active",
+      "label": "Active",
+      "component": false,
+      "attributes": {
+        "show": false,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": false,
+        "default": 1
+      },
+      "validation": {
+        "show": false,
+        "filter": []
+      },
+      "column": {
+        "type": "boolean",
+        "name": {
+          "show": false,
+          "default": "active"
+        },
+        "label": {
+          "show": false,
+          "default": "Active"
+        }
+      },
+      "data": {
+        "type": {
+          "show": true,
+          "default": "boolean"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": true,
+          "default": false
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "yesno",
+            "number",
+            "hide",
+            "custom",
+            "formula"
+          ],
+          "default": "hide"
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "yesno",
+            "number",
+            "hide",
+            "custom",
+            "formula"
+          ],
+          "default": "hide"
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "created": {
+      "method": "created",
+      "label": "Created",
+      "component": false,
+      "attributes": {
+        "show": false,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": false,
+        "default": "now()"
+      },
+      "validation": {
+        "show": false,
+        "filter": []
+      },
+      "column": {
+        "type": "date",
+        "name": {
+          "show": false,
+          "default": "created"
+        },
+        "label": {
+          "show": false,
+          "default": "Created"
+        }
+      },
+      "data": {
+        "type": {
+          "show": false,
+          "default": "datetime"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": false,
+          "default": true
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "char",
+            "number",
+            "date",
+            "relative",
+            "rel",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "char",
+            "number",
+            "date",
+            "relative",
+            "rel",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    },
+    "updated": {
+      "method": "updated",
+      "label": "Updated",
+      "component": false,
+      "attributes": {
+        "show": false,
+        "fixed": {},
+        "default": {}
+      },
+      "params": [],
+      "default": {
+        "show": false,
+        "default": "updated()"
+      },
+      "validation": {
+        "show": false,
+        "filter": []
+      },
+      "column": {
+        "type": "date",
+        "name": {
+          "show": false,
+          "default": "updated"
+        },
+        "label": {
+          "show": false,
+          "default": "Updated"
+        }
+      },
+      "data": {
+        "type": {
+          "show": false,
+          "default": "datetime"
+        },
+        "length": {
+          "show": false
+        },
+        "primary": {
+          "show": false,
+          "default": false
+        },
+        "required": {
+          "show": false,
+          "default": true
+        },
+        "unique": {
+          "show": false,
+          "default": false
+        },
+        "unsigned": {
+          "show": false,
+          "default": false
+        },
+        "relation": {
+          "show": false
+        }
+      },
+      "display": {
+        "list": {
+          "show": true,
+          "filter": [
+            "none",
+            "char",
+            "number",
+            "date",
+            "relative",
+            "rel",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "view": {
+          "show": true,
+          "filter": [
+            "none",
+            "char",
+            "number",
+            "date",
+            "relative",
+            "rel",
+            "hide",
+            "custom",
+            "formula"
+          ]
+        },
+        "searchable": {
+          "show": false,
+          "default": false
+        },
+        "filterable": {
+          "show": true,
+          "default": false
+        },
+        "sortable": {
+          "show": true,
+          "default": false
+        }
+      },
+      "enabled": true
+    }
+  }
+}
