@@ -10,6 +10,22 @@ import {
   formatCode
 } from '../utils';
 
+//types: string, text, string[], number, integer, 
+//       float, boolean, date, object, hash, hash[]
+const map: Record<string, string> = {
+  'string': 'string',
+  'text': 'string',
+  'string[]': 'string[]',
+  'number': 'number',
+  'integer': 'number',
+  'float': 'number',
+  'boolean': 'boolean',
+  'date': 'Date',
+  'object': 'Record<string, any>',
+  'hash': 'Record<string, string|number|boolean|null>',
+  'hash[]': 'Record<string, string|number|boolean|null>[]'
+};
+
 export default function generateModelTypes(
   project: Project|Directory, 
   schema: SchemaConfig,
@@ -42,7 +58,7 @@ export default function generateModelTypes(
     name: typeName,
     type: formatCode(`{
       ${schema.columns.map(column => (
-        `${column.name}${!isRequired(column) ? '?' : ''}: ${column.type}`
+        `${column.name}${!isRequired(column) ? '?' : ''}: ${map[column.type] || column.type}`
       )).join(',\n')}
     }`)
   });

@@ -2,8 +2,10 @@
 import type { Project, Directory } from 'ts-morph';
 import type { SchemaConfig } from 'inceptjs';
 //helpers
+import { api } from 'inceptjs/api';
 import { 
   capitalize, 
+  camelfy,
   getTypeName, 
   getTypeExtendedName,
   formatCode
@@ -15,6 +17,7 @@ export default function generateTailwindDefaultForm(
 ) {
   const path = `${schema.name}/components/DefaultForm.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
+  const fields = api.field.list();
   //import type { APIResponse, FetchStatuses, FormHandlers } from 'inceptjs';
   source.addImportDeclaration({
     isTypeOnly: true,
@@ -54,8 +57,8 @@ export default function generateTailwindDefaultForm(
   source.addImportDeclaration({
     moduleSpecifier: `./FormFields`,
     namedImports: schema.columns
-      .filter(column => column.field.method !== 'none')
-      .map(column => `${capitalize(column.name)}Field`)
+      .filter(column => fields[column.field.method].component)
+      .map(column => `${capitalize(camelfy(column.name))}Field`)
   });
   //export type DefaultFormProps
   source.addTypeAlias({
@@ -83,13 +86,13 @@ export default function generateTailwindDefaultForm(
         'form',
         { onSubmit: handlers.send },
         ${schema.columns.filter(
-          (column) => column.field.method !== 'none'
+          column => fields[column.field.method].component
         ).map((column, i) => (`
           React.createElement(
             'div',
             { style: { marginTop: '8px', position: 'relative', zIndex: ${5000 - (i + 1)} } },
             React.createElement(
-              ${capitalize(column.name)}Field,
+              ${capitalize(camelfy(column.name))}Field,
               {
                 label: _('${column.label}'),
                 error: response?.errors?.${column.name},

@@ -253,6 +253,10 @@ export const api = {
             break;
         }
       }
+
+      data.unsigned = (
+        data.type === 'int' || data.type === 'float'
+      ) ? data.unsigned: false;
     
       return data;
     },

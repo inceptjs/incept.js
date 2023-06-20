@@ -2,8 +2,10 @@
 import type { Project, Directory } from 'ts-morph';
 import type { SchemaConfig } from 'inceptjs';
 //helpers
+import { api } from 'inceptjs/api';
 import { 
   capitalize, 
+  camelfy,
   getTypeExtendedName,
   formatCode
 } from '../../../utils';
@@ -14,6 +16,7 @@ export default function generateTailwindDefaultTable(
 ) {
   const path = `${schema.name}/components/DefaultTable.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
+  const formats = api.format.list();
   //import type { FilterHandlers } from 'inceptjs';
   source.addImportDeclaration({
     isTypeOnly: true,
@@ -50,8 +53,11 @@ export default function generateTailwindDefaultTable(
   source.addImportDeclaration({
     moduleSpecifier: `./ListFormats`,
     namedImports: schema.columns
-      .filter(column => column.list.method !== 'hide')
-      .map(column => `${capitalize(column.name)}Format`)
+      .filter(column => formats[column.list.method].component 
+        || column.list.method === 'none' 
+        || column.list.method === 'escaped'
+      )
+      .map(column => `${capitalize(camelfy(column.name))}Format`)
   });
   //export type DefaultTableProps
   source.addTypeAlias({
@@ -79,7 +85,7 @@ export default function generateTailwindDefaultTable(
       return React.createElement(
         Table,
         ${schema.columns.filter(
-          (column) => column.list.method !== 'hide'
+          (column) => formats[column.list.method].component || column.list.method !== 'hide'
         ).map((column) => {
           if (column.sortable) {
             return (`
@@ -131,7 +137,7 @@ export default function generateTailwindDefaultTable(
                 Tcol,
                 { className: \`text-left \${stripe(i)}\` },
                 React.createElement(
-                  ${capitalize(column.name)}Format,
+                  ${capitalize(camelfy(column.name))}Format,
                   { value: data?.${column.name} }
                 )
               )

@@ -74,13 +74,43 @@ export function useSchemaUpsert(name?: string, redirect?: () => void) {
       });
       return false;
     }
-
     action.call({ 
       data: {
         columns: [],
-        relations: [],
-        rest: {},
-        ...input.values
+        relations: {},
+        ...input.values,
+        rest: {
+          create: {
+            method: 'post',
+            path: `/api/${input.values.name}`,
+            event: 'system-object-create',
+            body: { schema: input.values.name }
+          },
+          detail: {
+            method: 'get',
+            path: `/api/${input.values.name}/:id`,
+            event: 'system-object-detail',
+            body: { schema: input.values.name }
+          },
+          remove: {
+            method: 'delete',
+            path: `/api/${input.values.name}/:id`,
+            event: 'system-object-remove',
+            body: { schema: input.values.name }
+          },
+          search: {
+            method: 'get',
+            path: `/api/${input.values.name}`,
+            event: 'system-collection-search',
+            body: { schema: input.values.name }
+          },
+          update: {
+            method: 'put',
+            path: `/api/${input.values.name}/:id`,
+            event: 'system-object-update',
+            body: { schema: input.values.name }
+          }
+        },
       }, 
       params: name ? { name } : undefined
     }).then(response => {
@@ -96,7 +126,7 @@ export function useSchemaUpsert(name?: string, redirect?: () => void) {
       }
     });
     return false;
-  }, schema || { columns: [], relations: [], rest: {} });
+  }, schema || { columns: [], relations: {}, rest: {} });
   useEffect(() => {
     if (action.response?.error) {
       notify('error', action.response.message);

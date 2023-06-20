@@ -329,5 +329,46 @@
       "type": "1:1"
     }
   ],
-  "rest": {}
+  "rest": {
+    "create": {
+      "method": "post",
+      "path": "/api/article",
+      "event": "system-object-create",
+      "body": {
+        "schema": "article"
+      }
+    },
+    "detail": {
+      "method": "get",
+      "path": "/api/article/:id",
+      "event": "system-object-detail",
+      "body": {
+        "schema": "article"
+      }
+    },
+    "remove": {
+      "method": "delete",
+      "path": "/api/article/:id",
+      "event": "system-object-remove",
+      "body": {
+        "schema": "article"
+      }
+    },
+    "search": {
+      "method": "get",
+      "path": "/api/article",
+      "event": "system-collection-search",
+      "body": {
+        "schema": "article"
+      }
+    },
+    "update": {
+      "method": "put",
+      "path": "/api/article/:id",
+      "event": "system-object-update",
+      "body": {
+        "schema": "article"
+      }
+    }
+  }
 }

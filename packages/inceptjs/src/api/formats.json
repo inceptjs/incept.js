@@ -325,7 +325,7 @@
     "comma": {
       "method": "comma",
       "label": "Comma Separated",
-      "component": false,
+      "component": "FormatSeparated",
       "attributes": {
         "show": true,
         "fixed": {
@@ -339,7 +339,7 @@
     "line": {
       "method": "line",
       "label": "Line Separated",
-      "component": false,
+      "component": "FormatSeparated",
       "attributes": {
         "show": true,
         "fixed": {

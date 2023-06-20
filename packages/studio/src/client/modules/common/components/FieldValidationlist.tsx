@@ -37,7 +37,7 @@ const Fields: React.FC<FieldsProps<FieldValidationlistType>> = (props) => {
       input: undefined
     }),
     classNames: makeGroupClasses(classNames, {
-      row: 'mt-0.5',
+      row: 'mt-0.5 mb-2',
       button: 'flex items-center justify-center ml-0.5 dark:border-[#242931] dark:bg-[#242931]',
       method: 'py-2 border border-b0 box-border w-full bg-b5 text-t1 outline-none',
       input: 'mt-0.5 bg-b5 text-t1 border-b1 outline-none'
@@ -54,6 +54,7 @@ const Fields: React.FC<FieldsProps<FieldValidationlistType>> = (props) => {
       <div className="flex items-center">
         <select 
           style={map.styles.method} 
+          defaultValue={values?.[index]?.method || undefined}
           className={map.classNames.method} 
           onChange={e => handlers.method(e.target.value as ValidatorMethod)}
         >
@@ -83,34 +84,34 @@ const Fields: React.FC<FieldsProps<FieldValidationlistType>> = (props) => {
         <div>
           {selected.params.map((param, i) => param.field === 'text'
           ? (
-            <Control key={i} className="mt-2">
+            <Control key={i} className="mt-0.5">
               <FieldInput 
                 {...(param.attributes || {})}
                 className="outline-none dark:bg-b5 dark:text-t1 dark:border-b1 dark:placeholder-gray-500"
-                defaultValue={values ? values[index]?.parameters[i]: undefined}
+                defaultValue={values?.[index]?.parameters[i] || undefined}
                 onUpdate={value => handlers.parameters(i, value)} 
               />
             </Control>
           ) : param.field === 'number' ? (
-            <Control key={i} className="mt-2">
+            <Control key={i} className="mt-0.5">
               <FieldInput
                 {...(param.attributes || {})}
                 type="number" 
                 className="outline-none dark:bg-b5 dark:text-t1 dark:border-b1 dark:placeholder-gray-500"
-                defaultValue={values ? values[index]?.parameters[i]: undefined}
+                defaultValue={values?.[index]?.parameters[i] || undefined}
                 onUpdate={value => handlers.parameters(i, value)} 
               />
             </Control>
           ) : param.field === 'textlist' ? (
-            <Control key={i} className="mt-2">
+            <Control key={i} className="mt-0.5">
               <FieldTextlist
                 {...(param.attributes || {})}
-                className="box-border w-full dark:border-b0 darK:bg-b5 dark:text-t1"
+                className="box-border w-full dark:border-0 dark:bg-b2 dark:text-t1"
                 classNames={{
                   value: 'outline-none border dark:border-b0 dark:bg-b5 dark:text-t1 dark:placeholder-gray-500',
                   button: 'border-0 dark:bg-b2'
                 }}
-                value={values ? values[index]?.parameters[i]: undefined}
+                value={values?.[index]?.parameters[i] || undefined}
                 onUpdate={value => handlers.parameters(i, value)} 
               />
             </Control>
@@ -118,9 +119,9 @@ const Fields: React.FC<FieldsProps<FieldValidationlistType>> = (props) => {
         </div>
       )}
       <FieldInput 
-        className="outline-none dark:bg-b5 dark:text-t1 dark:border-b1 dark:placeholder-gray-500"
+        className="mt-0.5 outline-none dark:bg-b5 dark:text-t1 dark:border-b1 dark:placeholder-gray-500"
         placeholder="Error Message"
-        defaultValue={values ? values[index]?.message: undefined}
+        defaultValue={values?.[index]?.message || undefined}
         onUpdate={value => handlers.message(value)} 
         required 
       />

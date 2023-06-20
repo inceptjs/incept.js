@@ -108,7 +108,7 @@ const ColumnFormField: React.FC<{
             type={settings?.method}
             label={t`Add Validation` as string}
             value={data.input?.validation || []}
-            className="mt-0.5 py-2 border border-b0 box-border w-full bg-b5 text-t1 outline-none"
+            className="mt-0.5 py-2 border-0 box-border w-full bg-b2 text-t1 outline-none"
             onUpdate={validation => handlers.change('validation', validation)}
           />
         </Control>
@@ -193,7 +193,7 @@ const ColumnFormDisplay: React.FC<{
                 label={t`Searchable` as string}
                 className="bg-b5 text-t1 border-b1 outline-none"
                 checked={!!data?.searchable} 
-                onUpdate={_ => change('searchable', !data?.searchable)}
+                onUpdate={(_, on) => change('searchable', on)}
               />
             </Control>
           )}
@@ -203,7 +203,7 @@ const ColumnFormDisplay: React.FC<{
                 label={t`Filterable` as string}
                 className="bg-b5 text-t1 border-b1 outline-none"
                 checked={data?.filterable} 
-                onUpdate={_ => change('filterable', !data?.filterable)}
+                onUpdate={(_, on) => change('filterable', on)}
               />
             </Control>
           )}
@@ -213,7 +213,7 @@ const ColumnFormDisplay: React.FC<{
                 label={t`Sortable` as string}
                 className="bg-b5 text-t1 border-b1 outline-none"
                 checked={!!data?.sortable} 
-                onUpdate={_ => change('sortable', !data?.sortable)}
+                onUpdate={(_, on) => change('sortable', on)}
               />
             </Control>
           )}
@@ -280,7 +280,7 @@ const ColumnFormData: React.FC<{
                   label={t`Unsigned` as string}
                   className="bg-b5 text-t1 border-b1 outline-none"
                   checked={data.dataUnsigned} 
-                  onUpdate={_ => handlers.dataUnsigned(!data.dataUnsigned)}
+                  onUpdate={(_, on) => handlers.dataUnsigned(on)}
                 />
               </Control>
             )}
@@ -290,9 +290,9 @@ const ColumnFormData: React.FC<{
                   label={t`Primary` as string}
                   className="bg-b5 text-t1 border-b1 outline-none"
                   checked={data.input?.data?.primary} 
-                  onUpdate={value => handlers.change(
+                  onUpdate={(_, on) => handlers.change(
                     ['data', 'primary'], 
-                    !data.input?.data?.primary
+                    on
                   )}
                 />
               </Control>
@@ -315,8 +315,7 @@ const ColumnFormData: React.FC<{
             />
           </div>
         </Control>
-      )}
-      
+      )} 
     </section>
   );
 };

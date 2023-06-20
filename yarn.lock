@@ -3145,10 +3145,19 @@ fraction.js@^4.2.0:
   resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.2.0.tgz#448e5109a313a3527f5a3ab2119ec4cf0e0e2950"
   integrity sha512-MhLuK+2gUcnZe8ZHlaaINnQLl0xRIGRfcGk2yl8xoQAfHrSsL3rYu6FCmBdkdbhc9EPlwyGHewaRsvwRMJtAlA==
 
-frui@0.0.13:
-  version "0.0.13"
-  resolved "https://registry.yarnpkg.com/frui/-/frui-0.0.13.tgz#b3eb9a659877cd16bbec57408df1fc53b966c09c"
-  integrity sha512-KgUR11wMxRQ3/Ut0QXfJUBRGaNVLzqmnxGbA4sZDS48t/OehroZYqLUIalhmrrOEFw5mQ74RMow86w7ktGKgVg==
+frui@0.0.15:
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/frui/-/frui-0.0.15.tgz#66faab8aa30f7dac1c2e985926aa83cc235803a5"
+  integrity sha512-0osUgdBKh0zWdiZ7OpvYYHqXpQGyjQqW/Cf0VfwOe+u5Hb4CoMI6Ep29BhkmO1kAn38aknrk7EOR1ans7ZiLNg==
+  dependencies:
+    inputmask "5.0.8"
+    markdown-to-jsx "7.2.0"
+    moment "2.29.4"
+
+frui@0.0.16:
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/frui/-/frui-0.0.16.tgz#779e322cdb223e4064f97cbc9a6caa53ac1ba036"
+  integrity sha512-HHypx9amvFsjJmC8abZrzk+DDgvxI1HjEOzLafOJHAWuVXjDJJhcfFd5hZ3kkQm5zYmyQMhGMBSkuY99fiPFIw==
   dependencies:
     inputmask "5.0.8"
     markdown-to-jsx "7.2.0"

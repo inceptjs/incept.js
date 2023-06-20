@@ -4,6 +4,7 @@ import type { SchemaConfig } from 'inceptjs';
 //helpers
 import { 
   capitalize, 
+  camelfy,
   getTypeExtendedName,
   formatCode
 } from '../../../utils';
@@ -51,7 +52,7 @@ export default function generateTailwindDefaultFilters(
     moduleSpecifier: `./FilterFields`,
     namedImports: schema.columns
       .filter(column => column.filterable && column.field.method !== 'none')
-      .map(column => `${capitalize(column.name)}Filter`)
+      .map(column => `${capitalize(camelfy(column.name))}Filter`)
   });
   //export type DefaultFiltersProps
   source.addTypeAlias({
@@ -85,7 +86,7 @@ export default function generateTailwindDefaultFilters(
             'div',
             { style: { marginTop: '8px', position: 'relative', zIndex: ${5000 - (i + 1)} } },
             React.createElement(
-              ${capitalize(column.name)}Filter,
+              ${capitalize(camelfy(column.name))}Filter,
               {
                 label: _('By ${column.label}'),
                 error: response?.errors?.${column.name},

@@ -7,11 +7,14 @@ import { useState, useEffect } from 'react';
 import { useLanguage } from 'r22n';
 import { useForm } from 'inceptjs';
 //helpers
-import { slugify } from 'frui/utils';
+import { slugify, camelfy } from 'frui/utils';
 import { api } from 'inceptjs/api';
+import config from '.incept/server/config.json';
 import useMobile from '../../app/layouts/panel/hooks/useMobile';
 
 import notify from '../../common/components/notify';
+
+const lower = (str: string) => str.charAt(0).toLowerCase() + str.slice(1)
 
 export default function useColumn(
   mode: 'create'|'update',
@@ -34,7 +37,6 @@ export default function useColumn(
       });
       return false;
     }
-
     //check if the column already exists
     const exists = columns.find(column => column.name === input.values.name);
     if (mode === 'create' && exists) {
@@ -89,12 +91,15 @@ export default function useColumn(
   const [ dataType, setDataType ] = useState('');
   const [ dataLength, setDataLength ] = useState<number|number[]>(0);
   const [ dataUnsigned, setDataUnsigned ] = useState(false);
-
   //variables
   const originalName = defaultValue?.name;
   const handlers = {
     ...form,
-    slug: (value: string) => setSlug(slugify(value, true, false)),
+    slug: (value: string) => setSlug(
+      config.schema.casing === 'camel' 
+        ? lower(camelfy(value))
+        : slugify(value, true, false)
+    ),
     dataType: setDataType,
     dataLength: setDataLength,
     dataUnsigned: setDataUnsigned,

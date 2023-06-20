@@ -2,8 +2,10 @@
 import type { Project, Directory } from 'ts-morph';
 import type { SchemaConfig } from 'inceptjs';
 //helpers
+import { api } from 'inceptjs/api';
 import { 
-  capitalize, 
+  capitalize,
+  camelfy, 
   getTypeExtendedName,
   formatCode
 } from '../../../utils';
@@ -14,6 +16,7 @@ export default function generateTailwindDefaultView(
 ) {
   const path = `${schema.name}/components/DefaultView.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
+  const formats = api.format.list();
   //import type { ModelTypeExtended } from '../types';
   source.addImportDeclaration({
     isTypeOnly: true,
@@ -44,8 +47,11 @@ export default function generateTailwindDefaultView(
   source.addImportDeclaration({
     moduleSpecifier: `./ViewFormats`,
     namedImports: schema.columns
-      .filter(column => column.view.method !== 'hide')
-      .map(column => `${capitalize(column.name)}Format`)
+      .filter(column => formats[column.view.method].component
+        || column.view.method === 'none' 
+        || column.view.method === 'escaped'
+      )
+      .map(column => `${capitalize(camelfy(column.name))}Format`)
   });
   //export type DefaultViewProps
   source.addTypeAlias({
@@ -71,7 +77,9 @@ export default function generateTailwindDefaultView(
       return React.createElement(
         Table,
         ${schema.columns.filter(
-          (column) => column.view.method !== 'hide'
+          (column) => formats[column.view.method].component 
+            || column.view.method === 'none' 
+            || column.view.method === 'escaped'
         ).map((column) => (`
           React.createElement(
             Trow,
@@ -84,7 +92,7 @@ export default function generateTailwindDefaultView(
               Tcol,
               { style: { textAlign: 'left', backgroundColor: stripe() } },
               React.createElement(
-                ${capitalize(column.name)}Format,
+                ${capitalize(camelfy(column.name))}Format,
                 { value: data?.${column.name} }
               )
             )

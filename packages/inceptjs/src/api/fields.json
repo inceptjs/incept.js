@@ -82,10 +82,10 @@
     "color": {
       "method": "color",
       "label": "Color Field",
-      "component": "FieldColor",
+      "component": "FieldInput",
       "attributes": {
         "show": false,
-        "fixed": {},
+        "fixed": { "type": "color" },
         "default": {}
       },
       "params": [],
@@ -126,7 +126,7 @@
         },
         "length": {
           "show": true,
-          "default": 6
+          "default": 7
         },
         "primary": {
           "show": true,
@@ -666,7 +666,6 @@
           "ge",
           "lt",
           "le",
-          "cc",
           "regexp"
         ]
       },
@@ -3416,7 +3415,9 @@
         {
           "field": "metadata",
           "attribute": "options",
-          "attributes": {}
+          "attributes": {
+            "label": "Add Option"
+          }
         }
       ],
       "default": {
@@ -3585,7 +3586,9 @@
         {
           "field": "metadata",
           "attribute": "options",
-          "attributes": {}
+          "attributes": {
+            "label": "Add Option"
+          }
         }
       ],
       "default": {

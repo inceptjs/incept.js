@@ -2,6 +2,7 @@
 import type { Project, Directory } from 'ts-morph';
 import type { SchemaConfig } from 'inceptjs';
 //helpers
+import { api } from 'inceptjs/api';
 import { 
   capitalize, 
   getTypeExtendedName,
@@ -14,6 +15,7 @@ export default function generateTailwindDefaultTable(
 ) {
   const path = `${schema.name}/components/DefaultTable.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
+  const formats = api.format.list();
   //import type { FilterHandlers } from 'inceptjs';
   source.addImportDeclaration({
     isTypeOnly: true,
@@ -50,7 +52,10 @@ export default function generateTailwindDefaultTable(
   source.addImportDeclaration({
     moduleSpecifier: `./ListFormats`,
     namedImports: schema.columns
-      .filter(column => column.list.method !== 'hide')
+      .filter(column => formats[column.list.method].component 
+        || column.list.method === 'none' 
+        || column.list.method === 'escaped'
+      )
       .map(column => `${capitalize(column.name)}Format`)
   });
   //export type DefaultTableProps
@@ -79,7 +84,7 @@ export default function generateTailwindDefaultTable(
       return React.createElement(
         Table,
         ${schema.columns.filter(
-          (column) => column.list.method !== 'hide'
+          (column) => formats[column.list.method].component || column.list.method !== 'hide'
         ).map((column) => {
           if (column.sortable) {
             return (`

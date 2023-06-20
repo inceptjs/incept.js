@@ -3,8 +3,8 @@ import type { Project, Directory } from 'ts-morph';
 import type { SchemaConfig } from 'inceptjs';
 //helpers
 import { VariableDeclarationKind } from 'ts-morph';
-import { formats } from 'frui/data/tokens';
-import { capitalize, formatCode } from '../../utils';
+import { api } from 'inceptjs/api';
+import { capitalize, camelfy, formatCode } from '../../utils';
 
 export default function generateViewFormats(
   project: Project|Directory, 
@@ -13,12 +13,13 @@ export default function generateViewFormats(
 ) {
   const path = `${schema.name}/components/ViewFormats.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
+  const formats = api.format.list();
   //import type { FieldSelectProps, FieldInputProps } from 'frui'
   source.addImportDeclaration({
     isTypeOnly: true,
     moduleSpecifier: 'frui',
     namedImports: schema.columns
-    .filter(column => !!formats[column.view.method])
+    .filter(column => !!formats[column.view.method].component)
     .map(column => `${formats[column.view.method].component}Props`)
     .filter((value, index, array) => array.indexOf(value) === index)
   });
@@ -28,15 +29,17 @@ export default function generateViewFormats(
     moduleSpecifier: 'react'
   });
   schema.columns
-    .filter(column => !!formats[column.view.method])
+    .filter(column => !!formats[column.view.method].component)
     .map(column => formats[column.view.method].component)
     .filter((value, index, array) => array.indexOf(value) === index)
-    .forEach((defaultImport) => {
-      //import Control from 'frui/tailwind/Control';
-      source.addImportDeclaration({ 
-        defaultImport, 
-        moduleSpecifier: `frui/${ui}/${defaultImport}` 
-      });
+    .forEach(defaultImport => {
+      if (defaultImport) {
+        //import FieldInput from 'frui/tailwind/FieldInput';
+        source.addImportDeclaration({ 
+          defaultImport, 
+          moduleSpecifier: `frui/${ui}/${defaultImport}` 
+        });
+      }
     });
   //export type FormatComponentProps
   source.addTypeAlias({
@@ -46,16 +49,19 @@ export default function generateViewFormats(
   });
   //export NameFormat: (props: FormatComponentProps) => React.ReactElement
   schema.columns.filter(
-    (column) => !!formats[column.view.method] || column.view.method === 'none'
+    (column) => !!formats[column.view.method].component 
+      || column.view.method === 'none' 
+      || column.view.method === 'escaped'
   ).forEach((column) => {
     source.addFunction({
       isExported: true,
-      name: `${capitalize(column.name)}Format`,
+      name: `${capitalize(camelfy(column.name))}Format`,
       parameters: [
         { name: 'props', type: 'FormatComponentProps' }
       ],
       returnType: 'React.ReactElement',
-      statements: column.view.method === 'none' ? formatCode(`
+      statements: column.view.method === 'none' 
+        || column.view.method === 'escaped' ? formatCode(`
         return props.value;
       `) : formatCode(`
         const { value, ...others } = props;
@@ -78,8 +84,11 @@ export default function generateViewFormats(
         name: 'ViewFormats',
         initializer: formatCode(`{
           ${schema.columns
-            .filter((column) => !!formats[column.view.method] || column.view.method === 'none')
-            .map((column) => `${capitalize(column.name)}Format`)
+            .filter((column) => !!formats[column.view.method].component 
+              || column.view.method === 'none' 
+              || column.view.method === 'escaped'
+            )
+            .map((column) => `${capitalize(camelfy(column.name))}Format`)
             .join(',\n')}
         }`),
     }]

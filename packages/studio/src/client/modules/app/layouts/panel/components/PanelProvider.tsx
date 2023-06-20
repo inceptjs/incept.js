@@ -87,10 +87,15 @@ const PanelProvider: React.FC<PanelProviderProps> = (props) => {
           update(settings => ({ 
             ...settings, 
             mobile: false, 
-            level: 0
+            level: 0.5
           })); 
           setTimeout(() => {
             mobile.current.frames.pop();
+            update(settings => ({ 
+              ...settings, 
+              mobile: false, 
+              level: 0
+            })); 
           }, 200)
         }
       },

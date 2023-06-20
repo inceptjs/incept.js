@@ -97,11 +97,11 @@ const FieldSelectField: React.FC<{
             <Control key={i} className="mt-0.5">
               <FieldMetadata
                 {...(param.attributes || {})}
-                className="box-border w-full dark:border-b0 darK:bg-b5 dark:text-t1"
+                className="box-border w-full dark:border-0 darK:bg-b2 dark:text-t1"
                 classNames={{
                   name: 'outline-none border dark:border-b0 dark:bg-b5 dark:text-t1 dark:placeholder-gray-500',
                   value: 'outline-none border dark:border-b0 dark:bg-b5 dark:text-t1 dark:placeholder-gray-500',
-                  button: 'border-0 dark:bg-b2'
+                  button: 'dark:border-0 dark:bg-b2'
                 }}
                 value={value?.attributes[param.attribute]} 
                 onUpdate={value => handlers.parameters(param.attribute, Object.fromEntries(value))} 
@@ -111,7 +111,7 @@ const FieldSelectField: React.FC<{
             <Control key={i} className="mt-0.5">
               <FieldTextlist
                 {...(param.attributes || {})}
-                className="box-border w-full dark:border-b0 darK:bg-b5 dark:text-t1"
+                className="box-border w-full dark:border-0 darK:bg-b2 dark:text-t1"
                 classNames={{
                   value: 'outline-none border dark:border-b0 dark:bg-b5 dark:text-t1 dark:placeholder-gray-500',
                   button: 'border-0 dark:bg-b2'
@@ -127,7 +127,7 @@ const FieldSelectField: React.FC<{
         <Control className="mt-1">
           <FieldMetadata 
             label={t`Add Attribute` as string}
-            className="box-border w-full dark:border-b0 darK:bg-b5 dark:text-t1"
+            className="box-border w-full dark:border-0 dark:bg-b2 dark:text-t1"
             classNames={{
               name: 'outline-none border dark:border-b0 dark:bg-b5 dark:text-t1 dark:placeholder-gray-500',
               value: 'outline-none border dark:border-b0 dark:bg-b5 dark:text-t1 dark:placeholder-gray-500',

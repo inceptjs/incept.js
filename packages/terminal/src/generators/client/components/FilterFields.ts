@@ -3,8 +3,8 @@ import type { Project, Directory } from 'ts-morph';
 import type { SchemaConfig, SchemaColumn } from 'inceptjs';
 //helpers
 import { VariableDeclarationKind } from 'ts-morph';
-import { fields } from 'frui/data/tokens';
-import { capitalize, formatCode } from '../../utils';
+import { api } from 'inceptjs/api';
+import { capitalize, camelfy, formatCode } from '../../utils';
 
 const isRangeField = (column: SchemaColumn) => [
   'number', 
@@ -24,12 +24,13 @@ export default function generateFilterFields(
 ) {
   const path = `${schema.name}/components/FilterFields.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
+  const fields = api.field.list();
   //import type { FieldSelectProps, FieldInputProps } from 'frui'
   source.addImportDeclaration({
     isTypeOnly: true,
     moduleSpecifier: 'frui',
     namedImports: schema.columns
-    .filter(column => column.filterable && !!fields[column.field.method])
+    .filter(column => column.filterable && !!fields[column.field.method].component)
     .map(column => `${fields[column.field.method].component}Props`)
     .filter((value, index, array) => array.indexOf(value) === index)
   });
@@ -44,15 +45,17 @@ export default function generateFilterFields(
     moduleSpecifier: `frui/${ui}/Control`
   });
   schema.columns
-    .filter(column => column.filterable && !!fields[column.field.method])
+    .filter(column => column.filterable && !!fields[column.field.method].component)
     .map(column => fields[column.field.method].component)
     .filter((value, index, array) => array.indexOf(value) === index)
-    .forEach((defaultImport) => {
-      //import FieldInput from 'frui/tailwind/FieldInput';
-      source.addImportDeclaration({ 
-        defaultImport, 
-        moduleSpecifier: `frui/${ui}/${defaultImport}` 
-      });
+    .forEach(defaultImport => {
+      if (defaultImport) {
+        //import FieldInput from 'frui/tailwind/FieldInput';
+        source.addImportDeclaration({ 
+          defaultImport, 
+          moduleSpecifier: `frui/${ui}/${defaultImport}` 
+        });
+      }
     });
 
   //export type FilterComponentProps
@@ -71,7 +74,7 @@ export default function generateFilterFields(
   ).forEach((column) => {
     source.addFunction({
       isExported: true,
-      name: `${capitalize(column.name)}Filter`,
+      name: `${capitalize(camelfy(column.name))}Filter`,
       parameters: [
         { name: 'props', type: 'FilterComponentProps' }
       ],
@@ -84,10 +87,10 @@ export default function generateFilterFields(
         );
         attributes.error = Boolean(error);
         const minAttributes = Object.assign({}, attributes, {
-          onUpdate: value => filter({'filter[${column.name}][0]': value})
+          onUpdate: (value: string|number|Date) => filter({'filter[${column.name}][0]': value})
         });
         const maxAttributes = Object.assign({}, attributes, {
-          onUpdate: value => filter({'filter[${column.name}][1]': value})
+          onUpdate: (value: string|number|Date) => filter({'filter[${column.name}][1]': value})
         });
         return React.createElement(
           Control,
@@ -128,7 +131,7 @@ export default function generateFilterFields(
         initializer: formatCode(`{
           ${schema.columns
             .filter((column) => column.filterable && !!fields[column.field.method])
-            .map((column) => `${capitalize(column.name)}Filter`)
+            .map((column) => `${capitalize(camelfy(column.name))}Filter`)
             .join(',\n')}
         }`),
     }]
