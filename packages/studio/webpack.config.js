@@ -43,7 +43,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['.css', '.tsx', '.ts', '.js', '.jsx'],
+    extensions: ['.css', '.tsx', '.ts', '.js', '.jsx']
   },
   plugins: [
     dev && new webpack.HotModuleReplacementPlugin(),
@@ -58,5 +58,8 @@ module.exports = {
   ].filter(Boolean),
   devServer: {
     hot: true,
+    historyApiFallback: {
+      index: '/'
+    }
   }
 };

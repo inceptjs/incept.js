@@ -10,6 +10,8 @@ const compiler = webpack(config);
 
 const dev = webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
+  //serverSideRender: true,
+  //writeToDisk: true
 });
 const hot = webpackHotMiddleware(compiler, {
   log: false,

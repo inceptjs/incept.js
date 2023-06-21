@@ -9,6 +9,7 @@ import Framework from './types/Framework';
 import Request from './types/Request';
 import Response from './types/Response';
 import Schema from './types/Schema';
+import Fieldset from './types/Fieldset';
 import Exception from './types/Exception';
 
 import validators from './validators';
@@ -21,6 +22,7 @@ export {
   useForm,
   useStripe,
   Schema, 
+  Fieldset,
   Router, 
   Route, 
   Framework, 

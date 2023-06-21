@@ -1,0 +1,98 @@
+{
+  "name": "address",
+  "singular": "Address",
+  "plural": "Addresses",
+  "icon": "fas fa-map-marker-alt",
+  "columns": [
+    {
+      "type": "string",
+      "name": "street",
+      "label": "Street",
+      "field": {
+        "method": "text",
+        "attributes": {}
+      },
+      "validation": [
+        {
+          "method": "required",
+          "parameters": [],
+          "message": "Street is required"
+        }
+      ],
+      "list": {
+        "method": "none",
+        "attributes": {}
+      },
+      "view": {
+        "method": "none",
+        "attributes": {}
+      }
+    },
+    {
+      "type": "string",
+      "name": "city",
+      "label": "City",
+      "field": {
+        "method": "text",
+        "attributes": {}
+      },
+      "validation": [],
+      "list": {
+        "method": "none",
+        "attributes": {}
+      },
+      "view": {
+        "method": "none",
+        "attributes": {}
+      }
+    },
+    {
+      "type": "string",
+      "name": "country",
+      "label": "Country",
+      "field": {
+        "method": "country",
+        "attributes": {}
+      },
+      "validation": [
+        {
+          "method": "required",
+          "parameters": [],
+          "message": "Country is required"
+        }
+      ],
+      "list": {
+        "method": "none",
+        "attributes": {}
+      },
+      "view": {
+        "method": "none",
+        "attributes": {}
+      }
+    },
+    {
+      "type": "string",
+      "name": "postal",
+      "label": "Postal",
+      "field": {
+        "method": "text",
+        "attributes": {}
+      },
+      "validation": [
+        {
+          "method": "required",
+          "parameters": [],
+          "message": "Postal is required"
+        }
+      ],
+      "list": {
+        "method": "none",
+        "attributes": {}
+      },
+      "view": {
+        "method": "none",
+        "attributes": {}
+      }
+    }
+  ]
+}

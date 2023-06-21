@@ -15,7 +15,7 @@
   "scripts": {
     "start": "node ./build/server/index.js",
     "build": "tsc && cross-env NODE_ENV=\"production\" webpack --config ./webpack.config.js",
-    "dev": "cross-env NODE_ENV=\"development\" nodemon --ignore ./src/client/ ./src/server/index.ts"
+    "dev": "cross-env NODE_ENV=\"development\" nodemon --ignore ./src/client/ --ignore ./build/ ./src/server/index.ts"
   },
   "engines": {
     "node": ">=16.20.0"

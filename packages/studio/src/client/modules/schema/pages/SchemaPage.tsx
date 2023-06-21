@@ -88,7 +88,7 @@ const SchemaSearchPage = () => {
       </div>
       <div className="flex-grow overflow-auto">
         <Table>
-          <Thead className="bg-b3 w-3">&nbsp;</Thead>
+          <Thead className="bg-b3 w-3" />
           <Thead className="py-4 text-sm font-semibold text-left bg-b3 text-t1 w-full">
             {t`Schema`}
           </Thead>
@@ -109,7 +109,7 @@ const SchemaSearchPage = () => {
                 const schema = new search.Schema(config.name);
                 return (
                   <Trow key={`${i}-${j}`}>
-                    <Tcol className={`py-4 ${stripe(j)}`}>&nbsp;</Tcol>
+                    <Tcol className={`py-4 ${stripe(j)}`} />
                     <Tcol className={`py-4 text-left text-sm text-t1 ${stripe(j)}`}>
                       <a onClick={() => viewUpdate(config.name)} className="text-t2 cursor-pointer">
                         <i className={`fas fa-fw fa-${schema.icon}`} />

@@ -4,7 +4,7 @@ import { ModalProvider } from '../../../common/components/modal';
 //hooks
 import { useEffect } from 'react';
 //others
-import { unload } from '../../../common/components/global/notify';
+import { unload } from '../../../common/components/notify';
 
 const LayoutBlankPage: React.FC<{
   head?: React.FC,

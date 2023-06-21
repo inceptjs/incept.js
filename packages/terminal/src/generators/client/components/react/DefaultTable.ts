@@ -5,6 +5,7 @@ import type { SchemaConfig } from 'inceptjs';
 import { api } from 'inceptjs/api';
 import { 
   capitalize, 
+  camelfy,
   getTypeExtendedName,
   formatCode
 } from '../../../utils';
@@ -56,7 +57,7 @@ export default function generateTailwindDefaultTable(
         || column.list.method === 'none' 
         || column.list.method === 'escaped'
       )
-      .map(column => `${capitalize(column.name)}Format`)
+      .map(column => `${capitalize(camelfy(column.name))}Format`)
   });
   //export type DefaultTableProps
   source.addTypeAlias({
@@ -136,7 +137,7 @@ export default function generateTailwindDefaultTable(
                 Tcol,
                 { style: { textAlign: 'left', backgroundColor: stripe(i) } },
                 React.createElement(
-                  ${capitalize(column.name)}Format,
+                  ${capitalize(camelfy(column.name))}Format,
                   { value: data?.${column.name} }
                 )
               )

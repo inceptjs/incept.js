@@ -12,6 +12,7 @@ import PanelLayout from './layouts/panel/components/PanelLayout';
 import ErrorPage from './500';
 //pages
 const SchemaPage = React.lazy(() => import('../schema/pages/SchemaPage'));
+const FieldsetPage = React.lazy(() => import('../fieldset/pages/FieldsetPage'));
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,14 @@ const router = createBrowserRouter([
         element: (
           <React.Suspense fallback={<Loader />}>
             <SchemaPage />
+          </React.Suspense>
+        )
+      },
+      {
+        path: '/fieldset',
+        element: (
+          <React.Suspense fallback={<Loader />}>
+            <FieldsetPage />
           </React.Suspense>
         )
       }

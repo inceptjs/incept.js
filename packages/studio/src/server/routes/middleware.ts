@@ -53,4 +53,14 @@ export default function boot(ctx: Framework) {
     //dont allow any other middleware to run after this
     return false;
   });
+
+  //public asset folder
+  ctx.on('response', (req, res) => {
+    //if there is already a body
+    if (res.sent || res.body) {
+      return;
+    }
+    res.setStatus(404, 'Not Found');
+    res.json({ error: true, message: 'Not found' });
+  });
 };
