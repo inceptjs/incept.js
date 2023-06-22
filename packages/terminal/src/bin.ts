@@ -17,13 +17,18 @@ if (!fs.existsSync(server)) {
   //get the latest config from the project folder
   const config = Loader.config();
   //load more bootstrap by simply adding to the plugins
-  config.plugins = [
+  config.plugins = [ ...config.plugins ];
+  [
     `${server}/loaders/schema`,
     `${server}/loaders/error`,
     `${server}/loaders/object`,
-    `${server}/loaders/collection`,
-    ...config.plugins
-  ];
+    `${server}/loaders/collection`
+  ].forEach(loader => {
+    if (fs.existsSync(`${loader}.js`)) {
+      config.plugins.push(loader);
+    }
+  });
+
   //the app in server ignores the config because 
   //the plugins are hard coded in the app file
   //we should recreate the app manually instead

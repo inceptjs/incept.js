@@ -17,6 +17,11 @@ export default function generateTailwindDefaultView(
   const path = `${schema.name}/components/DefaultView.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
   const formats = api.format.list();
+  const columns = schema.columns.filter(
+    column => formats[column.view.method].component
+      || column.view.method === 'none' 
+      || column.view.method === 'escaped'
+  );
   //import type { ModelTypeExtended } from '../types';
   source.addImportDeclaration({
     isTypeOnly: true,
@@ -43,16 +48,15 @@ export default function generateTailwindDefaultView(
     moduleSpecifier: 'frui/react/Table',
     namedImports: [ 'Table', 'Trow', 'Tcol' ]
   });
-  //import { RoleFormat, ActiveFormat, ... } from './ListFormats';
-  source.addImportDeclaration({
-    moduleSpecifier: `./ViewFormats`,
-    namedImports: schema.columns
-      .filter(column => formats[column.view.method].component
-        || column.view.method === 'none' 
-        || column.view.method === 'escaped'
+  if (columns.length) {
+    //import { RoleFormat, ActiveFormat, ... } from './ListFormats';
+    source.addImportDeclaration({
+      moduleSpecifier: `./ViewFormats`,
+      namedImports: columns.map(
+        column => `${capitalize(camelfy(column.name))}Format`
       )
-      .map(column => `${capitalize(camelfy(column.name))}Format`)
-  });
+    });
+  }
   //export type DefaultViewProps
   source.addTypeAlias({
     isExported: true,
@@ -76,11 +80,7 @@ export default function generateTailwindDefaultView(
       const stripe = useStripe(stripes[0], stripes[1]);
       return React.createElement(
         Table,
-        ${schema.columns.filter(
-          (column) => formats[column.view.method].component 
-            || column.view.method === 'none' 
-            || column.view.method === 'escaped'
-        ).map((column) => (`
+        ${columns.map((column) => (`
           React.createElement(
             Trow,
             React.createElement(

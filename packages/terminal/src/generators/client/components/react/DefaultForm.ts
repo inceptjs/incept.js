@@ -18,6 +18,9 @@ export default function generateTailwindDefaultForm(
   const path = `${schema.name}/components/DefaultForm.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
   const fields = api.field.list();
+  const columns = schema.columns.filter(
+    column => !!fields[column.field.method].component
+  );
   //import type { APIResponse, FetchStatuses, FormHandlers } from 'inceptjs';
   source.addImportDeclaration({
     isTypeOnly: true,
@@ -53,13 +56,15 @@ export default function generateTailwindDefaultForm(
     defaultImport: 'Button',
     moduleSpecifier: 'frui/react/Button'
   });
-  //import { RoleField, ActiveField, ... } from './FormFields';
-  source.addImportDeclaration({
-    moduleSpecifier: `./FormFields`,
-    namedImports: schema.columns
-      .filter(column => fields[column.field.method].component)
-      .map(column => `${capitalize(camelfy(column.name))}Field`)
-  });
+  if (columns.length) {
+    //import { RoleField, ActiveField, ... } from './FormFields';
+    source.addImportDeclaration({
+      moduleSpecifier: `./FormFields`,
+      namedImports: columns.map(
+        column => `${capitalize(camelfy(column.name))}Field`
+      )
+    });
+  }
   //export type DefaultFormProps
   source.addTypeAlias({
     isExported: true,
@@ -85,9 +90,7 @@ export default function generateTailwindDefaultForm(
       return React.createElement(
         'form',
         { onSubmit: handlers.send },
-        ${schema.columns.filter(
-          column => fields[column.field.method].component
-        ).map((column, i) => (`
+        ${columns.map((column, i) => (`
           React.createElement(
             'div',
             { style: { marginTop: '8px', position: 'relative', zIndex: ${5000 - (i + 1)} } },

@@ -267,7 +267,7 @@ const SchemaFormFields: React.FC<{
         <table className="border-spacing-0 w-full">
           <thead>
             <tr>
-              <th className="p-2 border-t border-black bg-b1 w-3">&nbsp;</th>
+              <th className="p-2 border-t border-black bg-b1 w-3"></th>
               <th className="p-2 border-t border-black text-left bg-b1 text-t1 text-xs">
                 {t`Name`}
               </th>

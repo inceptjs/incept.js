@@ -14,15 +14,19 @@ export default function generateFormFields(
   const path = `${schema.name}/components/FormFields.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
   const fields = api.field.list();
-  //import type { FieldSelectProps, FieldInputProps } from 'frui'
-  source.addImportDeclaration({
-    isTypeOnly: true,
-    moduleSpecifier: 'frui',
-    namedImports: schema.columns
-    .filter(column => !!fields[column.field.method].component)
-    .map(column => `${fields[column.field.method].component}Props`)
-    .filter((value, index, array) => array.indexOf(value) === index)
-  });
+  const columns = schema.columns.filter(
+    column => !!fields[column.field.method].component
+  );
+  if (columns.length) {
+    //import type { FieldSelectProps, FieldInputProps } from 'frui'
+    source.addImportDeclaration({
+      isTypeOnly: true,
+      moduleSpecifier: 'frui',
+      namedImports: columns
+      .map(column => `${fields[column.field.method].component}Props`)
+      .filter((value, index, array) => array.indexOf(value) === index)
+    });
+  }
   //import React from 'react';
   source.addImportDeclaration({
     defaultImport: 'React',
@@ -33,8 +37,7 @@ export default function generateFormFields(
     defaultImport: 'Control',
     moduleSpecifier: `frui/${ui}/Control`
   });
-  schema.columns
-    .filter(column => !!fields[column.field.method].component)
+  columns
     .map(column => fields[column.field.method].component)
     .filter((value, index, array) => array.indexOf(value) === index)
     .forEach(defaultImport => {
@@ -57,9 +60,7 @@ export default function generateFormFields(
     }`)
   });
   //export NameField: (props: FormComponentProps) => React.ReactElement
-  schema.columns.filter(
-    (column) => !!fields[column.field.method].component
-  ).forEach((column) => {
+  columns.forEach((column) => {
     source.addFunction({
       isExported: true,
       name: `${capitalize(camelfy(column.name))}Field`,

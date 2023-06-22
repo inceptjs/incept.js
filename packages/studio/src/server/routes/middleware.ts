@@ -1,3 +1,5 @@
+import type { IncomingMessage, ServerResponse } from 'http';
+
 import fs from 'fs';
 import path from 'path';
 import mime from 'mime';
@@ -9,21 +11,15 @@ export default function boot(ctx: Framework) {
 
   if (process.env.NODE_ENV === 'development') {
     ctx.on('open', async (req, res) => {
-      const pDev = new Promise(resolve => dev(
-        req.resource, 
-        res.resource, 
-        resolve
-      ));
-      const pHot = new Promise(resolve => hot(
-        req.resource, 
-        res.resource, 
-        resolve
-      ));
+      const im = req.resource as IncomingMessage;
+      const sr = res.resource as ServerResponse;
+      const pDev = new Promise(resolve => dev(im, sr, resolve));
+      const pHot = new Promise(resolve => hot(im, sr, resolve));
 
       await pDev;
       await pHot;
 
-      if (res.resource.headersSent) {
+      if (sr.headersSent) {
         return false;
       }
     });

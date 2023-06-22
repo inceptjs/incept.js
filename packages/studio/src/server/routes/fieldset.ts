@@ -5,10 +5,15 @@ import fs from 'fs';
 import path from 'path';
 import { Framework } from 'inceptjs';
 import Loader from '../types/Loader';
+import Exception from '../types/Exception';
 import { api } from 'inceptjs/api';
 
-const parseJSONBody: <T = any>(im: IncomingMessage) => Promise<T> = im => {
-  return new Promise(resolve => {
+const parseJSONBody: <T = any>(im?: IncomingMessage) => Promise<T> = im => {
+  return new Promise((resolve, reject) => {
+    if (!im) {
+      reject(Exception.for('No incoming message'));
+      return;
+    }
     let body = '';
     im.on('data', chunk => {
       body += chunk.toString();

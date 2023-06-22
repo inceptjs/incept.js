@@ -6,6 +6,7 @@ import { useLanguage } from 'r22n';
 import { useStripe } from 'inceptjs';
 import { useSchemaSearch } from '../hooks/useSchema';
 //components
+import Alert from 'frui/tailwind/Alert';
 import Button from 'frui/tailwind/Button';
 import Loader from 'frui/tailwind/Loader';
 import { Table, Thead, Trow, Tcol, Tgroup } from 'frui//tailwind/Table';
@@ -87,64 +88,73 @@ const SchemaSearchPage = () => {
         </div>
       </div>
       <div className="flex-grow overflow-auto">
-        <Table>
-          <Thead className="bg-b3 w-3" />
-          <Thead className="py-4 text-sm font-semibold text-left bg-b3 text-t1 w-full">
-            {t`Schema`}
-          </Thead>
-          <Thead className="py-4 text-sm font-semibold text-left bg-b3 text-t1">
-            {t`Relations`}
-          </Thead>
-          {Object.keys(sorted).map((name, i) => (
-            <Tgroup key={i}>
-              <Trow>
-                <Tcol className="bg-b2 text-t1">
-                  <i className="fas fa-fw fa-caret-down mr-1 mt-[-1px]"></i>
-                </Tcol>
-                <Tcol wrap-4 colSpan={2} className="text-xs text-left text-t1 font-semibold bg-b2 uppercase">
-                  {name}
-                </Tcol>
-              </Trow>
-              {groups[name].map((config, j) => {
-                const schema = new search.Schema(config.name);
-                return (
-                  <Trow key={`${i}-${j}`}>
-                    <Tcol className={`py-4 ${stripe(j)}`} />
-                    <Tcol className={`py-4 text-left text-sm text-t1 ${stripe(j)}`}>
-                      <a onClick={() => viewUpdate(config.name)} className="text-t2 cursor-pointer">
-                        <i className={`fas fa-fw fa-${schema.icon}`} />
-                        <span className="ml-2">{schema.singular}</span>
-                      </a>
-                      <p className="mt-1">{schema.description}</p>
-                    </Tcol>
-                    <Tcol className={`py-4 pr-4 text-left text-sm text-t1 whitespace-nowrap ${stripe(j)}`}>
-                      {Object.values(schema.relations).map((relation, j) => {
-                        const required = !!schema.column(relation.from)?.data.required;
-                        return (
-                          <div key={`${i}-${j}`} className="mb-3">
-                            <div className="ml-1 font-semibold">
-                              {relation.label}
+        {Object.keys(sorted).length === 0 && (
+          <div className="p-4">
+            <Alert info className="mt-4">
+              {t`No schemas found.`}
+            </Alert>
+          </div>
+        )}
+        {Object.keys(sorted).length > 0 && (
+          <Table>
+            <Thead className="bg-b3 w-3" />
+            <Thead className="py-4 text-sm font-semibold text-left bg-b3 text-t1 w-full">
+              {t`Schema`}
+            </Thead>
+            <Thead className="py-4 text-sm font-semibold text-left bg-b3 text-t1">
+              {t`Relations`}
+            </Thead>
+            {Object.keys(sorted).map((name, i) => (
+              <Tgroup key={i}>
+                <Trow>
+                  <Tcol className="bg-b2 text-t1">
+                    <i className="fas fa-fw fa-caret-down mr-1 mt-[-1px]"></i>
+                  </Tcol>
+                  <Tcol wrap-4 colSpan={2} className="text-xs text-left text-t1 font-semibold bg-b2 uppercase">
+                    {name}
+                  </Tcol>
+                </Trow>
+                {groups[name].map((config, j) => {
+                  const schema = new search.Schema(config.name);
+                  return (
+                    <Trow key={`${i}-${j}`}>
+                      <Tcol className={`py-4 ${stripe(j)}`} />
+                      <Tcol className={`py-4 text-left text-sm text-t1 ${stripe(j)}`}>
+                        <a onClick={() => viewUpdate(config.name)} className="text-t2 cursor-pointer">
+                          <i className={`fas fa-fw fa-${schema.icon}`} />
+                          <span className="ml-2">{schema.singular}</span>
+                        </a>
+                        <p className="mt-1">{schema.description}</p>
+                      </Tcol>
+                      <Tcol className={`py-4 pr-4 text-left text-sm text-t1 whitespace-nowrap ${stripe(j)}`}>
+                        {Object.values(schema.relations).map((relation, j) => {
+                          const required = !!schema.column(relation.from)?.data.required;
+                          return (
+                            <div key={`${i}-${j}`} className="mb-3">
+                              <div className="ml-1 font-semibold">
+                                {relation.label}
+                              </div>
+                              <div className="mt-1">
+                                <span className="ml-1">
+                                  {relation.from}{!required ? '?' : ''}
+                                </span>
+                                <i className="fas fa-fw fa-arrow-right ml-1"></i>
+                                <span className="ml-1">
+                                  {relation.schema}
+                                  ({relation.to})
+                                </span>
+                              </div>
                             </div>
-                            <div className="mt-1">
-                              <span className="ml-1">
-                                {relation.from}{!required ? '?' : ''}
-                              </span>
-                              <i className="fas fa-fw fa-arrow-right ml-1"></i>
-                              <span className="ml-1">
-                                {relation.schema}
-                                ({relation.to})
-                              </span>
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </Tcol>
-                  </Trow>
-                );
-              })}
-            </Tgroup>
-          ))}
-        </Table>
+                          );
+                        })}
+                      </Tcol>
+                    </Trow>
+                  );
+                })}
+              </Tgroup>
+            ))}
+          </Table>
+        )}
       </div>
     </main>
   );

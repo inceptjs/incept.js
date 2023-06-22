@@ -5,6 +5,7 @@ import { useLanguage } from 'r22n';
 import { useStripe } from 'inceptjs';
 import { useFieldsetSearch } from '../hooks/useFieldset';
 //components
+import Alert from 'frui/tailwind/Alert';
 import Button from 'frui/tailwind/Button';
 import Loader from 'frui/tailwind/Loader';
 import { Table, Thead, Trow, Tcol } from 'frui//tailwind/Table';
@@ -38,6 +39,9 @@ const FieldsetSearchPage = () => {
   if (!search.response?.results) {
     return (<Loader />);
   }
+
+  const rows = search.response?.results || {};
+
   //render
   return (
     <main className="flex flex-col">
@@ -46,7 +50,7 @@ const FieldsetSearchPage = () => {
       </div>
       <div className="p-4 flex items-center">
         <h1 className="text-2xl font-semibold uppercase flex-grow">
-          {t`${Object.keys(search.response.results).length} Fieldsetss`}
+          {t`${Object.keys(search.response.results).length} Fieldsets`}
         </h1>
         <div className="hidden sm:block">
           <i className="fas fa-cloud-upload-alt"></i>
@@ -64,24 +68,33 @@ const FieldsetSearchPage = () => {
         </div>
       </div>
       <div className="flex-grow overflow-auto">
-        <Table>
-          <Thead className="py-4 text-sm font-semibold text-left bg-b3 text-t1 w-full">
-            {t`Fieldset`}
-          </Thead>
-          {Object.keys(search.response?.results).map((name, i) => {
-            const fieldset = new search.Fieldset(name);
-            return (
-              <Trow key={i}>
-                <Tcol className={`py-4 text-left text-sm text-t1 ${stripe(i)}`}>
-                  <a onClick={() => viewUpdate(name)} className="text-t2 cursor-pointer">
-                    <i className={`fas fa-fw fa-${fieldset.icon}`} />
-                    <span className="ml-2">{fieldset.singular}</span>
-                  </a>
-                </Tcol>
-              </Trow>
-            );
-          })}
-        </Table>
+        {Object.keys(rows).length === 0 && (
+          <div className="p-4">
+            <Alert info className="mt-4">
+              {t`No fieldsets found.`}
+            </Alert>
+          </div>
+        )}
+        {Object.keys(rows).length > 0 && (
+          <Table>
+            <Thead className="py-4 text-sm font-semibold text-left bg-b3 text-t1 w-full">
+              {t`Fieldset`}
+            </Thead>
+            {Object.keys(rows).map((name, i) => {
+              const fieldset = new search.Fieldset(name);
+              return (
+                <Trow key={i}>
+                  <Tcol className={`py-4 text-left text-sm text-t1 ${stripe(i)}`}>
+                    <a onClick={() => viewUpdate(name)} className="text-t2 cursor-pointer">
+                      <i className={`fas fa-fw fa-${fieldset.icon}`} />
+                      <span className="ml-2">{fieldset.singular}</span>
+                    </a>
+                  </Tcol>
+                </Trow>
+              );
+            })}
+          </Table>
+        )}
       </div>
     </main>
   );

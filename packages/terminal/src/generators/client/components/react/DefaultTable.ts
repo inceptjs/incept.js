@@ -17,6 +17,11 @@ export default function generateTailwindDefaultTable(
   const path = `${schema.name}/components/DefaultTable.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
   const formats = api.format.list();
+  const columns = schema.columns.filter(
+    column => formats[column.list.method].component 
+      || column.list.method === 'none' 
+      || column.list.method === 'escaped'
+  );
   //import type { FilterHandlers } from 'inceptjs';
   source.addImportDeclaration({
     isTypeOnly: true,
@@ -52,12 +57,9 @@ export default function generateTailwindDefaultTable(
   //import { RoleFormat, ActiveFormat, ... } from './ListFormats';
   source.addImportDeclaration({
     moduleSpecifier: `./ListFormats`,
-    namedImports: schema.columns
-      .filter(column => formats[column.list.method].component 
-        || column.list.method === 'none' 
-        || column.list.method === 'escaped'
-      )
-      .map(column => `${capitalize(camelfy(column.name))}Format`)
+    namedImports: columns.map(
+      column => `${capitalize(camelfy(column.name))}Format`
+    )
   });
   //export type DefaultTableProps
   source.addTypeAlias({
@@ -84,9 +86,7 @@ export default function generateTailwindDefaultTable(
       const stripe = useStripe(stripes[0], stripes[1]);
       return React.createElement(
         Table,
-        ${schema.columns.filter(
-          (column) => formats[column.list.method].component || column.list.method !== 'hide'
-        ).map((column) => {
+        ${columns.map((column) => {
           if (column.sortable) {
             return (`
               React.createElement(
@@ -130,9 +130,7 @@ export default function generateTailwindDefaultTable(
           return React.createElement(
             Trow,
             { key: i },
-            ${schema.columns.filter(
-              (column) => column.list.method !== 'hide'
-            ).map((column) => (`
+            ${columns.map((column) => (`
               React.createElement(
                 Tcol,
                 { style: { textAlign: 'left', backgroundColor: stripe(i) } },

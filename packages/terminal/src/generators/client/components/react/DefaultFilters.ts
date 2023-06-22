@@ -2,6 +2,7 @@
 import type { Project, Directory } from 'ts-morph';
 import type { SchemaConfig } from 'inceptjs';
 //helpers
+import { api } from 'inceptjs/api';
 import { 
   capitalize, 
   camelfy,
@@ -15,6 +16,10 @@ export default function generateTailwindDefaultFilters(
 ) {
   const path = `${schema.name}/components/DefaultFilters.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
+  const fields = api.field.list();
+  const columns = schema.columns.filter(
+    column => column.filterable && !!fields[column.field.method].component
+  );
   //import type { APIResponse, FetchStatuses, FilterHandlers } from 'inceptjs';
   source.addImportDeclaration({
     isTypeOnly: true,
@@ -47,13 +52,15 @@ export default function generateTailwindDefaultFilters(
     defaultImport: 'Button',
     moduleSpecifier: 'frui/react/Button'
   });
-  //import { RoleFilter, ActiveFilter, ... } from './FilterFields';
-  source.addImportDeclaration({
-    moduleSpecifier: `./FilterFields`,
-    namedImports: schema.columns
-      .filter(column => column.filterable && column.field.method !== 'none')
-      .map(column => `${capitalize(camelfy(column.name))}Filter`)
-  });
+  if (columns.length) {
+    //import { RoleFilter, ActiveFilter, ... } from './FilterFields';
+    source.addImportDeclaration({
+      moduleSpecifier: `./FilterFields`,
+      namedImports: columns.map(
+        column => `${capitalize(camelfy(column.name))}Filter`
+      )
+    });
+  }
   //export type DefaultFiltersProps
   source.addTypeAlias({
     isExported: true,
@@ -79,9 +86,7 @@ export default function generateTailwindDefaultFilters(
       return React.createElement(
         'form',
         { onSubmit: handlers.send },
-        ${schema.columns.filter(
-          (column) => column.filterable && column.field.method !== 'none'
-        ).map((column, i) => (`
+        ${columns.map((column, i) => (`
           React.createElement(
             'div',
             { style: { marginTop: '8px', position: 'relative', zIndex: ${5000 - (i + 1)} } },

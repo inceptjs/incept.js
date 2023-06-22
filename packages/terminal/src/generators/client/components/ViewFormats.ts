@@ -14,12 +14,19 @@ export default function generateViewFormats(
   const path = `${schema.name}/components/ViewFormats.ts`;
   const source = project.createSourceFile(path, '', { overwrite: true });
   const formats = api.format.list();
+  const columns = schema.columns.filter(
+    column => !!formats[column.view.method].component
+  );
+  const columnsNone = schema.columns.filter(
+    (column) => !!formats[column.view.method].component 
+      || column.view.method === 'none' 
+      || column.view.method === 'escaped'
+  );
   //import type { FieldSelectProps, FieldInputProps } from 'frui'
   source.addImportDeclaration({
     isTypeOnly: true,
     moduleSpecifier: 'frui',
-    namedImports: schema.columns
-    .filter(column => !!formats[column.view.method].component)
+    namedImports: columns
     .map(column => `${formats[column.view.method].component}Props`)
     .filter((value, index, array) => array.indexOf(value) === index)
   });
@@ -28,8 +35,7 @@ export default function generateViewFormats(
     defaultImport: 'React',
     moduleSpecifier: 'react'
   });
-  schema.columns
-    .filter(column => !!formats[column.view.method].component)
+  columns
     .map(column => formats[column.view.method].component)
     .filter((value, index, array) => array.indexOf(value) === index)
     .forEach(defaultImport => {
@@ -48,11 +54,7 @@ export default function generateViewFormats(
     type: 'Record<string, any>'
   });
   //export NameFormat: (props: FormatComponentProps) => React.ReactElement
-  schema.columns.filter(
-    (column) => !!formats[column.view.method].component 
-      || column.view.method === 'none' 
-      || column.view.method === 'escaped'
-  ).forEach((column) => {
+  columnsNone.forEach((column) => {
     source.addFunction({
       isExported: true,
       name: `${capitalize(camelfy(column.name))}Format`,
@@ -83,11 +85,7 @@ export default function generateViewFormats(
     declarations: [{
         name: 'ViewFormats',
         initializer: formatCode(`{
-          ${schema.columns
-            .filter((column) => !!formats[column.view.method].component 
-              || column.view.method === 'none' 
-              || column.view.method === 'escaped'
-            )
+          ${columnsNone
             .map((column) => `${capitalize(camelfy(column.name))}Format`)
             .join(',\n')}
         }`),
