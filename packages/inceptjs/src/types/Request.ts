@@ -6,6 +6,7 @@ import type {
 
 import cookie from 'cookie';
 import { Store } from '@inceptjs/types';
+import Exception from './Exception';
 
 /**
  * A type of request that provides a  
@@ -15,7 +16,7 @@ export default class Request {
   /**
    * Incoming message from the server.
    */
-  protected _resource: ExpressLikeMessage;
+  protected _resource?: ExpressLikeMessage;
 
   /**
    * args data
@@ -31,6 +32,7 @@ export default class Request {
    * Cached post data
    */
   protected _post?: NestedScalarObject;
+  
   /**
    * Cached query data
    */
@@ -75,6 +77,9 @@ export default class Request {
    * Returns the request method
    */
   public get method() {
+    if (!this._resource) {
+      throw Exception.for('Request resource is not set');
+    }
     return this._resource.method || 'GET';
   }
 
@@ -113,6 +118,10 @@ export default class Request {
    */
   public get url() {
     const resource = this._resource;
+    if (!resource) {
+      //we need to return a URL object
+      return new URL(this._unknownHost('/')); 
+    }
     //determine protocol (by default https)
     let protocol = 'https';
     //if there is an x-forwarded-proto header
@@ -146,7 +155,7 @@ export default class Request {
    * and all the properties will be lazy parsed
    * when called.
    */
-  constructor(resource: ExpressLikeMessage) {
+  constructor(resource?: ExpressLikeMessage) {
     this._resource = resource;
     this._args = typeof process !== 'undefined' ? process.argv || []: [];
   }
@@ -168,6 +177,9 @@ export default class Request {
    * Returns strongly typed body data
    */
   public getBody<T = string | NestedScalarObject>() {
+    if (!this._resource) {
+      return {} as NestedScalarObject;
+    }
     return this._resource.body as T;
   }
 
@@ -185,6 +197,9 @@ export default class Request {
    * Returns strongly typed headers data
    */
   public getHeaders<T = Record<string, string|string[]|undefined>>() {
+    if (!this._resource) {
+      throw Exception.for('Request resource is not set');
+    }
     return (this._resource.headers || {}) as T;
   }
 
@@ -311,11 +326,15 @@ export default class Request {
   /**
    * Allows the manipulation of the params object
    */
-  public stage(name: string, ...path: any[]) {
+  public stage(name: string|Record<string, any>, ...path: any[]) {
     const stage = new Store(this.params);
-    stage.set(name, ...path);
+    if (typeof name === 'object') {
+      stage.set(Object.assign({}, this.params, name));
+    } else {
+      stage.set(name, ...path);
+    }
     this._params = stage.get();
-    return this.params;
+    return this;
   }
 
   /**

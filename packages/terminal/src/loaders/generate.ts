@@ -49,7 +49,7 @@ export default function boot(ctx: Framework) {
     const ui = (req.params.ui || req.params.u || 'react') as string;
 
     if (platform === 'server' || platform === 'all') {
-      console.log('Generating server...');
+      ctx.emit('log', { type: 'info', message: 'Generating server...' });
       if (ts) {
         if (location === modules) {
           server(`${location}/ts-server`, ts);
@@ -60,10 +60,10 @@ export default function boot(ctx: Framework) {
         server(`${location}/server`, ts);
       }
       
-      console.log('Done!');
+      ctx.emit('log', { type: 'success', message: 'Done!' });
     }
     if (platform === 'client' || platform === 'all') {
-      console.log('Generating client...');
+      ctx.emit('log', { type: 'info', message: 'Generating client...' });
       if (ts) {
         if (location === modules) {
           client(`${location}/ts-client`, ts, ui);
@@ -73,7 +73,7 @@ export default function boot(ctx: Framework) {
       } else {
         client(`${location}/client`, ts, ui);
       }
-      console.log('Done!');
+      ctx.emit('log', { type: 'success', message: 'Done!' });
     }
 
     req.stage('ts', ts);
@@ -85,7 +85,7 @@ export default function boot(ctx: Framework) {
   }, 10);
 };
 
-function server(root: string, ts = false) {
+export function server(root: string, ts = false) {
   //get all json files in the schema directory (defined in config.schema)
   const folder = Loader.schemas();
   //read all files in the schema folder
@@ -136,17 +136,17 @@ function server(root: string, ts = false) {
 
   const directory = project.createDirectory(root);
   const plugins = Loader.plugins(root, config.plugins || []);
-  generateServerIndex(directory, schemas);
-  generateApp(directory, plugins, schemas);
-  generateBootSchema(directory, schemas);
-  generateBootError(directory);
-  generateBootObject(directory);
-  generateBootCollection(directory);
   for (const name in schemas) {
     generateModelRoutes(directory, schemas[name]);
     generateServerTypes(directory, schemas[name], schemas);
     generateServerValidate(directory, schemas[name]);
   }
+  generateBootSchema(directory, schemas);
+  generateBootError(directory);
+  generateBootObject(directory);
+  generateBootCollection(directory);
+  generateApp(directory, plugins, schemas);
+  generateServerIndex(directory, schemas);
 
   //move schema files to schemas/[name]
   Object.keys(schemas).forEach(name => {
@@ -173,9 +173,9 @@ function server(root: string, ts = false) {
   } else {
     project.emit();
   }
-}
+};
 
-function client(root: string, ts = false, ui = 'react') {
+export function client(root: string, ts = false, ui = 'react') {
   //get all json files in the schema directory (defined in config.schema)
   const folder = Loader.schemas();
   //read all files in the schema folder
@@ -255,4 +255,4 @@ function client(root: string, ts = false, ui = 'react') {
   } else {
     project.emit();
   }
-}
+};

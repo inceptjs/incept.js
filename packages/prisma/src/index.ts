@@ -2,8 +2,11 @@ import type { Framework } from 'inceptjs';
 import type { PrismaClient } from '@prisma/client';
 import type { Relation } from './types';
 
+import ModelTransformer from './types/Transformer';
 import Query from './types/Query';
 import Exception from './types/Exception';
+
+import fs from 'fs';
 
 export default function boot(ctx: Framework) {
   const connections: Record<string, PrismaClient> = {};
@@ -153,14 +156,19 @@ export default function boot(ctx: Framework) {
   ctx.on('generate', (req, res) => {
     //skip, if there is an error
     if (res.body?.error) return;
-    //const location = req.params.location as string;
+    const location = req.params.location as string;
     const platform = req.params.platform as string;
     //const engine = (req.params.engine || req.params.e || 'mysql') as string;
-
     if (platform === 'server' || platform === 'all') {
-      console.log('Generating prisma...');
-      //generate(engine, location)
-      console.log('Done!');
+      ctx.emit('log', { type: 'info', message: 'Generating prisma schema...' });
+      fs.writeFileSync(
+        `${location}/server/schema.prisma`, 
+        ModelTransformer.transform(
+          ctx.config.prisma?.provider || 'mysql',
+          ctx.config.prisma?.url || 'DATABASE_URL'
+        )
+      );
+      ctx.emit('log', { type: 'success', message: 'Done!' });
     }
     
     res.json({ error: false });

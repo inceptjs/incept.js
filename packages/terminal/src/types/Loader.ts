@@ -10,45 +10,19 @@ import Exception from './Exception';
  */
 export default class Loader {
   /**
-   * Returns the current working directory
+   * Returns the absolute path to the file
    */
-  static cwd() {
-    return process.cwd();
-  }
-  
-  static schemas(cwd?: string) {
+  static absolute(pathname: string, cwd?: string) {
     cwd = cwd || this.cwd();
-    const config = this.config(cwd);
-    let schemas = config.schema.build || './schemas';
-    if (schemas.startsWith('.')) {
-      schemas = path.resolve(cwd, schemas);
+    if (pathname.startsWith('.')) {
+      pathname = path.resolve(cwd, pathname);
     }
-    return schemas;
-  }
-  
-  static fieldsets(cwd?: string) {
-    cwd = cwd || this.cwd();
-    const config = this.config(cwd);
-    let schemas = config.fieldset.build || './fieldsets';
-    if (schemas.startsWith('.')) {
-      schemas = path.resolve(cwd, schemas);
+    //if the pathname does not start with /, 
+    //the path should start with modules
+    if (!pathname.startsWith('/')) {
+      pathname = path.resolve(this.modules(cwd), pathname);
     }
-    return schemas;
-  }
-
-  /**
-   * Should locate the node_modules directory 
-   * where incept is actually installed
-   */
-  static modules(cwd?: string): string {
-    cwd = cwd || this.cwd();
-    if (cwd === '/') {
-      throw new Error('Could not find node_modules');
-    }
-    if (fs.existsSync(path.resolve(cwd, 'node_modules/inceptjs'))) {
-      return path.resolve(cwd, 'node_modules');
-    }
-    return this.modules(path.dirname(cwd));
+    return pathname;
   }
 
   /**
@@ -74,7 +48,42 @@ export default class Loader {
     const json = this.require(file);
     const config = (json.incept || json) as ProjectConfig;
     config.cwd = cwd;
-    return config;
+    return { ...config };
+  }
+
+  /**
+   * Returns the current working directory
+   */
+  static cwd() {
+    return process.cwd();
+  }
+  
+  /**
+   * Returns the fieldset folder
+   */
+  static fieldsets(cwd?: string) {
+    cwd = cwd || this.cwd();
+    const config = this.config(cwd);
+    let schemas = config.fieldset.build || './fieldsets';
+    if (schemas.startsWith('.')) {
+      schemas = path.resolve(cwd, schemas);
+    }
+    return schemas;
+  }
+
+  /**
+   * Should locate the node_modules directory 
+   * where incept is actually installed
+   */
+  static modules(cwd?: string): string {
+    cwd = cwd || this.cwd();
+    if (cwd === '/') {
+      throw new Error('Could not find node_modules');
+    }
+    if (fs.existsSync(path.resolve(cwd, 'node_modules/inceptjs'))) {
+      return path.resolve(cwd, 'node_modules');
+    }
+    return this.modules(path.dirname(cwd));
   }
 
   /**
@@ -117,19 +126,19 @@ export default class Loader {
   }
 
   /**
-   * Returns the absolute path to the file
+   * require() should be monitored separately from the code
    */
-  static absolute(pathname: string, cwd?: string) {
-    cwd = cwd || this.cwd();
-    if (pathname.startsWith('.')) {
-      pathname = path.resolve(cwd, pathname);
+  static require(file: string) {
+    //if JSON, safely require it
+    if (path.extname(file) === '.json') {
+      const contents = fs.readFileSync(file, 'utf8');
+      try {
+        return JSON.parse(contents) || {};
+      } catch(e) {}
+      return {};
     }
-    //if the pathname does not start with /, 
-    //the path should start with modules
-    if (!pathname.startsWith('/')) {
-      pathname = path.resolve(this.modules(cwd), pathname);
-    }
-    return pathname;
+    
+    return require(file);
   }
 
   /**
@@ -195,20 +204,17 @@ export default class Loader {
 
     return file;
   }
-
+  
   /**
-   * require() should be monitored separately from the code
+   * Returns the schema folder
    */
-  static require(file: string) {
-    //if JSON, safely require it
-    if (path.extname(file) === '.json') {
-      const contents = fs.readFileSync(file, 'utf8');
-      try {
-        return JSON.parse(contents) || {};
-      } catch(e) {}
-      return {};
+  static schemas(cwd?: string) {
+    cwd = cwd || this.cwd();
+    const config = this.config(cwd);
+    let schemas = config.schema.build || './schemas';
+    if (schemas.startsWith('.')) {
+      schemas = path.resolve(cwd, schemas);
     }
-    
-    return require(file);
+    return schemas;
   }
 }

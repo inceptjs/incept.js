@@ -33,7 +33,8 @@
       },
       "searchable": false,
       "filterable": false,
-      "sortable": false
+      "sortable": false,
+      "default": "nanoid()"
     },
     {
       "type": "string",

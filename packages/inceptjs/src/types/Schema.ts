@@ -1,4 +1,8 @@
-import type { SchemaConfig, SchemaRelation } from '../types';
+import type { 
+  SchemaConfig, 
+  SchemaColumn, 
+  SchemaRelation 
+} from '../types';
 
 import Exception from './Exception';
 import validators from '../validators';
@@ -124,6 +128,22 @@ export default class Schema<Model = any> {
   }
 
   /**
+   * Returns the all the fields related to this schema
+   */
+  get relatedFields() {
+    const related: Record<string, SchemaColumn> = {};
+    Object.keys(Schema.configs).forEach(name => {
+      Schema.configs[name].columns.forEach(column => {
+        if (column.relation?.schema === this.name) {
+          related[name] = column;
+        }
+      });
+    });
+
+    return related;
+  }
+
+  /**
    * Returns the all the schema relations related to this schema
    */
   get related() {
@@ -135,6 +155,15 @@ export default class Schema<Model = any> {
     });
 
     return related;
+  }
+
+  /**
+   * Returns the all the fields related to other schemas
+   */
+  get relationFields() {
+    return this._config.columns.filter(
+      column => typeof column.relation === 'object'
+    );
   }
 
   /**

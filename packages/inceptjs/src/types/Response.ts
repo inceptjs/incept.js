@@ -1,5 +1,8 @@
+import type { NestedScalarObject, ServerResponse, Cookie } from '../types';
+
 import cookie from 'cookie';
-import { NestedScalarObject, ServerResponse, Cookie } from '../types';
+
+import Exception from './Exception';
 
 /**
  * A type of response that provides a
@@ -27,7 +30,7 @@ export default class Response<T = string|Buffer|NestedScalarObject> {
   /**
    * Native response from the server.
    */
-  protected _resource: ServerResponse;
+  protected _resource?: ServerResponse;
 
   /**
    * Whether the response has been prematurely sent
@@ -66,6 +69,9 @@ export default class Response<T = string|Buffer|NestedScalarObject> {
    * Returns whether the response has been prematurely sent
    */
   public get sent() {
+    if (!this._resource) {
+      throw Exception.for('Request resource is not set');
+    }
     return this._resource.headersSent || this._sent;
   }
 
@@ -81,7 +87,7 @@ export default class Response<T = string|Buffer|NestedScalarObject> {
    * and all the properties will be lazy parsed
    * when called.
    */
-  constructor(resource: ServerResponse) {
+  constructor(resource?: ServerResponse) {
     this._resource = resource;
   }
 
@@ -152,14 +158,18 @@ export default class Response<T = string|Buffer|NestedScalarObject> {
    * Sets all the outputs without sending
    */
   public prepare() {
+    if (!this._resource) {
+      throw Exception.for('Request resource is not set');
+    }
+    const resource = this._resource as ServerResponse;
     //set headers
     Object.keys(this._headers).map(key => {
-      this._resource.setHeader(key, this._headers[key] || '');
+      resource.setHeader(key, this._headers[key] || '');
     });
     //set cookies
     Object.keys(this._cookies).map(key => {
       const { value, options } = this._cookies[key];
-      this._resource.setHeader('Set-Cookie', cookie.serialize(key, value, options));
+      resource.setHeader('Set-Cookie', cookie.serialize(key, value, options));
     });
   }
 
@@ -168,6 +178,9 @@ export default class Response<T = string|Buffer|NestedScalarObject> {
    * the response using the native resource
    */
   public send(content?: any) {
+    if (!this._resource) {
+      throw Exception.for('Request resource is not set');
+    }
     //if already sent, do nothing
     if (this._sent) return;
     this._sent = true;

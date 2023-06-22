@@ -38,6 +38,48 @@ export default class Framework extends Router {
   }
 
   /**
+   * Emits the event and returns the response body
+   */
+  async call(
+    event: string, 
+    request?: Request|Record<string, any>, 
+    response?: Response<APIResponse>, 
+    error?: Exception
+  ) {
+    await this.emit(event, request, response, error);
+    return response?.body;
+  }
+
+  /**
+   * Emits an event
+   */
+  emit(
+    event: string, 
+    request?: Request|Record<string, any>, 
+    response?: Response<APIResponse>, 
+    error?: Exception
+  ) {
+    //firgure out the request
+    if (typeof request === 'undefined') {
+      request = this.request();
+    } else if (typeof request === 'object' 
+      && request.constructor.name === 'Object'
+    ) {
+      request = this.request().stage(request);
+    }
+    //figure out the response
+    if (typeof response === 'undefined') {
+      response = this.response();
+    }
+    return super.emit(
+      event, 
+      request as Request, 
+      response as Response<APIResponse>, 
+      error
+    );
+  }
+
+  /**
    * Handles a payload using events
    */
   async handle(im: IncomingMessage, sr: ServerResponse) {
@@ -84,7 +126,7 @@ export default class Framework extends Router {
   /**
    * Creates a payload from the message and response
    */
-  payload(im: IncomingMessage, sr: ServerResponse) {
+  payload(im?: IncomingMessage, sr?: ServerResponse) {
     //create a new payload
     const request = this.request(im);
     const response = this.response(sr);
@@ -129,14 +171,14 @@ export default class Framework extends Router {
   /**
    * Makes a new request object (IoC)
    */
-  request(resource: IncomingMessage): Request {
+  request(resource?: IncomingMessage): Request {
     return new Request(resource);
   }
 
   /**
    * Makes a new response object (IoC)
    */
-  response(resource: ServerResponse): Response<APIResponse> {
+  response(resource?: ServerResponse): Response<APIResponse> {
     return new Response<APIResponse>(resource);
   }
 
